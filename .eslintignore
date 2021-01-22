@@ -1,0 +1,2 @@
+# Ignore provided client-side js file imported from govuk-frontend node package
+govuk.js
