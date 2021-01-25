@@ -35,6 +35,7 @@ exports[`Header with snapshots renders Header correctly 1`] = `
                 fill-rule="evenodd"
               />
               <img
+                alt="GovUK Crown logo"
                 class="govuk-header__logotype-crown-fallback-image"
                 height="32"
                 src="/assets/images/govuk-logotype-crown.png"
