@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { PhaseBanner } from "../components/PhaseBanner";
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 const Home: FunctionComponent = () => {
   return (
@@ -18,6 +19,7 @@ const Home: FunctionComponent = () => {
           </div>
         }
       />
+      <Footer />
     </>
   );
 };
