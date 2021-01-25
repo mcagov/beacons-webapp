@@ -24,6 +24,23 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 We're using [Jest's Snapshot Testing](https://jestjs.io/docs/en/snapshot-testing) for our components.
 
+### Adding a Component
+
+We are creating React components from the [Gov UK Frontend components](https://design-system.service.gov.uk/components/).
+
+To add a new component:
+
+- Create a test file in `test/components`
+- Create an empty component in `src/components`
+  - Copy the HTML from the Gov UK Design System Website into the component
+  - Resolve any HTML to TSX conversion issues e.g. `class -> className`
+  - Decide the properties you want to make configurable e.g. `phase` in `PhaseBanner`
+  - Extract to props object
+- Check the component renders properly
+- Take a snapshot of the component by running the tests
+
+### Updating Snapshots
+
 To update all snapshots, run: `npm run test:update-all`
 
 To update a specific snapshot, run: `npm run test:update [INSERT TEST NAME PATTERN HERE]`
