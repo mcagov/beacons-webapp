@@ -1,16 +1,8 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 
 const Home: FunctionComponent = () => {
-  useEffect(() => {
-    document.body.className = document.body.className
-      ? document.body.className + " js-enabled"
-      : "js-enabled";
-    const GOVUKFrontend = require("govuk-frontend");
-    GOVUKFrontend.initAll();
-  }, []);
-
   return (
     <div className={styles.container}>
       <div
