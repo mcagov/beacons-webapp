@@ -1,0 +1,5 @@
+Use this dir to store JS functions for use with components.
+
+Benefits:
+- Separation of concerns
+- Easy to test logic/functionality independent of rendering
