@@ -10,6 +10,7 @@ describe("Header", () => {
     container = document.createElement("div");
   });
 
+  // eslint-disable-next-line
   const render = (component) => ReactDOM.render(component, container);
   // TODO: Investigate ESLint flag on ReactDOM
 

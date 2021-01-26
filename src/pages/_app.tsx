@@ -10,6 +10,7 @@ const MyApp: FunctionComponent<AppProps> = ({
     document.body.className = document.body.className
       ? document.body.className + " js-enabled"
       : "js-enabled";
+    // eslint-disable-next-line
     const GOVUKFrontend = require("govuk-frontend");
     GOVUKFrontend.initAll();
   }, []);
