@@ -16,7 +16,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged ; eslint --fix ."
+      "pre-commit": "npm run format ; npm run lint:fix"
     }
   },
   "dependencies": {

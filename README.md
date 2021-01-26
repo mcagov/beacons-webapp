@@ -20,15 +20,15 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 We separate the frontend in to three building blocks:
 
-1.  **Components**.  The individual components, most likely derived from the [GOV.UK Design System](https://design-system.service.gov.uk/components/).
-2.  **Pages**.  A page or view as it is displayed to the user, comprising several components.
-3.  **Functions**.  The logical functionality used by components and pages, most likely expressed in vanilla TypeScript.
+1.  **Components**. The individual components, most likely derived from the [GOV.UK Design System](https://design-system.service.gov.uk/components/).
+2.  **Pages**. A page or view as it is displayed to the user, comprising several components.
+3.  **Functions**. The logical functionality used by components and pages, most likely expressed in vanilla TypeScript.
 
 ```
 ├── node_modules
 |   └── ...
 ├── public
-│   └── assets 
+│   └── assets
 ├── src
 │   ├── components // Components go here
 │   ├── lib // Functions go here
@@ -36,6 +36,6 @@ We separate the frontend in to three building blocks:
 │   └── styles
 └── test
     ├── components
-    ├── lib 
+    ├── lib
     └── pages
 ```
