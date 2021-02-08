@@ -9,6 +9,7 @@ interface SummaryListItemProps {
   valueText: string;
   actionText?: string;
   actionValue?: string;
+  actionHref?: string;
 }
 
 export const SummaryList: FunctionComponent<SummaryListProps> = ({
@@ -22,12 +23,13 @@ export const SummaryListItem: FunctionComponent<SummaryListItemProps> = ({
   valueText,
   actionText,
   actionValue,
+  actionHref,
 }: SummaryListItemProps): JSX.Element => (
   <div className="govuk-summary-list__row">
     <dt className="govuk-summary-list__key">{labelText}</dt>
     <dd className="govuk-summary-list__value">{valueText}</dd>
     <dd className="govuk-summary-list__actions">
-      <a className="govuk-link" href="#">
+      <a className="govuk-link" href={actionHref}>
         {actionText}
         <span className="govuk-visually-hidden"> {actionValue}</span>
       </a>

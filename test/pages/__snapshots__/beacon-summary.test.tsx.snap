@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Check Beacon Summary Page renders correctly 1`] = `
+exports[`Beacon Summary Page renders correctly 1`] = `
 <DocumentFragment>
   <a
     class="govuk-skip-link"
@@ -109,50 +109,20 @@ exports[`Check Beacon Summary Page renders correctly 1`] = `
         >
           <a
             class="govuk-back-link"
-            href="/check-beacon-details"
+            href="/beacon-information"
           >
             Back
           </a>
-          <div
-            aria-labelledby="govuk-notification-banner-title"
-            class="govuk-notification-banner"
-            data-module="govuk-notification-banner"
-            role="region"
+          <h1
+            class="govuk-heading-l"
           >
-            <div
-              class="govuk-notification-banner__header"
-            >
-              <h2
-                class="govuk-notification-banner__title"
-                id="govuk-notification-banner-title"
-              >
-                This beacon is already registered
-              </h2>
-            </div>
-            <div
-              class="govuk-notification-banner__content"
-            >
-              <div
-                class="govuk-notification-banner__heading"
-              >
-                <div
-                  class="govuk-body"
-                >
-                  There maybe a few reasons why this beacon is already registered, including:
-                </div>
-                <ul
-                  class="govuk-list govuk-list--bullet"
-                >
-                  <li>
-                    It has already been registered by yourself or someone else (e.g. if you bought it second hand)
-                  </li>
-                  <li>
-                    The manufacturer may have incorrectly reused the HEX ID
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+            Check your answers before sending in your registration
+          </h1>
+          <h3
+            class="govuk-heading-m"
+          >
+            Beacon Information
+          </h3>
           <dl
             class="govuk-summary-list"
           >
@@ -174,11 +144,13 @@ exports[`Check Beacon Summary Page renders correctly 1`] = `
               >
                 <a
                   class="govuk-link"
+                  href="/check-beacon-details"
                 >
+                  Change
                   <span
                     class="govuk-visually-hidden"
                   >
-                     
+                     beacon-manufacturer
                   </span>
                 </a>
               </dd>
@@ -201,11 +173,13 @@ exports[`Check Beacon Summary Page renders correctly 1`] = `
               >
                 <a
                   class="govuk-link"
+                  href="/check-beacon-details"
                 >
+                  Change
                   <span
                     class="govuk-visually-hidden"
                   >
-                     
+                     beacon-model
                   </span>
                 </a>
               </dd>
@@ -221,18 +195,20 @@ exports[`Check Beacon Summary Page renders correctly 1`] = `
               <dd
                 class="govuk-summary-list__value"
               >
-                AF67 BB81 23CD 451
+                AF67 BB81 23CD 111
               </dd>
               <dd
                 class="govuk-summary-list__actions"
               >
                 <a
                   class="govuk-link"
+                  href="/check-beacon-details"
                 >
+                  Change
                   <span
                     class="govuk-visually-hidden"
                   >
-                     
+                     beacon-hex
                   </span>
                 </a>
               </dd>
@@ -243,103 +219,106 @@ exports[`Check Beacon Summary Page renders correctly 1`] = `
               <dt
                 class="govuk-summary-list__key"
               >
-                Date registered
+                Manufacturer serial number
               </dt>
               <dd
                 class="govuk-summary-list__value"
               >
-                19 September 2016
+                Serial number
               </dd>
               <dd
                 class="govuk-summary-list__actions"
               >
                 <a
                   class="govuk-link"
+                  href="/beacon-information"
                 >
+                  Change
                   <span
                     class="govuk-visually-hidden"
                   >
-                     
+                     beacon-manufacturer-serial-number
+                  </span>
+                </a>
+              </dd>
+            </div>
+            <div
+              class="govuk-summary-list__row"
+            >
+              <dt
+                class="govuk-summary-list__key"
+              >
+                Battery expiry date
+              </dt>
+              <dd
+                class="govuk-summary-list__value"
+              >
+                12 September 2026
+              </dd>
+              <dd
+                class="govuk-summary-list__actions"
+              >
+                <a
+                  class="govuk-link"
+                  href="/beacon-information"
+                >
+                  Change
+                  <span
+                    class="govuk-visually-hidden"
+                  >
+                     beacon-battery-expiry-date
+                  </span>
+                </a>
+              </dd>
+            </div>
+            <div
+              class="govuk-summary-list__row"
+            >
+              <dt
+                class="govuk-summary-list__key"
+              >
+                Beacon service date
+              </dt>
+              <dd
+                class="govuk-summary-list__value"
+              >
+                08 June 2019
+              </dd>
+              <dd
+                class="govuk-summary-list__actions"
+              >
+                <a
+                  class="govuk-link"
+                  href="/beacon-information"
+                >
+                  Change
+                  <span
+                    class="govuk-visually-hidden"
+                  >
+                     beacon-service-date
                   </span>
                 </a>
               </dd>
             </div>
           </dl>
-          <form
-            action="/"
-            method="POST"
+          <h3
+            class="govuk-heading-m"
           >
-            <div
-              class="govuk-form-group"
-            >
-              <fieldset
-                class="govuk-fieldset"
-              >
-                <legend
-                  class="govuk-fieldset__legend govuk-fieldset__legend--l"
-                >
-                  <h1
-                    class="govuk-fieldset__heading"
-                  >
-                    What would you like to do next?
-                  </h1>
-                </legend>
-                <div
-                  class="govuk-radios "
-                >
-                  <div
-                    class="govuk-radios__item"
-                  >
-                    <input
-                      class="govuk-radios__input"
-                      id="try-again"
-                      name="do-next"
-                      type="radio"
-                      value="try-again"
-                    />
-                    <label
-                      class="govuk-label govuk-radios__label"
-                      for="try-again"
-                    >
-                      Try again or register a different beacon
-                    </label>
-                  </div>
-                  <div
-                    class="govuk-radios__item"
-                  >
-                    <input
-                      aria-describedby="continue-anyway-hint"
-                      class="govuk-radios__input"
-                      id="continue-anyway"
-                      name="do-next"
-                      type="radio"
-                      value="continue-anyway"
-                    />
-                    <label
-                      class="govuk-label govuk-radios__label"
-                      for="continue-anyway"
-                    >
-                      Continue anyway - I've entered the beacons details correctly. I think this is a manufacturer fault or want to update the owner details
-                    </label>
-                    <div
-                      class="govuk-hint govuk-radios__hint"
-                      id="continue-anyway-hint"
-                    >
-                      We will contact the beacon manufacturer to rectify this. In the meantime, you can still use your beacon and Search & Rescue will still be able to locate you.
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-          </form>
+            Now send in your application
+          </h3>
+          <div
+            class="govuk-body"
+          >
+            By submitting this registration you are confirming that, to the best of your knowledge, the details you are providing are correct.
+          </div>
           <a
             class="govuk-button govuk-button--start"
             data-module="govuk-button"
             draggable="false"
-            href="/beacon-information"
+            href="/application-complete"
             role="button"
           >
-            Continue
+            Accept and send
             <svg
               aria-hidden="true"
               class="govuk-button__start-icon"
