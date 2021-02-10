@@ -11,8 +11,14 @@ import {
 } from "../components/Form";
 import { BeaconIntent } from "../lib/types";
 import { ErrorSummary } from "../components/ErrorSummary";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import parse from "urlencoded-body-parser";
+import {
+  BeaconCacheEntry,
+  FormCacheFactory,
+  IFormCache,
+} from "../lib/form-cache";
+import { getCache } from "../lib/middleware";
 
 interface IntentProps {
   isError: boolean;
@@ -41,7 +47,7 @@ const ErrorSummaryComponent: FunctionComponent = () => (
 );
 
 const IntentPageContent: FunctionComponent<IntentProps> = (props) => (
-  <Form action="/intent">
+  <Form action="/register-a-beacon/check-beacon-details">
     <FormGroup className={props.isError ? "govuk-form-group--error" : ""}>
       <FormFieldset>
         <FormLegendPageHeading>
@@ -77,29 +83,26 @@ const ErrorMessage: FunctionComponent = () => (
   </span>
 );
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   if (context.req.method === "POST") {
-    let output = await parse(context.req);
-    console.log(output);
-    if (output.beaconIntent) {
-      return {
-        props: { isError: false },
-      };
-      console.log("1");
-    } else {
-      return {
-        props: { isError: true },
-      };
-      console.log("2");
+    const cache: BeaconCacheEntry = getCache(context);
+
+    console.log(cache);
+    console.log("IN GET INTENT");
+    let error = false;
+
+    if (cache["errors"]) {
+      error = true;
     }
-  } else if (context.req.method === "GET") {
-    console.log("GET");
+
     return {
-      props: { isError: false },
+      props: { isError: error },
     };
   }
   return {
-    props: {},
+    props: { isError: false },
   };
 };
 

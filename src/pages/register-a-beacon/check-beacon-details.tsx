@@ -16,6 +16,8 @@ import {
 } from "../../components/Form";
 import { Details } from "../../components/Details";
 import { IfYouNeedHelp } from "../../components/Mca";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { cookieRedirect, updateFormCache } from "../../lib/middleware";
 
 const CheckBeaconDetails: FunctionComponent = () => (
   <>
@@ -102,5 +104,21 @@ const BeaconHexIdInput: FunctionComponent = (): JSX.Element => (
     </Details>
   </FormGroup>
 );
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  // Post from Intent page to check-beacon-details
+  // Redirected, POST, from next page back to check-beacon-details
+  if (context.req.method === "POST") {
+  }
+  updateFormCache(context);
+  return {
+    redirect: {
+      destination: "/intent",
+      permanent: false,
+    },
+  };
+};
 
 export default CheckBeaconDetails;

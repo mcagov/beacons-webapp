@@ -1,7 +1,12 @@
-import { Beacon } from "./types";
+import { Beacon, BeaconIntent } from "./types";
+
+type BeaconFormEntries = Partial<{
+  beaconIntent: BeaconIntent;
+  errors: boolean;
+}>;
 
 // Convenience type
-export type BeaconCacheEntry = Partial<Beacon>;
+export type BeaconCacheEntry = Partial<Beacon> & BeaconFormEntries;
 
 export interface IFormCache {
   update(id: string, formData?: BeaconCacheEntry): void;
@@ -12,7 +17,7 @@ export interface IFormCache {
 export class FormCacheFactory {
   private static _state: FormCache = null;
 
-  public static getCache(): FormCache {
+  public static getCache(): IFormCache {
     if (this._state === null) {
       this._state = new FormCache();
     }
