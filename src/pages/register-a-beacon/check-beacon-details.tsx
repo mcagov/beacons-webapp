@@ -18,7 +18,7 @@ import { Details } from "../../components/Details";
 import { IfYouNeedHelp } from "../../components/Mca";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { BeaconCacheEntry } from "../../lib/form-cache";
-import { updateFormCache } from "../../lib/middleware";
+import { getCache, updateFormCache } from "../../lib/middleware";
 import { ErrorSummary } from "../../components/ErrorSummary";
 import { FieldValidator } from "../../lib/FieldValidator";
 
@@ -51,18 +51,30 @@ interface ErrorSummaryComponentProps {
   fields: Array<FieldValidator>;
 }
 
+// // Form validation rules with error messages
+// {
+//   const manufacturerField = new FieldValidator("manufacturer");
+//
+//   manufacturerField
+//     .should()
+//     .containANonEmptyString()
+//     .withErrorMessage("Manufacturer should not be empty");
+// }
+
 const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
   manufacturer,
   model,
   hexId,
 }: CheckBeaconDetailsProps): JSX.Element => {
+  // Form validation rules with error messages
+
   return (
     <>
       <Layout navigation={<BackButton href="/intent" />}>
         <Grid
           mainContent={
             <>
-              <ErrorSummaryComponent fields={[manufacturer]} />
+              {/*<ErrorSummaryComponent fields={[manufacturer]} />*/}
               <Form action="/register-a-beacon/check-beacon-details">
                 <FormFieldset>
                   <FormLegendPageHeading>
@@ -75,9 +87,9 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
                   </InsetText>
 
                   <BeaconManufacturerSelect
-                    value={manufacturer.value}
-                    isError={manufacturer.hasError()}
-                    errorMessages={manufacturer.errorMessages()}
+                    value={manufacturer}
+                    isError={false}
+                    errorMessages={[]}
                   />
 
                   {/*<BeaconModelSelect />
@@ -95,19 +107,19 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
   );
 };
 
-const ErrorSummaryComponent: FunctionComponent<ErrorSummaryComponentProps> = ({
-  fields,
-}: ErrorSummaryComponentProps) => (
-  <ErrorSummary>
-    {fields.map((field, fieldIndex) => {
-      field.errorMessages().map((errorMessage, msgIndex) => (
-        <li key={`${fieldIndex}-${msgIndex}`}>
-          <a href={field.name}>{errorMessage}</a>
-        </li>
-      ));
-    })}
-  </ErrorSummary>
-);
+// const ErrorSummaryComponent: FunctionComponent<ErrorSummaryComponentProps> = ({
+//   fields,
+// }: ErrorSummaryComponentProps) => (
+//   <ErrorSummary>
+//     {fields.map((field, fieldIndex) => {
+//       field.errorMessages().map((errorMessage, msgIndex) => (
+//         <li key={`${fieldIndex}-${msgIndex}`}>
+//           <a href={field.name}>{errorMessage}</a>
+//         </li>
+//       ));
+//     })}
+//   </ErrorSummary>
+// );
 
 const ErrorMessage: FunctionComponent<ErrorMessageProps> = ({
   id,
@@ -188,40 +200,31 @@ const BeaconManufacturerSelect: FunctionComponent<BeaconManufacturerSelectProps>
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const formData: BeaconCacheEntry = await updateFormCache(context);
-
-  const manufacturerField = new FieldValidator(
-    "manufacturer",
-    formData.manufacturer
-  );
-
-  manufacturerField
-    .should()
-    .containANonEmptyString()
-    .withErrorMessage("Please select a beacon manufacturer");
-
   if (context.req.method === "POST") {
-    if (manufacturerField.hasError()) {
-      return {
-        props: {
-          manufacturerField,
-        },
-      };
-    } else {
-      return {
-        redirect: {
-          destination: "/register-a-beacon/check-beacon-summary",
-          permanent: false,
-        },
-      };
-    }
-  }
+    const formData: BeaconCacheEntry = await updateFormCache(context);
 
-  return {
-    props: {
-      manufacturerField,
-    },
-  };
+    // if (manufacturerField.hasError()) {
+    //   return {
+    //     props: {
+    //       manufacturer: formData.manufacturer,
+    //     },
+    //   };
+    // } else {
+    //   return {
+    //     redirect: {
+    //       destination: "/register-a-beacon/check-beacon-summary",
+    //       permanent: false,
+    //     },
+    //   };
+    // }
+  } else {
+    const formData: BeaconCacheEntry = await getCache(context);
+    return {
+      props: {
+        ...formData,
+      },
+    };
+  }
 };
 
 export default CheckBeaconDetails;

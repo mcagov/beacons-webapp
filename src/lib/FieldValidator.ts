@@ -6,27 +6,33 @@ interface FieldRule {
 }
 
 export class FieldValidator {
-  _name: string;
-  _value: string;
-  _rules: Array<FieldRule>;
+  private _fieldId: string;
+  private _value: string;
+  private _rules: FieldRule[];
 
-  constructor(name: string, value: string) {
-    this._name = name;
-    this._value = value;
+  constructor(name: string) {
+    this._fieldId = name;
     this._rules = [];
   }
 
   get value(): string {
-    return this.value;
+    return this._value;
+  }
+
+  set value(value) {
+    this._value = value;
   }
 
   hasError(): boolean {
-    return this._rules
-      .map((rule) => rule.validatorFunction(this.value))
-      .includes(true);
+    if (this._rules.length >= 1) {
+      return this._rules
+        .map((rule) => rule.validatorFunction(this.value))
+        .includes(true);
+    }
+    return false;
   }
 
-  errorMessages(): Array<string> {
+  errorMessages(): string[] {
     return this._rules
       .filter((rule) => rule.validatorFunction(this.value))
       .map((rule) => rule.errorMessage);
