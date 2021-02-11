@@ -1,7 +1,7 @@
 import {
   emptyRequiredField,
   containsNonHexChar,
-} from "../../src/lib/formValidators";
+} from "../../src/lib/validatorFunctions";
 
 describe("emptyRequiredField", () => {
   it("should return true when field is an empty string", () => {
@@ -27,7 +27,7 @@ describe("emptyRequiredField", () => {
 });
 
 describe("containsNonHexCharacter", () => {
-  it("should return false when field contains a valid hexadecimal character", () => {
+  it("should return true when field contains a valid hexadecimal character", () => {
     expect(containsNonHexChar("0")).toBe(true);
     expect(containsNonHexChar("1")).toBe(true);
     expect(containsNonHexChar("f")).toBe(true);

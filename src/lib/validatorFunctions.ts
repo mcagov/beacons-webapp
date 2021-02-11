@@ -1,4 +1,4 @@
-interface ValidatorFunction {
+export interface ValidatorFunction {
   (fieldValue: string): boolean;
 }
 
