@@ -23,7 +23,7 @@ import { ErrorSummary } from "../../components/ErrorSummary";
 import { FieldValidator } from "../../lib/FieldValidator";
 
 interface CheckBeaconDetailsProps {
-  manufacturer: FieldValidator;
+  manufacturer: string;
   model: FieldValidator;
   hexId: FieldValidator;
 }
@@ -52,13 +52,13 @@ interface ErrorSummaryComponentProps {
 }
 
 // // Form validation rules with error messages
-// {
-//   const manufacturerField = new FieldValidator("manufacturer");
-//
-//   manufacturerField
-//     .should()
-//     .containANonEmptyString()
-//     .withErrorMessage("Manufacturer should not be empty");
+
+const manufacturerField = new FieldValidator("manufacturer");
+
+manufacturerField
+  .should()
+  .containANonEmptyString()
+  .withErrorMessage("Manufacturer should not be empty");
 // }
 
 const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
@@ -67,7 +67,8 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
   hexId,
 }: CheckBeaconDetailsProps): JSX.Element => {
   // Form validation rules with error messages
-
+  manufacturerField.value = manufacturer;
+  console.log(manufacturerField);
   return (
     <>
       <Layout navigation={<BackButton href="/intent" />}>
@@ -88,8 +89,8 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
 
                   <BeaconManufacturerSelect
                     value={manufacturer}
-                    isError={false}
-                    errorMessages={[]}
+                    isError={manufacturerField.hasError()}
+                    errorMessages={manufacturerField.errorMessages()}
                   />
 
                   {/*<BeaconModelSelect />
@@ -210,12 +211,12 @@ export const getServerSideProps: GetServerSideProps = async (
     //     },
     //   };
     // } else {
-    //   return {
-    //     redirect: {
-    //       destination: "/register-a-beacon/check-beacon-summary",
-    //       permanent: false,
-    //     },
-    //   };
+    return {
+      redirect: {
+        destination: "/register-a-beacon/check-beacon-summary",
+        permanent: false,
+      },
+    };
     // }
   } else {
     const formData: BeaconCacheEntry = await getCache(context);

@@ -29,6 +29,28 @@ describe("FieldValidator", () => {
       expect(hasError).toBe(false);
     });
 
+    it("should return true if field is empty", () => {
+      const fieldWithValidator = new FieldValidator("formFieldId");
+      fieldWithValidator.should().containANonEmptyString();
+
+      const hasError = fieldWithValidator.hasError();
+
+      expect(hasError).toBe(true);
+    });
+
+    it("should return the error message if field is empty", () => {
+      const fieldWithValidator = new FieldValidator("formFieldId");
+      const errorMessage = "Enter something";
+      fieldWithValidator
+        .should()
+        .containANonEmptyString()
+        .withErrorMessage(errorMessage);
+
+      const errorMessages = fieldWithValidator.errorMessages();
+
+      expect(errorMessages).toStrictEqual([errorMessage]);
+    });
+
     xit("should return false when its only validator function says the field is valid", () => {
       const value = "This is a valid form field input value";
       const fieldShouldContainText = new FieldValidator("formFieldId");

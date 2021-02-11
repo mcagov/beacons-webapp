@@ -53,8 +53,7 @@ export class FieldValidator {
   }
 
   withErrorMessage(message): FieldValidator {
-    const ruleWithMessage = (this._rules.pop().errorMessage = message);
-    this._rules.push(ruleWithMessage);
+    this._rules[this._rules.length - 1].errorMessage = message;
     return this;
   }
 }
