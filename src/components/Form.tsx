@@ -7,11 +7,6 @@ import React, {
 } from "react";
 import { HttpMethod } from "../lib/types";
 
-interface ValidatableField {
-  hasError: boolean;
-  errorMessage: string;
-}
-
 interface FormProps {
   action: string;
   method?: HttpMethod;
@@ -55,7 +50,7 @@ interface InputProps {
   htmlAttributes?: InputHTMLAttributes<Element>;
 }
 
-interface SelectProps extends ValidatableField {
+interface SelectProps {
   name: string;
   defaultValue: string;
   children: ReactNode;
