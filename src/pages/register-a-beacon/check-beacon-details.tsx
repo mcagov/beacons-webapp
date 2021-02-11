@@ -24,8 +24,8 @@ import { FieldValidator } from "../../lib/FieldValidator";
 
 interface CheckBeaconDetailsProps {
   manufacturer: string;
-  model: FieldValidator;
-  hexId: FieldValidator;
+  model: string;
+  hexId: string;
 }
 
 interface BeaconManufacturerSelectProps {
@@ -35,7 +35,9 @@ interface BeaconManufacturerSelectProps {
 }
 
 interface BeaconModelSelectProps {
+  value: string;
   isError: boolean;
+  errorMessages: Array<string>;
 }
 
 interface BeaconHexIdSelectProps {
@@ -59,7 +61,13 @@ manufacturerField
   .should()
   .containANonEmptyString()
   .withErrorMessage("Manufacturer should not be empty");
-// }
+
+const modelField = new FieldValidator("model");
+
+modelField
+  .should()
+  .containANonEmptyString()
+  .withErrorMessage("Model should not be empty");
 
 const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
   manufacturer,
@@ -68,7 +76,7 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
 }: CheckBeaconDetailsProps): JSX.Element => {
   // Form validation rules with error messages
   manufacturerField.value = manufacturer;
-  console.log(manufacturerField);
+  modelField.value = model;
   return (
     <>
       <Layout navigation={<BackButton href="/intent" />}>
@@ -93,9 +101,13 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
                     errorMessages={manufacturerField.errorMessages()}
                   />
 
-                  {/*<BeaconModelSelect />
+                  <BeaconModelSelect
+                    value={model}
+                    isError={modelField.hasError()}
+                    errorMessages={modelField.errorMessages()}
+                  />
 
-                  <BeaconHexIdInput />*/}
+                  {/*<BeaconHexIdInput />*/}
                 </FormFieldset>
                 <Button buttonText="Submit" />
               </Form>
@@ -159,22 +171,31 @@ const BeaconManufacturerSelect: FunctionComponent<BeaconManufacturerSelectProps>
   </FormGroup>
 );
 
-// const BeaconModelSelect: FunctionComponent<BeaconModelSelectProps> = ({
-//   isError,
-// }: BeaconModelSelectProps): JSX.Element => (
-//   <FormGroup hasError={isError}>
-//     <FormLabel htmlFor="model">Select your beacon model</FormLabel>
-//     {isError && <ErrorMessage id={"model"} message={"Please select a model"} />}
-//     <Select name="model" id="model" defaultValue="default">
-//       <option hidden disabled value="default">
-//         Beacon model
-//       </option>
-//       <SelectOption value="Chopper">Chopper</SelectOption>
-//       <SelectOption value="TCR">TCR</SelectOption>
-//       <SelectOption value="Madone">Madone</SelectOption>
-//     </Select>
-//   </FormGroup>
-// );
+const BeaconModelSelect: FunctionComponent<BeaconModelSelectProps> = ({
+  value = "default",
+  isError,
+  errorMessages,
+}: BeaconModelSelectProps): JSX.Element => (
+  <FormGroup hasError={isError}>
+    <FormLabel htmlFor="model">Select your beacon model</FormLabel>
+    {isError &&
+      errorMessages.map((message, index) => (
+        <ErrorMessage
+          id={`model-error-${index}`}
+          key={`model-error-${index}`}
+          message={message}
+        />
+      ))}
+    <Select name="model" id="model" defaultValue={value}>
+      <option hidden disabled value="default">
+        Beacon model
+      </option>
+      <SelectOption value="Chopper">Chopper</SelectOption>
+      <SelectOption value="TCR">TCR</SelectOption>
+      <SelectOption value="Madone">Madone</SelectOption>
+    </Select>
+  </FormGroup>
+);
 
 // const BeaconHexIdInput: FunctionComponent<BeaconHexIdSelectProps> = ({
 //   isError,
@@ -204,20 +225,21 @@ export const getServerSideProps: GetServerSideProps = async (
   if (context.req.method === "POST") {
     const formData: BeaconCacheEntry = await updateFormCache(context);
 
-    // if (manufacturerField.hasError()) {
-    //   return {
-    //     props: {
-    //       manufacturer: formData.manufacturer,
-    //     },
-    //   };
-    // } else {
-    return {
-      redirect: {
-        destination: "/register-a-beacon/check-beacon-summary",
-        permanent: false,
-      },
-    };
-    // }
+    manufacturerField.value = formData.manufacturer;
+    modelField.value = formData.model;
+
+    if (manufacturerField.hasError() || modelField.hasError()) {
+      return {
+        props: {},
+      };
+    } else {
+      return {
+        redirect: {
+          destination: "/register-a-beacon/check-beacon-summary",
+          permanent: false,
+        },
+      };
+    }
   } else {
     const formData: BeaconCacheEntry = await getCache(context);
     return {
