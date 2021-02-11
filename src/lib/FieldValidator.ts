@@ -20,7 +20,9 @@ export class FieldValidator {
       .includes(true);
   }
 
-  fieldErrorMessages(): Array<string> {
-    return this.rules.filter((rule) => rule.validatorFunction(this.value));
+  errorMessages(): Array<string> {
+    return this.rules
+      .filter((rule) => rule.validatorFunction(this.value))
+      .map((rule) => rule.errorMessage);
   }
 }
