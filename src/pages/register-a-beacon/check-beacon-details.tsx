@@ -16,11 +16,7 @@ import { Details } from "../../components/Details";
 import { IfYouNeedHelp } from "../../components/Mca";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { BeaconCacheEntry } from "../../lib/formCache";
-import {
-  getCache,
-  updateFormCache,
-  withCookieRedirect,
-} from "../../lib/middleware";
+import { updateFormCache, withCookieRedirect } from "../../lib/middleware";
 import { ErrorSummary } from "../../components/ErrorSummary";
 import { FieldValidator } from "../../lib/fieldValidator";
 
@@ -240,42 +236,35 @@ const BeaconHexIdInput: FunctionComponent<FormInputProps> = ({
 
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   async (context: GetServerSidePropsContext) => {
-    if (context.req.method === "POST") {
-      const formData: BeaconCacheEntry = await updateFormCache(context);
+    const formData: BeaconCacheEntry = await updateFormCache(context);
 
-      manufacturerField.value = formData.manufacturer;
-      modelField.value = formData.model;
-      hexIdField.value = formData.hexId;
+    manufacturerField.value = formData.manufacturer || "";
+    modelField.value = formData.model || "";
+    hexIdField.value = formData.hexId || "";
 
-      if (
-        manufacturerField.hasError() ||
-        modelField.hasError() ||
-        hexIdField.hasError()
-      ) {
-        return {
-          props: {
-            needsValidation: true,
-            manufacturer: formData.manufacturer,
-            model: formData.model,
-            hexId: formData.hexId,
-          },
-        };
-      } else {
-        return {
-          redirect: {
-            destination: "/register-a-beacon/beacon-information",
-            permanent: false,
-          },
-        };
-      }
+    const userSubmittedForm = context.req.method === "POST";
+
+    const formIsValid = !(
+      manufacturerField.hasError() ||
+      modelField.hasError() ||
+      hexIdField.hasError()
+    );
+
+    if (userSubmittedForm && formIsValid) {
+      return {
+        redirect: {
+          destination: "/register-a-beacon/beacon-information",
+          permanent: false,
+        },
+      };
     }
-
-    const formData: BeaconCacheEntry = getCache(context);
 
     return {
       props: {
-        needsValidation: false,
-        ...formData,
+        needsValidation: userSubmittedForm,
+        manufacturer: manufacturerField.value,
+        model: modelField.value,
+        hexId: hexIdField.value,
       },
     };
   }
