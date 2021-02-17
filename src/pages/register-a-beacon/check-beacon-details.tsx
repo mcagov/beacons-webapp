@@ -19,6 +19,7 @@ import { BeaconCacheEntry } from "../../lib/formCache";
 import { updateFormCache, withCookieRedirect } from "../../lib/middleware";
 import { ErrorSummary } from "../../components/ErrorSummary";
 import { FieldValidator } from "../../lib/fieldValidator";
+import { FormValidator } from "../../lib/formValidator";
 
 interface CheckBeaconDetailsProps {
   manufacturer: string;
@@ -63,6 +64,8 @@ hexIdField
   .should()
   .beExactly15Characters()
   .withErrorMessage("HEX ID should be 15 characters long");
+
+const form = new FormValidator(manufacturerField, modelField, hexIdField);
 
 const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
   manufacturer,
@@ -141,9 +144,9 @@ const ErrorSummaryComponent: FunctionComponent<ErrorSummaryComponentProps> = ({
         {validators.map((validator, validatorIndex) => {
           return validator.errorMessages().map((errorMessage, errorIndex) => {
             return (
-              <li key={`${validator.fieldId}-${validatorIndex}-${errorIndex}`}>
+              <li key={`${validator.id}-${validatorIndex}-${errorIndex}`}>
                 {/*TODO: href should go to the component error message, e.g. `hexId-error-0`*/}
-                <a href={`#${validator.fieldId}`}>{errorMessage}</a>
+                <a href={`#${validator.id}`}>{errorMessage}</a>
               </li>
             );
           });
@@ -237,20 +240,11 @@ const BeaconHexIdInput: FunctionComponent<FormInputProps> = ({
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   async (context: GetServerSidePropsContext) => {
     const formData: BeaconCacheEntry = await updateFormCache(context);
-
-    manufacturerField.value = formData.manufacturer || "";
-    modelField.value = formData.model || "";
-    hexIdField.value = formData.hexId || "";
+    form.updateValues(formData);
 
     const userSubmittedForm = context.req.method === "POST";
 
-    const formIsValid = !(
-      manufacturerField.hasError() ||
-      modelField.hasError() ||
-      hexIdField.hasError()
-    );
-
-    if (userSubmittedForm && formIsValid) {
+    if (userSubmittedForm && form.isValid()) {
       return {
         redirect: {
           destination: "/register-a-beacon/beacon-information",
