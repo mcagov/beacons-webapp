@@ -1,9 +1,9 @@
-import { FieldValidator } from "./fieldValidator";
+import { IFieldValidator } from "./fieldValidator";
 
 export class FormValidator {
-  private _fields: FieldValidator[];
+  private _fields: IFieldValidator[];
 
-  constructor(...fields: FieldValidator[]) {
+  constructor(...fields: IFieldValidator[]) {
     this._fields = fields;
   }
 
@@ -13,7 +13,7 @@ export class FormValidator {
     });
   }
 
-  getField(fieldId: string): FieldValidator {
+  getField(fieldId: string): IFieldValidator {
     return this._fields.find((field) => field.fieldId === fieldId);
   }
 }
