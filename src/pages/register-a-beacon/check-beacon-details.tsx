@@ -83,14 +83,11 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
         <Grid
           mainContent={
             <>
-              {needsValidation &&
-                (manufacturerField.hasError() ||
-                  modelField.hasError() ||
-                  hexIdField.hasError()) && (
-                  <ErrorSummaryComponent
-                    validators={[manufacturerField, modelField, hexIdField]}
-                  />
-                )}
+              {needsValidation && form.hasError() && (
+                <ErrorSummaryComponent
+                  validators={[manufacturerField, modelField, hexIdField]}
+                />
+              )}
               <Form action="/register-a-beacon/check-beacon-details">
                 <FormFieldset>
                   <FormLegendPageHeading>
@@ -103,21 +100,23 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
                   </InsetText>
 
                   <BeaconManufacturerInput
-                    value={manufacturer}
-                    isError={needsValidation && manufacturerField.hasError()}
-                    errorMessages={manufacturerField.errorMessages()}
+                    value={form.field("manufacturer").value}
+                    isError={
+                      needsValidation && form.field("manufacturer").hasError()
+                    }
+                    errorMessages={form.field("manufacturer").errorMessages()}
                   />
 
                   <BeaconModelInput
-                    value={model}
-                    isError={needsValidation && modelField.hasError()}
-                    errorMessages={modelField.errorMessages()}
+                    value={form.field("model").value}
+                    isError={needsValidation && form.field("model").hasError()}
+                    errorMessages={form.field("model").errorMessages()}
                   />
 
                   <BeaconHexIdInput
-                    value={hexId}
-                    isError={needsValidation && hexIdField.hasError()}
-                    errorMessages={hexIdField.errorMessages()}
+                    value={form.field("hexId").value}
+                    isError={needsValidation && form.field("hexId").hasError()}
+                    errorMessages={form.field("hexId").errorMessages()}
                   />
                 </FormFieldset>
                 <Button buttonText="Submit" />
@@ -242,9 +241,9 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
     const formData: BeaconCacheEntry = await updateFormCache(context);
     form.updateValues(formData);
 
-    const userSubmittedForm = context.req.method === "POST";
+    const userDidSubmitForm = context.req.method === "POST";
 
-    if (userSubmittedForm && form.isValid()) {
+    if (userDidSubmitForm && form.isValid()) {
       return {
         redirect: {
           destination: "/register-a-beacon/beacon-information",
@@ -255,10 +254,11 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
 
     return {
       props: {
-        needsValidation: userSubmittedForm,
-        manufacturer: manufacturerField.value,
-        model: modelField.value,
-        hexId: hexIdField.value,
+        needsValidation: userDidSubmitForm,
+        // TODO, remove once page component no longer relies on them
+        manufacturer: form.field("manufacturer").value,
+        model: form.field("model").value,
+        hexId: form.field("hexId").value,
       },
     };
   }
