@@ -1,6 +1,13 @@
 import { FieldValidator } from "../../src/lib/fieldValidator";
 
 describe("FieldValidator", () => {
+  describe("constructor", () => {
+    it("defaults the value to an empty string, not undefined", () => {
+      const fieldValidator = new FieldValidator("emptyFormField");
+
+      expect(fieldValidator.value).toBe("");
+    });
+  });
   describe("hasError()", () => {
     it("should return false if no value is set", () => {
       const fieldWithNoValue = new FieldValidator("formFieldId");

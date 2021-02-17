@@ -24,6 +24,7 @@ export class FieldValidator implements IFieldValidator {
   constructor(fieldId: string) {
     this._id = fieldId;
     this._rules = [];
+    this._value = "";
   }
 
   public get value(): string {
