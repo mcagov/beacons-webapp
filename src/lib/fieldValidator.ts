@@ -26,19 +26,19 @@ export class FieldValidator implements IFieldValidator {
     this._rules = [];
   }
 
-  get value(): string {
+  public get value(): string {
     return this._value;
   }
 
-  set value(value: string) {
+  public set value(value: string) {
     this._value = value;
   }
 
-  get fieldId(): string {
+  public get fieldId(): string {
     return this._fieldId;
   }
 
-  hasError(): boolean {
+  public hasError(): boolean {
     if (this._rules.length >= 1) {
       return this._rules
         .map((rule) => rule.validatorFunction(this.value))
@@ -47,18 +47,18 @@ export class FieldValidator implements IFieldValidator {
     return false;
   }
 
-  errorMessages(): string[] {
+  public errorMessages(): string[] {
     return this._rules
       .filter((rule) => rule.validatorFunction(this.value))
       .map((rule) => rule.errorMessage);
   }
 
   // Declarative matcher-type syntax starts here -- possibly extract?
-  should(): FieldValidator {
+  public should(): FieldValidator {
     return this;
   }
 
-  containANonEmptyString(): FieldValidator {
+  public containANonEmptyString(): FieldValidator {
     const rule = {
       validatorFunction: emptyRequiredField,
       errorMessage: "",
@@ -67,7 +67,7 @@ export class FieldValidator implements IFieldValidator {
     return this;
   }
 
-  beExactly15Characters(): FieldValidator {
+  public beExactly15Characters(): FieldValidator {
     const rule = {
       validatorFunction: isNot15CharactersLong,
       errorMessage: "",
@@ -76,7 +76,7 @@ export class FieldValidator implements IFieldValidator {
     return this;
   }
 
-  withErrorMessage(message: string): FieldValidator {
+  public withErrorMessage(message: string): FieldValidator {
     this._rules[this._rules.length - 1].errorMessage = message;
     return this;
   }
