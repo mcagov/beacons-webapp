@@ -2,11 +2,13 @@ import { FormValidator } from "../../src/lib/formValidator";
 import { FieldValidator } from "../../src/lib/fieldValidator";
 
 describe("FormValidator", () => {
-  const createMockFieldValidator = (fieldId, hasError) => {
+  const createMockFieldValidator = (fieldId, hasError, initialValue = "") => {
     jest.mock("../../src/lib/fieldValidator");
 
     const fieldValidator = new FieldValidator(fieldId);
+
     fieldValidator.hasError = jest.fn().mockReturnValue(hasError);
+    fieldValidator.value = initialValue;
 
     return fieldValidator;
   };
@@ -100,6 +102,107 @@ describe("FormValidator", () => {
         formValidator.field("doesNotExist");
 
       expect(requestNonExistentFieldValidator).toThrow(ReferenceError);
+    });
+  });
+
+  describe("updateValues()", () => {
+    it("updates one child field value", () => {
+      const mockFieldValidator = createMockFieldValidator("mockFieldId", false);
+      const formValidator = new FormValidator(mockFieldValidator);
+      const newValues = {
+        mockFieldId: "new field value",
+      };
+
+      formValidator.updateValues(newValues);
+      const updatedValue = formValidator.field("mockFieldId").value;
+
+      expect(updatedValue).toBe("new field value");
+    });
+
+    it("updates two child field values", () => {
+      const mockFieldValidator1 = createMockFieldValidator("mockField1", false);
+      const mockFieldValidator2 = createMockFieldValidator("mockField2", false);
+      const formValidator = new FormValidator(
+        mockFieldValidator1,
+        mockFieldValidator2
+      );
+      const newValues = {
+        mockField1: "first new field value",
+        mockField2: "second new field value",
+      };
+
+      formValidator.updateValues(newValues);
+      const updatedValue1 = formValidator.field("mockField1").value;
+      const updatedValue2 = formValidator.field("mockField2").value;
+
+      expect(updatedValue1).toBe("first new field value");
+      expect(updatedValue2).toBe("second new field value");
+    });
+
+    it("updates one of two child field values", () => {
+      const mockFieldValidator1 = createMockFieldValidator(
+        "mockField1",
+        false,
+        "this field is updated"
+      );
+      const mockFieldValidator2 = createMockFieldValidator(
+        "mockField2",
+        false,
+        "this field stays the same"
+      );
+      const formValidator = new FormValidator(
+        mockFieldValidator1,
+        mockFieldValidator2
+      );
+      const newValues = {
+        mockField1: "only new field value, other field is untouched",
+      };
+
+      formValidator.updateValues(newValues);
+      const updatedValue = formValidator.field("mockField1").value;
+      const existingValue = formValidator.field("mockField2").value;
+
+      expect(updatedValue).toBe(
+        "only new field value, other field is untouched"
+      );
+      expect(existingValue).toBe("this field stays the same");
+    });
+
+    it("doesn't update when passed an empty {}", () => {
+      const mockFieldValidator1 = createMockFieldValidator(
+        "mockField1",
+        false,
+        "doesn't change"
+      );
+      const mockFieldValidator2 = createMockFieldValidator(
+        "mockField2",
+        false,
+        "doesn't change"
+      );
+      const formValidator = new FormValidator(
+        mockFieldValidator1,
+        mockFieldValidator2
+      );
+      const newValues = {};
+
+      formValidator.updateValues(newValues);
+      const updatedValue1 = formValidator.field("mockField1").value;
+      const updatedValue2 = formValidator.field("mockField2").value;
+
+      expect(updatedValue1).toBe("doesn't change");
+      expect(updatedValue2).toBe("doesn't change");
+    });
+
+    it("raises an exception when passed an invalid fieldId", () => {
+      const formValidator = new FormValidator();
+      const newValues = {
+        invalidField: "Attempt to update a fieldId that doesn't exist",
+      };
+
+      const attemptToUpdateWithInvalidValues = () =>
+        formValidator.updateValues(newValues);
+
+      expect(attemptToUpdateWithInvalidValues).toThrowError(ReferenceError);
     });
   });
 });

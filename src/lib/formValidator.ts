@@ -20,4 +20,10 @@ export class FormValidator {
 
     return requestedField;
   }
+
+  public updateValues(newValues: Record<string, string>): void {
+    Object.keys(newValues).forEach((fieldId) => {
+      this.field(fieldId).value = newValues[fieldId];
+    });
+  }
 }
