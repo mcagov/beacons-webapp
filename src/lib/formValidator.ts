@@ -13,6 +13,10 @@ export class FormValidator {
     });
   }
 
+  public isValid(): boolean {
+    return !this.hasError();
+  }
+
   public field(fieldId: string): IFieldValidator {
     const requestedField = this._fields.find((field) => field.id === fieldId);
     if (requestedField === undefined)
