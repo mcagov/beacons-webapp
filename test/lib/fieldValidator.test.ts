@@ -1,71 +1,48 @@
 import { FieldValidator } from "../../src/lib/fieldValidator";
 
 describe("FieldValidator", () => {
-  describe("constructor", () => {
-    it("defaults the value to an empty string, not undefined", () => {
-      const fieldValidator = new FieldValidator("emptyFormField");
+  describe("validate()", () => {
+    it("when given a valid string should return true", () => {
+      const field = new FieldValidator();
+      field.should().containANonEmptyString();
 
-      expect(fieldValidator.value).toBe("");
+      const valid = field.validate("valid string");
+
+      expect(valid).toBe(true);
+    });
+
+    it("when given an invalid string should return false", () => {
+      const field = new FieldValidator();
+      field.should().containANonEmptyString();
+
+      const valid = field.validate("");
+
+      expect(valid).toBe(false);
+    });
+
+    it("when no conditions are set should still return true", () => {
+      const field = new FieldValidator();
+
+      const valid = field.validate("string with no conditions attached");
+
+      expect(valid).toBe(true);
     });
   });
-  describe("hasError()", () => {
-    it("should return false if no value is set", () => {
-      const fieldWithNoValue = new FieldValidator("formFieldId");
 
-      const hasError = fieldWithNoValue.hasError();
-
-      expect(hasError).toBe(false);
-    });
-
-    it("should return false if no validators are added", () => {
-      const fieldWithNoValidators = new FieldValidator("formFieldId");
-      fieldWithNoValidators.value = "field value";
-
-      const hasError = fieldWithNoValidators.hasError();
-
-      expect(hasError).toBe(false);
-    });
-
-    it("should return false if no validators are added", () => {
-      const fieldWithNoValidators = new FieldValidator("formFieldId");
-      fieldWithNoValidators.value = "field value";
-
-      const hasError = fieldWithNoValidators.hasError();
-
-      expect(hasError).toBe(false);
-    });
-
-    it("should return true if field is empty", () => {
-      const fieldWithValidator = new FieldValidator("formFieldId");
-      fieldWithValidator.should().containANonEmptyString();
-
-      const hasError = fieldWithValidator.hasError();
-
-      expect(hasError).toBe(true);
-    });
-
-    it("should return the error messages if field is empty", () => {
-      const fieldWithValidator = new FieldValidator("formFieldId");
-      const errorMessage = "Enter something";
-      fieldWithValidator
+  describe("errorMessages()", () => {
+    it("when string is too long returns a suitable error message", () => {
+      const suitableErrorMessage = "Field should be exactly 15 characters";
+      const field = new FieldValidator();
+      field
         .should()
-        .containANonEmptyString()
-        .withErrorMessage(errorMessage);
+        .beExactly15Characters()
+        .withErrorMessage("Field should be exactly 15 characters");
 
-      const errorMessages = fieldWithValidator.errorMessages();
+      const errorMessages = field.errorMessages(
+        "String less than 15 characters"
+      );
 
-      expect(errorMessages).toStrictEqual([errorMessage]);
-    });
-
-    it("should return false when its only validator function says the field is valid", () => {
-      const value = "This is a valid form field input value";
-      const fieldShouldContainText = new FieldValidator("formFieldId");
-      fieldShouldContainText.should().containANonEmptyString();
-      fieldShouldContainText.value = value;
-
-      const hasError = fieldShouldContainText.hasError();
-
-      expect(hasError).toBe(false);
+      expect(errorMessages).toEqual([suitableErrorMessage]);
     });
   });
 });

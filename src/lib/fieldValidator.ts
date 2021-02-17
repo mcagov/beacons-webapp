@@ -5,52 +5,30 @@ import {
 } from "./validatorFunctions";
 
 export interface IFieldValidator {
-  value: string;
-  id: string;
-  hasError(): boolean;
-  errorMessages(): string[];
+  validate(value: string): boolean;
+  errorMessages(value: string): string[];
 }
 
-interface FieldRule {
+export interface IFieldRule {
   validatorFunction: ValidatorFunction;
   errorMessage: string;
 }
 
 export class FieldValidator implements IFieldValidator {
-  private _id: string;
-  private _value: string;
-  private _rules: FieldRule[];
+  private _rules: IFieldRule[];
 
-  constructor(fieldId: string) {
-    this._id = fieldId;
-    this._rules = [];
-    this._value = "";
+  constructor(...rules: IFieldRule[]) {
+    this._rules = rules;
   }
 
-  public get value(): string {
-    return this._value;
+  public validate(value: string): boolean {
+    if (this._rules.length === 0) return true;
+    return this._rules.some((rule) => !rule.validatorFunction(value));
   }
 
-  public set value(value: string) {
-    this._value = value;
-  }
-
-  public get id(): string {
-    return this._id;
-  }
-
-  public hasError(): boolean {
-    if (this._rules.length >= 1) {
-      return this._rules
-        .map((rule) => rule.validatorFunction(this.value))
-        .includes(true);
-    }
-    return false;
-  }
-
-  public errorMessages(): string[] {
+  public errorMessages(value: string): string[] {
     return this._rules
-      .filter((rule) => rule.validatorFunction(this.value))
+      .filter((rule) => rule.validatorFunction(value))
       .map((rule) => rule.errorMessage);
   }
 
