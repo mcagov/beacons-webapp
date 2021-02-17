@@ -71,4 +71,35 @@ describe("FormValidator", () => {
       expect(hasError).toBe(true);
     });
   });
+
+  describe("field()", () => {
+    it("retrieves a constituent FieldValidator object", () => {
+      const mockFieldValidator1 = createMockFieldValidator("fieldOne", false);
+      const mockFieldValidator2 = createMockFieldValidator("fieldTwo", false);
+      const formValidator = new FormValidator(
+        mockFieldValidator1,
+        mockFieldValidator2
+      );
+
+      const firstField = formValidator.field("fieldOne");
+      const secondField = formValidator.field("fieldTwo");
+
+      expect(firstField).toBe(mockFieldValidator1);
+      expect(secondField).toBe(mockFieldValidator2);
+    });
+
+    it("raises an exception if a non-existent FieldValidator is requested", () => {
+      const mockFieldValidator1 = createMockFieldValidator("fieldOne", false);
+      const mockFieldValidator2 = createMockFieldValidator("fieldTwo", false);
+      const formValidator = new FormValidator(
+        mockFieldValidator1,
+        mockFieldValidator2
+      );
+
+      const requestNonExistentFieldValidator = () =>
+        formValidator.field("doesNotExist");
+
+      expect(requestNonExistentFieldValidator).toThrow(ReferenceError);
+    });
+  });
 });

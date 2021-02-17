@@ -7,13 +7,19 @@ export class FormValidator {
     this._fields = fields;
   }
 
-  hasError(): boolean {
+  public hasError(): boolean {
     return this._fields.some((field) => {
       return field.hasError();
     });
   }
 
-  getField(fieldId: string): IFieldValidator {
-    return this._fields.find((field) => field.fieldId === fieldId);
+  public field(fieldId: string): IFieldValidator {
+    const requestedField = this._fields.find(
+      (field) => field.fieldId === fieldId
+    );
+    if (requestedField === undefined)
+      throw new ReferenceError("Field does not exist in form");
+
+    return requestedField;
   }
 }
