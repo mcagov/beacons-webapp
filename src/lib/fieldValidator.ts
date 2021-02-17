@@ -6,7 +6,7 @@ import {
 
 export interface IFieldValidator {
   value: string;
-  fieldId: string;
+  id: string;
   hasError(): boolean;
   errorMessages(): string[];
 }
@@ -17,12 +17,12 @@ interface FieldRule {
 }
 
 export class FieldValidator implements IFieldValidator {
-  private _fieldId: string;
+  private _id: string;
   private _value: string;
   private _rules: FieldRule[];
 
   constructor(fieldId: string) {
-    this._fieldId = fieldId;
+    this._id = fieldId;
     this._rules = [];
   }
 
@@ -34,8 +34,8 @@ export class FieldValidator implements IFieldValidator {
     this._value = value;
   }
 
-  public get fieldId(): string {
-    return this._fieldId;
+  public get id(): string {
+    return this._id;
   }
 
   public hasError(): boolean {

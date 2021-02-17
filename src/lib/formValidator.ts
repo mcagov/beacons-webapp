@@ -14,9 +14,7 @@ export class FormValidator {
   }
 
   public field(fieldId: string): IFieldValidator {
-    const requestedField = this._fields.find(
-      (field) => field.fieldId === fieldId
-    );
+    const requestedField = this._fields.find((field) => field.id === fieldId);
     if (requestedField === undefined)
       throw new ReferenceError("Field does not exist in form");
 
