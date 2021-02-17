@@ -44,7 +44,7 @@ describe("FieldValidator", () => {
       expect(hasError).toBe(true);
     });
 
-    it("should return the error message if field is empty", () => {
+    it("should return the error messages if field is empty", () => {
       const fieldWithValidator = new FieldValidator("formFieldId");
       const errorMessage = "Enter something";
       fieldWithValidator

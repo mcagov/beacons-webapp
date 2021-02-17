@@ -1,5 +1,10 @@
 import { IFieldValidator } from "./fieldValidator";
 
+export interface FormErrors {
+  linkedFieldId: string;
+  messages: string[];
+}
+
 export class FormValidator {
   private _fields: IFieldValidator[];
 
@@ -29,5 +34,16 @@ export class FormValidator {
     Object.keys(newValues).forEach((fieldId) => {
       this.field(fieldId).value = newValues[fieldId];
     });
+  }
+
+  public errors(): FormErrors[] {
+    return this._fields
+      .filter((field) => field.hasError())
+      .map((fieldWithError) => {
+        return {
+          linkedFieldId: fieldWithError.id,
+          messages: fieldWithError.errorMessages(),
+        };
+      });
   }
 }

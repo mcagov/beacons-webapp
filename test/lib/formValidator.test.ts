@@ -1,5 +1,5 @@
 import { FormValidator } from "../../src/lib/formValidator";
-import { FieldValidator } from "../../src/lib/fieldValidator";
+import { FieldValidator } from "../../src/lib/fieldValidator"; // Imported only for Jest auto-mocking
 
 describe("FormValidator", () => {
   const createMockFieldValidator = (fieldId, hasError, initialValue = "") => {
@@ -203,6 +203,30 @@ describe("FormValidator", () => {
         formValidator.updateValues(newValues);
 
       expect(attemptToUpdateWithInvalidValues).toThrowError(ReferenceError);
+    });
+  });
+
+  describe("errors()", () => {
+    it("returns an array of FormErrors", () => {
+      const idOfFormElementWithError = "htmlIdRenderedInDOM";
+      const mockFieldValidatorWithError = createMockFieldValidator(
+        idOfFormElementWithError,
+        true
+      );
+      mockFieldValidatorWithError.errorMessages = jest
+        .fn()
+        .mockReturnValue(["Test error messages"]);
+
+      const formValidator = new FormValidator(mockFieldValidatorWithError);
+
+      const errors = formValidator.errors();
+
+      expect(errors).toEqual([
+        {
+          linkedFieldId: idOfFormElementWithError,
+          messages: ["Test error messages"],
+        },
+      ]);
     });
   });
 });
