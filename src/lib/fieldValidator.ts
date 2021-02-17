@@ -4,12 +4,19 @@ import {
   isNot15CharactersLong,
 } from "./validatorFunctions";
 
+export interface IFieldValidator {
+  value: string;
+  fieldId: string;
+  hasError(): boolean;
+  errorMessages(): string[];
+}
+
 interface FieldRule {
   validatorFunction: ValidatorFunction;
   errorMessage: string;
 }
 
-export class FieldValidator {
+export class FieldValidator implements IFieldValidator {
   private _fieldId: string;
   private _value: string;
   private _rules: FieldRule[];
