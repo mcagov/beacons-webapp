@@ -21,9 +21,16 @@ import { Input } from "../../components/Input";
 import { InsetText } from "../../components/InsetText";
 import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
+import { BeaconCacheEntry } from "../../lib/formCache";
 import { withCookieRedirect } from "../../lib/middleware";
 
-const BeaconInformationPage: FunctionComponent = (): JSX.Element => {
+interface BeaconInformationProps {
+  formData: BeaconCacheEntry;
+}
+
+const BeaconInformation: FunctionComponent<BeaconInformationProps> = ({
+  formData,
+}: BeaconInformationProps): JSX.Element => {
   const pageHeading = "Beacon information";
 
   // TODO: Use form validation to set this
@@ -67,8 +74,9 @@ const BeaconInformationPage: FunctionComponent = (): JSX.Element => {
 const BeaconManufacturerSerialNumberInput: FunctionComponent = (): JSX.Element => (
   <FormGroup>
     <Input
-      id="beaconManufacturerSerialNumber"
+      id="manufacturerSerialNumber"
       label="Enter beacon manufacturer serial number"
+      defaultValue=""
       htmlAttributes={{ spellCheck: false }}
     />
     <Details
@@ -84,8 +92,9 @@ const BeaconManufacturerSerialNumberInput: FunctionComponent = (): JSX.Element =
 const BeaconCHKCode: FunctionComponent = (): JSX.Element => (
   <FormGroup>
     <Input
-      id="beaconCHKCode"
+      id="chkCode"
       label="Enter the beacon CHK code (optional)"
+      defaultValue=""
       hintText="This might be on the registration card you received when you bought the
       beacon"
       htmlAttributes={{ spellCheck: false }}
@@ -103,11 +112,8 @@ const BeaconCHKCode: FunctionComponent = (): JSX.Element => (
 );
 
 const BeaconBatteryExpiryDate: FunctionComponent = (): JSX.Element => (
-  <DateListInput id="beaconBatteryExpiryDate">
-    <FormLabel
-      htmlFor="beaconBatteryExpiryDate"
-      className="govuk-date-input__label"
-    >
+  <DateListInput id="batteryExpiryDate">
+    <FormLabel htmlFor="batteryExpiryDate" className="govuk-date-input__label">
       Enter your beacon battery expiry date (optional)
     </FormLabel>
     <FormHint forId="beaconBatteryExpiryDate">
@@ -116,14 +122,13 @@ const BeaconBatteryExpiryDate: FunctionComponent = (): JSX.Element => (
     <DateListItem>
       <FormGroup>
         <FormLabel
-          htmlFor="beaconBatteryExpiryDateMonth"
+          htmlFor="batteryExpiryDateMonth"
           className="govuk-date-input__label"
         >
           Month
         </FormLabel>
         <DateInput
-          id="beaconBatteryExpiryDateMonth"
-          name="beaconBatteryExpiryDateonth"
+          id="batteryExpiryDateMonth"
           dateType={DateType.MONTH}
         ></DateInput>
       </FormGroup>
@@ -138,8 +143,7 @@ const BeaconBatteryExpiryDate: FunctionComponent = (): JSX.Element => (
           Year
         </FormLabel>
         <DateInput
-          id="beaconBatteryExpiryDateYear"
-          name="beaconBatteryExpiryDateYear"
+          id="batteryExpiryDateYear"
           dateType={DateType.YEAR}
         ></DateInput>
       </FormGroup>
@@ -148,27 +152,23 @@ const BeaconBatteryExpiryDate: FunctionComponent = (): JSX.Element => (
 );
 
 const BeaconLastServicedDate: FunctionComponent = (): JSX.Element => (
-  <DateListInput id="beaconLastServicedDate">
-    <FormLabel
-      htmlFor="beaconLastServicedDate"
-      className="govuk-date-input__label"
-    >
+  <DateListInput id="lastServicedDate">
+    <FormLabel htmlFor="lastServicedDate" className="govuk-date-input__label">
       When was your beacon last serviced? (optional)
     </FormLabel>
-    <FormHint forId="beaconLastServicedDate">
+    <FormHint forId="lastServicedDate">
       You only need to enter the month and year, for example 11 2009
     </FormHint>
     <DateListItem>
       <FormGroup>
         <FormLabel
-          htmlFor="beaconLastServicedDateMonth"
+          htmlFor="lastServicedDateMonth"
           className="govuk-date-input__label"
         >
           Month
         </FormLabel>
         <DateInput
-          id="beaconLastServicedDateMonth"
-          name="beaconLastServicedDateMonth"
+          id="lastServicedDateMonth"
           dateType={DateType.MONTH}
         ></DateInput>
       </FormGroup>
@@ -177,14 +177,13 @@ const BeaconLastServicedDate: FunctionComponent = (): JSX.Element => (
     <DateListItem>
       <FormGroup>
         <FormLabel
-          htmlFor="beaconLastServicedDateYear"
+          htmlFor="lastServicedDateYear"
           className="govuk-date-input__label"
         >
           Year
         </FormLabel>
         <DateInput
-          id="beaconLastServicedDateYear"
-          name="beaconLastServicedDateYear"
+          id="lastServicedDateYear"
           dateType={DateType.YEAR}
         ></DateInput>
       </FormGroup>
@@ -200,4 +199,4 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   }
 );
 
-export default BeaconInformationPage;
+export default BeaconInformation;

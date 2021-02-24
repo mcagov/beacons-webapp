@@ -24,8 +24,11 @@ export interface Beacon {
   model: string;
   hexId: string;
   manufacturerSerialNumber: string;
-  batteryExpiryDate: string;
-  lastServicedDate: string;
+  chkCode: string;
+  batteryExpiryDateMonth: string;
+  batteryExpiryDateYear: string;
+  lastServicedDateMonth: string;
+  lastServicedDateYear: string;
 }
 
 export interface Vessel {
