@@ -1,8 +1,10 @@
 import React, { FunctionComponent, ReactNode } from "react";
 import { IFormError } from "../lib/formValidator";
+import { toArray } from "../lib/utils";
 
 interface FormErrorSummaryProps {
   errors: IFormError[];
+  showErrors?: boolean;
 }
 
 interface FormErrorSummaryLinkProps {
@@ -24,9 +26,13 @@ interface ErrorSummaryProps {
 
 export const FormErrorSummary: FunctionComponent<FormErrorSummaryProps> = ({
   errors,
-}: FormErrorSummaryProps) => (
-  <>
-    {errors && errors.length > 0 && (
+  showErrors = false,
+}: FormErrorSummaryProps) => {
+  errors = toArray(errors);
+  let errorComponent: ReactNode;
+
+  if (showErrors && errors.length > 0) {
+    errorComponent = (
       <ErrorSummary>
         {errors.map((field) =>
           field.errorMessages.map((errorMessage, index) => (
@@ -38,9 +44,11 @@ export const FormErrorSummary: FunctionComponent<FormErrorSummaryProps> = ({
           ))
         )}
       </ErrorSummary>
-    )}
-  </>
-);
+    );
+  }
+
+  return <>{errorComponent}</>;
+};
 
 const FormErrorSummaryLink: FunctionComponent<FormErrorSummaryLinkProps> = ({
   href,

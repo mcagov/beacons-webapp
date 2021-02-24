@@ -23,6 +23,9 @@ export interface Beacon {
   manufacturer: string;
   model: string;
   hexId: string;
+}
+
+export interface BeaconInformation {
   manufacturerSerialNumber: string;
   chkCode: string;
   batteryExpiryDateMonth: string;
@@ -33,6 +36,8 @@ export interface Beacon {
 
 export interface Vessel {
   moreVesselDetails: string;
+  maritimePleasureVesselUse: string;
+  otherPleasureVesselText: string;
 }
 
 export const formSubmissionCookieId = "submissionId";

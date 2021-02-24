@@ -8,6 +8,7 @@ import {
   DateType,
 } from "../../components/DateInput";
 import { Details } from "../../components/Details";
+import { FormErrorSummary } from "../../components/ErrorSummary";
 import {
   Form,
   FormFieldset,
@@ -21,20 +22,36 @@ import { Input } from "../../components/Input";
 import { InsetText } from "../../components/InsetText";
 import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
-import { BeaconCacheEntry } from "../../lib/formCache";
-import { withCookieRedirect } from "../../lib/middleware";
+import { FormValidator } from "../../lib/formValidator";
+import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
+import { ensureFormDataHasKeys } from "../../lib/utils";
 
-interface BeaconInformationProps {
-  formData: BeaconCacheEntry;
+interface FormInputProps {
+  value: string;
+  errorMessages: string[];
+  showErrors: boolean;
 }
 
-const BeaconInformation: FunctionComponent<BeaconInformationProps> = ({
+const BeaconInformation: FunctionComponent<FormPageProps> = ({
   formData,
-}: BeaconInformationProps): JSX.Element => {
+  needsValidation = false,
+}: FormPageProps): JSX.Element => {
+  formData = ensureFormDataHasKeys(formData, "manufacturerSerialNumber");
+
   const pageHeading = "Beacon information";
 
-  // TODO: Use form validation to set this
-  const pageHasErrors = false;
+  const errors = FormValidator.errorSummary(formData);
+
+  const {
+    manufacturerSerialNumber,
+    chkCode,
+    batteryExpiryDateMonth,
+    batteryExpiryDateYear,
+    lastServicedDateMonth,
+    lastServicedDateYear,
+  } = FormValidator.validate(formData);
+
+  const pageHasErrors = needsValidation && FormValidator.hasErrors(formData);
 
   return (
     <Layout
@@ -45,6 +62,7 @@ const BeaconInformation: FunctionComponent<BeaconInformationProps> = ({
       <Grid
         mainContent={
           <>
+            <FormErrorSummary showErrors={needsValidation} errors={errors} />
             <Form action="/register-a-beacon/beacon-information">
               <FormFieldset>
                 <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
@@ -53,7 +71,13 @@ const BeaconInformation: FunctionComponent<BeaconInformationProps> = ({
                   Rescue. Provide as much information you can find.
                 </InsetText>
 
-                <BeaconManufacturerSerialNumberInput />
+                <BeaconManufacturerSerialNumberInput
+                  value={formData.manufacturerSerialNumber}
+                  showErrors={
+                    needsValidation && manufacturerSerialNumber.invalid
+                  }
+                  errorMessages={manufacturerSerialNumber.errorMessages}
+                />
 
                 <BeaconCHKCode />
 
@@ -71,12 +95,16 @@ const BeaconInformation: FunctionComponent<BeaconInformationProps> = ({
   );
 };
 
-const BeaconManufacturerSerialNumberInput: FunctionComponent = (): JSX.Element => (
-  <FormGroup>
+const BeaconManufacturerSerialNumberInput: FunctionComponent<FormInputProps> = ({
+  value,
+  errorMessages,
+  showErrors,
+}: FormInputProps): JSX.Element => (
+  <FormGroup showErrors={showErrors} errorMessages={errorMessages}>
     <Input
       id="manufacturerSerialNumber"
       label="Enter beacon manufacturer serial number"
-      defaultValue=""
+      defaultValue={value}
       htmlAttributes={{ spellCheck: false }}
     />
     <Details
@@ -127,10 +155,7 @@ const BeaconBatteryExpiryDate: FunctionComponent = (): JSX.Element => (
         >
           Month
         </FormLabel>
-        <DateInput
-          id="batteryExpiryDateMonth"
-          dateType={DateType.MONTH}
-        ></DateInput>
+        <DateInput id="batteryExpiryDateMonth" dateType={DateType.MONTH} />
       </FormGroup>
     </DateListItem>
 
@@ -142,10 +167,7 @@ const BeaconBatteryExpiryDate: FunctionComponent = (): JSX.Element => (
         >
           Year
         </FormLabel>
-        <DateInput
-          id="batteryExpiryDateYear"
-          dateType={DateType.YEAR}
-        ></DateInput>
+        <DateInput id="batteryExpiryDateYear" dateType={DateType.YEAR} />
       </FormGroup>
     </DateListItem>
   </DateListInput>
@@ -167,10 +189,7 @@ const BeaconLastServicedDate: FunctionComponent = (): JSX.Element => (
         >
           Month
         </FormLabel>
-        <DateInput
-          id="lastServicedDateMonth"
-          dateType={DateType.MONTH}
-        ></DateInput>
+        <DateInput id="lastServicedDateMonth" dateType={DateType.MONTH} />
       </FormGroup>
     </DateListItem>
 
@@ -182,21 +201,14 @@ const BeaconLastServicedDate: FunctionComponent = (): JSX.Element => (
         >
           Year
         </FormLabel>
-        <DateInput
-          id="lastServicedDateYear"
-          dateType={DateType.YEAR}
-        ></DateInput>
+        <DateInput id="lastServicedDateYear" dateType={DateType.YEAR} />
       </FormGroup>
     </DateListItem>
   </DateListInput>
 );
 
-export const getServerSideProps: GetServerSideProps = withCookieRedirect(
-  async () => {
-    return {
-      props: {},
-    };
-  }
+export const getServerSideProps: GetServerSideProps = handlePageRequest(
+  "/register-a-beacon/primary-beacon-use"
 );
 
 export default BeaconInformation;
