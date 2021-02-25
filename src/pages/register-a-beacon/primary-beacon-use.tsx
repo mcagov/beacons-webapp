@@ -1,10 +1,7 @@
 import { GetServerSideProps } from "next";
 import React, { FunctionComponent } from "react";
 import { BackButton, Button } from "../../components/Button";
-import {
-  FieldErrorList,
-  FormErrorSummary,
-} from "../../components/ErrorSummary";
+import { FormErrorSummary } from "../../components/ErrorSummary";
 import {
   Form,
   FormFieldset,
@@ -61,7 +58,10 @@ const PrimaryBeaconUse: FunctionComponent<PrimaryBeaconUseProps> = ({
       <Grid
         mainContent={
           <>
-            {needsValidation && <FormErrorSummary errors={errors} />}
+            <FormErrorSummary
+              errors={errors}
+              needsValidation={needsValidation}
+            />
             <BeaconUseForm
               checkedValue={formData.maritimePleasureVesselUse}
               formData={formData}
@@ -94,14 +94,13 @@ const BeaconUseForm: FunctionComponent<BeaconUseFormProps> = ({
 
   return (
     <Form action="/register-a-beacon/primary-beacon-use">
-      <FormGroup showErrors={showErrors}>
+      <FormGroup showErrors={showErrors} errorMessages={errorMessages}>
         <FormFieldset>
           <FormLegendPageHeading>
             What type of maritime pleasure vessel will you mostly use this
             beacon on?
           </FormLegendPageHeading>
         </FormFieldset>
-        {showErrors && <FieldErrorList errorMessages={errorMessages} />}
         <RadioListConditional>
           <RadioListItemHint
             id="motor-vessel"
