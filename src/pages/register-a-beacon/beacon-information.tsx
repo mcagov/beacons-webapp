@@ -44,7 +44,6 @@ const BeaconInformation: FunctionComponent<FormPageProps> = ({
 
   const {
     manufacturerSerialNumber,
-    chkCode,
     batteryExpiryDateMonth,
     batteryExpiryDateYear,
     lastServicedDateMonth,
