@@ -84,6 +84,19 @@ export class BeaconHexIdValidator extends FieldValidator {
   }
 }
 
+export class EmailValidator extends FieldValidator {
+  private readonly errorMessagePrefix: string = "Email address must";
+  constructor() {
+    super();
+    this._rules = [
+      {
+        errorMessage: `${this.errorMessagePrefix} be valid`,
+        predicateFn: (value) => value.match(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/i) === null,
+      },
+    ];
+  }
+}
+
 export class MoreVesselDetailsValidator extends FieldValidator {
   constructor() {
     super();

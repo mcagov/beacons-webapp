@@ -4,6 +4,7 @@ import {
   BeaconModelValidator,
   MaritimePleasureVesselUseValidator,
   OtherPleasureVesselTextValidator,
+  EmailValidator
 } from "../../src/lib/fieldValidators";
 
 describe("BeaconModelValidator", () => {
@@ -168,3 +169,45 @@ describe("OtherPleasureVesselTextValidator", () => {
     });
   });
 });
+
+
+
+describe("EmailValidator", () => {
+  describe("validate", () => {
+    let emailValidator;
+
+    beforeEach(() => {
+      emailValidator = new EmailValidator();
+    });
+
+    const assertHasErrorsForValue = (
+      value: string,
+      numberOfErrors: number
+    ): void => {
+      const validationResponse = emailValidator.validate(value);
+
+      expect(validationResponse.valid).toBe(false);
+      expect(validationResponse.errorMessages.length).toBe(numberOfErrors);
+    };
+
+    const assertNoErrorsForValue = (value: string): void => {
+      const validationResponse = emailValidator.validate(value);
+
+      expect(validationResponse.valid).toBe(true);
+      expect(validationResponse.errorMessages.length).toBe(0);
+    };
+
+    it("should have errors if no value provided", () => {
+      assertHasErrorsForValue("", 1);
+    });
+
+    it("should have errors if not a valid email", () => {
+      assertHasErrorsForValue("invalid-email", 1);
+    });
+
+    it("should return true if a valid email", () => {
+      assertNoErrorsForValue("valid@email.now");
+    });
+  });
+});
+
