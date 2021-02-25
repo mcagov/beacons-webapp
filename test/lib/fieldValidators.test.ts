@@ -2,9 +2,9 @@ import {
   BeaconHexIdValidator,
   BeaconManufacturerValidator,
   BeaconModelValidator,
+  EmailValidator,
   MaritimePleasureVesselUseValidator,
   OtherPleasureVesselTextValidator,
-  EmailValidator
 } from "../../src/lib/fieldValidators";
 
 describe("BeaconModelValidator", () => {
@@ -170,8 +170,6 @@ describe("OtherPleasureVesselTextValidator", () => {
   });
 });
 
-
-
 describe("EmailValidator", () => {
   describe("validate", () => {
     let emailValidator;
@@ -210,4 +208,3 @@ describe("EmailValidator", () => {
     });
   });
 });
-

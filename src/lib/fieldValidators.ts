@@ -91,7 +91,8 @@ export class EmailValidator extends FieldValidator {
     this._rules = [
       {
         errorMessage: `${this.errorMessagePrefix} be valid`,
-        predicateFn: (value) => value.match(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/i) === null,
+        predicateFn: (value) =>
+          value.match(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/i) === null,
       },
     ];
   }
