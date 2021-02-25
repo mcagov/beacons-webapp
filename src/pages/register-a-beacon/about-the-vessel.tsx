@@ -109,7 +109,10 @@ const BeaconLocationInput: FunctionComponent = (): JSX.Element => (
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   async () => {
     return {
-      props: {},
+      redirect: {
+        statusCode: 303,
+        destination: "/register-a-beacon/about-the-owner",
+      },
     };
   }
 );

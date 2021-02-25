@@ -27,9 +27,16 @@ describe("AboutTheVessel", () => {
       };
     });
 
-    it("should return an empty props object", async () => {
+    it("should return a redirect object", async () => {
       const expectedProps = await getServerSideProps(context);
-      expect(expectedProps).toStrictEqual({ props: {} });
+      expect(expectedProps).toStrictEqual(
+        {
+          "redirect": {
+            "destination": "/register-a-beacon/about-the-owner",
+            "statusCode": 303,
+          }
+        }
+      );
     });
   });
 });
