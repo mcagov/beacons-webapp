@@ -1,9 +1,4 @@
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-} from "next";
-import { NextApiRequestCookies } from "next/dist/next-server/server/api-utils";
+import { GetServerSideProps } from "next";
 import React, { FunctionComponent } from "react";
 import { BackButton, Button } from "../../components/Button";
 import { Details } from "../../components/Details";
@@ -21,12 +16,7 @@ import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
 import { CacheEntry } from "../../lib/formCache";
 import { FormValidator } from "../../lib/formValidator";
-import {
-  getCache,
-  parseFormData,
-  updateFormCache,
-  withCookieRedirect,
-} from "../../lib/middleware";
+import { handlePageRequest } from "../../lib/handlePageRequest";
 import { ensureFormDataHasKeys } from "../../lib/utils";
 
 interface CheckBeaconDetailsProps {
@@ -146,54 +136,8 @@ const BeaconHexIdInput: FunctionComponent<FormInputProps> = ({
   </FormGroup>
 );
 
-export const getServerSideProps: GetServerSideProps = withCookieRedirect(
-  async (context: GetServerSidePropsContext) => {
-    if (context.req.method === "POST") {
-      return handlePostRequest(context);
-    } else {
-      return handleGetRequest(context.req.cookies);
-    }
-  }
+export const getServerSideProps: GetServerSideProps = handlePageRequest(
+  "/register-a-beacon/beacon-information"
 );
-
-const handlePostRequest = async (
-  context: GetServerSidePropsContext
-): Promise<GetServerSidePropsResult<CheckBeaconDetailsProps>> => {
-  const rawFormData: CacheEntry = await parseFormData(context.req);
-  const formData: CacheEntry = {
-    ...rawFormData,
-    hexId: (rawFormData["hexId"] || "").toUpperCase(),
-  };
-
-  updateFormCache(context.req.cookies, formData);
-
-  const formIsValid = !FormValidator.hasErrors(formData);
-
-  if (formIsValid) {
-    return {
-      redirect: {
-        statusCode: 303,
-        destination: "/register-a-beacon/beacon-information",
-      },
-    };
-  }
-
-  return {
-    props: {
-      formData: formData,
-      needsValidation: true,
-    },
-  };
-};
-
-const handleGetRequest = (
-  cookies: NextApiRequestCookies
-): GetServerSidePropsResult<CheckBeaconDetailsProps> => {
-  return {
-    props: {
-      formData: getCache(cookies),
-    },
-  };
-};
 
 export default CheckBeaconDetails;
