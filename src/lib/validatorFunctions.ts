@@ -2,7 +2,7 @@ export interface errorIf {
   (fieldValue: string): boolean;
 }
 
-export const requiredInputHasNoValue: errorIf = (value) => value.length === 0;
+export const requiredFieldHasNoValue: errorIf = (value) => !value;
 
 export const isNot15CharactersLong: errorIf = (value) =>
   !value || value.length !== 15;

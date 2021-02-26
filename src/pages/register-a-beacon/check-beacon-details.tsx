@@ -19,7 +19,7 @@ import { handlePageRequest } from "../../lib/handlePageRequest";
 import {
   isNot15CharactersLong,
   isNotHexadecimalString,
-  requiredInputHasNoValue,
+  requiredFieldHasNoValue,
 } from "../../lib/validatorFunctions";
 
 interface CheckBeaconDetailsProps {
@@ -31,13 +31,13 @@ const formRules = {
   manufacturer: [
     {
       errorMessage: "Beacon manufacturer is a required field",
-      errorIf: requiredInputHasNoValue,
+      errorIf: requiredFieldHasNoValue,
     },
   ],
   model: [
     {
       errorMessage: "Beacon model is a required field",
-      errorIf: requiredInputHasNoValue,
+      errorIf: requiredFieldHasNoValue,
     },
   ],
   hexId: [

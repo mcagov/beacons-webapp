@@ -1,28 +1,28 @@
 import {
-  emptyRequiredField,
   isNot15CharactersLong,
+  requiredFieldHasNoValue,
 } from "../../src/lib/validatorFunctions";
 
 describe("emptyRequiredField", () => {
   it("should return true when field is an empty string", () => {
-    expect(emptyRequiredField("")).toBe(true);
+    expect(requiredFieldHasNoValue("")).toBe(true);
   });
 
   it("should return true when field is undefined", () => {
-    expect(emptyRequiredField(undefined)).toBe(true);
+    expect(requiredFieldHasNoValue(undefined)).toBe(true);
   });
 
   it("should return true when field is null", () => {
-    expect(emptyRequiredField(null)).toBe(true);
+    expect(requiredFieldHasNoValue(null)).toBe(true);
   });
 
   it("should return false when field is a string of one or more character", () => {
-    expect(emptyRequiredField("Space")).toBe(false);
-    expect(emptyRequiredField("Jam")).toBe(false);
+    expect(requiredFieldHasNoValue("Space")).toBe(false);
+    expect(requiredFieldHasNoValue("Jam")).toBe(false);
   });
 
   it("should return false when field is a string of a number", () => {
-    expect(emptyRequiredField("42")).toBe(false);
+    expect(requiredFieldHasNoValue("42")).toBe(false);
   });
 });
 
