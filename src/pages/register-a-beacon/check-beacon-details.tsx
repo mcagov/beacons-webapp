@@ -16,36 +16,39 @@ import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
 import { FormValidator } from "../../lib/formValidator";
 import { handlePageRequest } from "../../lib/handlePageRequest";
+import {
+  isNot15CharactersLong,
+  isNotHexadecimalString,
+  requiredInputHasNoValue,
+} from "../../lib/validatorFunctions";
 
 interface CheckBeaconDetailsProps {
   formData: Record<string, string>;
   needsValidation?: boolean;
 }
 
-const RequiredInputFieldHasNoValue = (value) => value.length === 0;
-
 const formRules = {
   manufacturer: [
     {
       errorMessage: "Beacon manufacturer is a required field",
-      errorIf: RequiredInputFieldHasNoValue,
+      errorIf: requiredInputHasNoValue,
     },
   ],
   model: [
     {
       errorMessage: "Beacon model is a required field",
-      errorIf: RequiredInputFieldHasNoValue,
+      errorIf: requiredInputHasNoValue,
     },
   ],
   hexId: [
     {
       errorMessage: "Beacon HEX ID or UIN must be 15 characters long",
-      errorIf: (value) => value.length !== 15,
+      errorIf: isNot15CharactersLong,
     },
     {
       errorMessage:
         "Beacon HEX ID or UIN must use numbers 0 to 9 and letters A to F",
-      errorIf: (value) => value.match(/^[a-f0-9]+$/i) === null,
+      errorIf: isNotHexadecimalString,
     },
   ],
 };
