@@ -152,7 +152,8 @@ const BeaconHexIdInput: FunctionComponent<FormInputProps> = ({
 );
 
 export const getServerSideProps: GetServerSideProps = handlePageRequest(
-  "/register-a-beacon/beacon-information"
+  "/register-a-beacon/beacon-information",
+  formRules
 );
 
 export default CheckBeaconDetails;
