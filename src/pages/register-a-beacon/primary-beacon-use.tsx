@@ -17,6 +17,7 @@ import {
   RadioListItemConditional,
   RadioListItemHint,
 } from "../../components/RadioList";
+import { fieldValidatorLookup } from "../../lib/field-validators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormValidator } from "../../lib/formValidator";
 import { handlePageRequest } from "../../lib/handlePageRequest";
@@ -194,6 +195,7 @@ const ensureMaritimePleasureVesselUseIsSubmitted = (formData) => {
 
 export const getServerSideProps: GetServerSideProps = handlePageRequest(
   "/register-a-beacon/about-the-vessel",
+  fieldValidatorLookup,
   ensureMaritimePleasureVesselUseIsSubmitted
 );
 
