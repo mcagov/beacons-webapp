@@ -11,7 +11,7 @@ export interface IFieldValidationResponse {
 
 export interface FieldRule {
   errorMessage: string;
-  predicateFn: (valueToValidate: string) => boolean;
+  errorIf: (valueToValidate: string) => boolean;
 }
 
 export abstract class FieldValidator implements IFieldValidator {
@@ -27,7 +27,7 @@ export abstract class FieldValidator implements IFieldValidator {
   }
 
   static valueViolatesRule(value: string, rule: FieldRule): boolean {
-    return rule.predicateFn(value);
+    return rule.errorIf(value);
   }
 
   private isValid(value: string): boolean {
