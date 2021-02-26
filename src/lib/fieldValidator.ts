@@ -9,13 +9,13 @@ export interface IFieldValidationResponse {
   invalid: boolean;
 }
 
-export interface FieldRule {
+export interface IFieldRule {
   errorMessage: string;
   errorIf: (valueToValidate: string) => boolean;
 }
 
 export abstract class FieldValidator implements IFieldValidator {
-  protected _rules: FieldRule[];
+  protected _rules: IFieldRule[];
 
   validate(value: string): IFieldValidationResponse {
     return {
@@ -26,7 +26,7 @@ export abstract class FieldValidator implements IFieldValidator {
     };
   }
 
-  static valueViolatesRule(value: string, rule: FieldRule): boolean {
+  static valueViolatesRule(value: string, rule: IFieldRule): boolean {
     return rule.errorIf(value);
   }
 

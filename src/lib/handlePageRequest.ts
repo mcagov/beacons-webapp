@@ -4,9 +4,8 @@ import {
   GetServerSidePropsResult,
 } from "next";
 import { NextApiRequestCookies } from "next/dist/next-server/server/api-utils";
-import { IFieldValidator } from "./fieldValidator";
 import { CacheEntry } from "./formCache";
-import { FormValidator } from "./formValidator";
+import { FormValidator, Validator } from "./formValidator";
 import {
   getCache,
   parseFormData,
@@ -23,7 +22,7 @@ export interface FormPageProps {
 
 export const handlePageRequest = (
   destinationIfValid: string,
-  formRules: Record<string, IFieldValidator>,
+  formRules: Record<string, Validator>,
   transformFunction: TransformFunction = (formData) => formData
 ): GetServerSideProps =>
   withCookieRedirect(async (context: GetServerSidePropsContext) => {
@@ -56,7 +55,7 @@ export const handlePostRequest = async (
   context: GetServerSidePropsContext,
   destinationIfValid: string,
   transformFunction: TransformFunction = (formData) => formData,
-  formRules: Record<string, IFieldValidator>
+  formRules: Record<string, Validator>
 ): Promise<GetServerSidePropsResult<FormPageProps>> => {
   const transformedFormData = transformFunction(
     await parseFormData(context.req)

@@ -14,11 +14,6 @@ import { FormInputProps, Input } from "../../components/Input";
 import { InsetText } from "../../components/InsetText";
 import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
-import {
-  BeaconHexIdValidator,
-  BeaconManufacturerValidator,
-  BeaconModelValidator,
-} from "../../lib/field-validators/beaconFieldValidators";
 import { FormValidator } from "../../lib/formValidator";
 import { handlePageRequest } from "../../lib/handlePageRequest";
 
@@ -27,11 +22,32 @@ interface CheckBeaconDetailsProps {
   needsValidation?: boolean;
 }
 
+const RequiredInputFieldHasNoValue = (value) => value.length === 0;
+
 const formRules = {
-  manufacturer: new BeaconManufacturerValidator(),
-  model: new BeaconModelValidator(),
-  hexId: new BeaconHexIdValidator(),
-  newField: new BeaconModelValidator(),
+  manufacturer: [
+    {
+      errorMessage: "Beacon manufacturer is a required field",
+      errorIf: RequiredInputFieldHasNoValue,
+    },
+  ],
+  model: [
+    {
+      errorMessage: "Beacon model is a required field",
+      errorIf: RequiredInputFieldHasNoValue,
+    },
+  ],
+  hexId: [
+    {
+      errorMessage: "Beacon HEX ID or UIN must be 15 characters long",
+      errorIf: (value) => value.length !== 15,
+    },
+    {
+      errorMessage:
+        "Beacon HEX ID or UIN must use numbers 0 to 9 and letters A to F",
+      errorIf: (value) => value.match(/^[a-f0-9]+$/i) === null,
+    },
+  ],
 };
 
 const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
@@ -44,7 +60,7 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
     needsValidation && FormValidator.hasErrors(formData, formRules);
   const errors = FormValidator.errorSummary(formData, formRules);
 
-  const { manufacturer, model, hexId, newField } = FormValidator.validate(
+  const { manufacturer, model, hexId } = FormValidator.validate(
     formData,
     formRules
   );
@@ -87,12 +103,6 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
                     value={hexId.value}
                     showErrors={needsValidation && hexId.invalid}
                     errorMessages={hexId.errorMessages}
-                  />
-
-                  <NewInput
-                    value={newField.value}
-                    showErrors={needsValidation && newField.invalid}
-                    errorMessages={newField.errorMessages}
                   />
                 </FormFieldset>
                 <Button buttonText="Continue" />
@@ -150,21 +160,6 @@ const BeaconHexIdInput: FunctionComponent<FormInputProps> = ({
     >
       TODO: Explain to users how to find their beacon HEX ID
     </Details>
-  </FormGroup>
-);
-
-const NewInput: FunctionComponent<FormInputProps> = ({
-  value = "",
-  showErrors,
-  errorMessages,
-}: FormInputProps): JSX.Element => (
-  <FormGroup showErrors={showErrors} errorMessages={errorMessages}>
-    <Input
-      id="newField"
-      label="This is a totally new field with validation"
-      htmlAttributes={{ spellCheck: false }}
-      defaultValue={value}
-    />
   </FormGroup>
 );
 
