@@ -3,6 +3,7 @@ export interface IFieldValidator {
 }
 
 export interface IFieldValidationResponse {
+  value: string;
   errorMessages: string[];
   valid: boolean;
   invalid: boolean;
@@ -18,6 +19,7 @@ export abstract class FieldValidator implements IFieldValidator {
 
   validate(value: string): IFieldValidationResponse {
     return {
+      value: value,
       valid: this.isValid(value),
       invalid: !this.isValid(value),
       errorMessages: this.errorMessages(value),

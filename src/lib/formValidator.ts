@@ -2,25 +2,25 @@ import { fieldValidatorLookup } from "./field-validators";
 import { IFieldValidationResponse, IFieldValidator } from "./fieldValidator";
 
 export interface IFormError {
-  fieldId: string;
+  fieldName: string;
   errorMessages: string[];
 }
 
 export class FormValidator {
+  private static defaultResponseIfFieldNameNotInFormData: IFieldValidationResponse = {
+    value: "",
+    valid: true,
+    invalid: false,
+    errorMessages: [],
+  };
+
   public static validate(
     formData: Record<string, string>,
     validatorLookup: Record<string, IFieldValidator> = fieldValidatorLookup
   ): Record<string, IFieldValidationResponse> {
-    const fields = Object.entries(formData);
+    const fields = this.getFields(validatorLookup, formData);
 
-    return fields.reduce((validatorResponse, [fieldId, value]) => {
-      if (fieldId in validatorLookup) {
-        validatorResponse[fieldId] = {
-          ...validatorLookup[fieldId].validate(value),
-        };
-      }
-      return validatorResponse;
-    }, {});
+    return this.applyValidatorsToFields(fields, validatorLookup);
   }
 
   public static errorSummary(
@@ -32,9 +32,9 @@ export class FormValidator {
     );
 
     return validatedFields
-      .filter(([, field]) => field.invalid)
-      .map(([id, field]) => {
-        return { fieldId: id, errorMessages: field.errorMessages };
+      .filter(([, fieldName]) => fieldName.invalid)
+      .map(([fieldName, field]) => {
+        return { fieldName: fieldName, errorMessages: field.errorMessages };
       });
   }
 
@@ -43,6 +43,31 @@ export class FormValidator {
     validatorLookup: Record<string, IFieldValidator> = fieldValidatorLookup
   ): boolean {
     return this.errorSummary(formData, validatorLookup).length > 0;
+  }
+
+  private static getFields(
+    validatorLookup: Record<string, IFieldValidator>,
+    formData: Record<string, string>
+  ) {
+    return Object.keys(validatorLookup).map((fieldName) => [
+      fieldName,
+      fieldName in formData ? formData[fieldName] : "",
+    ]);
+  }
+
+  private static applyValidatorsToFields(
+    fields: string[][],
+    validatorLookup: Record<string, IFieldValidator>
+  ) {
+    return fields.reduce((validatorResponse, [fieldName, value]) => {
+      validatorResponse[fieldName] = {
+        ...(fieldName in validatorLookup
+          ? { ...validatorLookup[fieldName].validate(value) }
+          : this.defaultResponseIfFieldNameNotInFormData),
+      };
+
+      return validatorResponse;
+    }, {});
   }
 
   private FormValidator() {

@@ -33,8 +33,8 @@ export const FormErrorSummary: FunctionComponent<FormErrorSummaryProps> = ({
         {errors.map((field) =>
           field.errorMessages.map((errorMessage, index) => (
             <FormErrorSummaryLink
-              key={`${field.fieldId}-${index}`}
-              href={`#${field.fieldId}`}
+              key={`${field.fieldName}-${index}`}
+              href={`#${field.fieldName}`}
               errorMessage={errorMessage}
             />
           ))

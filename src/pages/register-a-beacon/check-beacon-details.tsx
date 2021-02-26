@@ -19,13 +19,11 @@ import {
   BeaconManufacturerValidator,
   BeaconModelValidator,
 } from "../../lib/field-validators/beaconFieldValidators";
-import { CacheEntry } from "../../lib/formCache";
 import { FormValidator } from "../../lib/formValidator";
 import { handlePageRequest } from "../../lib/handlePageRequest";
-import { ensureFormDataHasKeys } from "../../lib/utils";
 
 interface CheckBeaconDetailsProps {
-  formData: CacheEntry;
+  formData: Record<string, string>;
   needsValidation?: boolean;
 }
 
@@ -33,25 +31,23 @@ const formRules = {
   manufacturer: new BeaconManufacturerValidator(),
   model: new BeaconModelValidator(),
   hexId: new BeaconHexIdValidator(),
+  newField: new BeaconModelValidator(),
 };
 
 const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
   formData,
   needsValidation = false,
 }: CheckBeaconDetailsProps): JSX.Element => {
-  formData = ensureFormDataHasKeys(formData, "manufacturer", "model", "hexId");
-
-  const errors = FormValidator.errorSummary(formData, formRules);
-
-  const { manufacturer, model, hexId } = FormValidator.validate(
-    formData,
-    formRules
-  );
-
   const pageHeading = "Check beacon details";
 
   const pageHasErrors =
     needsValidation && FormValidator.hasErrors(formData, formRules);
+  const errors = FormValidator.errorSummary(formData, formRules);
+
+  const { manufacturer, model, hexId, newField } = FormValidator.validate(
+    formData,
+    formRules
+  );
 
   return (
     <>
@@ -76,21 +72,27 @@ const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
                   </InsetText>
 
                   <BeaconManufacturerInput
-                    value={formData.manufacturer}
+                    value={manufacturer.value}
                     showErrors={needsValidation && manufacturer.invalid}
                     errorMessages={manufacturer.errorMessages}
                   />
 
                   <BeaconModelInput
-                    value={formData.model}
+                    value={model.value}
                     showErrors={needsValidation && model.invalid}
                     errorMessages={model.errorMessages}
                   />
 
                   <BeaconHexIdInput
-                    value={formData.hexId}
+                    value={hexId.value}
                     showErrors={needsValidation && hexId.invalid}
                     errorMessages={hexId.errorMessages}
+                  />
+
+                  <NewInput
+                    value={newField.value}
+                    showErrors={needsValidation && newField.invalid}
+                    errorMessages={newField.errorMessages}
                   />
                 </FormFieldset>
                 <Button buttonText="Continue" />
@@ -148,6 +150,21 @@ const BeaconHexIdInput: FunctionComponent<FormInputProps> = ({
     >
       TODO: Explain to users how to find their beacon HEX ID
     </Details>
+  </FormGroup>
+);
+
+const NewInput: FunctionComponent<FormInputProps> = ({
+  value = "",
+  showErrors,
+  errorMessages,
+}: FormInputProps): JSX.Element => (
+  <FormGroup showErrors={showErrors} errorMessages={errorMessages}>
+    <Input
+      id="newField"
+      label="This is a totally new field with validation"
+      htmlAttributes={{ spellCheck: false }}
+      defaultValue={value}
+    />
   </FormGroup>
 );
 

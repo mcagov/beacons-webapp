@@ -28,9 +28,9 @@ const mockInvalidFieldValidator = (errors): IFieldValidator => {
 describe("FormValidator", () => {
   describe("validate", () => {
     it("should return a 'valid' response when the only field is valid", () => {
-      const formData = { testFieldId: "valid value" };
+      const formData = { testFieldName: "valid value" };
       const fieldValidatorLookup = {
-        testFieldId: mockValidFieldValidator(),
+        testFieldName: mockValidFieldValidator(),
       };
 
       const validationResponse = FormValidator.validate(
@@ -39,7 +39,7 @@ describe("FormValidator", () => {
       );
 
       expect(validationResponse).toEqual({
-        testFieldId: {
+        testFieldName: {
           valid: true,
           invalid: false,
           errorMessages: [],
@@ -48,9 +48,9 @@ describe("FormValidator", () => {
     });
 
     it("should return an 'invalid' response when the only field is invalid", () => {
-      const formData = { anotherTestFieldId: "invalid value" };
+      const formData = { anotherTestFieldName: "invalid value" };
       const fieldValidatorLookup = {
-        anotherTestFieldId: mockInvalidFieldValidator(["TooLong"]),
+        anotherTestFieldName: mockInvalidFieldValidator(["TooLong"]),
       };
 
       const validationResponse = FormValidator.validate(
@@ -59,7 +59,7 @@ describe("FormValidator", () => {
       );
 
       expect(validationResponse).toEqual({
-        anotherTestFieldId: {
+        anotherTestFieldName: {
           valid: false,
           invalid: true,
           errorMessages: ["TooLong"],
@@ -69,12 +69,12 @@ describe("FormValidator", () => {
 
     it("should return an 'invalid' response when one of two fields is invalid", () => {
       const formData = {
-        firstTestFieldId: "invalid value",
-        secondTestFieldId: "valid value",
+        firstTestFieldName: "invalid value",
+        secondTestFieldName: "valid value",
       };
       const fieldValidatorLookup = {
-        firstTestFieldId: mockInvalidFieldValidator(["Required"]),
-        secondTestFieldId: mockValidFieldValidator(),
+        firstTestFieldName: mockInvalidFieldValidator(["Required"]),
+        secondTestFieldName: mockValidFieldValidator(),
       };
 
       const validationResponse = FormValidator.validate(
@@ -83,12 +83,12 @@ describe("FormValidator", () => {
       );
 
       expect(validationResponse).toEqual({
-        firstTestFieldId: {
+        firstTestFieldName: {
           valid: false,
           invalid: true,
           errorMessages: ["Required"],
         },
-        secondTestFieldId: {
+        secondTestFieldName: {
           valid: true,
           invalid: false,
           errorMessages: [],
@@ -100,10 +100,10 @@ describe("FormValidator", () => {
   describe("errorSummary", () => {
     it("should return a blank errorMessage summary when the only field is valid", () => {
       const formData = {
-        validFieldId: "valid value",
+        validFieldName: "valid value",
       };
       const fieldValidatorLookup = {
-        validFieldId: mockValidFieldValidator(),
+        validFieldName: mockValidFieldValidator(),
       };
 
       const errorSummary = FormValidator.errorSummary(
@@ -116,10 +116,10 @@ describe("FormValidator", () => {
 
     it("should return a summary of one errorMessage when the only field is invalid", () => {
       const formData = {
-        invalidFieldId: "invalid value",
+        invalidFieldName: "invalid value",
       };
       const fieldValidatorLookup = {
-        invalidFieldId: mockInvalidFieldValidator(["TooLong"]),
+        invalidFieldName: mockInvalidFieldValidator(["TooLong"]),
       };
 
       const errorSummary = FormValidator.errorSummary(
@@ -128,20 +128,20 @@ describe("FormValidator", () => {
       );
 
       expect(errorSummary).toEqual([
-        { fieldId: "invalidFieldId", errorMessages: ["TooLong"] },
+        { fieldName: "invalidFieldName", errorMessages: ["TooLong"] },
       ]);
     });
 
     it("should return a summary of two errorMessages when two fields are invalid", () => {
       const formData = {
-        invalidFieldId1: "invalid value",
-        invalidFieldId2: "invalid value",
-        validFieldId: "valid value",
+        invalidFieldName1: "invalid value",
+        invalidFieldName2: "invalid value",
+        validFieldName: "valid value",
       };
       const fieldValidatorLookup = {
-        invalidFieldId1: mockInvalidFieldValidator(["TooLong"]),
-        invalidFieldId2: mockInvalidFieldValidator(["TooLong"]),
-        validFieldId: mockValidFieldValidator(),
+        invalidFieldName1: mockInvalidFieldValidator(["TooLong"]),
+        invalidFieldName2: mockInvalidFieldValidator(["TooLong"]),
+        validFieldName: mockValidFieldValidator(),
       };
 
       const errorSummary = FormValidator.errorSummary(
@@ -150,8 +150,8 @@ describe("FormValidator", () => {
       );
 
       expect(errorSummary).toEqual([
-        { fieldId: "invalidFieldId1", errorMessages: ["TooLong"] },
-        { fieldId: "invalidFieldId2", errorMessages: ["TooLong"] },
+        { fieldName: "invalidFieldName1", errorMessages: ["TooLong"] },
+        { fieldName: "invalidFieldName2", errorMessages: ["TooLong"] },
       ]);
     });
   });
