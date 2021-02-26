@@ -14,6 +14,11 @@ import { FormInputProps, Input } from "../../components/Input";
 import { InsetText } from "../../components/InsetText";
 import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
+import {
+  BeaconHexIdValidator,
+  BeaconManufacturerValidator,
+  BeaconModelValidator,
+} from "../../lib/field-validators/beaconFieldValidators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormValidator } from "../../lib/formValidator";
 import { handlePageRequest } from "../../lib/handlePageRequest";
@@ -24,19 +29,29 @@ interface CheckBeaconDetailsProps {
   needsValidation?: boolean;
 }
 
+const formRules = {
+  manufacturer: new BeaconManufacturerValidator(),
+  model: new BeaconModelValidator(),
+  hexId: new BeaconHexIdValidator(),
+};
+
 const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
   formData,
   needsValidation = false,
 }: CheckBeaconDetailsProps): JSX.Element => {
   formData = ensureFormDataHasKeys(formData, "manufacturer", "model", "hexId");
 
-  const errors = FormValidator.errorSummary(formData);
+  const errors = FormValidator.errorSummary(formData, formRules);
 
-  const { manufacturer, model, hexId } = FormValidator.validate(formData);
+  const { manufacturer, model, hexId } = FormValidator.validate(
+    formData,
+    formRules
+  );
 
   const pageHeading = "Check beacon details";
 
-  const pageHasErrors = needsValidation && FormValidator.hasErrors(formData);
+  const pageHasErrors =
+    needsValidation && FormValidator.hasErrors(formData, formRules);
 
   return (
     <>
