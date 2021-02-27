@@ -45,7 +45,8 @@ const formRules = {
     ],
     rules: [
       {
-        errorMessage: "Other pleasure vessel text is a required field",
+        errorMessage:
+          'More detail is required if "Other pleasure vessel" is selected',
         errorIf: (value) => value.length === 0,
       },
     ],
