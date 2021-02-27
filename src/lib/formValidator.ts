@@ -1,16 +1,16 @@
 import { fieldValidatorLookup } from "./field-validators";
 import {
-  IFieldRule,
+  IClassBasedValidator,
   IFieldValidationResponse,
-  IFieldValidator,
 } from "./fieldValidator";
+import { IFunctionalValidator } from "./validatorFunctions";
 
 export interface IFormError {
   fieldName: string;
   errorMessages: string[];
 }
 
-export type Validator = IFieldValidator | IFieldRule[];
+export type Validator = Partial<IClassBasedValidator & IFunctionalValidator>;
 
 export class FormValidator {
   private static defaultResponseIfFieldNameNotInFormData: IFieldValidationResponse = {
@@ -78,7 +78,7 @@ export class FormValidator {
 
   private static validateField(
     // TODO: Change `any` for `IFieldRule[]` when type guard removed
-    validatorLookup: Record<string, any>,
+    validatorLookup: Record<string, Validator>,
     fieldName: string,
     value: string
   ) {
@@ -87,7 +87,7 @@ export class FormValidator {
       return { ...validatorLookup[fieldName].validate(value) };
     }
 
-    const rules = validatorLookup[fieldName];
+    const rules = validatorLookup[fieldName].rules;
 
     return {
       value: value,

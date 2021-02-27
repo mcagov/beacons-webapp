@@ -1,4 +1,6 @@
-export interface IFieldValidator {
+import { IFieldRule } from "./validatorFunctions";
+
+export interface IClassBasedValidator {
   validate(value: string): IFieldValidationResponse;
 }
 
@@ -9,12 +11,7 @@ export interface IFieldValidationResponse {
   invalid: boolean;
 }
 
-export interface IFieldRule {
-  errorMessage: string;
-  errorIf: (valueToValidate: string) => boolean;
-}
-
-export abstract class FieldValidator implements IFieldValidator {
+export abstract class FieldValidator implements IClassBasedValidator {
   protected _rules: IFieldRule[];
 
   validate(value: string): IFieldValidationResponse {

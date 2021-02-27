@@ -28,29 +28,35 @@ interface CheckBeaconDetailsProps {
 }
 
 const formRules = {
-  manufacturer: [
-    {
-      errorMessage: "Beacon manufacturer is a required field",
-      errorIf: requiredFieldHasNoValue,
-    },
-  ],
-  model: [
-    {
-      errorMessage: "Beacon model is a required field",
-      errorIf: requiredFieldHasNoValue,
-    },
-  ],
-  hexId: [
-    {
-      errorMessage: "Beacon HEX ID or UIN must be 15 characters long",
-      errorIf: isNot15CharactersLong,
-    },
-    {
-      errorMessage:
-        "Beacon HEX ID or UIN must use numbers 0 to 9 and letters A to F",
-      errorIf: isNotHexadecimalString,
-    },
-  ],
+  manufacturer: {
+    rules: [
+      {
+        errorMessage: "Beacon manufacturer is a required field",
+        errorIf: requiredFieldHasNoValue,
+      },
+    ],
+  },
+  model: {
+    rules: [
+      {
+        errorMessage: "Beacon model is a required field",
+        errorIf: requiredFieldHasNoValue,
+      },
+    ],
+  },
+  hexId: {
+    rules: [
+      {
+        errorMessage: "Beacon HEX ID or UIN must be 15 characters long",
+        errorIf: isNot15CharactersLong,
+      },
+      {
+        errorMessage:
+          "Beacon HEX ID or UIN must use numbers 0 to 9 and letters A to F",
+        errorIf: isNotHexadecimalString,
+      },
+    ],
+  },
 };
 
 const CheckBeaconDetails: FunctionComponent<CheckBeaconDetailsProps> = ({
