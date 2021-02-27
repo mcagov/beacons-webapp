@@ -173,7 +173,7 @@ describe("FormValidator", () => {
 
     describe("conditional validation", () => {
       it("should not validate textInput when radioButton condition is not met", () => {
-        const mockValidatorFn = jest.fn();
+        const mockInvalidValidatorFn = jest.fn().mockReturnValue(true);
         const formData = {
           radioButton: "MOTOR_VESSEL",
           textInput: "should not be validated because radioButton !== OTHER",
@@ -185,7 +185,7 @@ describe("FormValidator", () => {
               {
                 errorMessage:
                   "textInput is required if radioButton OTHER is selected",
-                errorIf: mockValidatorFn,
+                errorIf: mockInvalidValidatorFn,
               },
             ],
             applyRulesIf: [
@@ -198,12 +198,14 @@ describe("FormValidator", () => {
         };
 
         FormValidator.validate(formData, formRules);
+        const errorSummary = FormValidator.errorSummary(formData, formRules);
 
-        expect(mockValidatorFn).not.toBeCalled();
+        expect(mockInvalidValidatorFn).not.toBeCalled();
+        expect(errorSummary.length).toBe(0);
       });
 
       it("should validate textInput when radioButton condition is met", () => {
-        const mockValidatorFn = jest.fn();
+        const mockInvalidValidatorFn = jest.fn().mockReturnValue(true);
         const formData = {
           radioButton: "OTHER",
           textInput: "should be validated because radioButton === OTHER",
@@ -215,7 +217,7 @@ describe("FormValidator", () => {
               {
                 errorMessage:
                   "textInput is required if radioButton OTHER is selected",
-                errorIf: mockValidatorFn,
+                errorIf: mockInvalidValidatorFn,
               },
             ],
             applyRulesIf: [
@@ -228,8 +230,10 @@ describe("FormValidator", () => {
         };
 
         FormValidator.validate(formData, formRules);
+        const errorSummary = FormValidator.errorSummary(formData, formRules);
 
-        expect(mockValidatorFn).toBeCalled();
+        expect(mockInvalidValidatorFn).toBeCalled();
+        expect(errorSummary.length).toBe(1);
       });
     });
   });
