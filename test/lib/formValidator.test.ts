@@ -1,10 +1,11 @@
-import { IFieldValidator } from "../../src/lib/fieldValidator";
+import { IClassBasedValidator } from "../../src/lib/fieldValidator";
 import { FormValidator } from "../../src/lib/formValidator";
 
-const mockValidFieldValidator = (): IFieldValidator => {
+const mockValidFieldValidator = (value): IClassBasedValidator => {
   return {
     validate: jest.fn(() => {
       return {
+        value: value,
         valid: true,
         invalid: false,
         errorMessages: [],
@@ -13,10 +14,11 @@ const mockValidFieldValidator = (): IFieldValidator => {
   };
 };
 
-const mockInvalidFieldValidator = (errors): IFieldValidator => {
+const mockInvalidFieldValidator = (value, errors): IClassBasedValidator => {
   return {
     validate: jest.fn(() => {
       return {
+        value: value,
         valid: false,
         invalid: true,
         errorMessages: errors,
@@ -30,7 +32,7 @@ describe("FormValidator", () => {
     it("should return a 'valid' response when the only field is valid", () => {
       const formData = { testFieldName: "valid value" };
       const fieldValidatorLookup = {
-        testFieldName: mockValidFieldValidator(),
+        testFieldName: mockValidFieldValidator("valid value"),
       };
 
       const validationResponse = FormValidator.validate(
@@ -40,6 +42,7 @@ describe("FormValidator", () => {
 
       expect(validationResponse).toEqual({
         testFieldName: {
+          value: "valid value",
           valid: true,
           invalid: false,
           errorMessages: [],
@@ -50,7 +53,9 @@ describe("FormValidator", () => {
     it("should return an 'invalid' response when the only field is invalid", () => {
       const formData = { anotherTestFieldName: "invalid value" };
       const fieldValidatorLookup = {
-        anotherTestFieldName: mockInvalidFieldValidator(["TooLong"]),
+        anotherTestFieldName: mockInvalidFieldValidator("invalid value", [
+          "TooLong",
+        ]),
       };
 
       const validationResponse = FormValidator.validate(
@@ -60,6 +65,7 @@ describe("FormValidator", () => {
 
       expect(validationResponse).toEqual({
         anotherTestFieldName: {
+          value: "invalid value",
           valid: false,
           invalid: true,
           errorMessages: ["TooLong"],
@@ -73,8 +79,10 @@ describe("FormValidator", () => {
         secondTestFieldName: "valid value",
       };
       const fieldValidatorLookup = {
-        firstTestFieldName: mockInvalidFieldValidator(["Required"]),
-        secondTestFieldName: mockValidFieldValidator(),
+        firstTestFieldName: mockInvalidFieldValidator("invalid value", [
+          "Required",
+        ]),
+        secondTestFieldName: mockValidFieldValidator("valid value"),
       };
 
       const validationResponse = FormValidator.validate(
@@ -84,11 +92,13 @@ describe("FormValidator", () => {
 
       expect(validationResponse).toEqual({
         firstTestFieldName: {
+          value: "invalid value",
           valid: false,
           invalid: true,
           errorMessages: ["Required"],
         },
         secondTestFieldName: {
+          value: "valid value",
           valid: true,
           invalid: false,
           errorMessages: [],
@@ -103,7 +113,7 @@ describe("FormValidator", () => {
         validFieldName: "valid value",
       };
       const fieldValidatorLookup = {
-        validFieldName: mockValidFieldValidator(),
+        validFieldName: mockValidFieldValidator("valid value"),
       };
 
       const errorSummary = FormValidator.errorSummary(
@@ -119,7 +129,9 @@ describe("FormValidator", () => {
         invalidFieldName: "invalid value",
       };
       const fieldValidatorLookup = {
-        invalidFieldName: mockInvalidFieldValidator(["TooLong"]),
+        invalidFieldName: mockInvalidFieldValidator("invalid value", [
+          "TooLong",
+        ]),
       };
 
       const errorSummary = FormValidator.errorSummary(
@@ -139,9 +151,13 @@ describe("FormValidator", () => {
         validFieldName: "valid value",
       };
       const fieldValidatorLookup = {
-        invalidFieldName1: mockInvalidFieldValidator(["TooLong"]),
-        invalidFieldName2: mockInvalidFieldValidator(["TooLong"]),
-        validFieldName: mockValidFieldValidator(),
+        invalidFieldName1: mockInvalidFieldValidator("invalid value", [
+          "TooLong",
+        ]),
+        invalidFieldName2: mockInvalidFieldValidator("invalid value", [
+          "TooLong",
+        ]),
+        validFieldName: mockValidFieldValidator("valid value"),
       };
 
       const errorSummary = FormValidator.errorSummary(
@@ -153,6 +169,68 @@ describe("FormValidator", () => {
         { fieldName: "invalidFieldName1", errorMessages: ["TooLong"] },
         { fieldName: "invalidFieldName2", errorMessages: ["TooLong"] },
       ]);
+    });
+
+    describe("conditional validation", () => {
+      it("should not validate textInput when radioButton condition is not met", () => {
+        const mockValidatorFn = jest.fn();
+        const formData = {
+          radioButton: "MOTOR_VESSEL",
+          textInput: "should not be validated because radioButton !== OTHER",
+        };
+        const formRules = {
+          radioButton: { rules: [] },
+          textInput: {
+            rules: [
+              {
+                errorMessage:
+                  "textInput is required if radioButton OTHER is selected",
+                errorIf: mockValidatorFn,
+              },
+            ],
+            applyRulesIf: [
+              {
+                fieldName: "radioButton",
+                meetsConditions: [(value) => value === "OTHER"],
+              },
+            ],
+          },
+        };
+
+        FormValidator.validate(formData, formRules);
+
+        expect(mockValidatorFn).not.toBeCalled();
+      });
+
+      it("should validate textInput when radioButton condition is met", () => {
+        const mockValidatorFn = jest.fn();
+        const formData = {
+          radioButton: "OTHER",
+          textInput: "should be validated because radioButton === OTHER",
+        };
+        const formRules = {
+          radioButton: { rules: [] },
+          textInput: {
+            rules: [
+              {
+                errorMessage:
+                  "textInput is required if radioButton OTHER is selected",
+                errorIf: mockValidatorFn,
+              },
+            ],
+            applyRulesIf: [
+              {
+                fieldName: "radioButton",
+                meetsConditions: [(value) => value === "OTHER"],
+              },
+            ],
+          },
+        };
+
+        FormValidator.validate(formData, formRules);
+
+        expect(mockValidatorFn).toBeCalled();
+      });
     });
   });
 });

@@ -55,25 +55,55 @@ export class FormValidator {
     validatorLookup: Record<string, Validator>,
     formData: Record<string, string>
   ) {
-    return Object.keys(validatorLookup).map((fieldName) => [
-      fieldName,
-      fieldName in formData ? formData[fieldName] : "",
-    ]);
+    return Object.keys(validatorLookup).reduce((fields, fieldName) => {
+      fields[fieldName] = fieldName in formData ? formData[fieldName] : "";
+      return fields;
+    }, {});
   }
 
   private static applyValidators(
-    fields: string[][],
+    fields: Record<string, string>,
     validatorLookup: Record<string, Validator>
   ) {
-    return fields.reduce((validatorResponse, [fieldName, value]) => {
-      validatorResponse[fieldName] = {
-        ...(fieldName in validatorLookup
-          ? this.validateField(validatorLookup, fieldName, value)
-          : this.defaultResponseIfFieldNameNotInFormData),
-      };
+    return Object.entries(fields).reduce(
+      (validatorResponse, [fieldName, value]) => {
+        validatorResponse[fieldName] = {
+          ...(fieldName in validatorLookup &&
+          this.shouldValidate(fieldName, validatorLookup, fields)
+            ? this.validateField(validatorLookup, fieldName, value)
+            : this.defaultResponseIfFieldNameNotInFormData),
+        };
 
-      return validatorResponse;
-    }, {});
+        return validatorResponse;
+      },
+      {}
+    );
+  }
+
+  private static shouldValidate(
+    fieldName,
+    validatorLookup: Record<string, Validator>,
+    fields: Record<string, string>
+  ) {
+    if (this.hasCondition(fieldName, validatorLookup)) {
+      const fieldConditions = validatorLookup[fieldName].applyRulesIf;
+
+      return fieldConditions.every((condition) => {
+        const dependentFieldValue = fields[condition.fieldName];
+        return condition.meetsConditions.every((rule) =>
+          rule(dependentFieldValue)
+        );
+      });
+    }
+
+    return true;
+  }
+
+  private static hasCondition(fieldName, validatorLookup) {
+    return (
+      fieldName in validatorLookup &&
+      "applyRulesIf" in validatorLookup[fieldName]
+    );
   }
 
   private static validateField(
