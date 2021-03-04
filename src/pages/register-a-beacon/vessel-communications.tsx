@@ -95,7 +95,21 @@ const definePageForm = ({
       ]
     ),
     mobileTelephone: new FieldManager(mobileTelephone),
-    mobileTelephoneInput1: new FieldManager(mobileTelephoneInput1),
+    mobileTelephoneInput1: new FieldManager(
+      mobileTelephoneInput1,
+      [
+        Validators.required(
+          "We need your telephone number if you have a mobile telephone"
+        ),
+      ],
+      [
+        {
+          dependsOn: "mobileTelephone",
+          meetingCondition: (value) =>
+            value === VesselCommunication.MOBILE_TELEPHONE,
+        },
+      ]
+    ),
     mobileTelephoneInput2: new FieldManager(mobileTelephoneInput2),
   });
 };
