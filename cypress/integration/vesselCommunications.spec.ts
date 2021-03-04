@@ -1,8 +1,11 @@
 describe("As a beacon owner, I want to register my communication details so SAR can contact me in an emergency", () => {
   const pageUrl = "/register-a-beacon/vessel-communications";
 
-  it("requires an MMSI number if the fixed VHF checkbox is selected", () => {
+  beforeEach(() => {
     givenIAmOnTheVesselCommunicationsPage();
+  });
+
+  it("requires an MMSI number if the fixed VHF checkbox is selected", () => {
     givenIHaveSelectedTheFixedVhfRadioOption();
     andIHaveLeftTheRelevantTextInputBlank();
 
@@ -12,7 +15,6 @@ describe("As a beacon owner, I want to register my communication details so SAR 
   });
 
   it("requires an MMSI number if the portable VHF checkbox is selected", () => {
-    givenIAmOnTheVesselCommunicationsPage();
     givenIHaveSelectedThePortableVhfRadioOption();
     andIHaveLeftTheRelevantTextInputBlank();
 
@@ -22,7 +24,6 @@ describe("As a beacon owner, I want to register my communication details so SAR 
   });
 
   it("requires a phone number if the satellite telephone checkbox is selected", () => {
-    givenIAmOnTheVesselCommunicationsPage();
     givenIHaveSelectedTheSatelliteTelephoneOption();
     andIHaveLeftTheRelevantTextInputBlank();
 
@@ -32,7 +33,6 @@ describe("As a beacon owner, I want to register my communication details so SAR 
   });
 
   it("requires a phone number if the satellite telephone checkbox is selected", () => {
-    givenIAmOnTheVesselCommunicationsPage();
     givenIHaveSelectedTheMobileTelephoneOption();
     andIHaveLeftTheRelevantTextInputBlank();
 
