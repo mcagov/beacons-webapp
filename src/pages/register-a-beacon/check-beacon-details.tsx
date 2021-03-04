@@ -34,7 +34,7 @@ const definePageForm = ({
     ]),
     hexId: new FieldManager(hexId, [
       Validators.isLength(
-        "Beacon HEX ID or UIN must by 15 characters long",
+        "Beacon HEX ID or UIN must be 15 characters long",
         15
       ),
       Validators.hexId(
@@ -138,9 +138,17 @@ const BeaconHexIdInput: FunctionComponent<FormInputProps> = ({
   </FormGroup>
 );
 
+const transformFormData = (formData: CacheEntry): CacheEntry => {
+  const hexId = (formData["hexId"] || "").toUpperCase();
+  formData = { ...formData, hexId };
+
+  return formData;
+};
+
 export const getServerSideProps: GetServerSideProps = handlePageRequest(
   "/register-a-beacon/beacon-information",
-  definePageForm
+  definePageForm,
+  transformFormData
 );
 
 export default CheckBeaconDetails;
