@@ -4,7 +4,17 @@ describe("As a beacon owner, I want to register my communication details so SAR 
   it("requires an MMSI number if the fixed VHF checkbox is selected", () => {
     givenIAmOnTheVesselCommunicationsPage();
     givenIHaveSelectedTheFixedVhfRadioOption();
-    andIHaveLeftTheMMSINumberTextInputBlank();
+    andIHaveLeftTheRelevantTextInputBlank();
+
+    whenIClickContinue();
+
+    thenISeeAnError();
+  });
+
+  it("requires an MMSI number if the portable VHF checkbox is selected", () => {
+    givenIAmOnTheVesselCommunicationsPage();
+    givenIHaveSelectedThePortableVhfRadioOption();
+    andIHaveLeftTheRelevantTextInputBlank();
 
     whenIClickContinue();
 
@@ -19,10 +29,13 @@ describe("As a beacon owner, I want to register my communication details so SAR 
   const givenIHaveSelectedTheFixedVhfRadioOption = () =>
     cy.get("#fixedVhfRadio").click();
 
+  const givenIHaveSelectedThePortableVhfRadioOption = () =>
+    cy.get("#portableVhfRadio").click();
+
   const whenIClickContinue = () =>
     cy.get("button").contains("Continue").click();
 
-  const andIHaveLeftTheMMSINumberTextInputBlank = () => null;
+  const andIHaveLeftTheRelevantTextInputBlank = () => null;
 
   const thenISeeAnError = () => {
     expect(cy.get(".govuk-error-summary"));

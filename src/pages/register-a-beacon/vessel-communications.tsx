@@ -63,7 +63,21 @@ const definePageForm = ({
       ]
     ),
     portableVhfRadio: new FieldManager(portableVhfRadio),
-    portableVhfRadioInput: new FieldManager(portableVhfRadioInput),
+    portableVhfRadioInput: new FieldManager(
+      portableVhfRadioInput,
+      [
+        Validators.required(
+          "We need your MMSI number if you have a portable VHF radio"
+        ),
+      ],
+      [
+        {
+          dependsOn: "portableVhfRadio",
+          meetingCondition: (value) =>
+            value === VesselCommunication.PORTABLE_VHF_RADIO,
+        },
+      ]
+    ),
     satelliteTelephone: new FieldManager(satelliteTelephone),
     satelliteTelephoneInput: new FieldManager(satelliteTelephoneInput),
     mobileTelephone: new FieldManager(mobileTelephone),
