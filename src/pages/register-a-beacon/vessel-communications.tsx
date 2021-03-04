@@ -21,6 +21,7 @@ import {
 } from "../../components/Typography";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
+import { Validators } from "../../lib/form/validators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { VesselCommunication } from "../../lib/types";
@@ -46,7 +47,21 @@ const definePageForm = ({
     callSign: new FieldManager(callSign),
     vhfRadio: new FieldManager(vhfRadio),
     fixedVhfRadio: new FieldManager(fixedVhfRadio),
-    fixedVhfRadioInput: new FieldManager(fixedVhfRadioInput),
+    fixedVhfRadioInput: new FieldManager(
+      fixedVhfRadioInput,
+      [
+        Validators.required(
+          "We need your MMSI number if you have a fixed VHF radio"
+        ),
+      ],
+      [
+        {
+          dependsOn: "fixedVhfRadio",
+          meetingCondition: (value) =>
+            value === VesselCommunication.FIXED_VHF_RADIO,
+        },
+      ]
+    ),
     portableVhfRadio: new FieldManager(portableVhfRadio),
     portableVhfRadioInput: new FieldManager(portableVhfRadioInput),
     satelliteTelephone: new FieldManager(satelliteTelephone),
