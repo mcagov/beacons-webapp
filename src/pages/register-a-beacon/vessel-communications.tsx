@@ -79,7 +79,21 @@ const definePageForm = ({
       ]
     ),
     satelliteTelephone: new FieldManager(satelliteTelephone),
-    satelliteTelephoneInput: new FieldManager(satelliteTelephoneInput),
+    satelliteTelephoneInput: new FieldManager(
+      satelliteTelephoneInput,
+      [
+        Validators.required(
+          "We need your phone number if you have a satellite telephone"
+        ),
+      ],
+      [
+        {
+          dependsOn: "satelliteTelephone",
+          meetingCondition: (value) =>
+            value === VesselCommunication.SATELLITE_TELEPHONE,
+        },
+      ]
+    ),
     mobileTelephone: new FieldManager(mobileTelephone),
     mobileTelephoneInput1: new FieldManager(mobileTelephoneInput1),
     mobileTelephoneInput2: new FieldManager(mobileTelephoneInput2),

@@ -21,6 +21,16 @@ describe("As a beacon owner, I want to register my communication details so SAR 
     thenISeeAnError();
   });
 
+  it("requires a phone number if the satellite telephone checkbox is selected", () => {
+    givenIAmOnTheVesselCommunicationsPage();
+    givenIHaveSelectedTheSatelliteTelephoneOption();
+    andIHaveLeftTheRelevantTextInputBlank();
+
+    whenIClickContinue();
+
+    thenISeeAnError();
+  });
+
   const givenIAmOnTheVesselCommunicationsPage = () => {
     cy.visit("/"); // Sets cookie
     cy.visit(pageUrl);
@@ -31,6 +41,9 @@ describe("As a beacon owner, I want to register my communication details so SAR 
 
   const givenIHaveSelectedThePortableVhfRadioOption = () =>
     cy.get("#portableVhfRadio").click();
+
+  const givenIHaveSelectedTheSatelliteTelephoneOption = () =>
+    cy.get("#satelliteTelephone").click();
 
   const whenIClickContinue = () =>
     cy.get("button").contains("Continue").click();
