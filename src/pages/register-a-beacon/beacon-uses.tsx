@@ -45,7 +45,7 @@ const definePageForm = ({
   });
 };
 
-const PrimaryBeaconUse: FunctionComponent<FormPageProps> = ({
+const BeaconUses: FunctionComponent<FormPageProps> = ({
   form,
   showCookieBanner,
 }: FormPageProps): JSX.Element => {
@@ -62,7 +62,7 @@ const PrimaryBeaconUse: FunctionComponent<FormPageProps> = ({
         mainContent={
           <>
             <FormErrorSummary formErrors={form.errorSummary} />
-            <Form action="/register-a-beacon/primary-beacon-use">
+            <Form action="/register-a-beacon/beacon-uses">
               <FormGroup
                 errorMessages={
                   form.fields.maritimePleasureVesselUse.errorMessages
@@ -179,4 +179,4 @@ export const getServerSideProps: GetServerSideProps = handlePageRequest(
   definePageForm
 );
 
-export default PrimaryBeaconUse;
+export default BeaconUses;

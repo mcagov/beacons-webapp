@@ -174,7 +174,7 @@ const BeaconUseSection: FunctionComponent<CacheEntry> = ({
       <SummaryList>
         <SummaryListItem
           labelText="Primary use of beacon"
-          href="/register-a-beacon/primary-beacon-use"
+          href="/register-a-beacon/beacon-uses"
           actionText="Change"
         >
           {"Maritime"}

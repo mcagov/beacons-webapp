@@ -13,7 +13,7 @@ import {
 } from "./common.spec";
 
 describe("As a beacon owner, I want to submit the primary use for my beacon", () => {
-  const thisPageUrl = "/register-a-beacon/primary-beacon-use";
+  const thisPageUrl = "/register-a-beacon/beacon-uses";
   const previousPageUrl = "/register-a-beacon/beacon-information";
 
   beforeEach(() => {
@@ -44,17 +44,6 @@ describe("As a beacon owner, I want to submit the primary use for my beacon", ()
 
     whenIClickOnTheErrorSummaryLinkContaining(requiredFieldErrorMessage);
     thenMyFocusMovesTo("#motor-vessel");
-  });
-
-  describe("conditional routing", () => {
-    it("routes to the commercial-or-pleasure page if maritime use is selected", () => {
-      givenIHaveSelected("#maritimeUse");
-      whenIClickContinue();
-
-      thenTheUrlShouldContain(
-        "/register-a-beacon/maritime/commercial-or-pleasure"
-      );
-    });
   });
 
   describe("more than one beacon use", () => {

@@ -13,7 +13,9 @@ import {
 } from "./common.spec";
 
 describe("As a beacon owner, I want to submit information about my beacon", () => {
-  const pageUrl = "/register-a-beacon/beacon-information";
+  const thisPageUrl = "/register-a-beacon/beacon-information";
+  const nextPageUrl = "/register-a-beacon/beacon-uses";
+
   const manufacturerSerialNumberFieldSelector = "#manufacturerSerialNumber";
   const batteryExpiryDateMonthFieldSelector = "#batteryExpiryDateMonth";
   const batteryExpiryDateYearFieldSelector = "#batteryExpiryDateYear";
@@ -29,7 +31,7 @@ describe("As a beacon owner, I want to submit information about my beacon", () =
   const validMonth = "12";
 
   beforeEach(() => {
-    givenIAmAt(pageUrl);
+    givenIAmAt(thisPageUrl);
   });
 
   it("shows me the page title", () => {
@@ -40,7 +42,7 @@ describe("As a beacon owner, I want to submit information about my beacon", () =
     whenIType("ASOS", manufacturerSerialNumberFieldSelector);
     whenIClickContinue();
 
-    thenTheUrlShouldContain("/register-a-beacon/primary-beacon-use");
+    thenTheUrlShouldContain(nextPageUrl);
   });
 
   describe("the manufacturer serial number field", () => {
