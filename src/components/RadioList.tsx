@@ -16,15 +16,7 @@ interface RadioListItemProps {
   name: string;
   value: string;
   children: ReactNode;
-  inputHtmlAttributes?: Record<string, string>;
-}
-
-interface RadioListItemHintProps {
-  id: string;
-  name: string;
-  value: string;
-  children: ReactNode;
-  hintText: string;
+  hintText?: string;
   inputHtmlAttributes?: Record<string, string | boolean>;
 }
 
@@ -57,31 +49,9 @@ export const RadioListItem: FunctionComponent<RadioListItemProps> = ({
   name,
   value,
   children,
+  hintText = "",
   inputHtmlAttributes = {},
 }: RadioListItemProps): JSX.Element => (
-  <div className="govuk-radios__item">
-    <input
-      className="govuk-radios__input"
-      id={id}
-      name={name}
-      type="radio"
-      value={value}
-      {...inputHtmlAttributes}
-    />
-    <FormLabel className="govuk-radios__label" htmlFor={id}>
-      {children}
-    </FormLabel>
-  </div>
-);
-
-export const RadioListItemHint: FunctionComponent<RadioListItemHintProps> = ({
-  id,
-  name,
-  value,
-  children,
-  hintText,
-  inputHtmlAttributes = {},
-}: RadioListItemHintProps): JSX.Element => (
   <div className="govuk-radios__item">
     <input
       className="govuk-radios__input"
@@ -96,9 +66,11 @@ export const RadioListItemHint: FunctionComponent<RadioListItemHintProps> = ({
       {children}
     </FormLabel>
 
-    <FormHint forId={id} className="govuk-radios__hint">
-      {hintText}
-    </FormHint>
+    {hintText && (
+      <FormHint forId={id} className="govuk-radios__hint">
+        {hintText}
+      </FormHint>
+    )}
   </div>
 );
 
