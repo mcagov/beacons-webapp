@@ -2,6 +2,7 @@ import {
   givenIAmAt,
   givenIHaveSelected,
   iCanClickTheBackLinkToGoToPreviousPage,
+  iCanSeeAHeadingThatContains,
   requiredFieldErrorMessage,
   thenIShouldSeeAnErrorMessageThatContains,
   thenIShouldSeeAnErrorSummaryLinkThatContains,
@@ -24,6 +25,13 @@ describe("As a beacon owner, I want to submit the primary use for my beacon", ()
     iCanClickTheBackLinkToGoToPreviousPage(previousPageUrl);
   });
 
+  describe("many beacon uses", () => {
+    it("shows 'main or primary use' if this is the first use I am submitting", () => {
+      givenIAmAt(thisPageUrl);
+      iCanSeeAHeadingThatContains("main or primary use");
+    });
+  });
+
   it("displays an error if no primary beacon use is selected", () => {
     whenIClickContinue();
     thenIShouldSeeAnErrorMessageThatContains(requiredFieldErrorMessage);
@@ -44,12 +52,6 @@ describe("As a beacon owner, I want to submit the primary use for my beacon", ()
 
     whenIClickOnTheErrorSummaryLinkContaining(requiredFieldErrorMessage);
     thenMyFocusMovesTo("#motor-vessel");
-  });
-
-  describe("more than one beacon use", () => {
-    xit("plays back to me the number of the use I am entering ('primary', 'secondary' etc.)", () => {
-      return null;
-    });
   });
 
   it("displays an error if 'Other pleasure vessel' is selected, but no text is provided", () => {

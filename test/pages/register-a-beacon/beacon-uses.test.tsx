@@ -17,11 +17,7 @@ describe("BeaconUses", () => {
     hasErrors: false,
     errorSummary: [],
     fields: {
-      maritimePleasureVesselUse: {
-        value: "",
-        errorMessages: [],
-      },
-      otherPleasureVesselText: {
+      beaconUse: {
         value: "",
         errorMessages: [],
       },
