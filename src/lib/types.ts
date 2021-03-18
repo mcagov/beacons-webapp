@@ -56,6 +56,18 @@ export interface Vessel {
   otherPleasureVesselText: string;
 }
 
+export interface Aircraft {
+  maxCapacity: string;
+  aircraftManufacturer: string;
+  principalAirport: string;
+  secondaryAirport: string;
+  registrationMark: string;
+  hexAddress: string;
+  cnOrMsnNumber: string;
+  dongle: string;
+  beaconPosition: string;
+}
+
 export interface Owner {
   beaconOwnerFullName: string;
   beaconOwnerEmail?: string;
