@@ -1,29 +1,26 @@
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import React, { FunctionComponent } from "react";
-import { BackButton, Button } from "../../../components/Button";
-import { Details } from "../../../components/Details";
-import { FormErrorSummary } from "../../../components/ErrorSummary";
+import { BackButton, Button } from "../../components/Button";
+import { Details } from "../../components/Details";
+import { FormErrorSummary } from "../../components/ErrorSummary";
 import {
   Form,
   FormFieldset,
   FormGroup,
   FormLegendPageHeading,
-} from "../../../components/Form";
-import { Grid } from "../../../components/Grid";
-import { FormInputProps, Input } from "../../../components/Input";
-import { InsetText } from "../../../components/InsetText";
-import { Layout } from "../../../components/Layout";
-import { IfYouNeedHelp } from "../../../components/Mca";
-import { FieldManager } from "../../../lib/form/fieldManager";
-import { FormManager } from "../../../lib/form/formManager";
-import { Validators } from "../../../lib/form/validators";
-import { CacheEntry } from "../../../lib/formCache";
-import {
-  FormPageProps,
-  handlePageRequest,
-} from "../../../lib/handlePageRequest";
-import { toUpperCase } from "../../../lib/utils";
+} from "../../components/Form";
+import { Grid } from "../../components/Grid";
+import { FormInputProps, Input } from "../../components/Input";
+import { InsetText } from "../../components/InsetText";
+import { Layout } from "../../components/Layout";
+import { IfYouNeedHelp } from "../../components/Mca";
+import { FieldManager } from "../../lib/form/fieldManager";
+import { FormManager } from "../../lib/form/formManager";
+import { Validators } from "../../lib/form/validators";
+import { CacheEntry } from "../../lib/formCache";
+import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
+import { toUpperCase } from "../../lib/utils";
 
 const definePageForm = ({
   manufacturer,
