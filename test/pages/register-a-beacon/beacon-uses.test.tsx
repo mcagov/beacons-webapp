@@ -12,7 +12,7 @@ jest.mock("../../../src/lib/handlePageRequest", () => ({
   handlePageRequest: jest.fn().mockImplementation(() => jest.fn()),
 }));
 
-describe("BeaconUses", () => {
+xdescribe("BeaconUses", () => {
   const primaryBeaconUseForm: FormJSON = {
     hasErrors: false,
     errorSummary: [],
