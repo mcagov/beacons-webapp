@@ -43,7 +43,7 @@ export const handlePageRequest = (
     return handleGetRequest(context.req.cookies, formManagerFactory);
   });
 
-const handleGetRequest = (
+export const handleGetRequest = (
   cookies: NextApiRequestCookies,
   defineFormRulesCallback: FormManagerFactory
 ): GetServerSidePropsResult<FormPageProps> => {

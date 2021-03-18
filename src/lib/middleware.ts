@@ -9,6 +9,7 @@ import { NextApiRequestCookies } from "next/dist/next-server/server/api-utils";
 import parse from "urlencoded-body-parser";
 import { v4 as uuidv4 } from "uuid";
 import { CacheEntry, FormCacheFactory, IFormCache } from "./formCache";
+import { Registration } from "./model/registration.model";
 import { formSubmissionCookieId } from "./types";
 import { toArray } from "./utils";
 
@@ -59,6 +60,7 @@ export const checkHeaderContains = (
 const seedCache = (id: string): void => {
   const cache: IFormCache = FormCacheFactory.getCache();
   cache.update(id);
+  cache.get(id).registration = new Registration();
 };
 
 const setCookieHeader = (id: string, res: ServerResponse): void => {
