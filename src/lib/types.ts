@@ -57,7 +57,7 @@ export interface Vessel {
 }
 
 export interface Aircraft {
-  maxCapacity: string;
+  aircraftMaxCapacity: string;
   aircraftManufacturer: string;
   principalAirport: string;
   secondaryAirport: string;
