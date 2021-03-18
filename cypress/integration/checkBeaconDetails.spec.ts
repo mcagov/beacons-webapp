@@ -3,7 +3,6 @@ import {
   thenIShouldSeeAnErrorMessageThatContains,
   thenIShouldSeeAnErrorSummaryLinkThatContains,
   thenMyFocusMovesTo,
-  thenTheInputShouldContain,
   thenTheUrlShouldContain,
   whenIClickContinue,
   whenIClickOnTheErrorSummaryLinkContaining,
@@ -120,15 +119,6 @@ describe("As a beacon owner, I want to enter my initial beacon information", () 
   it("routes to the next page if there are no errors with the form submission", () => {
     givenISubmit(validForm);
     thenTheUrlShouldContain("/register-a-beacon/beacon-information");
-  });
-
-  it("can access existing beacons by number in the URL", () => {
-    givenISubmit(validForm);
-    givenIAmAt(thisPageUrl + "/1");
-
-    Object.entries(validForm).forEach(([selector, value]) => {
-      thenTheInputShouldContain(value, selector);
-    });
   });
 });
 
