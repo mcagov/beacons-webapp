@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { FormJSON } from "../../../src/lib/form/formManager";
-import CheckBeaconDetails from "../../../src/pages/register-a-beacon/check-beacon-details";
+import CheckBeaconDetails from "../../../src/pages/register-a-beacon/check-beacon-details/[[...beacon_number]]";
 
 describe("CheckBeaconDetails", () => {
   it("should have a back button which directs the user to the service start page", () => {

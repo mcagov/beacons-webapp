@@ -1,9 +1,9 @@
 import {
   givenIAmAt,
-  iCanSeeAHeadingThatContains,
   thenIShouldSeeAnErrorMessageThatContains,
   thenIShouldSeeAnErrorSummaryLinkThatContains,
   thenMyFocusMovesTo,
+  thenTheInputShouldContain,
   thenTheUrlShouldContain,
   whenIClickContinue,
   whenIClickOnTheErrorSummaryLinkContaining,
@@ -11,17 +11,21 @@ import {
 } from "./common.spec";
 
 describe("As a beacon owner, I want to enter my initial beacon information", () => {
-  const pageUrl = "/register-a-beacon/check-beacon-details";
+  const thisPageUrl = "/register-a-beacon/check-beacon-details";
+  const nextPageUrl = "/register-a-beacon/beacon-information";
+
   const manufacturerFieldSelector = "#manufacturer";
   const modelFieldSelector = "#model";
   const hexIdFieldSelector = "#hexId";
 
-  beforeEach(() => {
-    givenIAmAt(pageUrl);
-  });
+  const validForm = {
+    "#manufacturer": "Raleigh",
+    "#model": "Chopper",
+    "#hexId": "1D0EA08C52FFBFF",
+  };
 
-  it("shows me the page title", () => {
-    iCanSeeAHeadingThatContains("Check beacon details");
+  beforeEach(() => {
+    givenIAmAt(thisPageUrl);
   });
 
   it("errors if I submit just whitespace in the manufacturer field", () => {
@@ -114,14 +118,24 @@ describe("As a beacon owner, I want to enter my initial beacon information", () 
   });
 
   it("routes to the next page if there are no errors with the form submission", () => {
-    const validUkEncodedHexId = "1D0EA08C52FFBFF";
-
-    whenIType("Test Manufacturer", "#manufacturer");
-    whenIType("Test Model", "#model");
-    whenIType(validUkEncodedHexId, "#hexId");
-
-    whenIClickContinue();
-
+    givenISubmit(validForm);
     thenTheUrlShouldContain("/register-a-beacon/beacon-information");
   });
+
+  it("can access existing beacons by number in the URL", () => {
+    givenISubmit(validForm);
+    givenIAmAt(thisPageUrl + "/1");
+
+    Object.entries(validForm).forEach(([selector, value]) => {
+      thenTheInputShouldContain(value, selector);
+    });
+  });
 });
+
+const givenISubmit = (formData) => {
+  Object.entries(formData).forEach(([selector, value]) => {
+    whenIType(value, selector);
+  });
+
+  whenIClickContinue();
+};
