@@ -1,5 +1,6 @@
 import {
   givenIAmAt,
+  givenIHaveTyped,
   requiredFieldErrorMessage,
   thenIShouldSeeAnErrorMessageThatContains,
   thenMyFocusMovesTo,
@@ -56,7 +57,7 @@ describe("As a beacon owner, I want to submit information about my aircraft", ()
     });
   });
 
-  describe("beacon position", () => {
+  describe("the beacon position", () => {
     const tooManyCharactersErrorMessageContains = [
       "Where the beacon",
       tooManyCharactersErrorMessage,
@@ -74,6 +75,15 @@ describe("As a beacon owner, I want to submit information about my aircraft", ()
         ...tooManyCharactersErrorMessageContains
       );
       thenMyFocusMovesTo(beaconPositionSelector);
+    });
+
+    it("submits if less than 100 characters are submitted", () => {
+      const requiredFieldValue = "42";
+      givenIHaveTyped(requiredFieldValue, aircraftMaxCapacitySelector);
+
+      whenIType("a".repeat(99), beaconPositionSelector);
+      whenIClickContinue();
+      thenTheUrlShouldContain(nextPageUrl);
     });
   });
 });
