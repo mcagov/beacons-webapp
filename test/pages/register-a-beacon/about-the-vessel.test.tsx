@@ -40,7 +40,7 @@ describe("AboutTheVessel", () => {
     },
   };
 
-  it("should have a back button which directs the user to the primary beacon use page", () => {
+  it("should have a back button which directs the user to the about the vessel page", () => {
     render(<AboutTheVessel form={aboutTheVesselForm} />);
 
     expect(screen.getByText("Back", { exact: true })).toHaveAttribute(
