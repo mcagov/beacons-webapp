@@ -87,7 +87,7 @@ export const FormLegend: FunctionComponent<FormLegendProps> = ({
 }: FormLegendProps): JSX.Element => {
   let sizeClassName = "";
 
-  if (size !== null) {
+  if (size) {
     sizeClassName =
       size === "medium"
         ? "govuk-fieldset__legend--m"
