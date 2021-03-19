@@ -6,12 +6,15 @@ import {
   Form,
   FormFieldset,
   FormGroup,
+  FormHint,
+  FormLegend,
   FormLegendPageHeading,
 } from "../../components/Form";
 import { Grid } from "../../components/Grid";
 import { FormInputProps, Input } from "../../components/Input";
 import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
+import { RadioList, RadioListItem } from "../../components/RadioList";
 import { TextareaCharacterCount } from "../../components/Textarea";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
@@ -105,6 +108,8 @@ const AboutTheAircraft: FunctionComponent<FormPageProps> = ({
                   <CoreNumberOrManufacturerSerialNumber
                     value={form.fields.cnOrMsnNumber.value}
                   />
+
+                  <Dongle value={form.fields.dongle.value} />
 
                   <BeaconPosition
                     value={form.fields.beaconPosition.value}
@@ -223,12 +228,30 @@ const Dongle: FunctionComponent<FormInputProps> = ({
   value = "",
 }: FormInputProps): JSX.Element => (
   <FormGroup>
-    <Input
-      id="dongle"
-      label="Is the beacon a dongle? (optional)"
-      hintText="A dongle is a small USB stick beacon that can be moved between different aircraft. Knowing if it might used on a different aircraft will help Search and Rescue in an emergency"
-      defaultValue={value}
-    />
+    <FormFieldset>
+      <FormLegend>Types of communication devices onboard</FormLegend>
+      <FormHint forId="typesOfCommunication">
+        A dongle is a small USB stick beacon that can be moved between different
+        aircraft. Knowing if it might used on a different aircraft will help
+        Search and Rescue in an emergency
+      </FormHint>
+      <RadioList small={true}>
+        <RadioListItem
+          id="dongle-no"
+          name="dongle"
+          value="false"
+          label="no"
+          defaultChecked={value === "false"}
+        />
+        <RadioListItem
+          id="dongle-yes"
+          name="dongle"
+          value="true"
+          label="yes"
+          defaultChecked={value === "true"}
+        />
+      </RadioList>
+    </FormFieldset>
   </FormGroup>
 );
 
