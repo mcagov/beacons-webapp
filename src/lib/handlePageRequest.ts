@@ -30,9 +30,6 @@ export const handlePageRequest = (
 ): GetServerSideProps =>
   withCookieRedirect(async (context: GetServerSidePropsContext) => {
     const userDidSubmitForm = context.req.method === "POST";
-    // extract out beacon_index = 0
-    // extract flat beacon information
-    // pass that into the getFormPage function
 
     if (userDidSubmitForm) {
       return handlePostRequest(
