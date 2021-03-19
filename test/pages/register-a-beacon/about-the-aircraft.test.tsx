@@ -20,6 +20,10 @@ describe("AboutTheAircraft", () => {
         value: "",
         errorMessages: [],
       },
+      secondaryAirport: {
+        value: "",
+        errorMessages: [],
+      },
       registrationMark: {
         value: "",
         errorMessages: [],
