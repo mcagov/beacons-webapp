@@ -1,6 +1,7 @@
 import {
   givenIAmAt,
   givenIHaveTyped,
+  iCanClickTheBackLinkToGoToPreviousPage,
   requiredFieldErrorMessage,
   thenIShouldSeeAnErrorMessageThatContains,
   thenMyFocusMovesTo,
@@ -12,6 +13,7 @@ import {
 } from "./common.spec";
 
 describe("As a beacon owner, I want to submit information about my aircraft", () => {
+  const previousPageUrl = "/register-a-beacon/primary-beacon-use";
   const thisPageUrl = "/register-a-beacon/about-the-aircraft";
   const nextPageUrl = "/register-a-beacon/aircraft-communications";
 
@@ -22,11 +24,15 @@ describe("As a beacon owner, I want to submit information about my aircraft", ()
     givenIAmAt(thisPageUrl);
   });
 
-  it("routes to the next page if there are no errors with the form submission", () => {
+  it("should route to the next page if there are no errors with the form submission", () => {
     whenIType("42", aircraftMaxCapacitySelector);
     whenIClickContinue();
 
     thenTheUrlShouldContain(nextPageUrl);
+  });
+
+  it("should route to the previous page", () => {
+    iCanClickTheBackLinkToGoToPreviousPage(previousPageUrl);
   });
 
   describe("maximum capacity field", () => {
