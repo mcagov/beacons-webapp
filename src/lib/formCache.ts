@@ -1,5 +1,6 @@
 import {
   Aircraft,
+  AircraftCommunications,
   Beacon,
   BeaconInformation,
   BeaconIntent,
@@ -15,6 +16,7 @@ type BeaconModel = Beacon &
   Vessel &
   VesselCommunications &
   Aircraft &
+  AircraftCommunications &
   EmergencyContacts;
 
 // Convenience type

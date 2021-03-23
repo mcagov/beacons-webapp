@@ -19,14 +19,6 @@ export enum MaritimePleasureVessel {
   OTHER = "OTHER",
 }
 
-export enum VesselCommunication {
-  VHF_RADIO = "VHF_RADIO",
-  FIXED_VHF_RADIO = "FIXED_VHF_RADIO",
-  PORTABLE_VHF_RADIO = "PORTABLE_VHF_RADIO",
-  SATELLITE_TELEPHONE = "SATELLITE_TELEPHONE",
-  MOBILE_TELEPHONE = "MOBILE_TELEPHONE",
-}
-
 export interface Beacon {
   manufacturer: string;
   model: string;
@@ -56,30 +48,6 @@ export interface Vessel {
   otherPleasureVesselText: string;
 }
 
-export interface Aircraft {
-  aircraftMaxCapacity: string;
-  aircraftManufacturer: string;
-  principalAirport: string;
-  secondaryAirport: string;
-  registrationMark: string;
-  hexAddress: string;
-  cnOrMsnNumber: string;
-  dongle: string;
-  beaconPosition: string;
-}
-
-export interface Owner {
-  beaconOwnerFullName: string;
-  beaconOwnerEmail?: string;
-  beaconOwnerTelephoneNumber?: string;
-  beaconOwnerAlternativeTelephoneNumber?: string;
-  beaconOwnerAddressLine1: string;
-  beaconOwnerAddressLine2: string;
-  beaconOwnerTownOrCity: string;
-  beaconOwnerCounty?: string;
-  beaconOwnerPostcode: string;
-}
-
 export interface VesselCommunications {
   callSign: string;
   vhfRadio: VesselCommunication;
@@ -92,6 +60,57 @@ export interface VesselCommunications {
   mobileTelephone: VesselCommunication;
   mobileTelephoneInput1: string;
   mobileTelephoneInput2: string;
+}
+
+export enum VesselCommunication {
+  VHF_RADIO = "VHF_RADIO",
+  FIXED_VHF_RADIO = "FIXED_VHF_RADIO",
+  PORTABLE_VHF_RADIO = "PORTABLE_VHF_RADIO",
+  SATELLITE_TELEPHONE = "SATELLITE_TELEPHONE",
+  MOBILE_TELEPHONE = "MOBILE_TELEPHONE",
+}
+
+export interface Aircraft {
+  aircraftMaxCapacity: string;
+  aircraftManufacturer: string;
+  principalAirport: string;
+  secondaryAirport: string;
+  registrationMark: string;
+  hexAddress: string;
+  cnOrMsnNumber: string;
+  dongle: string;
+  beaconPosition: string;
+}
+
+export interface AircraftCommunications {
+  aircraftVhfRadio: AircraftCommunication;
+  aircraftVhfRadioInput: string;
+  aircraftSatelliteTelephone: AircraftCommunication;
+  aircraftSatelliteTelephoneInput: string;
+  aircraftMobileTelephone: AircraftCommunication;
+  aircraftMobileTelephoneInput1: string;
+  aircraftMobileTelephoneInput2: string;
+  aircraftOtherCommunications: AircraftCommunication;
+  aircraftOtherCommunicationsInput: string;
+}
+
+export enum AircraftCommunication {
+  VHF_RADIO = "VHF_RADIO",
+  SATELLITE_TELEPHONE = "SATELLITE_TELEPHONE",
+  MOBILE_TELEPHONE = "MOBILE_TELEPHONE",
+  OTHER = "OTHER",
+}
+
+export interface Owner {
+  beaconOwnerFullName: string;
+  beaconOwnerEmail?: string;
+  beaconOwnerTelephoneNumber?: string;
+  beaconOwnerAlternativeTelephoneNumber?: string;
+  beaconOwnerAddressLine1: string;
+  beaconOwnerAddressLine2: string;
+  beaconOwnerTownOrCity: string;
+  beaconOwnerCounty?: string;
+  beaconOwnerPostcode: string;
 }
 
 export interface EmergencyContacts {

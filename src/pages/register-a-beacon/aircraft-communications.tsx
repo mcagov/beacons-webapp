@@ -21,116 +21,34 @@ import {
 } from "../../components/Typography";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
-import { Validators } from "../../lib/form/validators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
-import { VesselCommunication } from "../../lib/types";
-
-interface FormInputProps {
-  value: string;
-}
+import { AircraftCommunication } from "../../lib/types";
+import { ofcomLicenseUrl } from "../../lib/urls";
 
 const definePageForm = ({
-  callSign,
-  vhfRadio,
-  fixedVhfRadio,
-  fixedVhfRadioInput,
-  portableVhfRadio,
-  portableVhfRadioInput,
-  satelliteTelephone,
-  satelliteTelephoneInput,
-  mobileTelephone,
-  mobileTelephoneInput1,
-  mobileTelephoneInput2,
+  aircraftVhfRadio,
+  aircraftVhfRadioInput,
+  aircraftSatelliteTelephone,
+  aircraftSatelliteTelephoneInput,
+  aircraftMobileTelephone,
+  aircraftMobileTelephoneInput1,
+  aircraftMobileTelephoneInput2,
+  aircraftOtherCommunications,
+  aircraftOtherCommunicationsInput,
 }: CacheEntry): FormManager => {
   return new FormManager({
-    callSign: new FieldManager(callSign),
-    vhfRadio: new FieldManager(vhfRadio),
-    fixedVhfRadio: new FieldManager(fixedVhfRadio),
-    fixedVhfRadioInput: new FieldManager(
-      fixedVhfRadioInput,
-      [
-        Validators.required(
-          "We need your MMSI number if you have a fixed VHF/DSC radio"
-        ),
-        Validators.wholeNumber(
-          "Your fixed MMSI number must only include numbers 0 to 9, with no letters or other characters"
-        ),
-        Validators.isLength(
-          "Your fixed MMSI number must be exactly nine digits long",
-          9
-        ),
-      ],
-      [
-        {
-          dependsOn: "fixedVhfRadio",
-          meetingCondition: (value) =>
-            value === VesselCommunication.FIXED_VHF_RADIO,
-        },
-      ]
+    vhfRadio: new FieldManager(aircraftVhfRadio),
+    vhfRadioInput: new FieldManager(aircraftVhfRadioInput),
+    satelliteTelephoneRadio: new FieldManager(aircraftSatelliteTelephone),
+    satelliteTelephoneInput: new FieldManager(aircraftSatelliteTelephoneInput),
+    mobileTelephoneRadio: new FieldManager(aircraftMobileTelephone),
+    mobileTelephoneInput1: new FieldManager(aircraftMobileTelephoneInput1),
+    mobileTelephoneInput2: new FieldManager(aircraftMobileTelephoneInput2),
+    otherCommunicationsRadio: new FieldManager(aircraftOtherCommunications),
+    otherCommunicationsRadioInput: new FieldManager(
+      aircraftOtherCommunicationsInput
     ),
-    portableVhfRadio: new FieldManager(portableVhfRadio),
-    portableVhfRadioInput: new FieldManager(
-      portableVhfRadioInput,
-      [
-        Validators.required(
-          "We need your portable MMSI number if you have a portable VHF/DSC radio"
-        ),
-        Validators.wholeNumber(
-          "Your portable MMSI number must only include numbers 0 to 9, with no letters or other characters"
-        ),
-        Validators.isLength(
-          "Your portable MMSI number must be exactly nine digits long",
-          9
-        ),
-      ],
-      [
-        {
-          dependsOn: "portableVhfRadio",
-          meetingCondition: (value) =>
-            value === VesselCommunication.PORTABLE_VHF_RADIO,
-        },
-      ]
-    ),
-    satelliteTelephone: new FieldManager(satelliteTelephone),
-    satelliteTelephoneInput: new FieldManager(
-      satelliteTelephoneInput,
-      [
-        Validators.required(
-          "We need your phone number if you have a satellite telephone"
-        ),
-        Validators.phoneNumber(
-          "Enter a satellite telephone number in the correct format"
-        ),
-      ],
-      [
-        {
-          dependsOn: "satelliteTelephone",
-          meetingCondition: (value) =>
-            value === VesselCommunication.SATELLITE_TELEPHONE,
-        },
-      ]
-    ),
-    mobileTelephone: new FieldManager(mobileTelephone),
-    mobileTelephoneInput1: new FieldManager(
-      mobileTelephoneInput1,
-      [
-        Validators.required(
-          "We need your telephone number if you have a mobile telephone"
-        ),
-        Validators.phoneNumber(
-          "Enter a mobile telephone number, like 07700 982736 or +447700912738"
-        ),
-      ],
-      [
-        {
-          dependsOn: "mobileTelephone",
-          meetingCondition: (value) =>
-            value === VesselCommunication.MOBILE_TELEPHONE,
-        },
-      ]
-    ),
-    mobileTelephoneInput2: new FieldManager(mobileTelephoneInput2),
   });
 };
 
@@ -153,21 +71,16 @@ const AircraftCommunications: FunctionComponent<FormPageProps> = ({
             <PageHeading>{pageHeading}</PageHeading>
             <FormErrorSummary formErrors={form.errorSummary} />
             <GovUKBody>
-              Details about the onboard communications will be critical for
-              Search and Rescue when trying to contact you in an emergency.
+              This will be critical for Search and Rescue in an emergency.
             </GovUKBody>
             <GovUKBody>
-              If you have a radio licence and have a Very High Frequency (VHF)
-              and/or Very High Frequency (VHF) / Digital Selective Calling (DSC)
-              radio, you can{" "}
-              <AnchorLink href="https://www.ofcom.org.uk/manage-your-licence/radiocommunication-licences/ships-radio">
-                find up your Call Sign and Maritime Mobile Service Identity
-                (MMSI) number on the OFCOM website.
+              If you have a VHF Airband radio license you can
+              <AnchorLink href={ofcomLicenseUrl}>
+                find your Call Sign on the OFCOM website
               </AnchorLink>
             </GovUKBody>
-            <Form action="/register-a-beacon/vessel-communications">
-              <CallSign value={form.fields.callSign.value} />
 
+            <Form>
               <TypesOfCommunication form={form} />
 
               <Button buttonText="Continue" />
@@ -179,23 +92,6 @@ const AircraftCommunications: FunctionComponent<FormPageProps> = ({
     </Layout>
   );
 };
-
-const CallSign: FunctionComponent<FormInputProps> = ({
-  value,
-}: FormInputProps) => (
-  <>
-    <FormGroup className="govuk-!-margin-top-4">
-      <Input
-        id="callSign"
-        labelClassName="govuk-label--s"
-        label="Vessel Call Sign (optional)"
-        hintText="This is the unique Call Sign associated to this vessel"
-        defaultValue={value}
-        numOfChars={20}
-      />
-    </FormGroup>
-  </>
-);
 
 const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
   form,
@@ -212,62 +108,29 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
       <CheckboxList conditional={true}>
         <CheckboxListItem
           id="vhfRadio"
-          value={VesselCommunication.VHF_RADIO}
+          value={AircraftCommunication.VHF_RADIO}
           defaultChecked={
-            form.fields.vhfRadio.value === VesselCommunication.VHF_RADIO
+            form.fields.vhfRadio.value === AircraftCommunication.VHF_RADIO
           }
           label="VHF Radio"
-        />
+          conditional={true}
+        >
+          <FormGroup errorMessages={form.fields.vhfRadioInput.errorMessages}>
+            <Input
+              id="vhfRadioInput"
+              label="Fixed aircraft radio numnber (optional)"
+              hintText="This is the unique radio number associated to the aircraft, it is # numbers long"
+              defaultValue={form.fields.vhfRadioInput.value}
+            />
+          </FormGroup>
+        </CheckboxListItem>
 
         <CheckboxListItem
-          id="fixedVhfRadio"
-          label="Fixed VHF/DSC Radio"
-          value={VesselCommunication.FIXED_VHF_RADIO}
+          id="satelliteTelephoneRadio"
+          value={AircraftCommunication.SATELLITE_TELEPHONE}
           defaultChecked={
-            form.fields.fixedVhfRadio.value ===
-            VesselCommunication.FIXED_VHF_RADIO
-          }
-          conditional={true}
-        >
-          <FormGroup
-            errorMessages={form.fields.fixedVhfRadioInput.errorMessages}
-          >
-            <Input
-              id="fixedVhfRadioInput"
-              label="Fixed MMSI number"
-              hintText="This is the unique MMSI number associated to the vessel, it is 9
-          digits long"
-              defaultValue={form.fields.fixedVhfRadioInput.value}
-            />
-          </FormGroup>
-        </CheckboxListItem>
-        <CheckboxListItem
-          id="portableVhfRadio"
-          value={VesselCommunication.PORTABLE_VHF_RADIO}
-          defaultChecked={
-            form.fields.portableVhfRadio.value ===
-            VesselCommunication.PORTABLE_VHF_RADIO
-          }
-          label="Portable VHF/DSC Radio"
-          conditional={true}
-        >
-          <FormGroup
-            errorMessages={form.fields.portableVhfRadioInput.errorMessages}
-          >
-            <Input
-              id="portableVhfRadioInput"
-              label="Portable MMSI number"
-              hintText="This is the unique MMSI number associated to the portable radio and is 9 numbers long. E.g. starts with 2359xxxxx"
-              defaultValue={form.fields.portableVhfRadioInput.value}
-            />
-          </FormGroup>
-        </CheckboxListItem>
-        <CheckboxListItem
-          id="satelliteTelephone"
-          value={VesselCommunication.SATELLITE_TELEPHONE}
-          defaultChecked={
-            form.fields.satelliteTelephone.value ===
-            VesselCommunication.SATELLITE_TELEPHONE
+            form.fields.satelliteTelephoneRadio.value ===
+            AircraftCommunication.SATELLITE_TELEPHONE
           }
           label="Satellite Telephone"
           conditional={true}
@@ -278,17 +141,17 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
             <Input
               id="satelliteTelephoneInput"
               label="Enter phone number"
-              hintText="Iridium usually start: +8707, Thuraya usually start: +8821, Globalstar usually start: +3364)"
+              hintText="Iridium start: +8816, Inmarsat (ISAT, FLEET, BGAN) start +870, Thuraya start: +8821, Globalstar start: +3364"
               defaultValue={form.fields.satelliteTelephoneInput.value}
             />
           </FormGroup>
         </CheckboxListItem>
         <CheckboxListItem
-          id="mobileTelephone"
-          value={VesselCommunication.MOBILE_TELEPHONE}
+          id="mobileTelephoneRadio"
+          value={AircraftCommunication.MOBILE_TELEPHONE}
           defaultChecked={
-            form.fields.mobileTelephone.value ===
-            VesselCommunication.MOBILE_TELEPHONE
+            form.fields.mobileTelephoneRadio.value ===
+            AircraftCommunication.MOBILE_TELEPHONE
           }
           label="Mobile Telephone(s)"
           conditional={true}
@@ -318,7 +181,7 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
 );
 
 export const getServerSideProps: GetServerSideProps = handlePageRequest(
-  "/register-a-beacon/more-vessel-details",
+  "/register-a-beacon/more-details",
   definePageForm
 );
 

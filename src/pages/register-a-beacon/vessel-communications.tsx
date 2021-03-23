@@ -25,6 +25,7 @@ import { Validators } from "../../lib/form/validators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { VesselCommunication } from "../../lib/types";
+import { ofcomLicenseUrl } from "../../lib/urls";
 
 interface FormInputProps {
   value: string;
@@ -160,7 +161,7 @@ const VesselCommunications: FunctionComponent<FormPageProps> = ({
               If you have a radio licence and have a Very High Frequency (VHF)
               and/or Very High Frequency (VHF) / Digital Selective Calling (DSC)
               radio, you can{" "}
-              <AnchorLink href="https://www.ofcom.org.uk/manage-your-licence/radiocommunication-licences/ships-radio">
+              <AnchorLink href={ofcomLicenseUrl}>
                 find up your Call Sign and Maritime Mobile Service Identity
                 (MMSI) number on the OFCOM website.
               </AnchorLink>
