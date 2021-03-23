@@ -7,7 +7,7 @@ import { Grid } from "./Grid";
 import { InsetText } from "./InsetText";
 import { Layout } from "./Layout";
 
-interface FormPageProps {
+interface BeaconsFormProps {
   form: FormJSON;
   children: ReactNode;
   previousPageUrl: string;
@@ -16,14 +16,14 @@ interface FormPageProps {
   insetText?: ReactNode;
 }
 
-export const BeaconsForm: FunctionComponent<FormPageProps> = ({
+export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
   form,
   children,
   previousPageUrl,
   pageHeading,
   showCookieBanner,
   insetText = null,
-}: FormPageProps): JSX.Element => {
+}: BeaconsFormProps): JSX.Element => {
   let insetComponent;
   if (insetText) {
     insetComponent = <InsetText>{insetText}</InsetText>;
