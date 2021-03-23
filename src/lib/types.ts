@@ -116,11 +116,5 @@ export interface EmergencyContacts {
   emergencyContact3AlternativeTelephoneNumber: string;
 }
 
-export interface BeaconUse {
-  environment: string;
-  purpose: string;
-  activity: string;
-}
-
 export const formSubmissionCookieId = "submissionId";
 export const acceptRejectCookieId = "acceptRejectId";

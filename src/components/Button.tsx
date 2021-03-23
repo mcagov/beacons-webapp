@@ -67,9 +67,9 @@ export const StartButton: FunctionComponent<StartButtonProps> = ({
 export const BackButton: FunctionComponent<BackButtonProps> = ({
   href,
 }: BackButtonProps): JSX.Element => (
-  <a href={href} className="govuk-back-link">
-    Back
-  </a>
+  <Link href={href} shallow={true}>
+    <a className="govuk-back-link">Back</a>
+  </Link>
 );
 
 export const LinkButton: FunctionComponent<LinkButtonProps> = ({

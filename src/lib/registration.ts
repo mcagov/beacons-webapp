@@ -14,3 +14,16 @@ export interface Registration {
 
   uses: BeaconUse[];
 }
+
+export interface BeaconUse {
+  environment: string;
+  purpose: string;
+  activity: string;
+}
+
+export enum BeaconEnvionment {
+  MARITIME = "MARITIME",
+  AVIATION = "AVIATION",
+  LAND = "LAND",
+  OTHER = "OTHER",
+}
