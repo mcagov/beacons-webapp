@@ -45,7 +45,7 @@ const CheckYourAnswersPage: FunctionComponent<CheckYourAnswersProps> = ({
               <BeaconUseSection {...formData} />
               <AboutTheVesselSection {...formData} />
               <VesselCommunicationsSection {...formData} />
-              <MoreVesselDetailsSection {...formData} />
+              <MoreDetailsSection {...formData} />
               <BeaconOwnerSection {...formData} />
               <BeaconOwnerAddressSection {...formData} />
               <BeaconOwnerEmergencyContact1Section {...formData} />
@@ -357,19 +357,19 @@ const VesselCommunicationsSection: FunctionComponent<CacheEntry> = ({
   );
 };
 
-const MoreVesselDetailsSection: FunctionComponent<CacheEntry> = ({
-  moreVesselDetails,
+const MoreDetailsSection: FunctionComponent<CacheEntry> = ({
+  moreDetails,
 }: Vessel): JSX.Element => (
   <>
-    <h2 className="govuk-heading-m">More about the vessel</h2>
+    <h2 className="govuk-heading-m">More about the use</h2>
 
     <SummaryList>
       <SummaryListItem
-        labelText="Vessel description"
-        href="/register-a-beacon/more-vessel-details"
+        labelText="Use description"
+        href="/register-a-beacon/more-details"
         actionText="Change"
       >
-        {moreVesselDetails}
+        {moreDetails}
       </SummaryListItem>
     </SummaryList>
   </>
