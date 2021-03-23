@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode } from "react";
-import { FormJSON } from "../lib/form/formManager";
+import { FormError } from "../lib/form/formManager";
 import { BackButton, Button } from "./Button";
 import { FormErrorSummary } from "./ErrorSummary";
 import { Form, FormFieldset, FormLegendPageHeading } from "./Form";
@@ -8,20 +8,20 @@ import { InsetText } from "./InsetText";
 import { Layout } from "./Layout";
 
 interface BeaconsFormProps {
-  form: FormJSON;
   children: ReactNode;
   previousPageUrl: string;
   pageHeading: string;
   showCookieBanner: boolean;
+  formErrors?: FormError[];
   insetText?: ReactNode;
 }
 
 export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
-  form,
   children,
   previousPageUrl,
   pageHeading,
   showCookieBanner,
+  formErrors = [],
   insetText = null,
 }: BeaconsFormProps): JSX.Element => {
   let insetComponent;
@@ -38,7 +38,7 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
       <Grid
         mainContent={
           <>
-            <FormErrorSummary formErrors={form.errorSummary} />
+            <FormErrorSummary formErrors={formErrors} />
             <Form>
               <FormFieldset>
                 <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
