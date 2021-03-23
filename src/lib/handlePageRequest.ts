@@ -58,7 +58,7 @@ const handleGetRequest = (
   };
 };
 
-export const handlePostRequest = async (
+const handlePostRequest = async (
   context: GetServerSidePropsContext,
   destinationIfValid: string,
   formManagerFactory: FormManagerFactory,
