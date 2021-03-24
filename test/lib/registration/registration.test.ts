@@ -42,4 +42,11 @@ describe("Registration", () => {
     registration.update(formData);
     expect(registration.registration.uses.length).toBe(1);
   });
+
+  it("should create a beacon use at the provided index if none exists", () => {
+    const formData = { useIndex: 1, environment: BeaconEnvionment.MARITIME };
+    registration.registration.uses.push({});
+    registration.update(formData);
+    expect(registration.registration.uses.length).toBe(2);
+  });
 });
