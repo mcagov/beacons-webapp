@@ -32,7 +32,7 @@ describe("Registration", () => {
   });
 
   it("should not write over the uses array", () => {
-    const formData = { uses: "Is not an array" };
+    const formData = { uses: "Is not an array" } as any;
     registration.update(formData);
     expect(registration.registration.uses).toStrictEqual([]);
   });

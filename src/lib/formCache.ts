@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Registration } from "./registration/registration";
+import { IRegistration } from "./registration/types";
+
+type Indexes = { beaconIndex: number; useIndex: number };
 
 // Convenience type
-export type CacheEntry = Record<string, any>;
+export type CacheEntry = Partial<IRegistration & Indexes>;
 
 export interface IFormCache {
   update(id: string, formData?: CacheEntry): void;
