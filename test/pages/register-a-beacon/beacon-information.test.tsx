@@ -50,18 +50,4 @@ describe("BeaconInformationPage", () => {
       "/register-a-beacon/check-beacon-details"
     );
   });
-
-  it("should POST its form submission to itself for redirection via getServerSideProps()", () => {
-    const { container } = render(
-      <BeaconInformationPage
-        form={emptyBeaconInformationPageForm}
-        showCookieBanner={false}
-      />
-    );
-    const ownPath = "/register-a-beacon/beacon-information";
-
-    const form = container.querySelector("form");
-
-    expect(form).toHaveAttribute("action", ownPath);
-  });
 });

@@ -119,7 +119,7 @@ const BeaconInformationPage: FunctionComponent<FormPageProps> = ({
         mainContent={
           <>
             <FormErrorSummary formErrors={form.errorSummary} />
-            <Form action="/register-a-beacon/beacon-information">
+            <Form>
               <FormFieldset>
                 <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
                 <InsetText>
@@ -284,7 +284,7 @@ const transformFormData = (formData: CacheEntry): CacheEntry => {
 };
 
 export const getServerSideProps: GetServerSideProps = handlePageRequest(
-  "/register-a-beacon/primary-beacon-use",
+  "/register-a-beacon/beacon-use",
   definePageForm,
   transformFormData
 );
