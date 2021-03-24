@@ -1,13 +1,22 @@
 import { CacheEntry } from "../formCache";
-import { IRegistration } from "./types";
-import { initBeacon } from "./utils";
+import { initBeacon } from "./registrationUtils";
+import { Registration } from "./types";
 
-export class Registration {
-  private _beacon: IRegistration;
+export class BeaconRegistration {
+  private _registration: Registration;
+  private _beaconKeyMask: string[] = ["uses"];
 
   constructor() {
-    this._beacon = initBeacon();
+    this._registration = initBeacon();
   }
 
-  public update(formData: CacheEntry): void {}
+  public get registration(): Registration {
+    return this._registration;
+  }
+
+  public update(formData: CacheEntry): void {
+    Object.keys(this._registration)
+      .filter((key: string) => this._beaconKeyMask.includes(key))
+      .forEach((key: string) => {});
+  }
 }

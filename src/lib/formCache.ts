@@ -1,23 +1,5 @@
-import { Registration } from "./registration";
-import {
-  Aircraft,
-  Beacon,
-  BeaconInformation,
-  BeaconUse,
-  EmergencyContacts,
-  Owner,
-  Vessel,
-  VesselCommunications,
-} from "./types";
-
-type BeaconModel = Beacon &
-  BeaconInformation &
-  Owner &
-  Vessel &
-  VesselCommunications &
-  Aircraft &
-  EmergencyContacts &
-  BeaconUse;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { BeaconRegistration } from "./registration/registration";
 
 // Convenience type
 export type CacheEntry = Record<string, any>;
@@ -45,11 +27,11 @@ export class FormCacheFactory {
 class FormCache implements IFormCache {
   private _byId: Record<string, CacheEntry> = {};
 
-  private _byIdToRegistration: Record<string, Registration> = {};
+  private _byIdToRegistration: Record<string, BeaconRegistration> = {};
 
   public init(id: string): void {
     this._byId[id] = {};
-    this._byIdToRegistration[id] = new Registration();
+    this._byIdToRegistration[id] = new BeaconRegistration();
   }
 
   public update(id: string, formData: CacheEntry): void {
@@ -57,18 +39,7 @@ class FormCache implements IFormCache {
     const cache = this._byId[id];
     Object.assign(cache, formData);
 
-    this.updateUse(cache, formData);
-  }
-
-  private updateUse(cache: CacheEntry, formData: CacheEntry): void {
-    const useIndex = formData.useIndex;
-
-    if (useIndex >= 0) {
-      cache.uses = cache.uses || [];
-
-      let use = cache.uses[useIndex] || {};
-      Object.assign(use, formData);
-    }
+    this._byIdToRegistration[id].update(formData);
   }
 
   public get(id: string): CacheEntry {

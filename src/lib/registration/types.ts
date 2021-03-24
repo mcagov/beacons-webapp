@@ -1,4 +1,4 @@
-export interface IRegistration {
+export interface Registration {
   manufacturer: string;
   model: string;
   hexId: string;
@@ -13,13 +13,13 @@ export interface IRegistration {
   lastServicedDateYear: string;
 
   ownerFullName: string;
-  ownerEmail?: string;
-  ownerTelephoneNumber?: string;
-  ownerAlternativeTelephoneNumber?: string;
+  ownerEmail: string;
+  ownerTelephoneNumber: string;
+  ownerAlternativeTelephoneNumber: string;
   ownerAddressLine1: string;
   ownerAddressLine2: string;
   ownerTownOrCity: string;
-  ownerCounty?: string;
+  ownerCounty: string;
   ownerPostcode: string;
 
   emergencyContact1FullName: string;
@@ -46,4 +46,26 @@ export enum BeaconEnvionment {
   AVIATION = "AVIATION",
   LAND = "LAND",
   OTHER = "OTHER",
+}
+
+export interface VesselCommunications {
+  callSign: string;
+  vhfRadio: VesselCommunication;
+  fixedVhfRadio: string;
+  fixedVhfRadioInput: string;
+  portableVhfRadio: VesselCommunication;
+  portableVhfRadioInput: string;
+  satelliteTelephone: VesselCommunication;
+  satelliteTelephoneInput: string;
+  mobileTelephone: VesselCommunication;
+  mobileTelephoneInput1: string;
+  mobileTelephoneInput2: string;
+}
+
+export enum VesselCommunication {
+  VHF_RADIO = "VHF_RADIO",
+  FIXED_VHF_RADIO = "FIXED_VHF_RADIO",
+  PORTABLE_VHF_RADIO = "PORTABLE_VHF_RADIO",
+  SATELLITE_TELEPHONE = "SATELLITE_TELEPHONE",
+  MOBILE_TELEPHONE = "MOBILE_TELEPHONE",
 }

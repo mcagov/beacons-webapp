@@ -76,34 +76,4 @@ describe("FormCache", () => {
 
     expect(cache.get(id)).toStrictEqual(updatedFormData);
   });
-
-  it("should create a uses array if none exist and a use index is provided", () => {
-    const formData: CacheEntry = { environment: "MARITIME", useIndex: 0 };
-    cache.update(id, formData);
-
-    const expected = {
-      environment: "MARITIME",
-      useIndex: 0,
-      uses: [{ useIndex: 0, environment: "MARITIME" }],
-    };
-
-    expect(cache.get(id)).toStrictEqual(expected);
-  });
-
-  it("should update an existing beacon use if a use index is provided", () => {
-    const formData: CacheEntry = {
-      environment: "MARITIME",
-      uses: [{ environment: "AVIATION" }],
-      useIndex: 0,
-    };
-    cache.update(id, formData);
-
-    const expected = {
-      environment: "AVIATION",
-      useIndex: 0,
-      uses: [{ useIndex: 0, environment: "AVIATION" }],
-    };
-
-    expect(cache.get(id)).toStrictEqual(expected);
-  });
 });

@@ -1,10 +1,10 @@
+import { useRouter } from "next/router";
 import React, { FunctionComponent, ReactNode } from "react";
 import { FormError } from "../lib/form/formManager";
 import { BackButton, Button } from "./Button";
 import { FormErrorSummary } from "./ErrorSummary";
 import { Form, FormFieldset, FormGroup, FormLegendPageHeading } from "./Form";
 import { Grid } from "./Grid";
-import { HiddenInput } from "./Input";
 import { InsetText } from "./InsetText";
 import { Layout } from "./Layout";
 import { IfYouNeedHelp } from "./Mca";
@@ -59,5 +59,14 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
         }
       />
     </Layout>
+  );
+};
+
+const HiddenInput: FunctionComponent = () => {
+  const router = useRouter();
+  const useIndexValue = router.query.useIndex || 0;
+
+  return (
+    <input id="use-index" type="hidden" name="useIndex" value={useIndexValue} />
   );
 };

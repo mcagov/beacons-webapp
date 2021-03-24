@@ -1,9 +1,9 @@
 /**
  * Convenience function for returning an `empty` instance of a beacon registration.
  *
- * @returns {IRegistration}   JSON instance of a beacon registration
+ * @returns {Registration}   JSON instance of a beacon registration
  */
-const initBeacon = () => {
+export const initBeacon = () => {
   return {
     manufacturer: "",
     model: "",
