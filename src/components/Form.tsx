@@ -17,6 +17,7 @@ interface FormGroupProps {
   children: ReactNode;
   className?: string;
   errorMessages?: string[];
+  errorMessagesIfSingleField?: string[];
 }
 
 interface FormLabelProps {
@@ -55,8 +56,10 @@ export const FormGroup: FunctionComponent<FormGroupProps> = ({
   children,
   className = "",
   errorMessages = [],
+  errorMessagesIfSingleField = [],
 }: FormGroupProps): JSX.Element => {
-  const showErrors = errorMessages.length > 0;
+  const showErrors =
+    errorMessages.length > 0 || errorMessagesIfSingleField.length > 0;
   const errorClassName: string = showErrors ? "govuk-form-group--error" : "";
 
   let errorsComponent: ReactNode;
