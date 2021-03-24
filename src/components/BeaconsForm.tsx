@@ -14,8 +14,8 @@ interface BeaconsFormProps {
   pageHeading: string;
   showCookieBanner: boolean;
   formErrors?: FormError[];
-  errorMessages?: string[];
   insetText?: ReactNode;
+  errorMessagesIfSingleField?: string[];
 }
 
 export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
@@ -24,8 +24,8 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
   pageHeading,
   showCookieBanner,
   formErrors = [],
-  errorMessages = [],
   insetText = null,
+  errorMessagesIfSingleField = [],
 }: BeaconsFormProps): JSX.Element => {
   let insetComponent;
   if (insetText) {
@@ -43,7 +43,9 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
           <>
             <FormErrorSummary formErrors={formErrors} />
             <Form>
-              <FormGroup errorMessages={errorMessages}>
+              <FormGroup
+                errorMessagesIfSingleField={errorMessagesIfSingleField}
+              >
                 <FormFieldset>
                   <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
                 </FormFieldset>
