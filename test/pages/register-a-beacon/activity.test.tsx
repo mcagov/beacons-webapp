@@ -3,16 +3,16 @@ import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { FormJSON } from "../../../src/lib/form/formManager";
 import { handlePageRequest } from "../../../src/lib/handlePageRequest";
-import PrimaryBeaconUse, {
+import Activity, {
   getServerSideProps,
-} from "../../../src/pages/register-a-beacon/primary-beacon-use";
+} from "../../../src/pages/register-a-beacon/activity";
 
 jest.mock("../../../src/lib/handlePageRequest", () => ({
   __esModule: true,
   handlePageRequest: jest.fn().mockImplementation(() => jest.fn()),
 }));
 
-describe("PrimaryBeaconUse", () => {
+describe("Activity", () => {
   const primaryBeaconUseForm: FormJSON = {
     hasErrors: false,
     errorSummary: [],
@@ -29,7 +29,7 @@ describe("PrimaryBeaconUse", () => {
   };
 
   it("should have a back button which directs the user to the beacon information page", () => {
-    render(<PrimaryBeaconUse form={primaryBeaconUseForm} />);
+    render(<Activity form={primaryBeaconUseForm} />);
 
     expect(screen.getByText("Back", { exact: true })).toHaveAttribute(
       "href",

@@ -36,7 +36,7 @@ const definePageForm = ({
   });
 };
 
-const PrimaryBeaconUse: FunctionComponent<FormPageProps> = ({
+const Activity: FunctionComponent<FormPageProps> = ({
   form,
   showCookieBanner,
 }: FormPageProps): JSX.Element => {
@@ -137,4 +137,4 @@ export const getServerSideProps: GetServerSideProps = handlePageRequest(
   definePageForm
 );
 
-export default PrimaryBeaconUse;
+export default Activity;
