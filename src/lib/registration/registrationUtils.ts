@@ -50,7 +50,9 @@ export const initBeacon = (): IRegistration => {
  * @param environment {BeaconEnvironment}   An environment for which the beacon will be used
  * @returns           {any}                 The concrete beacon use
  */
-export const initBeaconUse = (environment: BeaconEnvionment): any => {
+export const beaconUseFromEnvironment = (
+  environment: BeaconEnvionment
+): any => {
   switch (environment) {
     case BeaconEnvionment.MARITIME:
       return {

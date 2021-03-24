@@ -1,5 +1,5 @@
 import { CacheEntry } from "../formCache";
-import { initBeacon, initBeaconUse } from "./registrationUtils";
+import { beaconUseFromEnvironment, initBeacon } from "./registrationUtils";
 import { IRegistration } from "./types";
 
 export class Registration {
@@ -35,8 +35,7 @@ export class Registration {
       let use = this.registration.uses[useIndex];
 
       if (!use) {
-        use = initBeaconUse(formData.environment);
-        console.log("use", use);
+        use = beaconUseFromEnvironment(formData.environment);
         this.registration.uses.splice(useIndex, 1, use);
       }
 
