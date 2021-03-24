@@ -1,5 +1,5 @@
 import { CacheEntry } from "../formCache";
-import { initBeacon } from "./registrationUtils";
+import { initBeacon, initBeaconUse } from "./registrationUtils";
 import { IRegistration } from "./types";
 
 export class Registration {
@@ -32,7 +32,15 @@ export class Registration {
 
     if (useIndex >= 0) {
       useIndex = Math.max(0, this.registration.uses.length);
-      const use = this.registration.uses[useIndex];
+      let use = this.registration.uses[useIndex];
+
+      if (!use) {
+        use = initBeaconUse(formData.environment);
+        console.log("use", use);
+        this.registration.uses.splice(useIndex, 1, use);
+      }
+
+      this._updateKeysFor(formData, use);
     }
   }
 

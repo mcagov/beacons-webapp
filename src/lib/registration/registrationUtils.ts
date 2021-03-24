@@ -62,6 +62,8 @@ export const initBeaconUse = (environment: BeaconEnvionment): any => {
     case BeaconEnvionment.AVIATION:
       return {
         environment: BeaconEnvionment.AVIATION,
+        purpose: "",
+        activity: "",
       };
 
     case BeaconEnvionment.LAND:
@@ -75,6 +77,6 @@ export const initBeaconUse = (environment: BeaconEnvionment): any => {
       };
 
     default:
-      throw new Error(`Unknown beacon environment submitted: ${environment}`);
+      return null;
   }
 };

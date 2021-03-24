@@ -32,16 +32,11 @@ export interface IRegistration {
   emergencyContact3TelephoneNumber: string;
   emergencyContact3AlternativeTelephoneNumber: string;
 
-  uses: BeaconUse[];
+  // TODO: Update this type to Beacon Use
+  uses: Record<string, string>[];
 }
 
 export interface BeaconUse {
-  environment: BeaconEnvionment;
-  purpose: string;
-  activity: string;
-}
-
-export interface MaritimeUse {
   environment: BeaconEnvionment;
   purpose: string;
   activity: string;
@@ -52,6 +47,18 @@ export enum BeaconEnvionment {
   AVIATION = "AVIATION",
   LAND = "LAND",
   OTHER = "OTHER",
+}
+
+export interface AviationUse {
+  environment: BeaconEnvionment;
+  purpose: string;
+  activity: string;
+}
+
+export interface AviationUse {
+  environment: BeaconEnvionment;
+  purpose: string;
+  activity: string;
 }
 
 export interface VesselCommunications {
