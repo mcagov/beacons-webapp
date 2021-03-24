@@ -51,5 +51,30 @@ export const initBeacon = (): IRegistration => {
  * @returns           {any}                 The concrete beacon use
  */
 export const initBeaconUse = (environment: BeaconEnvionment): any => {
-  return {};
+  switch (environment) {
+    case BeaconEnvionment.MARITIME:
+      return {
+        environment: BeaconEnvionment.MARITIME,
+        purpose: "",
+        activity: "",
+      };
+
+    case BeaconEnvionment.AVIATION:
+      return {
+        environment: BeaconEnvionment.AVIATION,
+      };
+
+    case BeaconEnvionment.LAND:
+      return {
+        environment: BeaconEnvionment.LAND,
+      };
+
+    case BeaconEnvionment.OTHER:
+      return {
+        environment: BeaconEnvionment.OTHER,
+      };
+
+    default:
+      throw new Error(`Unknown beacon environment submitted: ${environment}`);
+  }
 };

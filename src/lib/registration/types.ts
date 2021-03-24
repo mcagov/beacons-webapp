@@ -41,6 +41,12 @@ export interface BeaconUse {
   activity: string;
 }
 
+export interface MaritimeUse {
+  environment: BeaconEnvionment;
+  purpose: string;
+  activity: string;
+}
+
 export enum BeaconEnvionment {
   MARITIME = "MARITIME",
   AVIATION = "AVIATION",

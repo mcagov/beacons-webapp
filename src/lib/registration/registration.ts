@@ -13,7 +13,7 @@ export class Registration {
   public update(formData: CacheEntry): void {
     formData = formData || {};
     this._updateBeacon(formData);
-    this._updateUses(formData);
+    this._updateUse(formData);
   }
 
   private _updateBeacon(formData: CacheEntry): void {
@@ -27,7 +27,24 @@ export class Registration {
       });
   }
 
-  private _updateUses(formData: CacheEntry): void {
-    // Updates specific use
+  private _updateUse(formData: CacheEntry): void {
+    let useIndex = formData.useIndex;
+
+    if (useIndex >= 0) {
+      useIndex = Math.max(0, this.registration.uses.length);
+      const use = this.registration.uses[useIndex];
+    }
+  }
+
+  private _updateKeysFor(
+    formData: CacheEntry,
+    toUpdate: Record<string, string>
+  ): void {
+    Object.keys(formData).forEach((key: string) => {
+      if (key in toUpdate) {
+        const value = formData[key];
+        toUpdate[key] = value;
+      }
+    });
   }
 }
