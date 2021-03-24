@@ -13,6 +13,7 @@ describe("BeaconsForm Component", () => {
   let pageHeading;
   let showCookieBanner;
   let formErrors;
+  let errorMessages;
   let insetText;
 
   beforeEach(() => {
@@ -21,6 +22,7 @@ describe("BeaconsForm Component", () => {
     pageHeading = "A day in the beacon life";
     showCookieBanner = true;
     formErrors = [];
+    errorMessages = ["This is an error"];
     insetText = "Once upon a time a person with a beacon walked the seas";
   });
 
@@ -82,5 +84,34 @@ describe("BeaconsForm Component", () => {
     );
 
     expect(screen.queryByText(insetText)).toBeNull();
+  });
+
+  it("should render the error messages if provided", () => {
+    render(
+      <BeaconsForm
+        previousPageUrl={previousPageUrl}
+        pageHeading={pageHeading}
+        showCookieBanner={showCookieBanner}
+        errorMessages={errorMessages}
+      >
+        {children}
+      </BeaconsForm>
+    );
+
+    expect(screen.queryByText("This is an error")).toBeDefined();
+  });
+
+  it("should not render an error messages if not provided", () => {
+    render(
+      <BeaconsForm
+        previousPageUrl={previousPageUrl}
+        pageHeading={pageHeading}
+        showCookieBanner={showCookieBanner}
+      >
+        {children}
+      </BeaconsForm>
+    );
+
+    expect(screen.queryByText("This is an error")).toBeNull();
   });
 });
