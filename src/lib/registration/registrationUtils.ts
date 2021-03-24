@@ -1,9 +1,11 @@
+import { BeaconEnvionment, IRegistration } from "./types";
+
 /**
  * Convenience function for returning an `empty` instance of a beacon registration.
  *
  * @returns {Registration}   JSON instance of a beacon registration
  */
-export const initBeacon = () => {
+export const initBeacon = (): IRegistration => {
   return {
     manufacturer: "",
     model: "",
@@ -40,4 +42,14 @@ export const initBeacon = () => {
 
     uses: [],
   };
+};
+
+/**
+ * Convenience function for returning the typed instance a beacon use, given the provided environment.
+ *
+ * @param environment {BeaconEnvironment}   An environment for which the beacon will be used
+ * @returns           {any}                 The concrete beacon use
+ */
+export const initBeaconUse = (environment: BeaconEnvionment): any => {
+  return {};
 };

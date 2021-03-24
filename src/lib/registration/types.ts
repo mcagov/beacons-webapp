@@ -36,7 +36,7 @@ export interface IRegistration {
 }
 
 export interface BeaconUse {
-  environment: string;
+  environment: BeaconEnvionment;
   purpose: string;
   activity: string;
 }

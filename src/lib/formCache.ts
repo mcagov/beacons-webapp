@@ -6,9 +6,7 @@ import { Registration } from "./registration/registration";
 export type CacheEntry = Record<string, any>;
 
 export interface IFormCache {
-  init(id: string);
-
-  update(id: string, formData: CacheEntry): void;
+  update(id: string, formData?: CacheEntry): void;
 
   get(id: string): CacheEntry;
 }
@@ -30,15 +28,12 @@ class FormCache implements IFormCache {
 
   private _byIdToRegistration: Record<string, Registration> = {};
 
-  public init(id: string): void {
-    this._byId[id] = {};
-    this._byIdToRegistration[id] = new Registration();
-  }
+  public update(id: string, formData: CacheEntry = {}): void {
+    this._byId[id] = this._byId[id] || {};
+    Object.assign(this._byId[id], formData);
 
-  public update(id: string, formData: CacheEntry): void {
-    formData = formData || {};
-    const cache = this._byId[id];
-    Object.assign(cache, formData);
+    this._byIdToRegistration[id] =
+      this._byIdToRegistration[id] || new Registration();
 
     this._byIdToRegistration[id].update(formData);
   }

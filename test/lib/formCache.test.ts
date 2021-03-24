@@ -12,7 +12,6 @@ describe("FormCache", () => {
   beforeEach(() => {
     cache = FormCacheFactory.getCache();
     id = uuidv4();
-    cache.init(id);
   });
 
   it("should return a singleton instance of the form cache", () => {
