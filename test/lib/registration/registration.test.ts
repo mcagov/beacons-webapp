@@ -1,5 +1,6 @@
 import { Registration } from "../../../src/lib/registration/registration";
 import { initBeacon } from "../../../src/lib/registration/registrationUtils";
+import { BeaconEnvionment } from "../../../src/lib/registration/types";
 
 describe("Registration", () => {
   let registration: Registration;
@@ -36,5 +37,9 @@ describe("Registration", () => {
     expect(registration.registration.uses).toStrictEqual([]);
   });
 
-  xit("should create the correct beacon use based on the type", () => {});
+  it("should create a beacon use if none exists", () => {
+    const formData = { useIndex: 0, environment: BeaconEnvionment.MARITIME };
+    registration.update(formData);
+    expect(registration.registration.uses.length).toBe(1);
+  });
 });

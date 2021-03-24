@@ -30,5 +30,7 @@ export class Registration {
       });
   }
 
-  private _updateUses(formData: CacheEntry): void {}
+  private _updateUses(formData: CacheEntry): void {
+    // Updates specific use
+  }
 }
