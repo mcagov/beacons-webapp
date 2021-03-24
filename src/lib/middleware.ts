@@ -71,9 +71,9 @@ const setCookieHeader = (id: string, res: ServerResponse): void => {
   res.setHeader("Set-Cookie", serialize(formSubmissionCookieId, id, options));
 };
 
-export function updateFormCache<T>(
+export function updateFormCache(
   cookies: NextApiRequestCookies,
-  formData: T,
+  formData: CacheEntry,
   cache: IFormCache = FormCacheFactory.getCache()
 ): void {
   const submissionId: string = cookies[formSubmissionCookieId];

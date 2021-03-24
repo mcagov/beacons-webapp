@@ -2,7 +2,6 @@ import {
   Aircraft,
   Beacon,
   BeaconInformation,
-  BeaconIntent,
   BeaconUse,
   EmergencyContacts,
   Owner,
@@ -20,9 +19,7 @@ type BeaconModel = Beacon &
   BeaconUse;
 
 // Convenience type
-export type CacheEntry = Partial<BeaconModel> & {
-  beaconIntent?: BeaconIntent;
-};
+export type CacheEntry = Record<string, string | number>;
 
 export interface IFormCache {
   update(id: string, formData?: CacheEntry): void;

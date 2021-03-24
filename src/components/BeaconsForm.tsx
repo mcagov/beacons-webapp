@@ -4,6 +4,7 @@ import { BackButton, Button } from "./Button";
 import { FormErrorSummary } from "./ErrorSummary";
 import { Form, FormFieldset, FormLegendPageHeading } from "./Form";
 import { Grid } from "./Grid";
+import { HiddenInput } from "./Input";
 import { InsetText } from "./InsetText";
 import { Layout } from "./Layout";
 
@@ -45,6 +46,7 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
               </FormFieldset>
               {insetComponent}
               {children}
+              <HiddenInput />
 
               <Button buttonText="Continue" />
             </Form>

@@ -1,6 +1,11 @@
 import { render, screen } from "@testing-library/react";
+import * as nextRouter from "next/router";
 import React from "react";
 import { BeaconsForm } from "../../src/components/BeaconsForm";
+
+(nextRouter as any).useRouter = jest.fn().mockImplementation(() => ({
+  query: {},
+}));
 
 describe("BeaconsForm Component", () => {
   let children;

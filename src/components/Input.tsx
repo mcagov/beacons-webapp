@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, {
   FunctionComponent,
   InputHTMLAttributes,
@@ -71,5 +72,14 @@ export const Input: FunctionComponent<InputProps> = ({
         {...htmlAttributes}
       />
     </>
+  );
+};
+
+export const HiddenInput: FunctionComponent = () => {
+  const router = useRouter();
+  const useIndexValue = router.query.useIndex || 0;
+
+  return (
+    <input id="use-index" type="hidden" name="useIndex" value={useIndexValue} />
   );
 };

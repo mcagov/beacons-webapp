@@ -11,7 +11,7 @@ describe("Button Components", () => {
 
     it("should have the correct href attribute", () => {
       render(<BackButton href="#" />);
-      expect(screen.getByText("Back")).toHaveAttribute("href", "#");
+      expect(screen.getByText("Back")).toHaveAttribute("href", "/#");
     });
   });
 });
