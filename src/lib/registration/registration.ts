@@ -15,8 +15,15 @@ export class BeaconRegistration {
   }
 
   public update(formData: CacheEntry): void {
-    Object.keys(this._registration)
-      .filter((key: string) => this._beaconKeyMask.includes(key))
-      .forEach((key: string) => {});
+    formData = formData || {};
+
+    Object.keys(formData)
+      .filter((key: string) => !this._beaconKeyMask.includes(key))
+      .forEach((key: string) => {
+        if (key in this._registration) {
+          const value = formData[key];
+          this._registration[key] = value;
+        }
+      });
   }
 }
