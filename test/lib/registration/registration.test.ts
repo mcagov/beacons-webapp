@@ -49,4 +49,10 @@ describe("Registration", () => {
     registration.update(formData);
     expect(registration.registration.uses.length).toBe(2);
   });
+
+  it("should not add a beacon use if the index is greater than the index provided", () => {
+    const formData = { useIndex: 2, environment: BeaconEnvionment.MARITIME };
+    registration.update(formData);
+    expect(registration.registration.uses.length).toBe(1);
+  });
 });
