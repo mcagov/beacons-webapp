@@ -16,6 +16,7 @@ export class Registration {
   public update(formData: CacheEntry): void {
     formData = formData || {};
     this._updateBeacon(formData);
+    this._updateUses(formData);
   }
 
   private _updateBeacon(formData: CacheEntry): void {
@@ -28,4 +29,6 @@ export class Registration {
         }
       });
   }
+
+  private _updateUses(formData: CacheEntry): void {}
 }
