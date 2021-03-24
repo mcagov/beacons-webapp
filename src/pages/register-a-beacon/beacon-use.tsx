@@ -23,7 +23,7 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
   return (
     <BeaconsForm
       formErrors={form.errorSummary}
-      previousPageUrl="/register-a-beacon/primary-beacon-use"
+      previousPageUrl="/register-a-beacon/beacon-information"
       pageHeading={pageHeading}
       showCookieBanner={showCookieBanner}
       insetText="If you have multiple uses for this beacon, tell us about the
