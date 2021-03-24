@@ -1,11 +1,11 @@
-import { BeaconRegistration } from "../../../src/lib/registration/registration";
+import { Registration } from "../../../src/lib/registration/registration";
 import { initBeacon } from "../../../src/lib/registration/registrationUtils";
 
 describe("Registration", () => {
-  let registration: BeaconRegistration;
+  let registration: Registration;
 
   beforeEach(() => {
-    registration = new BeaconRegistration();
+    registration = new Registration();
   });
 
   it("should handle null form data", () => {
@@ -35,4 +35,6 @@ describe("Registration", () => {
     registration.update(formData);
     expect(registration.registration.uses).toStrictEqual([]);
   });
+
+  xit("should create the correct beacon use based on the type", () => {});
 });

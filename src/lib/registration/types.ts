@@ -1,4 +1,4 @@
-export interface Registration {
+export interface IRegistration {
   manufacturer: string;
   model: string;
   hexId: string;

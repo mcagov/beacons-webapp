@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BeaconRegistration } from "./registration/registration";
+import { IRegistration } from "./registration/registration";
 
 // Convenience type
 export type CacheEntry = Record<string, any>;
@@ -27,11 +27,11 @@ export class FormCacheFactory {
 class FormCache implements IFormCache {
   private _byId: Record<string, CacheEntry> = {};
 
-  private _byIdToRegistration: Record<string, BeaconRegistration> = {};
+  private _byIdToRegistration: Record<string, IRegistration> = {};
 
   public init(id: string): void {
     this._byId[id] = {};
-    this._byIdToRegistration[id] = new BeaconRegistration();
+    this._byIdToRegistration[id] = new Registration();
   }
 
   public update(id: string, formData: CacheEntry): void {
