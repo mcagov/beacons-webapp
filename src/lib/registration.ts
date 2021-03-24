@@ -1,7 +1,6 @@
-import { FormManager } from "./form/formManager";
 import { CacheEntry } from "./formCache";
 
-export interface Registration {
+export interface IRegistration {
   manufacturer: string;
   model: string;
   hexId: string;
@@ -14,6 +13,26 @@ export interface Registration {
   lastServicedDate: string;
   lastServicedDateMonth: string;
   lastServicedDateYear: string;
+
+  ownerFullName: string;
+  ownerEmail?: string;
+  ownerTelephoneNumber?: string;
+  ownerAlternativeTelephoneNumber?: string;
+  ownerAddressLine1: string;
+  ownerAddressLine2: string;
+  ownerTownOrCity: string;
+  ownerCounty?: string;
+  ownerPostcode: string;
+
+  emergencyContact1FullName: string;
+  emergencyContact1TelephoneNumber: string;
+  emergencyContact1AlternativeTelephoneNumber: string;
+  emergencyContact2FullName: string;
+  emergencyContact2TelephoneNumber: string;
+  emergencyContact2AlternativeTelephoneNumber: string;
+  emergencyContact3FullName: string;
+  emergencyContact3TelephoneNumber: string;
+  emergencyContact3AlternativeTelephoneNumber: string;
 
   uses: BeaconUse[];
 }
@@ -31,36 +50,51 @@ export enum BeaconEnvionment {
   OTHER = "OTHER",
 }
 
+const initBeacon = () => {
+  return {
+    manufacturer: "",
+    model: "",
+    hexId: "",
+
+    manufacturerSerialNumber: "",
+    chkCode: "",
+    batteryExpiryDate: "",
+    batteryExpiryDateMonth: "",
+    batteryExpiryDateYear: "",
+    lastServicedDate: "",
+    lastServicedDateMonth: "",
+    lastServicedDateYear: "",
+
+    ownerFullName: "",
+    ownerEmail: "",
+    ownerTelephoneNumber: "",
+    ownerAlternativeTelephoneNumber: "",
+    ownerAddressLine1: "",
+    ownerAddressLine2: "",
+    ownerTownOrCity: "",
+    ownerCounty: "",
+    ownerPostcode: "",
+
+    emergencyContact1FullName: "",
+    emergencyContact1TelephoneNumber: "",
+    emergencyContact1AlternativeTelephoneNumber: "",
+    emergencyContact2FullName: "",
+    emergencyContact2TelephoneNumber: "",
+    emergencyContact2AlternativeTelephoneNumber: "",
+    emergencyContact3FullName: "",
+    emergencyContact3TelephoneNumber: "",
+    emergencyContact3AlternativeTelephoneNumber: "",
+
+    uses: [],
+  };
+};
+
 export class Registration {
-  // A form representation for a beacon registration.
-  private beacon: Record<string, any> = getBeaconForm();
+  private _beacon: IRegistration;
 
-  constructor() {}
-
-  /**
-   * Public getter for the form this registration object manages.
-   */
-  public get form(): FormManager {
-    return this._form;
+  constructor() {
+    this._beacon = initBeacon();
   }
 
-  public updateBeacon(formData: CacheEntry): void {
-    this.form.updateValue(formData);
-
-    const useIndex = formData.useIndex as number;
-
-    if (useIndex) {
-      this.updateUse(formData, useIndex);
-    }
-  }
-
-  private updateUse(formData: CacheEntry, useIndex: number): void {
-    // Handles creating the correct use type, if it does not already exist and updates the values.
-  }
-
-  public markAsPristine(): void {
-    // Marks the form as `pristine` => resetting the form object this registration class manages.
-  }
-
-  public hasErrors(): void {}
+  public update(formData: CacheEntry): void {}
 }

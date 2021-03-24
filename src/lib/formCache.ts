@@ -1,3 +1,4 @@
+import { Registration } from "./registration";
 import {
   Aircraft,
   Beacon,
@@ -19,10 +20,12 @@ type BeaconModel = Beacon &
   BeaconUse;
 
 // Convenience type
-export type CacheEntry = Record<string, string | number>;
+export type CacheEntry = Record<string, any>;
 
 export interface IFormCache {
-  update(id: string, formData?: CacheEntry): void;
+  init(id: string);
+
+  update(id: string, formData: CacheEntry): void;
 
   get(id: string): CacheEntry;
 }
@@ -42,9 +45,30 @@ export class FormCacheFactory {
 class FormCache implements IFormCache {
   private _byId: Record<string, CacheEntry> = {};
 
-  public update(id: string, formData: CacheEntry = {}): void {
-    this._byId[id] = this._byId[id] || {};
-    Object.assign(this._byId[id], formData);
+  private _byIdToRegistration: Record<string, Registration> = {};
+
+  public init(id: string): void {
+    this._byId[id] = {};
+    this._byIdToRegistration[id] = new Registration();
+  }
+
+  public update(id: string, formData: CacheEntry): void {
+    formData = formData || {};
+    const cache = this._byId[id];
+    Object.assign(cache, formData);
+
+    this.updateUse(cache, formData);
+  }
+
+  private updateUse(cache: CacheEntry, formData: CacheEntry): void {
+    const useIndex = formData.useIndex;
+
+    if (useIndex >= 0) {
+      cache.uses = cache.uses || [];
+
+      let use = cache.uses[useIndex] || {};
+      Object.assign(use, formData);
+    }
   }
 
   public get(id: string): CacheEntry {

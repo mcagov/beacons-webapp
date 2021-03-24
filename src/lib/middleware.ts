@@ -58,7 +58,7 @@ export const checkHeaderContains = (
 
 const seedCache = (id: string): void => {
   const cache: IFormCache = FormCacheFactory.getCache();
-  cache.update(id);
+  cache.init(id);
 };
 
 const setCookieHeader = (id: string, res: ServerResponse): void => {
