@@ -5,11 +5,15 @@ import { FormGroup } from "../../components/Form";
 import { Input } from "../../components/Input";
 import { RadioList, RadioListItem } from "../../components/RadioList";
 import { FieldManager } from "../../lib/form/fieldManager";
-import { FormManager } from "../../lib/form/formManager";
+import { FormJSON, FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { MaritimePleasureVessel } from "../../lib/types";
+
+interface OptionsProps {
+  form: FormJSON;
+}
 
 const definePageForm = ({
   maritimePleasureVesselUse,
@@ -36,7 +40,6 @@ const PrimaryBeaconUse: FunctionComponent<FormPageProps> = ({
   form,
   showCookieBanner,
 }: FormPageProps): JSX.Element => {
-  const maritimePleasureVesselName = "maritimePleasureVesselUse";
   const pageHeading =
     "What type of maritime pleasure vessel will you mostly use this beacon on?";
 
@@ -48,74 +51,84 @@ const PrimaryBeaconUse: FunctionComponent<FormPageProps> = ({
       formErrors={form.errorSummary}
       errorMessages={form.fields.maritimePleasureVesselUse.errorMessages}
     >
-      <RadioList conditional={true}>
-        <RadioListItem
-          id="motor-vessel"
-          name={maritimePleasureVesselName}
-          value={MaritimePleasureVessel.MOTOR}
-          label="Motor vessel"
-          hintText="E.g. Speedboat, RIB"
-          defaultChecked={
-            form.fields.maritimePleasureVesselUse.value ===
-            MaritimePleasureVessel.MOTOR
-          }
-        />
-        <RadioListItem
-          id="sailing-vessel"
-          name={maritimePleasureVesselName}
-          value={MaritimePleasureVessel.SAILING}
-          label="Sailing vessel"
-          hintText="E.g. Skiff, Dinghy, Yacht, Catamaran"
-          defaultChecked={
-            form.fields.maritimePleasureVesselUse.value ===
-            MaritimePleasureVessel.SAILING
-          }
-        />
-        <RadioListItem
-          id="rowing-vessel"
-          name={maritimePleasureVesselName}
-          value={MaritimePleasureVessel.ROWING}
-          label="Rowing vessel"
-          hintText="E.g. Single person rowing boat, Cornish Gig, Multi-person rowing boat"
-          defaultChecked={
-            form.fields.maritimePleasureVesselUse.value ===
-            MaritimePleasureVessel.ROWING
-          }
-        />
-        <RadioListItem
-          id="maritimePleasureVesselUse"
-          value={MaritimePleasureVessel.SMALL_UNPOWERED}
-          label="Small unpowered vessel"
-          hintText="E.g. Canoe, Kayak"
-          defaultChecked={
-            form.fields.maritimePleasureVesselUse.value ===
-            MaritimePleasureVessel.SMALL_UNPOWERED
-          }
-        />
-        <RadioListItem
-          id="other-pleasure-vessel"
-          name={maritimePleasureVesselName}
-          value={MaritimePleasureVessel.OTHER}
-          label="Other pleasure vessel"
-          hintText="E.g. Surfboard, Kitesurfing"
-          defaultChecked={
-            form.fields.maritimePleasureVesselUse.value ===
-            MaritimePleasureVessel.OTHER
-          }
-          conditional={true}
-        >
-          <FormGroup
-            errorMessages={form.fields.otherPleasureVesselText.errorMessages}
-          >
-            <Input
-              id="otherPleasureVesselText"
-              label="What sort of vessel is it?"
-              defaultValue={form.fields.otherPleasureVesselText.value}
-            />
-          </FormGroup>
-        </RadioListItem>
-      </RadioList>
+      <MaritimePleasureOptions form={form} />
     </BeaconsForm>
+  );
+};
+
+const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
+  form,
+}: OptionsProps): JSX.Element => {
+  const maritimePleasureVesselName = "maritimePleasureVesselUse";
+
+  return (
+    <RadioList conditional={true}>
+      <RadioListItem
+        id="motor-vessel"
+        name={maritimePleasureVesselName}
+        value={MaritimePleasureVessel.MOTOR}
+        label="Motor vessel"
+        hintText="E.g. Speedboat, RIB"
+        defaultChecked={
+          form.fields.maritimePleasureVesselUse.value ===
+          MaritimePleasureVessel.MOTOR
+        }
+      />
+      <RadioListItem
+        id="sailing-vessel"
+        name={maritimePleasureVesselName}
+        value={MaritimePleasureVessel.SAILING}
+        label="Sailing vessel"
+        hintText="E.g. Skiff, Dinghy, Yacht, Catamaran"
+        defaultChecked={
+          form.fields.maritimePleasureVesselUse.value ===
+          MaritimePleasureVessel.SAILING
+        }
+      />
+      <RadioListItem
+        id="rowing-vessel"
+        name={maritimePleasureVesselName}
+        value={MaritimePleasureVessel.ROWING}
+        label="Rowing vessel"
+        hintText="E.g. Single person rowing boat, Cornish Gig, Multi-person rowing boat"
+        defaultChecked={
+          form.fields.maritimePleasureVesselUse.value ===
+          MaritimePleasureVessel.ROWING
+        }
+      />
+      <RadioListItem
+        id="maritimePleasureVesselUse"
+        value={MaritimePleasureVessel.SMALL_UNPOWERED}
+        label="Small unpowered vessel"
+        hintText="E.g. Canoe, Kayak"
+        defaultChecked={
+          form.fields.maritimePleasureVesselUse.value ===
+          MaritimePleasureVessel.SMALL_UNPOWERED
+        }
+      />
+      <RadioListItem
+        id="other-pleasure-vessel"
+        name={maritimePleasureVesselName}
+        value={MaritimePleasureVessel.OTHER}
+        label="Other pleasure vessel"
+        hintText="E.g. Surfboard, Kitesurfing"
+        defaultChecked={
+          form.fields.maritimePleasureVesselUse.value ===
+          MaritimePleasureVessel.OTHER
+        }
+        conditional={true}
+      >
+        <FormGroup
+          errorMessages={form.fields.otherPleasureVesselText.errorMessages}
+        >
+          <Input
+            id="otherPleasureVesselText"
+            label="What sort of vessel is it?"
+            defaultValue={form.fields.otherPleasureVesselText.value}
+          />
+        </FormGroup>
+      </RadioListItem>
+    </RadioList>
   );
 };
 
