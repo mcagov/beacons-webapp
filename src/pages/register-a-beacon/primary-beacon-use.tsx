@@ -62,7 +62,7 @@ const PrimaryBeaconUse: FunctionComponent<FormPageProps> = ({
             <FormErrorSummary formErrors={form.errorSummary} />
             <Form action="/register-a-beacon/primary-beacon-use">
               <FormGroup
-                errorMessages={
+                errorMessagesIfSingleField={
                   form.fields.maritimePleasureVesselUse.errorMessages
                 }
               >
@@ -72,75 +72,83 @@ const PrimaryBeaconUse: FunctionComponent<FormPageProps> = ({
                     this beacon on?
                   </FormLegendPageHeading>
                 </FormFieldset>
-                <RadioList conditional={true}>
-                  <RadioListItem
-                    id="motor-vessel"
-                    name={maritimePleasureVesselName}
-                    value={MaritimePleasureVessel.MOTOR}
-                    label="Motor vessel"
-                    hintText="E.g. Speedboat, RIB"
-                    defaultChecked={
-                      form.fields.maritimePleasureVesselUse.value ===
-                      MaritimePleasureVessel.MOTOR
-                    }
-                  />
-                  <RadioListItem
-                    id="sailing-vessel"
-                    name={maritimePleasureVesselName}
-                    value={MaritimePleasureVessel.SAILING}
-                    label="Sailing vessel"
-                    hintText="E.g. Skiff, Dinghy, Yacht, Catamaran"
-                    defaultChecked={
-                      form.fields.maritimePleasureVesselUse.value ===
-                      MaritimePleasureVessel.SAILING
-                    }
-                  />
-                  <RadioListItem
-                    id="rowing-vessel"
-                    name={maritimePleasureVesselName}
-                    value={MaritimePleasureVessel.ROWING}
-                    label="Rowing vessel"
-                    hintText="E.g. Single person rowing boat, Cornish Gig, Multi-person rowing boat"
-                    defaultChecked={
-                      form.fields.maritimePleasureVesselUse.value ===
-                      MaritimePleasureVessel.ROWING
-                    }
-                  />
-                  <RadioListItem
-                    id="maritimePleasureVesselUse"
-                    value={MaritimePleasureVessel.SMALL_UNPOWERED}
-                    label="Small unpowered vessel"
-                    hintText="E.g. Canoe, Kayak"
-                    defaultChecked={
-                      form.fields.maritimePleasureVesselUse.value ===
-                      MaritimePleasureVessel.SMALL_UNPOWERED
-                    }
-                  />
-                  <RadioListItem
-                    id="other-pleasure-vessel"
-                    name={maritimePleasureVesselName}
-                    value={MaritimePleasureVessel.OTHER}
-                    label="Other pleasure vessel"
-                    hintText="E.g. Surfboard, Kitesurfing"
-                    defaultChecked={
-                      form.fields.maritimePleasureVesselUse.value ===
-                      MaritimePleasureVessel.OTHER
-                    }
-                    conditional={true}
-                  >
-                    <FormGroup
-                      errorMessages={
-                        form.fields.otherPleasureVesselText.errorMessages
+                <FormGroup
+                  errorMessages={
+                    form.fields.maritimePleasureVesselUse.errorMessages
+                  }
+                >
+                  <RadioList conditional={true}>
+                    <RadioListItem
+                      id="motor-vessel"
+                      name={maritimePleasureVesselName}
+                      value={MaritimePleasureVessel.MOTOR}
+                      label="Motor vessel"
+                      hintText="E.g. Speedboat, RIB"
+                      defaultChecked={
+                        form.fields.maritimePleasureVesselUse.value ===
+                        MaritimePleasureVessel.MOTOR
                       }
+                    />
+                    <RadioListItem
+                      id="sailing-vessel"
+                      name={maritimePleasureVesselName}
+                      value={MaritimePleasureVessel.SAILING}
+                      label="Sailing vessel"
+                      hintText="E.g. Skiff, Dinghy, Yacht, Catamaran"
+                      defaultChecked={
+                        form.fields.maritimePleasureVesselUse.value ===
+                        MaritimePleasureVessel.SAILING
+                      }
+                    />
+                    <RadioListItem
+                      id="rowing-vessel"
+                      name={maritimePleasureVesselName}
+                      value={MaritimePleasureVessel.ROWING}
+                      label="Rowing vessel"
+                      hintText="E.g. Single person rowing boat, Cornish Gig, Multi-person rowing boat"
+                      defaultChecked={
+                        form.fields.maritimePleasureVesselUse.value ===
+                        MaritimePleasureVessel.ROWING
+                      }
+                    />
+                    <RadioListItem
+                      id="maritimePleasureVesselUse"
+                      value={MaritimePleasureVessel.SMALL_UNPOWERED}
+                      label="Small unpowered vessel"
+                      hintText="E.g. Canoe, Kayak"
+                      defaultChecked={
+                        form.fields.maritimePleasureVesselUse.value ===
+                        MaritimePleasureVessel.SMALL_UNPOWERED
+                      }
+                    />
+                    <RadioListItem
+                      id="other-pleasure-vessel"
+                      name={maritimePleasureVesselName}
+                      value={MaritimePleasureVessel.OTHER}
+                      label="Other pleasure vessel"
+                      hintText="E.g. Surfboard, Kitesurfing"
+                      defaultChecked={
+                        form.fields.maritimePleasureVesselUse.value ===
+                        MaritimePleasureVessel.OTHER
+                      }
+                      conditional={true}
                     >
-                      <Input
-                        id="otherPleasureVesselText"
-                        label="What sort of vessel is it?"
-                        defaultValue={form.fields.otherPleasureVesselText.value}
-                      />
-                    </FormGroup>
-                  </RadioListItem>
-                </RadioList>
+                      <FormGroup
+                        errorMessages={
+                          form.fields.otherPleasureVesselText.errorMessages
+                        }
+                      >
+                        <Input
+                          id="otherPleasureVesselText"
+                          label="What sort of vessel is it?"
+                          defaultValue={
+                            form.fields.otherPleasureVesselText.value
+                          }
+                        />
+                      </FormGroup>
+                    </RadioListItem>
+                  </RadioList>
+                </FormGroup>
               </FormGroup>
 
               <Button buttonText="Continue" />
