@@ -6,8 +6,8 @@ import { RadioList, RadioListItem } from "../../components/RadioList";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { FormPageProps } from "../../lib/handlePageRequest";
-import { withCookieRedirect } from "../../lib/middleware";
+import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
+import { BeaconEnvionment } from "../../lib/registration/types";
 
 const getPageForm = ({ environment }) => {
   return new FormManager({
@@ -44,7 +44,10 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
             name={environmentFieldName}
             label="Maritime"
             hintText="This might include commercial or pleasure sailing / motor vessels or unpowered craft. It could also include sea-based windfarms and rigs/platforms."
-            value="MARITIME"
+            value={BeaconEnvionment.MARITIME}
+            defaultChecked={
+              form.fields.environment.value === BeaconEnvionment.MARITIME
+            }
           />
 
           <RadioListItem
@@ -52,7 +55,10 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
             name={environmentFieldName}
             label="Aviation"
             hintText="This might include commercial or pleasure aircraft"
-            value="AVIATION"
+            value={BeaconEnvionment.AVIATION}
+            defaultChecked={
+              form.fields.environment.value === BeaconEnvionment.AVIATION
+            }
           />
 
           <RadioListItem
@@ -60,14 +66,20 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
             name={environmentFieldName}
             label="Land-based"
             hintText="This could include vehicle or other overland uses. It could also include land-based windfarms."
-            value="LAND"
+            value={BeaconEnvionment.LAND}
+            defaultChecked={
+              form.fields.environment.value === BeaconEnvionment.LAND
+            }
           />
 
           <RadioListItem
             id="other"
             name={environmentFieldName}
             label="Other"
-            value="OTHER"
+            value={BeaconEnvionment.OTHER}
+            defaultChecked={
+              form.fields.environment.value === BeaconEnvionment.OTHER
+            }
           />
         </RadioList>
       </FormGroup>
@@ -75,24 +87,29 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = withCookieRedirect(
-  async (context) => {
-    // const userDidSubmitForm = context.req.method === "POST";
-
-    // if (userDidSubmitForm) {
-    //   const transformedFormData = await parseFormData(context.req);
-
-    //   if (transformedFormData.environment === "AVIATION" ) {
-    //     ("/register-a-beacon/purpose");
-    //   } else {
-    //     ("/register-a-beacon/activity");
-    //   }
-    // }
-
-    return {
-      props: { showCookieBanner: false },
-    };
+const onSuccessfulFormCallback = (formData) => {
+  let destination: string;
+  switch (formData.environment) {
+    case BeaconEnvionment.MARITIME:
+    case BeaconEnvionment.AVIATION:
+      destination = "/register-a-beacon/purpose";
+    default:
+      destination = "/register-a-beacon/activity";
   }
+
+  return {
+    redirect: {
+      status: 303,
+      destination,
+    },
+  };
+};
+
+export const getServerSideProps: GetServerSideProps = handlePageRequest(
+  "",
+  getPageForm,
+  (f) => f,
+  onSuccessfulFormCallback
 );
 
 export default BeaconUse;

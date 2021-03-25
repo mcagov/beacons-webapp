@@ -65,22 +65,8 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
 const HiddenInput: FunctionComponent = () => {
   const router = useRouter();
   const useIndexValue = router.query.useIndex || 0;
-  const beaconIndexValue = router.query.beaconIndex || 0;
 
   return (
-    <>
-      <input
-        id="use-index"
-        type="hidden"
-        name="useIndex"
-        value={useIndexValue}
-      />
-      <input
-        id="beacon-index"
-        type="hidden"
-        name="beaconIndex"
-        value={beaconIndexValue}
-      />
-    </>
+    <input id="use-index" type="hidden" name="useIndex" value={useIndexValue} />
   );
 };

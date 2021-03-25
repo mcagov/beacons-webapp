@@ -2,19 +2,24 @@ import {
   GetServerSideProps,
   GetServerSidePropsContext,
   GetServerSidePropsResult,
+  Redirect,
 } from "next";
 import { FormJSON, FormManager } from "./form/formManager";
 import { CacheEntry } from "./formCache";
 import {
+  BeaconsContext,
   getCache,
   parseFormData,
   updateFormCache,
   withCookieRedirect,
 } from "./middleware";
 import { Registration } from "./registration/registration";
-import { acceptRejectCookieId, formSubmissionCookieId } from "./types";
 
 type TransformCallback = (formData: CacheEntry) => CacheEntry;
+
+type SuccessfulPostCallback = (
+  formData: CacheEntry
+) => { redirect: Partial<Redirect> };
 
 export type FormManagerFactory = (formData: CacheEntry) => FormManager;
 
@@ -27,7 +32,10 @@ export interface FormPageProps {
 export const handlePageRequest = (
   destinationIfValid: string,
   formManagerFactory: FormManagerFactory,
-  transformCallback: TransformCallback = (formData: CacheEntry) => formData
+  transformCallback: TransformCallback = (formData: CacheEntry) => formData,
+  onSuccessfulPostCallback: SuccessfulPostCallback = () => {
+    return { redirect: { status: 303, destination: destinationIfValid } };
+  }
 ): GetServerSideProps =>
   withCookieRedirect(async (context: GetServerSidePropsContext) => {
     const userDidSubmitForm = context.req.method === "POST";
@@ -35,9 +43,9 @@ export const handlePageRequest = (
     if (userDidSubmitForm) {
       return handlePostRequest(
         context,
-        destinationIfValid,
         formManagerFactory,
-        transformCallback
+        transformCallback,
+        onSuccessfulPostCallback
       );
     }
 
@@ -45,13 +53,10 @@ export const handlePageRequest = (
   });
 
 const handleGetRequest = (
-  context: GetServerSidePropsContext,
+  context: BeaconsContext,
   formManagerFactory: FormManagerFactory
 ): GetServerSidePropsResult<FormPageProps> => {
-  const submissionId = context.req.cookies[formSubmissionCookieId];
-  const showCookieBanner = !context.req.cookies[acceptRejectCookieId];
-
-  const registration: Registration = getCache(submissionId);
+  const registration: Registration = getCache(context.submissionId);
   const flattenedRegistration = registration.getFlattenedRegistration({
     useIndex: parseInt(context.query.useIndex as string),
   });
@@ -60,17 +65,17 @@ const handleGetRequest = (
   return {
     props: {
       form: formManager.serialise(),
-      showCookieBanner,
-      submissionId,
+      showCookieBanner: context.showCookieBanner,
+      submissionId: context.submissionId,
     },
   };
 };
 
 const handlePostRequest = async (
-  context: GetServerSidePropsContext,
-  destinationIfValid: string,
+  context: BeaconsContext,
   formManagerFactory: FormManagerFactory,
-  transformCallback: TransformCallback = (formData) => formData
+  transformCallback: TransformCallback = (formData) => formData,
+  onSuccessfulFormPostCallback
 ): Promise<GetServerSidePropsResult<FormPageProps>> => {
   const transformedFormData = transformCallback(
     await parseFormData(context.req)
@@ -82,22 +87,23 @@ const handlePostRequest = async (
   const formIsValid = !formManager.hasErrors();
 
   if (formIsValid) {
-    return {
-      redirect: {
-        statusCode: 303,
-        destination: destinationIfValid,
-      },
-    };
+    return onSuccessfulFormPostCallback(transformedFormData);
   }
-
-  const showCookieBanner = !context.req.cookies[acceptRejectCookieId];
-  const submissionId = context.req.cookies[formSubmissionCookieId];
 
   return {
     props: {
       form: formManager.serialise(),
-      showCookieBanner,
-      submissionId,
+      showCookieBanner: context.showCookieBanner,
+      submissionId: context.submissionId,
     },
   };
 };
+
+function successfulRedirectCallback(destinationIfValid: string) {
+  return {
+    redirect: {
+      statusCode: 303,
+      destination: destinationIfValid,
+    },
+  };
+}

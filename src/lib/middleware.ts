@@ -11,12 +11,17 @@ import parse from "urlencoded-body-parser";
 import { v4 as uuidv4 } from "uuid";
 import { CacheEntry, FormCacheFactory, IFormCache } from "./formCache";
 import { Registration } from "./registration/registration";
-import { formSubmissionCookieId } from "./types";
+import { acceptRejectCookieId, formSubmissionCookieId } from "./types";
 import { toArray } from "./utils";
+
+export type BeaconsContext = GetServerSidePropsContext & {
+  showCookieBanner?: boolean;
+  submissionId?: string;
+};
 
 export function withCookieRedirect<T>(callback: GetServerSideProps<T>) {
   return async (
-    context: GetServerSidePropsContext
+    context: BeaconsContext
   ): Promise<GetServerSidePropsResult<T>> => {
     const cookies: NextApiRequestCookies = context.req.cookies;
 
@@ -29,8 +34,18 @@ export function withCookieRedirect<T>(callback: GetServerSideProps<T>) {
       };
     }
 
+    decorateContext(context);
+
     return callback(context);
   };
+}
+
+function decorateContext(context: GetServerSidePropsContext) {
+  const showCookieBanner = !context.req.cookies[acceptRejectCookieId];
+  const submissionId = context.req.cookies[formSubmissionCookieId];
+
+  context["showCookieBanner"] = showCookieBanner;
+  context["submissionId"] = submissionId;
 }
 
 export const setFormSubmissionCookie = (

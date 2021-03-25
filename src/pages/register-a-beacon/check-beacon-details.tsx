@@ -63,7 +63,7 @@ const CheckBeaconDetails: FunctionComponent<FormPageProps> = ({
   return (
     <>
       <Layout
-        navigation={<BackButton href="/" />}
+        navigation={<BackButton href="/" appendIndexes={false} />}
         title={pageHeading}
         pageHasErrors={form.hasErrors}
         showCookieBanner={showCookieBanner}
