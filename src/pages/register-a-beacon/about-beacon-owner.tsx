@@ -19,20 +19,20 @@ import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 
 const definePageForm = ({
-  beaconOwnerFullName,
-  beaconOwnerTelephoneNumber,
-  beaconOwnerAlternativeTelephoneNumber,
-  beaconOwnerEmail,
+  ownerFullName,
+  ownerTelephoneNumber,
+  ownerAlternativeTelephoneNumber,
+  ownerEmail,
 }: CacheEntry): FormManager => {
   return new FormManager({
-    beaconOwnerFullName: new FieldManager(beaconOwnerFullName, [
+    ownerFullName: new FieldManager(ownerFullName, [
       Validators.required("Full name is a required field"),
     ]),
-    beaconOwnerTelephoneNumber: new FieldManager(beaconOwnerTelephoneNumber),
-    beaconOwnerAlternativeTelephoneNumber: new FieldManager(
-      beaconOwnerAlternativeTelephoneNumber
+    ownerTelephoneNumber: new FieldManager(ownerTelephoneNumber),
+    ownerAlternativeTelephoneNumber: new FieldManager(
+      ownerAlternativeTelephoneNumber
     ),
-    beaconOwnerEmail: new FieldManager(beaconOwnerEmail, [
+    ownerEmail: new FieldManager(ownerEmail, [
       Validators.email("Email address must be valid"),
     ]),
   });
@@ -61,25 +61,21 @@ const AboutBeaconOwner: FunctionComponent<FormPageProps> = ({
                   <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
 
                   <FullName
-                    value={form.fields.beaconOwnerFullName.value}
-                    errorMessages={
-                      form.fields.beaconOwnerFullName.errorMessages
-                    }
+                    value={form.fields.ownerFullName.value}
+                    errorMessages={form.fields.ownerFullName.errorMessages}
                   />
 
                   <TelephoneNumber
-                    value={form.fields.beaconOwnerTelephoneNumber.value}
+                    value={form.fields.ownerTelephoneNumber.value}
                   />
 
                   <AlternativeTelephoneNumber
-                    value={
-                      form.fields.beaconOwnerAlternativeTelephoneNumber.value
-                    }
+                    value={form.fields.ownerAlternativeTelephoneNumber.value}
                   />
 
                   <EmailAddress
-                    value={form.fields.beaconOwnerEmail.value}
-                    errorMessages={form.fields.beaconOwnerEmail.errorMessages}
+                    value={form.fields.ownerEmail.value}
+                    errorMessages={form.fields.ownerEmail.errorMessages}
                   />
                 </FormFieldset>
                 <Button buttonText="Continue" />
@@ -98,7 +94,7 @@ const FullName: FunctionComponent<FormInputProps> = ({
   errorMessages,
 }: FormInputProps): JSX.Element => (
   <FormGroup errorMessages={errorMessages}>
-    <Input id="beaconOwnerFullName" label="Full name" defaultValue={value} />
+    <Input id="ownerFullName" label="Full name" defaultValue={value} />
   </FormGroup>
 );
 
@@ -108,7 +104,7 @@ const TelephoneNumber: FunctionComponent<FormInputProps> = ({
 }: FormInputProps): JSX.Element => (
   <FormGroup errorMessages={errorMessages}>
     <Input
-      id="beaconOwnerTelephoneNumber"
+      id="ownerTelephoneNumber"
       label="Telephone number (optional)"
       hintText="This can be a mobile or landline. For international numbers include the country code."
       defaultValue={value}
@@ -122,7 +118,7 @@ const AlternativeTelephoneNumber: FunctionComponent<FormInputProps> = ({
 }: FormInputProps): JSX.Element => (
   <FormGroup errorMessages={errorMessages}>
     <Input
-      id="beaconOwnerAlternativeTelephoneNumber"
+      id="ownerAlternativeTelephoneNumber"
       label="Additional telephone number (optional)"
       hintText="This can be a mobile or landline. For international numbers include the country code."
       defaultValue={value}
@@ -136,7 +132,7 @@ const EmailAddress: FunctionComponent<FormInputProps> = ({
 }: FormInputProps): JSX.Element => (
   <FormGroup errorMessages={errorMessages}>
     <Input
-      id="beaconOwnerEmail"
+      id="ownerEmail"
       label="Email address (optional)"
       hintText="You will receive an email confirming your beacon registration application, including a reference
         number if you need to get in touch with the beacons registry team."

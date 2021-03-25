@@ -17,19 +17,19 @@ describe("AboutBeaconOwner", () => {
     hasErrors: false,
     errorSummary: [],
     fields: {
-      beaconOwnerFullName: {
+      ownerFullName: {
         value: "",
         errorMessages: [],
       },
-      beaconOwnerTelephoneNumber: {
+      ownerTelephoneNumber: {
         value: "",
         errorMessages: [],
       },
-      beaconOwnerAlternativeTelephoneNumber: {
+      ownerAlternativeTelephoneNumber: {
         value: "",
         errorMessages: [],
       },
-      beaconOwnerEmail: {
+      ownerEmail: {
         value: "",
         errorMessages: [],
       },

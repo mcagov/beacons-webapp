@@ -104,17 +104,5 @@ export interface VesselCommunications {
   mobileTelephoneInput2: string;
 }
 
-export interface EmergencyContacts {
-  emergencyContact1FullName: string;
-  emergencyContact1TelephoneNumber: string;
-  emergencyContact1AlternativeTelephoneNumber: string;
-  emergencyContact2FullName: string;
-  emergencyContact2TelephoneNumber: string;
-  emergencyContact2AlternativeTelephoneNumber: string;
-  emergencyContact3FullName: string;
-  emergencyContact3TelephoneNumber: string;
-  emergencyContact3AlternativeTelephoneNumber: string;
-}
-
 export const formSubmissionCookieId = "submissionId";
 export const acceptRejectCookieId = "acceptRejectId";
