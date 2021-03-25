@@ -28,6 +28,7 @@ const CheckYourAnswersPage: FunctionComponent<CheckYourAnswersProps> = ({
   registration,
 }: CheckYourAnswersProps): JSX.Element => {
   const pageHeading = "Check your answers before sending in your registration";
+  // TODO: Update to iterate over all beacon uses - upcoming in Sprint 7 please remove afterwards.
   const use: BeaconUse = registration.uses[0];
 
   return (
