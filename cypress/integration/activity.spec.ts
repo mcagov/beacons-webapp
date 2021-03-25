@@ -2,6 +2,7 @@ import {
   givenIAmAt,
   givenIHaveSelected,
   iCanClickTheBackLinkToGoToPreviousPage,
+  iCanSeeAHeadingThatContains,
   requiredFieldErrorMessage,
   thenIShouldSeeAnErrorMessageThatContains,
   thenIShouldSeeAnErrorSummaryLinkThatContains,
@@ -22,6 +23,11 @@ describe("As a beacon owner, I want to submit the primary activity for my beacon
 
   it("allows me to go back a page by following the 'back' button", () => {
     iCanClickTheBackLinkToGoToPreviousPage(previousPageUrl);
+  });
+
+  //TODO: Once caching is in place, this could be more dynamic and not just hardcoded
+  it("displays the environment and purpose of my beacon", () => {
+    iCanSeeAHeadingThatContains("pleasure maritime");
   });
 
   it("displays an error if no activity is selected", () => {

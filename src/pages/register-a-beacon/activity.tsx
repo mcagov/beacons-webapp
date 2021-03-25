@@ -46,12 +46,10 @@ const Activity: FunctionComponent<FormPageProps> = ({
   form,
   showCookieBanner,
 }: FormPageProps): JSX.Element => {
-  const pageHeading =
-    "What type of maritime pleasure vessel will you mostly use this beacon on?";
-
   //TODO: These values will be taken from the cache once that's available
   const environment = "MARITIME";
   const purpose = "PLEASURE";
+  const pageHeading = `Please select the ${purpose.toLowerCase()} ${environment.toLowerCase()} activity that best describes how the beacon will be used`;
 
   return (
     <BeaconsForm
