@@ -1,5 +1,5 @@
 import { CacheEntry } from "../formCache";
-import { initBeacon, initBeaconUse } from "./registrationUtils";
+import { initBeacon } from "./registrationUtils";
 import { IRegistration } from "./types";
 
 type Indexes = {
@@ -45,32 +45,19 @@ export class Registration {
 
   private _updateUse(formData: CacheEntry): void {
     const useIndex = this._parseUseIndex(formData.useIndex);
-
     let use = this.registration.uses[useIndex];
 
-    if (!use) {
-      use = initBeaconUse();
-      this.registration.uses.splice(useIndex, 1, use);
-    }
-
-    this._updateKeysFor(formData, use);
+    Object.keys(formData).forEach((key: string) => {
+      if (key in use) {
+        const value = formData[key];
+        use[key] = value;
+      }
+    });
   }
 
   private _parseUseIndex(useIndex: number): number {
     useIndex = useIndex || 0;
     const beaconUseLength = this.registration.uses.length - 1;
     return Math.min(useIndex, beaconUseLength);
-  }
-
-  private _updateKeysFor(
-    formData: CacheEntry,
-    toUpdate: Record<string, any>
-  ): void {
-    Object.keys(formData).forEach((key: string) => {
-      if (key in toUpdate) {
-        const value = formData[key];
-        toUpdate[key] = value;
-      }
-    });
   }
 }
