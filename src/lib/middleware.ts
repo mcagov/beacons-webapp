@@ -10,6 +10,7 @@ import { NextApiRequestCookies } from "next/dist/next-server/server/api-utils";
 import parse from "urlencoded-body-parser";
 import { v4 as uuidv4 } from "uuid";
 import { CacheEntry, FormCacheFactory, IFormCache } from "./formCache";
+import { Registration } from "./registration/registration";
 import { formSubmissionCookieId } from "./types";
 import { toArray } from "./utils";
 
@@ -90,6 +91,6 @@ export async function parseFormData(
 export const getCache = (
   id: string,
   cache: IFormCache = FormCacheFactory.getCache()
-): CacheEntry => {
+): Registration => {
   return cache.get(id);
 };

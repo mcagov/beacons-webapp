@@ -11,6 +11,7 @@ import {
   updateFormCache,
   withCookieRedirect,
 } from "./middleware";
+import { Registration } from "./registration/registration";
 import { acceptRejectCookieId, formSubmissionCookieId } from "./types";
 
 type TransformCallback = (formData: CacheEntry) => CacheEntry;
@@ -45,11 +46,16 @@ export const handlePageRequest = (
 
 const handleGetRequest = (
   context: GetServerSidePropsContext,
-  defineFormRulesCallback: FormManagerFactory
+  formManagerFactory: FormManagerFactory
 ): GetServerSidePropsResult<FormPageProps> => {
   const submissionId = context.req.cookies[formSubmissionCookieId];
-  const formManager = defineFormRulesCallback(getCache(submissionId));
   const showCookieBanner = !context.req.cookies[acceptRejectCookieId];
+
+  const registration: Registration = getCache(submissionId);
+  const flattenedRegistration = registration.getFlattenedRegistration({
+    useIndex: parseInt(context.query.useIndex as string),
+  });
+  const formManager = formManagerFactory(flattenedRegistration);
 
   return {
     props: {
