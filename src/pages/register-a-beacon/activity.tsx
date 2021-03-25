@@ -78,7 +78,7 @@ const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
         name={listItemName}
         value={MaritimePleasureVessel.MOTOR}
         label="Motor vessel"
-        hintText="E.g. Speedboat, RIB"
+        hintText="E.g. Speedboat, Skiff"
         defaultChecked={
           form.fields.activity.value === MaritimePleasureVessel.MOTOR
         }
@@ -88,7 +88,7 @@ const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
         name={listItemName}
         value={MaritimePleasureVessel.SAILING}
         label="Sailing vessel"
-        hintText="E.g. Skiff, Dinghy, Yacht, Catamaran"
+        hintText="E.g. Dinghy, Yacht, Catamaran"
         defaultChecked={
           form.fields.activity.value === MaritimePleasureVessel.SAILING
         }
@@ -98,7 +98,7 @@ const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
         name={listItemName}
         value={MaritimePleasureVessel.ROWING}
         label="Rowing vessel"
-        hintText="E.g. Single person rowing boat, Cornish Gig, Multi-person rowing boat"
+        hintText="E.g. Rowing boat, Cornish Gig"
         defaultChecked={
           form.fields.activity.value === MaritimePleasureVessel.ROWING
         }
@@ -118,7 +118,7 @@ const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
         name={listItemName}
         value={MaritimePleasureVessel.OTHER}
         label="Other pleasure vessel"
-        hintText="E.g. Surfboard, Kitesurfing"
+        hintText="E.g. Surfboard, Kitesurfing, Small punt or tender"
         defaultChecked={
           form.fields.activity.value === MaritimePleasureVessel.OTHER
         }
