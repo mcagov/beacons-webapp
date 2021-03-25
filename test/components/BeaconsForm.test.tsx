@@ -13,7 +13,6 @@ describe("BeaconsForm Component", () => {
   let previousPageUrl;
   let pageHeading;
   let showCookieBanner;
-  let formErrors;
   let errorMessages;
   let insetText;
 
@@ -22,7 +21,6 @@ describe("BeaconsForm Component", () => {
     previousPageUrl = "/register-a-beacon/previous-life";
     pageHeading = "A day in the beacon life";
     showCookieBanner = true;
-    formErrors = [];
     errorMessages = ["This is an error"];
     insetText = "Once upon a time a person with a beacon walked the seas";
   });
