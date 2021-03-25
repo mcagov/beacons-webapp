@@ -75,7 +75,6 @@ const handlePostRequest = async (
   const transformedFormData = transformCallback(
     await parseFormData(context.req)
   );
-
   updateFormCache(context.req.cookies, transformedFormData);
 
   const formManager = formManagerFactory(transformedFormData);

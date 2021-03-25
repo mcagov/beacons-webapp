@@ -3,7 +3,7 @@ import { BeaconUse, IRegistration } from "./types";
 /**
  * Convenience function for returning an `empty` instance of a beacon registration.
  *
- * @returns {Registration}   JSON instance of a beacon registration
+ * @returns {IRegistration}   JSON representation of a beacon registration
  */
 export const initBeacon = (): IRegistration => {
   return {
@@ -44,10 +44,36 @@ export const initBeacon = (): IRegistration => {
   };
 };
 
+/**
+ * Convenience function for returning an `empty` instance of a beacon use.
+ *
+ * @returns {BeaconUse}   JSON representation of a beacon use
+ */
 export const initBeaconUse = (): BeaconUse => {
+  // TODO: Update type for beacon use once other L2/L3 pages are in
   return {
     environment: "",
     purpose: "",
     activity: "",
+
+    callSign: "",
+    vhfRadio: "",
+    fixedVhfRadio: "",
+    fixedVhfRadioInput: "",
+    portableVhfRadio: "",
+    portableVhfRadioInput: "",
+    satelliteTelephone: "",
+    satelliteTelephoneInput: "",
+    mobileTelephone: "",
+    mobileTelephoneInput1: "",
+    mobileTelephoneInput2: "",
+
+    maxCapacity: "",
+    vesselName: "",
+    homeport: "",
+    areaOfOperation: "",
+    beaconLocation: "",
+
+    moreDetails: "",
   };
 };

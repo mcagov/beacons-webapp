@@ -39,6 +39,26 @@ export interface BeaconUse {
   environment: string;
   purpose: string;
   activity: string;
+
+  callSign: string;
+  vhfRadio: string;
+  fixedVhfRadio: string;
+  fixedVhfRadioInput: string;
+  portableVhfRadio: string;
+  portableVhfRadioInput: string;
+  satelliteTelephone: string;
+  satelliteTelephoneInput: string;
+  mobileTelephone: string;
+  mobileTelephoneInput1: string;
+  mobileTelephoneInput2: string;
+
+  maxCapacity: string;
+  vesselName: string;
+  homeport: string;
+  areaOfOperation: string;
+  beaconLocation: string;
+
+  moreDetails: string;
 }
 
 export enum BeaconEnvionment {
@@ -46,32 +66,6 @@ export enum BeaconEnvionment {
   AVIATION = "AVIATION",
   LAND = "LAND",
   OTHER = "OTHER",
-}
-
-export interface AviationUse {
-  environment: BeaconEnvionment;
-  purpose: string;
-  activity: string;
-}
-
-export interface AviationUse {
-  environment: BeaconEnvionment;
-  purpose: string;
-  activity: string;
-}
-
-export interface VesselCommunications {
-  callSign: string;
-  vhfRadio: VesselCommunication;
-  fixedVhfRadio: string;
-  fixedVhfRadioInput: string;
-  portableVhfRadio: VesselCommunication;
-  portableVhfRadioInput: string;
-  satelliteTelephone: VesselCommunication;
-  satelliteTelephoneInput: string;
-  mobileTelephone: VesselCommunication;
-  mobileTelephoneInput1: string;
-  mobileTelephoneInput2: string;
 }
 
 export enum VesselCommunication {

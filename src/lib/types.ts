@@ -32,24 +32,6 @@ export enum Purpose {
   COMMERCIAL = "COMMERCIAL",
 }
 
-export interface Beacon {
-  manufacturer: string;
-  model: string;
-  hexId: string;
-  manufacturerSerialNumber: string;
-}
-
-export interface BeaconInformation {
-  manufacturerSerialNumber: string;
-  chkCode: string;
-  batteryExpiryDate: string;
-  batteryExpiryDateMonth: string;
-  batteryExpiryDateYear: string;
-  lastServicedDate: string;
-  lastServicedDateMonth: string;
-  lastServicedDateYear: string;
-}
-
 export interface Vessel {
   maxCapacity: string;
   vesselName: string;
@@ -76,18 +58,6 @@ export interface Aircraft {
   cnOrMsnNumber: string;
   dongle: string;
   beaconPosition: string;
-}
-
-export interface Owner {
-  beaconOwnerFullName: string;
-  beaconOwnerEmail?: string;
-  beaconOwnerTelephoneNumber?: string;
-  beaconOwnerAlternativeTelephoneNumber?: string;
-  beaconOwnerAddressLine1: string;
-  beaconOwnerAddressLine2: string;
-  beaconOwnerTownOrCity: string;
-  beaconOwnerCounty?: string;
-  beaconOwnerPostcode: string;
 }
 
 export interface VesselCommunications {

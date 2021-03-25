@@ -1,5 +1,5 @@
 import { CacheEntry } from "../formCache";
-import { initBeacon } from "./registrationUtils";
+import { initBeacon } from "./registrationInitialisation";
 import { IRegistration } from "./types";
 
 type Indexes = {
@@ -19,7 +19,7 @@ export class Registration {
     let flattenedRegistration = { ...this.registration };
     delete flattenedRegistration.uses;
 
-    const useIndex = this._parseUseIndex(indexes?.useIndex);
+    const useIndex = this._parseUseIndex(indexes.useIndex);
     const use = this.registration.uses[useIndex];
     flattenedRegistration = { ...flattenedRegistration, ...use };
 
@@ -45,7 +45,7 @@ export class Registration {
 
   private _updateUse(formData: CacheEntry): void {
     const useIndex = this._parseUseIndex(formData.useIndex);
-    let use = this.registration.uses[useIndex];
+    const use = this.registration.uses[useIndex];
 
     Object.keys(formData).forEach((key: string) => {
       if (key in use) {

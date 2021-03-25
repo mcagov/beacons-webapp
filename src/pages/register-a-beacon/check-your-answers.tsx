@@ -4,54 +4,54 @@ import { BackButton, StartButton } from "../../components/Button";
 import { Grid } from "../../components/Grid";
 import { Layout } from "../../components/Layout";
 import { SummaryList, SummaryListItem } from "../../components/SummaryList";
-import { GovUKBody, GovUKList, PageHeading } from "../../components/Typography";
+import {
+  GovUKBody,
+  GovUKList,
+  PageHeading,
+  SectionHeading,
+} from "../../components/Typography";
 import { CacheEntry } from "../../lib/formCache";
 import { getCache, withCookieRedirect } from "../../lib/middleware";
+import { Registration } from "../../lib/registration/registration";
+import { BeaconUse, IRegistration } from "../../lib/registration/types";
 import {
-  Beacon,
-  BeaconInformation,
-  EmergencyContacts,
   formSubmissionCookieId,
   MaritimePleasureVessel,
-  Owner,
-  Vessel,
   VesselCommunication,
-  VesselCommunications,
 } from "../../lib/types";
 
 interface CheckYourAnswersProps {
-  formData: CacheEntry;
+  registration: IRegistration;
 }
 
 const CheckYourAnswersPage: FunctionComponent<CheckYourAnswersProps> = ({
-  formData,
+  registration,
 }: CheckYourAnswersProps): JSX.Element => {
   const pageHeading = "Check your answers before sending in your registration";
+  const use: BeaconUse = registration.uses[0];
 
-  // TODO: This page is removed in PR check your answers.
   return (
     <>
       <Layout
         navigation={<BackButton href="/register-a-beacon/emergency-contact" />}
         title={pageHeading}
-        pageHasErrors={false}
         showCookieBanner={false}
       >
         <Grid
           mainContent={
             <>
               <PageHeading>{pageHeading}</PageHeading>
-              <BeaconDetailsSection {...formData} />
-              <BeaconInformationSection {...formData} />
-              <BeaconUseSection {...formData} />
-              <AboutTheVesselSection {...formData} />
-              <VesselCommunicationsSection {...formData} />
-              <MoreDetailsSection {...formData} />
-              <BeaconOwnerSection {...formData} />
-              <BeaconOwnerAddressSection {...formData} />
-              <BeaconOwnerEmergencyContact1Section {...formData} />
-              <BeaconOwnerEmergencyContact2Section {...formData} />
-              <BeaconOwnerEmergencyContact3Section {...formData} />
+              <BeaconDetailsSection {...registration} />
+              <BeaconInformationSection {...registration} />
+              <BeaconUseSection {...use} />
+              <AboutTheVesselSection {...use} />
+              <VesselCommunicationsSection {...use} />
+              <MoreDetailsSection {...use} />
+              <BeaconOwnerSection {...registration} />
+              <BeaconOwnerAddressSection {...registration} />
+              <BeaconOwnerEmergencyContact1Section {...registration} />
+              <BeaconOwnerEmergencyContact2Section {...registration} />
+              <BeaconOwnerEmergencyContact3Section {...registration} />
               <SendYourApplication />
               <StartButton
                 buttonText="Accept and send"
@@ -65,13 +65,13 @@ const CheckYourAnswersPage: FunctionComponent<CheckYourAnswersProps> = ({
   );
 };
 
-const BeaconDetailsSection: FunctionComponent<CacheEntry> = ({
+const BeaconDetailsSection: FunctionComponent<IRegistration> = ({
   manufacturer,
   model,
   hexId,
-}: Beacon): JSX.Element => (
+}: IRegistration): JSX.Element => (
   <>
-    <h2 className="govuk-heading-m">Beacon details</h2>
+    <SectionHeading>Beacon details</SectionHeading>
 
     <SummaryList>
       <SummaryListItem
@@ -99,16 +99,16 @@ const BeaconDetailsSection: FunctionComponent<CacheEntry> = ({
   </>
 );
 
-const BeaconInformationSection: FunctionComponent<CacheEntry> = ({
+const BeaconInformationSection: FunctionComponent<IRegistration> = ({
   manufacturerSerialNumber,
   chkCode,
   batteryExpiryDateMonth,
   batteryExpiryDateYear,
   lastServicedDateMonth,
   lastServicedDateYear,
-}: BeaconInformation): JSX.Element => (
+}: IRegistration): JSX.Element => (
   <>
-    <h2 className="govuk-heading-m">Beacon information</h2>
+    <SectionHeading>Beacon information</SectionHeading>
 
     <SummaryList>
       <SummaryListItem
@@ -145,10 +145,10 @@ const BeaconInformationSection: FunctionComponent<CacheEntry> = ({
   </>
 );
 
-const BeaconUseSection: FunctionComponent<CacheEntry> = ({
+const BeaconUseSection: FunctionComponent<BeaconUse> = ({
   maritimePleasureVesselUse,
   otherPleasureVesselText,
-}: any): JSX.Element => {
+}: BeaconUse): JSX.Element => {
   let level3UseText = "";
   switch (maritimePleasureVesselUse) {
     case MaritimePleasureVessel.MOTOR:
@@ -170,7 +170,7 @@ const BeaconUseSection: FunctionComponent<CacheEntry> = ({
 
   return (
     <>
-      <h2 className="govuk-heading-m">Beacon use</h2>
+      <SectionHeading>Beacon use</SectionHeading>
 
       <SummaryList>
         <SummaryListItem
@@ -189,15 +189,15 @@ const BeaconUseSection: FunctionComponent<CacheEntry> = ({
   );
 };
 
-const AboutTheVesselSection: FunctionComponent<CacheEntry> = ({
+const AboutTheVesselSection: FunctionComponent<BeaconUse> = ({
   maxCapacity,
   vesselName,
   homeport,
   areaOfOperation,
   beaconLocation,
-}: Vessel): JSX.Element => (
+}: BeaconUse): JSX.Element => (
   <>
-    <h2 className="govuk-heading-m">About the vessel</h2>
+    <SectionHeading>About the vessel</SectionHeading>
 
     <SummaryList>
       <SummaryListItem
@@ -239,7 +239,7 @@ const AboutTheVesselSection: FunctionComponent<CacheEntry> = ({
   </>
 );
 
-const VesselCommunicationsSection: FunctionComponent<CacheEntry> = ({
+const VesselCommunicationsSection: FunctionComponent<BeaconUse> = ({
   callSign,
   vhfRadio,
   fixedVhfRadio,
@@ -251,7 +251,7 @@ const VesselCommunicationsSection: FunctionComponent<CacheEntry> = ({
   mobileTelephone,
   mobileTelephoneInput1,
   mobileTelephoneInput2,
-}: VesselCommunications): JSX.Element => {
+}: BeaconUse): JSX.Element => {
   let vhfRadioText = "";
   if (vhfRadio == VesselCommunication.VHF_RADIO) vhfRadioText += "YES";
 
@@ -294,7 +294,7 @@ const VesselCommunicationsSection: FunctionComponent<CacheEntry> = ({
 
   return (
     <>
-      <h2 className="govuk-heading-m">Vessel communications</h2>
+      <SectionHeading>Vessel communications</SectionHeading>
 
       <SummaryList>
         <SummaryListItem
@@ -358,11 +358,11 @@ const VesselCommunicationsSection: FunctionComponent<CacheEntry> = ({
   );
 };
 
-const MoreDetailsSection: FunctionComponent<CacheEntry> = ({
+const MoreDetailsSection: FunctionComponent<BeaconUse> = ({
   moreDetails,
-}: Vessel): JSX.Element => (
+}: BeaconUse): JSX.Element => (
   <>
-    <h2 className="govuk-heading-m">More about the use</h2>
+    <SectionHeading>More about the use</SectionHeading>
 
     <SummaryList>
       <SummaryListItem
@@ -376,14 +376,14 @@ const MoreDetailsSection: FunctionComponent<CacheEntry> = ({
   </>
 );
 
-const BeaconOwnerSection: FunctionComponent<CacheEntry> = ({
-  beaconOwnerFullName,
-  beaconOwnerTelephoneNumber,
-  beaconOwnerAlternativeTelephoneNumber,
-  beaconOwnerEmail,
-}: Owner): JSX.Element => (
+const BeaconOwnerSection: FunctionComponent<IRegistration> = ({
+  ownerFullName,
+  ownerTelephoneNumber,
+  ownerAlternativeTelephoneNumber,
+  ownerEmail,
+}: IRegistration): JSX.Element => (
   <>
-    <h2 className="govuk-heading-m">About the beacon owner</h2>
+    <SectionHeading>About the beacon owner</SectionHeading>
 
     <SummaryList>
       <SummaryListItem
@@ -391,53 +391,53 @@ const BeaconOwnerSection: FunctionComponent<CacheEntry> = ({
         href="/register-a-beacon/about-beacon-owner"
         actionText="Change"
       >
-        {beaconOwnerFullName}
+        {ownerFullName}
       </SummaryListItem>
       <SummaryListItem
         labelText="Telephone number"
         href="/register-a-beacon/about-beacon-owner"
         actionText="Change"
       >
-        {beaconOwnerTelephoneNumber}
+        {ownerTelephoneNumber}
       </SummaryListItem>
       <SummaryListItem
         labelText="Additional telephone number"
         href="/register-a-beacon/about-beacon-owner"
         actionText="Change"
       >
-        {beaconOwnerAlternativeTelephoneNumber}
+        {ownerAlternativeTelephoneNumber}
       </SummaryListItem>
       <SummaryListItem
         labelText="Email address"
         href="/register-a-beacon/about-beacon-owner"
         actionText="Change"
       >
-        {beaconOwnerEmail}
+        {ownerEmail}
       </SummaryListItem>
     </SummaryList>
   </>
 );
 
-const BeaconOwnerAddressSection: FunctionComponent<CacheEntry> = ({
-  beaconOwnerAddressLine1,
-  beaconOwnerAddressLine2,
-  beaconOwnerTownOrCity,
-  beaconOwnerCounty,
-  beaconOwnerPostcode,
-}: Owner): JSX.Element => {
+const BeaconOwnerAddressSection: FunctionComponent<IRegistration> = ({
+  ownerAddressLine1,
+  ownerAddressLine2,
+  ownerTownOrCity,
+  ownerCounty,
+  ownerPostcode,
+}: IRegistration): JSX.Element => {
   const addressText: ReactNode = (
     <GovUKList>
-      <li>{beaconOwnerAddressLine1}</li>
-      <li>{beaconOwnerAddressLine2}</li>
-      <li>{beaconOwnerTownOrCity}</li>
-      {beaconOwnerCounty ? <li>{beaconOwnerCounty}</li> : ""}
-      <li>{beaconOwnerPostcode}</li>
+      <li>{ownerAddressLine1}</li>
+      <li>{ownerAddressLine2}</li>
+      <li>{ownerTownOrCity}</li>
+      {ownerCounty ? <li>{ownerCounty}</li> : ""}
+      <li>{ownerPostcode}</li>
     </GovUKList>
   );
 
   return (
     <>
-      <h2 className="govuk-heading-m">Beacon owner address</h2>
+      <SectionHeading>Beacon owner address</SectionHeading>
 
       <SummaryList>
         <SummaryListItem
@@ -456,7 +456,7 @@ const BeaconOwnerEmergencyContact1Section: FunctionComponent<CacheEntry> = ({
   emergencyContact1FullName,
   emergencyContact1TelephoneNumber,
   emergencyContact1AlternativeTelephoneNumber,
-}: EmergencyContacts): JSX.Element => {
+}: CacheEntry): JSX.Element => {
   const contactDetails: ReactNode = (
     <GovUKList>
       <li>{emergencyContact1TelephoneNumber}</li>
@@ -470,7 +470,7 @@ const BeaconOwnerEmergencyContact1Section: FunctionComponent<CacheEntry> = ({
 
   return (
     <>
-      <h2 className="govuk-heading-m">Emergency contact 1</h2>
+      <SectionHeading>Emergency contact 1</SectionHeading>
 
       <SummaryList>
         <SummaryListItem
@@ -492,11 +492,11 @@ const BeaconOwnerEmergencyContact1Section: FunctionComponent<CacheEntry> = ({
   );
 };
 
-const BeaconOwnerEmergencyContact2Section: FunctionComponent<CacheEntry> = ({
+const BeaconOwnerEmergencyContact2Section: FunctionComponent<IRegistration> = ({
   emergencyContact2FullName,
   emergencyContact2TelephoneNumber,
   emergencyContact2AlternativeTelephoneNumber,
-}: EmergencyContacts): JSX.Element => {
+}: IRegistration): JSX.Element => {
   const contactDetails: ReactNode = (
     <GovUKList>
       <li>{emergencyContact2TelephoneNumber}</li>
@@ -510,7 +510,7 @@ const BeaconOwnerEmergencyContact2Section: FunctionComponent<CacheEntry> = ({
 
   return (
     <>
-      <h2 className="govuk-heading-m">Emergency contact 2</h2>
+      <SectionHeading>Emergency contact 2</SectionHeading>
 
       <SummaryList>
         <SummaryListItem
@@ -532,11 +532,11 @@ const BeaconOwnerEmergencyContact2Section: FunctionComponent<CacheEntry> = ({
   );
 };
 
-const BeaconOwnerEmergencyContact3Section: FunctionComponent<CacheEntry> = ({
+const BeaconOwnerEmergencyContact3Section: FunctionComponent<IRegistration> = ({
   emergencyContact3FullName,
   emergencyContact3TelephoneNumber,
   emergencyContact3AlternativeTelephoneNumber,
-}: EmergencyContacts): JSX.Element => {
+}: IRegistration): JSX.Element => {
   const contactDetails: ReactNode = (
     <GovUKList>
       <li>{emergencyContact3TelephoneNumber}</li>
@@ -550,7 +550,7 @@ const BeaconOwnerEmergencyContact3Section: FunctionComponent<CacheEntry> = ({
 
   return (
     <>
-      <h2 className="govuk-heading-m">Emergency contact 3</h2>
+      <SectionHeading>Emergency contact 3</SectionHeading>
 
       <SummaryList>
         <SummaryListItem
@@ -574,7 +574,7 @@ const BeaconOwnerEmergencyContact3Section: FunctionComponent<CacheEntry> = ({
 
 const SendYourApplication: FunctionComponent = (): JSX.Element => (
   <>
-    <h2 className="govuk-heading-m">Now send in your application</h2>
+    <SectionHeading>Now send in your application</SectionHeading>
 
     <GovUKBody>
       By submitting this registration you are confirming that, to the best of
@@ -586,11 +586,10 @@ const SendYourApplication: FunctionComponent = (): JSX.Element => (
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   async (context: GetServerSidePropsContext) => {
     const submissionId = context.req.cookies[formSubmissionCookieId];
-    const formData: CacheEntry = getCache(submissionId);
-    // TODO: State persistence stuff to go her
+    const registration: Registration = getCache(submissionId);
 
     return {
-      props: { formData },
+      props: { registration: registration.registration },
     };
   }
 );

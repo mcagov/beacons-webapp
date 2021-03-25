@@ -2,7 +2,7 @@ import { Registration } from "../../../src/lib/registration/registration";
 import {
   initBeacon,
   initBeaconUse,
-} from "../../../src/lib/registration/registrationUtils";
+} from "../../../src/lib/registration/registrationInitialisation";
 import { BeaconEnvionment } from "../../../src/lib/registration/types";
 
 describe("Registration", () => {
@@ -91,9 +91,9 @@ describe("Registration", () => {
       const formData = { useIndex: 0, environment: BeaconEnvionment.MARITIME };
       registration.update(formData);
 
-      expect(registration.getFlattenedRegistration(null).environment).toBe(
-        BeaconEnvionment.MARITIME
-      );
+      expect(
+        registration.getFlattenedRegistration({ useIndex: null }).environment
+      ).toBe(BeaconEnvionment.MARITIME);
     });
 
     it("should flatten the registration and return use objects as top level keys", () => {
