@@ -35,7 +35,7 @@ export class Registration {
       let use = this.registration.uses[useIndex];
 
       if (!use) {
-        use = initBeaconUse(formData.environment);
+        use = initBeaconUse();
         this.registration.uses.splice(useIndex, 1, use);
       }
 
