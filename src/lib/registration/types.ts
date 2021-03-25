@@ -40,6 +40,7 @@ export interface BeaconUse {
   purpose: string;
   activity: string;
 
+  // Vessel comms
   callSign: string;
   vhfRadio: string;
   fixedVhfRadio: string;

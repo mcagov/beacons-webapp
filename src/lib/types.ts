@@ -49,7 +49,7 @@ export interface Vessel {
 }
 
 export interface Aircraft {
-  aircraftMaxCapacity: string;
+  maxCapacity: string;
   aircraftManufacturer: string;
   principalAirport: string;
   secondaryAirport: string;
@@ -58,20 +58,6 @@ export interface Aircraft {
   cnOrMsnNumber: string;
   dongle: string;
   beaconPosition: string;
-}
-
-export interface VesselCommunications {
-  callSign: string;
-  vhfRadio: VesselCommunication;
-  fixedVhfRadio: string;
-  fixedVhfRadioInput: string;
-  portableVhfRadio: VesselCommunication;
-  portableVhfRadioInput: string;
-  satelliteTelephone: VesselCommunication;
-  satelliteTelephoneInput: string;
-  mobileTelephone: VesselCommunication;
-  mobileTelephoneInput1: string;
-  mobileTelephoneInput2: string;
 }
 
 export const formSubmissionCookieId = "submissionId";

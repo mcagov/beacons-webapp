@@ -23,7 +23,7 @@ import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 
 const definePageForm = ({
-  aircraftMaxCapacity,
+  maxCapacity,
   aircraftManufacturer,
   principalAirport,
   secondaryAirport,
@@ -34,7 +34,7 @@ const definePageForm = ({
   beaconPosition,
 }: CacheEntry): FormManager => {
   return new FormManager({
-    aircraftMaxCapacity: new FieldManager(aircraftMaxCapacity, [
+    maxCapacity: new FieldManager(maxCapacity, [
       Validators.required(
         "Maximum number of persons onboard is a required field"
       ),
@@ -81,10 +81,8 @@ const AboutTheAircraft: FunctionComponent<FormPageProps> = ({
                   <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
 
                   <MaxCapacityInput
-                    value={form.fields.aircraftMaxCapacity.value}
-                    errorMessages={
-                      form.fields.aircraftMaxCapacity.errorMessages
-                    }
+                    value={form.fields.maxCapacity.value}
+                    errorMessages={form.fields.maxCapacity.errorMessages}
                   />
 
                   <Manufacturer
@@ -133,7 +131,7 @@ const MaxCapacityInput: FunctionComponent<FormInputProps> = ({
 }: FormInputProps): JSX.Element => (
   <FormGroup errorMessages={errorMessages}>
     <Input
-      id="aircraftMaxCapacity"
+      id="maxCapacity"
       label="Enter the maximum number of persons onboard"
       hintText="Knowing the maximum number of persons likely to be onboard the aircraft helps Search and Rescue know how many people to look for and what resources to send"
       defaultValue={value}
