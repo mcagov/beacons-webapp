@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Registration } from "./registration/registration";
 
 // Convenience type

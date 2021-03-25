@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CookieSerializeOptions, serialize } from "cookie";
 import { IncomingHttpHeaders, IncomingMessage, ServerResponse } from "http";
 import {
@@ -80,7 +81,9 @@ export function updateFormCache(
   cache.update(submissionId, formData);
 }
 
-export async function parseFormData<T>(request: IncomingMessage): Promise<T> {
+export async function parseFormData(
+  request: IncomingMessage
+): Promise<Record<string, any>> {
   return await parse(request);
 }
 
