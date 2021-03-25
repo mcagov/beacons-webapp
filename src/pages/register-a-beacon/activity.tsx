@@ -50,6 +50,17 @@ const Activity: FunctionComponent<FormPageProps> = ({
   const environment = "MARITIME";
   const purpose = "PLEASURE";
   const pageHeading = `Please select the ${purpose.toLowerCase()} ${environment.toLowerCase()} activity that best describes how the beacon will be used`;
+  const insetText = (
+    <>
+      <p>
+        This information will help us plan any Search and Rescue response that
+        may be required in future.
+      </p>
+      <p>
+        We will ask you for a full description of any vessels later in the form
+      </p>
+    </>
+  );
 
   return (
     <BeaconsForm
@@ -58,6 +69,7 @@ const Activity: FunctionComponent<FormPageProps> = ({
       showCookieBanner={showCookieBanner}
       formErrors={form.errorSummary}
       errorMessages={form.fields.activity.errorMessages}
+      insetText={insetText}
     >
       <RadioList conditional={true}>
         <ActivityOptions
