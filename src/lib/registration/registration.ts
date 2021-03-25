@@ -2,6 +2,10 @@ import { CacheEntry } from "../formCache";
 import { initBeacon, initBeaconUse } from "./registrationUtils";
 import { IRegistration } from "./types";
 
+type Indexes = {
+  useIndex: number;
+};
+
 export class Registration {
   public registration: IRegistration;
   private _keyMask: string[] = ["uses"];
@@ -10,13 +14,19 @@ export class Registration {
     this.registration = initBeacon();
   }
 
-  public getRegistrationFlattened(useIndex): CacheEntry {
-    useIndex = useIndex || 0;
+  public getFlattenedRegistration(indexes: Indexes): CacheEntry {
+    const useIndex = indexes.useIndex;
 
     let flattenedRegistration = { ...this.registration };
+
+    if (this._isValidUseIndex(useIndex)) {
+      const use = this.registration.uses[useIndex];
+      flattenedRegistration = { ...flattenedRegistration, ...use };
+    }
+
     delete flattenedRegistration.uses;
 
-    return {};
+    return flattenedRegistration;
   }
 
   public update(formData: CacheEntry): void {

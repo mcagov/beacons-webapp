@@ -59,5 +59,23 @@ describe("Registration", () => {
     expect(registration.registration.uses.length).toBe(1);
   });
 
-  it("should flatten the registration and return use objects as top level keys", () => {});
+  it("should flatten the registration and return use objects as top level keys", () => {
+    const formData = { useIndex: 0, environment: BeaconEnvionment.MARITIME };
+    registration.update(formData);
+    expect(
+      registration.getFlattenedRegistration({ useIndex: 0 }).environment
+    ).toBe(BeaconEnvionment.MARITIME);
+  });
+
+  it("should not return beacon use information if it is not a valid index", () => {
+    expect(
+      registration.getFlattenedRegistration({ useIndex: 1 }).environment
+    ).toBeUndefined();
+  });
+
+  it("should remove the uses key from the flattened object", () => {
+    expect(
+      registration.getFlattenedRegistration({ useIndex: 0 }).uses
+    ).toBeUndefined();
+  });
 });
