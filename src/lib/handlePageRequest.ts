@@ -17,7 +17,9 @@ import { Registration } from "./registration/registration";
 
 type TransformCallback = (formData: CacheEntry) => CacheEntry;
 
-type SuccessfulPostCallback = (formData: CacheEntry) => { redirect: Redirect };
+export type SuccessfulPostCallback = (
+  formData: CacheEntry
+) => { redirect: Redirect };
 
 export type FormManagerFactory = (formData: CacheEntry) => FormManager;
 
@@ -96,12 +98,3 @@ const handlePostRequest = async (
     },
   };
 };
-
-function successfulRedirectCallback(destinationIfValid: string) {
-  return {
-    redirect: {
-      statusCode: 303,
-      destination: destinationIfValid,
-    },
-  };
-}

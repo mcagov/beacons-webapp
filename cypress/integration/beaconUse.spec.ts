@@ -9,9 +9,8 @@ import {
 describe("As a beacon owner, I want to submit uses for my beacon", () => {
   const previousPageUrl = "register-a-beacon/beacon-information";
   const pageUrl = "/register-a-beacon/beacon-use";
-  const purposeUrl = "/registrer-a-beacon/purpose";
-  const activityUrl = "/registrer-a-beacon/activity";
-  const environmentSelector = "#environment";
+  const purposeUrl = "/register-a-beacon/purpose";
+  const activityUrl = "/register-a-beacon/activity";
 
   beforeEach(() => {
     givenIAmAt(pageUrl);
@@ -29,7 +28,7 @@ describe("As a beacon owner, I want to submit uses for my beacon", () => {
   });
 
   it("should route to the purpose page if aircraft selected", () => {
-    givenIHaveSelected("#aircraft");
+    givenIHaveSelected("#aviation");
     whenIClickContinue();
 
     thenTheUrlShouldContain(purposeUrl);

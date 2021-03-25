@@ -6,7 +6,11 @@ import { RadioList, RadioListItem } from "../../components/RadioList";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
+import {
+  FormPageProps,
+  handlePageRequest,
+  SuccessfulPostCallback,
+} from "../../lib/handlePageRequest";
 import { BeaconEnvionment } from "../../lib/registration/types";
 
 const getPageForm = ({ environment }) => {
@@ -87,12 +91,13 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
   );
 };
 
-const onSuccessfulFormCallback = (formData) => {
+const onSuccessfulFormCallback: SuccessfulPostCallback = (formData) => {
   let destination: string;
   switch (formData.environment) {
     case BeaconEnvionment.MARITIME:
     case BeaconEnvionment.AVIATION:
       destination = "/register-a-beacon/purpose";
+      break;
     default:
       destination = "/register-a-beacon/activity";
   }
