@@ -7,6 +7,7 @@ import {
   withCookieRedirect,
 } from "../../src/lib/middleware";
 import {
+  acceptRejectCookieId,
   formSubmissionCookieId,
   formSubmissionCookieId as submissionCookieId,
 } from "../../src/lib/types";
@@ -79,6 +80,39 @@ describe("Middleware Functions", () => {
       context.req.cookies = { [submissionCookieId]: void 0 };
 
       assertRedirected();
+    });
+
+    it("should set the if the submission cookie header is set to undefined", async () => {
+      context.req.cookies = { [submissionCookieId]: "1" };
+
+      await withCookieRedirect(async (c) => {
+        expect(c["submissionId"]).toBe("1");
+        return null;
+      })(context);
+    });
+
+    it("should set the cookie policy to false if the user has not accepted the policy", async () => {
+      context.req.cookies = {
+        [acceptRejectCookieId]: false,
+        [submissionCookieId]: "1",
+      };
+
+      await withCookieRedirect(async (c) => {
+        expect(c["showCookieBanner"]).toBe(true);
+        return null;
+      })(context);
+    });
+
+    it("should set the cookie policy to false if the user has not accepted the policy", async () => {
+      context.req.cookies = {
+        [acceptRejectCookieId]: true,
+        [submissionCookieId]: "1",
+      };
+
+      await withCookieRedirect(async (c) => {
+        expect(c["showCookieBanner"]).toBe(false);
+        return null;
+      })(context);
     });
   });
 
