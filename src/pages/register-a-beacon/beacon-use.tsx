@@ -9,13 +9,20 @@ import { Validators } from "../../lib/form/validators";
 import { FormPageProps } from "../../lib/handlePageRequest";
 import { withCookieRedirect } from "../../lib/middleware";
 
+const getPageForm = ({ environment }) => {
+  return new FormManager({
+    environment: new FieldManager(environment, [
+      Validators.required(
+        "Which enviornment the beacon will be used is required"
+      ),
+    ]),
+  });
+};
+
 const BeaconUse: FunctionComponent<FormPageProps> = ({
+  form,
   showCookieBanner,
 }: FormPageProps): JSX.Element => {
-  const form = new FormManager({
-    environment: new FieldManager(""),
-  }).serialise();
-
   const pageHeading = "What is the primary use for this beacon?";
 
   const environmentFieldName = "environment";
@@ -66,16 +73,6 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
       </FormGroup>
     </BeaconsForm>
   );
-};
-
-const getPageForm = ({ environment }) => {
-  return new FormManager({
-    environment: new FieldManager(environment, [
-      Validators.required(
-        "Which enviornment the beacon will be used is required"
-      ),
-    ]),
-  });
 };
 
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
