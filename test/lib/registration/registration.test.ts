@@ -19,7 +19,7 @@ describe("Registration", () => {
     expect(registration.registration).toStrictEqual(initBeacon());
   });
 
-  it("should update the values within the form data", () => {
+  it("should update the values from the form data", () => {
     const formData = { hexId: "Hex" };
     registration.update(formData);
     expect(registration.registration.hexId).toBe("Hex");
@@ -31,7 +31,7 @@ describe("Registration", () => {
     expect(registration.registration["foo"]).toBeUndefined();
   });
 
-  it("should not write over the uses array", () => {
+  it("should not overwrite the beacon uses array", () => {
     const formData = { uses: "Is not an array" } as any;
     registration.update(formData);
     expect(registration.registration.uses).toStrictEqual([]);
