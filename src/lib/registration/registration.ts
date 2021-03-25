@@ -47,7 +47,7 @@ export class Registration {
   }
 
   private _updateUse(formData: CacheEntry): void {
-    let useIndex = formData.useIndex;
+    const useIndex = formData.useIndex;
 
     if (this._isValidUseIndex(useIndex)) {
       let use = this.registration.uses[useIndex];

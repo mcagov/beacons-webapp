@@ -1,4 +1,4 @@
-import { IRegistration } from "./types";
+import { BeaconUse, IRegistration } from "./types";
 
 /**
  * Convenience function for returning an `empty` instance of a beacon registration.
@@ -44,7 +44,7 @@ export const initBeacon = (): IRegistration => {
   };
 };
 
-export const initBeaconUse = (): any => {
+export const initBeaconUse = (): BeaconUse => {
   return {
     environment: "",
     purpose: "",

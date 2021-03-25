@@ -10,7 +10,7 @@ jest.mock("../../src/lib/middleware", () => ({
   parseFormData: jest.fn().mockReturnValue({}),
   updateFormCache: jest.fn(),
   getCache: jest.fn().mockReturnValue({
-    getFlattenedRegistration: () => {},
+    getFlattenedRegistration: jest.fn(),
   }),
   withCookieRedirect: jest.fn().mockImplementation((callback) => {
     return async (context) => {

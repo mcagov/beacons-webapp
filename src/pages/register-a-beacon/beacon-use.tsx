@@ -7,7 +7,7 @@ import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
 import { FormPageProps } from "../../lib/handlePageRequest";
-import { parseFormData, withCookieRedirect } from "../../lib/middleware";
+import { withCookieRedirect } from "../../lib/middleware";
 
 const BeaconUse: FunctionComponent<FormPageProps> = ({
   showCookieBanner,
@@ -80,17 +80,17 @@ const getPageForm = ({ environment }) => {
 
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   async (context) => {
-    const userDidSubmitForm = context.req.method === "POST";
+    // const userDidSubmitForm = context.req.method === "POST";
 
-    if (userDidSubmitForm) {
-      const transformedFormData = await parseFormData(context.req);
+    // if (userDidSubmitForm) {
+    //   const transformedFormData = await parseFormData(context.req);
 
-      if (transformedFormData.environment === "AVIATION" || "MARITIMNE") {
-        ("/register-a-beacon/purpose");
-      } else {
-        ("/register-a-beacon/activity");
-      }
-    }
+    //   if (transformedFormData.environment === "AVIATION" ) {
+    //     ("/register-a-beacon/purpose");
+    //   } else {
+    //     ("/register-a-beacon/activity");
+    //   }
+    // }
 
     return {
       props: { showCookieBanner: false },

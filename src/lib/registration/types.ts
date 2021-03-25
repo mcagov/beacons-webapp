@@ -32,12 +32,11 @@ export interface IRegistration {
   emergencyContact3TelephoneNumber: string;
   emergencyContact3AlternativeTelephoneNumber: string;
 
-  // TODO: Update this type to Beacon Use
-  uses: Record<string, string>[];
+  uses: BeaconUse[];
 }
 
 export interface BeaconUse {
-  environment: BeaconEnvionment;
+  environment: string;
   purpose: string;
   activity: string;
 }
