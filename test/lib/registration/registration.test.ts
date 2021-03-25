@@ -34,25 +34,30 @@ describe("Registration", () => {
   it("should not overwrite the beacon uses array", () => {
     const formData = { uses: "Is not an array" } as any;
     registration.update(formData);
-    expect(registration.registration.uses).toStrictEqual([]);
+    expect(registration.registration.uses).toBeInstanceOf(Array);
   });
 
-  it("should create a beacon use if none exists", () => {
+  it("should update a beacon use with the values provided at the given index", () => {
+    const formData = { useIndex: 0, environment: BeaconEnvionment.MARITIME };
+    registration.update(formData);
+    expect(registration.registration.uses.length).toBe(1);
+    expect(registration.registration.uses[0].environment).toBe(
+      BeaconEnvionment.MARITIME
+    );
+  });
+
+  it("should not update a beacon use at the provided index if none exists", () => {
+    const formData = { useIndex: 1, environment: BeaconEnvionment.MARITIME };
+    registration.update(formData);
+    expect(registration.registration.uses.length).toBe(1);
+    expect(registration.registration.uses[0].environment).toBe("");
+  });
+
+  it("should not add a beacon use if the number of uses is greater than the index provided", () => {
     const formData = { useIndex: 0, environment: BeaconEnvionment.MARITIME };
     registration.update(formData);
     expect(registration.registration.uses.length).toBe(1);
   });
 
-  it("should create a beacon use at the provided index if none exists", () => {
-    const formData = { useIndex: 1, environment: BeaconEnvionment.MARITIME };
-    registration.registration.uses.push({});
-    registration.update(formData);
-    expect(registration.registration.uses.length).toBe(2);
-  });
-
-  it("should not add a beacon use if the index is greater than the index provided", () => {
-    const formData = { useIndex: 2, environment: BeaconEnvionment.MARITIME };
-    registration.update(formData);
-    expect(registration.registration.uses.length).toBe(1);
-  });
+  it("should flatten the registration and return use objects as top level keys", () => {});
 });

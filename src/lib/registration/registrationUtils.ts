@@ -40,7 +40,7 @@ export const initBeacon = (): IRegistration => {
     emergencyContact3TelephoneNumber: "",
     emergencyContact3AlternativeTelephoneNumber: "",
 
-    uses: [],
+    uses: [initBeaconUse()],
   };
 };
 

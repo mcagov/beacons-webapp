@@ -3,7 +3,6 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from "next";
-import { NextApiRequestCookies } from "next/dist/next-server/server/api-utils";
 import { FormJSON, FormManager } from "./form/formManager";
 import { CacheEntry } from "./formCache";
 import {
@@ -41,16 +40,16 @@ export const handlePageRequest = (
       );
     }
 
-    return handleGetRequest(context.req.cookies, formManagerFactory);
+    return handleGetRequest(context, formManagerFactory);
   });
 
 const handleGetRequest = (
-  cookies: NextApiRequestCookies,
+  context: GetServerSidePropsContext,
   defineFormRulesCallback: FormManagerFactory
 ): GetServerSidePropsResult<FormPageProps> => {
-  const submissionId = cookies[formSubmissionCookieId];
+  const submissionId = context.req.cookies[formSubmissionCookieId];
   const formManager = defineFormRulesCallback(getCache(submissionId));
-  const showCookieBanner = !cookies[acceptRejectCookieId];
+  const showCookieBanner = !context.req.cookies[acceptRejectCookieId];
 
   return {
     props: {

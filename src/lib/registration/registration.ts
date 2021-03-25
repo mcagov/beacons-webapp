@@ -10,6 +10,15 @@ export class Registration {
     this.registration = initBeacon();
   }
 
+  public getRegistrationFlattened(useIndex): CacheEntry {
+    useIndex = useIndex || 0;
+
+    let flattenedRegistration = { ...this.registration };
+    delete flattenedRegistration.uses;
+
+    return {};
+  }
+
   public update(formData: CacheEntry): void {
     formData = formData || {};
     this._updateBeacon(formData);
@@ -30,8 +39,7 @@ export class Registration {
   private _updateUse(formData: CacheEntry): void {
     let useIndex = formData.useIndex;
 
-    if (useIndex >= 0) {
-      useIndex = Math.max(0, this.registration.uses.length);
+    if (this._isValidUseIndex(useIndex)) {
       let use = this.registration.uses[useIndex];
 
       if (!use) {
@@ -41,6 +49,10 @@ export class Registration {
 
       this._updateKeysFor(formData, use);
     }
+  }
+
+  private _isValidUseIndex(useIndex: number) {
+    return useIndex >= 0 && useIndex <= this.registration.uses.length - 1;
   }
 
   private _updateKeysFor(
