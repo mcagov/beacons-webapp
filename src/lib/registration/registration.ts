@@ -7,8 +7,9 @@ type Indexes = {
 };
 
 export class Registration {
+  private static readonly USES_KEY = "uses";
+
   public registration: IRegistration;
-  private _keyMask: string[] = ["uses"];
 
   constructor() {
     this.registration = initBeacon();
@@ -33,7 +34,7 @@ export class Registration {
 
   private _updateBeacon(formData: CacheEntry): void {
     Object.keys(formData)
-      .filter((key: string) => !this._keyMask.includes(key))
+      .filter((key: string) => !(key === Registration.USES_KEY))
       .forEach((key: string) => {
         if (key in this.registration) {
           const value = formData[key];

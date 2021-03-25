@@ -33,7 +33,10 @@ describe("Registration", () => {
     });
 
     it("should not update the registration with fields that are not valid keys for a beacon registration", () => {
-      const formData = { hexId: "Hex", foo: "bar" };
+      const formData = {
+        hexId: "Hex",
+        foo: "bar",
+      };
       registration.update(formData);
 
       expect(registration.registration["foo"]).toBeUndefined();
@@ -83,7 +86,7 @@ describe("Registration", () => {
     });
   });
 
-  describe("flattening the registration", () => {
+  describe("flattening the registration object", () => {
     it("should flatten the registration and return the first use if no index is provided", () => {
       const formData = { useIndex: 0, environment: BeaconEnvionment.MARITIME };
       registration.update(formData);
