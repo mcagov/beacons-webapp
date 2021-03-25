@@ -9,7 +9,7 @@ import { FormJSON, FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
-import { Environment, MaritimePleasureVessel, Purpose } from "../../lib/types";
+import { Environment, MaritimePleasureType, Purpose } from "../../lib/types";
 
 interface OptionsProps {
   form: FormJSON;
@@ -30,7 +30,7 @@ const definePageForm = ({
       [
         {
           dependsOn: "activity",
-          meetingCondition: (value) => value === MaritimePleasureVessel.OTHER,
+          meetingCondition: (value) => value === MaritimePleasureType.OTHER,
         },
       ]
     ),
@@ -76,51 +76,51 @@ const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
       <RadioListItem
         id="motor-vessel"
         name={listItemName}
-        value={MaritimePleasureVessel.MOTOR}
+        value={MaritimePleasureType.MOTOR}
         label="Motor vessel"
         hintText="E.g. Speedboat, Skiff"
         defaultChecked={
-          form.fields.activity.value === MaritimePleasureVessel.MOTOR
+          form.fields.activity.value === MaritimePleasureType.MOTOR
         }
       />
       <RadioListItem
         id="sailing-vessel"
         name={listItemName}
-        value={MaritimePleasureVessel.SAILING}
+        value={MaritimePleasureType.SAILING}
         label="Sailing vessel"
         hintText="E.g. Dinghy, Yacht, Catamaran"
         defaultChecked={
-          form.fields.activity.value === MaritimePleasureVessel.SAILING
+          form.fields.activity.value === MaritimePleasureType.SAILING
         }
       />
       <RadioListItem
         id="rowing-vessel"
         name={listItemName}
-        value={MaritimePleasureVessel.ROWING}
+        value={MaritimePleasureType.ROWING}
         label="Rowing vessel"
         hintText="E.g. Rowing boat, Cornish Gig"
         defaultChecked={
-          form.fields.activity.value === MaritimePleasureVessel.ROWING
+          form.fields.activity.value === MaritimePleasureType.ROWING
         }
       />
       <RadioListItem
         id="small-unpowered-vessel"
         name={listItemName}
-        value={MaritimePleasureVessel.SMALL_UNPOWERED}
+        value={MaritimePleasureType.SMALL_UNPOWERED}
         label="Small unpowered vessel"
         hintText="E.g. Canoe, Kayak"
         defaultChecked={
-          form.fields.activity.value === MaritimePleasureVessel.SMALL_UNPOWERED
+          form.fields.activity.value === MaritimePleasureType.SMALL_UNPOWERED
         }
       />
       <RadioListItem
         id="other-pleasure-vessel"
         name={listItemName}
-        value={MaritimePleasureVessel.OTHER}
+        value={MaritimePleasureType.OTHER}
         label="Other pleasure vessel"
         hintText="E.g. Surfboard, Kitesurfing, Small punt or tender"
         defaultChecked={
-          form.fields.activity.value === MaritimePleasureVessel.OTHER
+          form.fields.activity.value === MaritimePleasureType.OTHER
         }
         conditional={true}
       >

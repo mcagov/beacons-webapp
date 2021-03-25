@@ -11,7 +11,7 @@ import {
   Beacon,
   BeaconInformation,
   EmergencyContacts,
-  MaritimePleasureVessel,
+  MaritimePleasureType,
   Owner,
   Vessel,
   VesselCommunication,
@@ -150,19 +150,19 @@ const BeaconUseSection: FunctionComponent<CacheEntry> = ({
 }: any): JSX.Element => {
   let level3UseText = "";
   switch (activity) {
-    case MaritimePleasureVessel.MOTOR:
+    case MaritimePleasureType.MOTOR:
       level3UseText = "Motor vessel";
       break;
-    case MaritimePleasureVessel.ROWING:
+    case MaritimePleasureType.ROWING:
       level3UseText = "Rowing vessel";
       break;
-    case MaritimePleasureVessel.SAILING:
+    case MaritimePleasureType.SAILING:
       level3UseText = "Sailing vessel";
       break;
-    case MaritimePleasureVessel.SMALL_UNPOWERED:
+    case MaritimePleasureType.SMALL_UNPOWERED:
       level3UseText = "Small unpowered vessel";
       break;
-    case MaritimePleasureVessel.OTHER:
+    case MaritimePleasureType.OTHER:
       level3UseText = otherActivityText;
       break;
   }
