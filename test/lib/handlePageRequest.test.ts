@@ -81,6 +81,7 @@ describe("handlePageRequest()", () => {
   });
 
   it("should return the serialized form data on invalid form submission", async () => {
+    context.req.cookies[formSubmissionCookieId] = "id";
     getFormGroup = () => {
       return {
         markAsDirty: jest.fn(),
@@ -95,6 +96,7 @@ describe("handlePageRequest()", () => {
       props: {
         form: formJSON,
         showCookieBanner: true,
+        submissionId: "id",
       },
     });
   });

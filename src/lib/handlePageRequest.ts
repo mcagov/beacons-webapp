@@ -87,11 +87,13 @@ const handlePostRequest = async (
   }
 
   const showCookieBanner = !context.req.cookies[acceptRejectCookieId];
+  const submissionId = context.req.cookies[formSubmissionCookieId];
 
   return {
     props: {
       form: formManager.serialise(),
       showCookieBanner,
+      submissionId,
     },
   };
 };
