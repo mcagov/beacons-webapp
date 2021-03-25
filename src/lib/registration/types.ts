@@ -55,6 +55,8 @@ export interface BeaconUse {
 
   maxCapacity: string;
   vesselName: string;
+  vesselUse: string;
+  otherVesselUseText: string;
   homeport: string;
   areaOfOperation: string;
   beaconLocation: string;

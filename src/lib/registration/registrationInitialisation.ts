@@ -70,6 +70,8 @@ export const initBeaconUse = (): BeaconUse => {
 
     maxCapacity: "",
     vesselName: "",
+    vesselUse: "",
+    otherVesselUseText: "",
     homeport: "",
     areaOfOperation: "",
     beaconLocation: "",

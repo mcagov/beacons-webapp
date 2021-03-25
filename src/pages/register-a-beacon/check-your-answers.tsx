@@ -147,11 +147,11 @@ const BeaconInformationSection: FunctionComponent<IRegistration> = ({
 );
 
 const BeaconUseSection: FunctionComponent<BeaconUse> = ({
-  maritimePleasureVesselUse,
-  otherPleasureVesselText,
+  vesselUse,
+  otherVesselUseText,
 }: BeaconUse): JSX.Element => {
   let level3UseText = "";
-  switch (maritimePleasureVesselUse) {
+  switch (vesselUse) {
     case MaritimePleasureVessel.MOTOR:
       level3UseText = "Motor vessel";
       break;
@@ -165,7 +165,7 @@ const BeaconUseSection: FunctionComponent<BeaconUse> = ({
       level3UseText = "Small unpowered vessel";
       break;
     case MaritimePleasureVessel.OTHER:
-      level3UseText = otherPleasureVesselText;
+      level3UseText = otherVesselUseText;
       break;
   }
 
