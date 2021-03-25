@@ -15,14 +15,12 @@ export class Registration {
   }
 
   public getFlattenedRegistration(indexes: Indexes): CacheEntry {
-    const useIndex = indexes.useIndex;
+    const useIndex = this._parseUseIndex(indexes?.useIndex);
 
     let flattenedRegistration = { ...this.registration };
 
-    if (this._isValidUseIndex(useIndex)) {
-      const use = this.registration.uses[useIndex];
-      flattenedRegistration = { ...flattenedRegistration, ...use };
-    }
+    const use = this.registration.uses[useIndex];
+    flattenedRegistration = { ...flattenedRegistration, ...use };
 
     delete flattenedRegistration.uses;
 
@@ -47,27 +45,27 @@ export class Registration {
   }
 
   private _updateUse(formData: CacheEntry): void {
-    const useIndex = formData.useIndex;
+    const useIndex = this._parseUseIndex(formData.useIndex);
 
-    if (this._isValidUseIndex(useIndex)) {
-      let use = this.registration.uses[useIndex];
+    let use = this.registration.uses[useIndex];
 
-      if (!use) {
-        use = initBeaconUse();
-        this.registration.uses.splice(useIndex, 1, use);
-      }
-
-      this._updateKeysFor(formData, use);
+    if (!use) {
+      use = initBeaconUse();
+      this.registration.uses.splice(useIndex, 1, use);
     }
+
+    this._updateKeysFor(formData, use);
   }
 
-  private _isValidUseIndex(useIndex: number) {
-    return useIndex >= 0 && useIndex <= this.registration.uses.length - 1;
+  private _parseUseIndex(useIndex: number): number {
+    useIndex = useIndex || 0;
+    const beaconUseLength = this.registration.uses.length - 1;
+    return Math.min(useIndex, beaconUseLength);
   }
 
   private _updateKeysFor(
     formData: CacheEntry,
-    toUpdate: Record<string, string>
+    toUpdate: Record<string, any>
   ): void {
     Object.keys(formData).forEach((key: string) => {
       if (key in toUpdate) {
