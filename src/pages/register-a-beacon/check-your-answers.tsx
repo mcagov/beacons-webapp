@@ -11,6 +11,7 @@ import {
   Beacon,
   BeaconInformation,
   EmergencyContacts,
+  formSubmissionCookieId,
   MaritimePleasureVessel,
   Owner,
   Vessel,
@@ -584,7 +585,8 @@ const SendYourApplication: FunctionComponent = (): JSX.Element => (
 
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   async (context: GetServerSidePropsContext) => {
-    const formData: CacheEntry = getCache(context.req.cookies);
+    const submissionId = context.req.cookies[formSubmissionCookieId];
+    const formData: CacheEntry = getCache(submissionId);
     // TODO: State persistence stuff to go her
 
     return {

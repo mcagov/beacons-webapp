@@ -85,9 +85,8 @@ export async function parseFormData<T>(request: IncomingMessage): Promise<T> {
 }
 
 export const getCache = (
-  cookies: NextApiRequestCookies,
+  id: string,
   cache: IFormCache = FormCacheFactory.getCache()
 ): CacheEntry => {
-  const submissionId: string = cookies[formSubmissionCookieId];
-  return cache.get(submissionId);
+  return cache.get(id);
 };

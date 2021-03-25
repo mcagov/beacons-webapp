@@ -1,6 +1,9 @@
 // Mock module dependencies in getServerSideProps for testing handlePageRequest()
 import { handlePageRequest } from "../../src/lib/handlePageRequest";
-import { acceptRejectCookieId } from "../../src/lib/types";
+import {
+  acceptRejectCookieId,
+  formSubmissionCookieId,
+} from "../../src/lib/types";
 
 jest.mock("../../src/lib/middleware", () => ({
   __esModule: true,
@@ -97,6 +100,7 @@ describe("handlePageRequest()", () => {
   it("should return the cached formJSON when it receives a GET request", async () => {
     context.req.method = "GET";
     const nextPagePath = "/irrelevant";
+    context.req.cookies[formSubmissionCookieId] = "id";
     getFormGroup = () => {
       return {
         serialise: jest.fn().mockReturnValue(formJSON),
@@ -111,6 +115,7 @@ describe("handlePageRequest()", () => {
       props: {
         form: formJSON,
         showCookieBanner: true,
+        submissionId: "id",
       },
     });
   });

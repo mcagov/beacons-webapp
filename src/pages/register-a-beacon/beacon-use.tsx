@@ -84,6 +84,12 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
 
     if (userDidSubmitForm) {
       const transformedFormData = await parseFormData(context.req);
+
+      if (transformedFormData.environment === "AVIATION" || "MARITIMNE") {
+        ("/register-a-beacon/purpose");
+      } else {
+        ("/register-a-beacon/activity");
+      }
     }
 
     return {

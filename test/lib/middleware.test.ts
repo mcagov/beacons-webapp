@@ -201,19 +201,17 @@ describe("Middleware Functions", () => {
 
   describe("getCache()", () => {
     let id;
-    let cookies;
     let cacheMock: jest.Mocked<IFormCache>;
 
     beforeEach(() => {
       id = "1";
-      cookies = { [formSubmissionCookieId]: id };
       cacheMock = getCacheMock();
     });
 
     it("should call the cache with the correct id", () => {
       cacheMock.get.mockReturnValue({});
 
-      expect(getCache(cookies, cacheMock)).toStrictEqual({});
+      expect(getCache(id, cacheMock)).toStrictEqual({});
       expect(cacheMock.get).toHaveBeenCalledWith(id);
     });
   });
