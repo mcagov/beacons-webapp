@@ -45,7 +45,7 @@ const Activity: FunctionComponent<FormPageProps> = ({
     "What type of maritime pleasure vessel will you mostly use this beacon on?";
 
   //TODO: These values will be taken from the cache once that's available
-  const use = "MARITIME";
+  const environment = "MARITIME";
   const purpose = "PLEASURE";
 
   let Options: ReactNode;
