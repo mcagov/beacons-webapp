@@ -99,7 +99,7 @@ const onSuccessfulFormCallback = (formData) => {
 
   return {
     redirect: {
-      status: 303,
+      statusCode: 303,
       destination,
     },
   };

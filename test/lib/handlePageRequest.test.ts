@@ -1,9 +1,5 @@
 // Mock module dependencies in getServerSideProps for testing handlePageRequest()
 import { handlePageRequest } from "../../src/lib/handlePageRequest";
-import {
-  acceptRejectCookieId,
-  formSubmissionCookieId,
-} from "../../src/lib/types";
 
 jest.mock("../../src/lib/middleware", () => ({
   __esModule: true,
@@ -47,10 +43,10 @@ describe("handlePageRequest()", () => {
     };
   });
 
-  it("should should set the showCookieBanner to false if the user has accepted the cookie policy", async () => {
+  it("should should set the showCookieBanner to false if this is the value on the context object", async () => {
     context.req.method = "GET";
-    context.req.cookies[acceptRejectCookieId] = "I have accepted!";
-    context.req.cookies[formSubmissionCookieId] = "id";
+    context.submissionId = "id";
+    context.showCookieBanner = false;
     getFormGroup = () => {
       return {
         serialise: jest.fn().mockReturnValue(formJSON),
@@ -84,7 +80,8 @@ describe("handlePageRequest()", () => {
   });
 
   it("should return the serialized form data on invalid form submission", async () => {
-    context.req.cookies[formSubmissionCookieId] = "id";
+    context.submissionId = "id";
+    context.showCookieBanner = true;
     getFormGroup = () => {
       return {
         markAsDirty: jest.fn(),
@@ -107,7 +104,8 @@ describe("handlePageRequest()", () => {
   it("should return the cached formJSON when it receives a GET request", async () => {
     context.req.method = "GET";
     const nextPagePath = "/irrelevant";
-    context.req.cookies[formSubmissionCookieId] = "id";
+    context.submissionId = "id";
+    context.showCookieBanner = true;
     getFormGroup = () => {
       return {
         serialise: jest.fn().mockReturnValue(formJSON),

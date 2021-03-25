@@ -17,9 +17,7 @@ import { Registration } from "./registration/registration";
 
 type TransformCallback = (formData: CacheEntry) => CacheEntry;
 
-type SuccessfulPostCallback = (
-  formData: CacheEntry
-) => { redirect: Partial<Redirect> };
+type SuccessfulPostCallback = (formData: CacheEntry) => { redirect: Redirect };
 
 export type FormManagerFactory = (formData: CacheEntry) => FormManager;
 
@@ -34,7 +32,7 @@ export const handlePageRequest = (
   formManagerFactory: FormManagerFactory,
   transformCallback: TransformCallback = (formData: CacheEntry) => formData,
   onSuccessfulPostCallback: SuccessfulPostCallback = () => {
-    return { redirect: { status: 303, destination: destinationIfValid } };
+    return { redirect: { statusCode: 303, destination: destinationIfValid } };
   }
 ): GetServerSideProps =>
   withCookieRedirect(async (context: GetServerSidePropsContext) => {
