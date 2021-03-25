@@ -61,6 +61,7 @@ export interface BeaconUse {
   areaOfOperation: string;
   beaconLocation: string;
 
+  // Generic more details on use of beacon
   moreDetails: string;
 }
 
