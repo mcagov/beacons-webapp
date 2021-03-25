@@ -9,7 +9,9 @@ jest.mock("../../src/lib/middleware", () => ({
   __esModule: true,
   parseFormData: jest.fn().mockReturnValue({}),
   updateFormCache: jest.fn(),
-  getCache: jest.fn().mockReturnValue({}),
+  getCache: jest.fn().mockReturnValue({
+    getFlattenedRegistration: () => {},
+  }),
   withCookieRedirect: jest.fn().mockImplementation((callback) => {
     return async (context) => {
       return callback(context);
@@ -41,6 +43,7 @@ describe("handlePageRequest()", () => {
         method: "POST",
         cookies: {},
       },
+      query: {},
     };
   });
 
