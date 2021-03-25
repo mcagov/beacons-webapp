@@ -15,14 +15,12 @@ export class Registration {
   }
 
   public getFlattenedRegistration(indexes: Indexes): CacheEntry {
-    const useIndex = this._parseUseIndex(indexes?.useIndex);
-
     let flattenedRegistration = { ...this.registration };
+    delete flattenedRegistration.uses;
 
+    const useIndex = this._parseUseIndex(indexes?.useIndex);
     const use = this.registration.uses[useIndex];
     flattenedRegistration = { ...flattenedRegistration, ...use };
-
-    delete flattenedRegistration.uses;
 
     return flattenedRegistration;
   }
