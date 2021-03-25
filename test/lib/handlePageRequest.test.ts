@@ -47,6 +47,7 @@ describe("handlePageRequest()", () => {
   it("should should set the showCookieBanner to false if the user has accepted the cookie policy", async () => {
     context.req.method = "GET";
     context.req.cookies[acceptRejectCookieId] = "I have accepted!";
+    context.req.cookies[formSubmissionCookieId] = "id";
     getFormGroup = () => {
       return {
         serialise: jest.fn().mockReturnValue(formJSON),
@@ -59,6 +60,7 @@ describe("handlePageRequest()", () => {
       props: {
         form: formJSON,
         showCookieBanner: false,
+        submissionId: "id",
       },
     });
   });
