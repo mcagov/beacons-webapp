@@ -3,7 +3,9 @@ import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { FormJSON } from "../../../src/lib/form/formManager";
 import { handlePageRequest } from "../../../src/lib/handlePageRequest";
+import { Environment, Purpose } from "../../../src/lib/types";
 import Activity, {
+  ActivityOptions,
   getServerSideProps,
 } from "../../../src/pages/register-a-beacon/activity";
 
@@ -13,7 +15,7 @@ jest.mock("../../../src/lib/handlePageRequest", () => ({
 }));
 
 describe("Activity", () => {
-  const primaryBeaconUseForm: FormJSON = {
+  const activityForm: FormJSON = {
     hasErrors: false,
     errorSummary: [],
     fields: {
@@ -29,7 +31,7 @@ describe("Activity", () => {
   };
 
   it("should have a back button which directs the user to the beacon information page", () => {
-    render(<Activity form={primaryBeaconUseForm} />);
+    render(<Activity form={activityForm} />);
 
     expect(screen.getByText("Back", { exact: true })).toHaveAttribute(
       "href",
@@ -45,5 +47,28 @@ describe("Activity", () => {
       "/register-a-beacon/about-the-vessel",
       expect.anything()
     );
+  });
+
+  describe("ActivityOptions", () => {
+    let environment: string;
+    let purpose: string;
+
+    describe("When environment is MARITIME and purpose is PLEASURE", () => {
+      environment = Environment.MARITIME;
+      purpose = Purpose.PLEASURE;
+      it("should have the Maritime Pleasure options in the list", () => {
+        render(
+          <ActivityOptions
+            environment={environment}
+            purpose={purpose}
+            form={activityForm}
+            listItemName={"activity"}
+          />
+        );
+
+        expect(screen.queryByText("Small unpowered vessel")).toBeDefined();
+        expect(screen.queryByText("Commercial")).toBeNull();
+      });
+    });
   });
 });

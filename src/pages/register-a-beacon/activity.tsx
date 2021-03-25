@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import React, { FunctionComponent, ReactNode } from "react";
+import React, { FunctionComponent } from "react";
 import { BeaconsForm } from "../../components/BeaconsForm";
 import { FormGroup } from "../../components/Form";
 import { Input } from "../../components/Input";
@@ -14,6 +14,11 @@ import { Environment, MaritimePleasureType, Purpose } from "../../lib/types";
 interface OptionsProps {
   form: FormJSON;
   listItemName: string;
+}
+
+interface ActivityOptionsProps extends OptionsProps {
+  environment: string;
+  purpose: string;
 }
 
 const definePageForm = ({
@@ -48,12 +53,6 @@ const Activity: FunctionComponent<FormPageProps> = ({
   const environment = "MARITIME";
   const purpose = "PLEASURE";
 
-  let Options: ReactNode;
-
-  if (use === Environment.MARITIME && purpose === Purpose.PLEASURE) {
-    Options = <MaritimePleasureOptions form={form} listItemName={"activity"} />;
-  }
-
   return (
     <BeaconsForm
       previousPageUrl={"/register-a-beacon/beacon-information"}
@@ -62,9 +61,27 @@ const Activity: FunctionComponent<FormPageProps> = ({
       formErrors={form.errorSummary}
       errorMessages={form.fields.activity.errorMessages}
     >
-      <RadioList conditional={true}>{Options}</RadioList>
+      <RadioList conditional={true}>
+        <ActivityOptions
+          environment={environment}
+          purpose={purpose}
+          form={form}
+          listItemName={"activity"}
+        />
+      </RadioList>
     </BeaconsForm>
   );
+};
+
+export const ActivityOptions: FunctionComponent<ActivityOptionsProps> = ({
+  environment,
+  purpose,
+  form,
+  listItemName,
+}: ActivityOptionsProps): JSX.Element => {
+  if (environment === Environment.MARITIME && purpose === Purpose.PLEASURE) {
+    return <MaritimePleasureOptions form={form} listItemName={listItemName} />;
+  }
 };
 
 const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
