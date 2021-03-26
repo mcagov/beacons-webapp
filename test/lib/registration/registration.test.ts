@@ -89,7 +89,7 @@ describe("Registration", () => {
 
   describe("flattening the registration object", () => {
     it("should flatten the registration and return the first use if no index is provided", () => {
-      const formData = { useIndex: 0, environment: BeaconEnvionment.MARITIME };
+      const formData = { environment: BeaconEnvionment.MARITIME };
       registration.update(formData);
 
       expect(
