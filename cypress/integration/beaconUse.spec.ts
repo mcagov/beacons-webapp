@@ -2,6 +2,7 @@ import {
   givenIAmAt,
   givenIHaveSelected,
   iCanClickTheBackLinkToGoToPreviousPage,
+  iCanSeeAHeadingThatContains,
   thenTheUrlShouldContain,
   whenIClickContinue,
 } from "./common.spec";
@@ -20,10 +21,11 @@ describe("As a beacon owner, I want to submit uses for my beacon", () => {
     iCanClickTheBackLinkToGoToPreviousPage(previousPageUrl);
   });
 
-  it("should route to the purpose page if maritime selected", () => {
+  it("should route to the purpose page if maritime selected with the correct heading text", () => {
     givenIHaveSelected("#maritime");
     whenIClickContinue();
 
+    iCanSeeAHeadingThatContains("maritime use");
     thenTheUrlShouldContain(purposeUrl);
   });
 
@@ -31,6 +33,7 @@ describe("As a beacon owner, I want to submit uses for my beacon", () => {
     givenIHaveSelected("#aviation");
     whenIClickContinue();
 
+    iCanSeeAHeadingThatContains("aviation use");
     thenTheUrlShouldContain(purposeUrl);
   });
 
