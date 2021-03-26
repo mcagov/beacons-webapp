@@ -28,7 +28,7 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
   formErrors = [],
   errorMessages = [],
   insetText = null,
-  includeUseIndex = false,
+  includeUseIndex = true,
 }: BeaconsFormProps): JSX.Element => {
   let insetComponent: ReactNode;
   if (insetText) {
@@ -72,7 +72,7 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
 
 const HiddenInput: FunctionComponent = () => {
   const router = useRouter();
-  const useIndexValue = router.query.useIndex || 0;
+  const useIndexValue = router?.query.useIndex || 0;
 
   return (
     <input id="use-index" type="hidden" name="useIndex" value={useIndexValue} />

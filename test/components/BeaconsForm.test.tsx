@@ -63,6 +63,7 @@ describe("BeaconsForm Component", () => {
         previousPageUrl={previousPageUrl}
         pageHeading={pageHeading}
         showCookieBanner={showCookieBanner}
+        includeUseIndex={false}
       >
         {children}
       </BeaconsForm>

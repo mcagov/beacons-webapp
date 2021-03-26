@@ -122,7 +122,13 @@ describe("Middleware Functions", () => {
       expect(decoratedContext.formData).toStrictEqual({ model: "ASOS" });
     });
 
-    it("should set the useIndex as 0 on the context if the useIndex is not set", async () => {
+    it("should set the useIndex to 0 on the context if the useIndex is not set", async () => {
+      const decoratedContext = await decorateGetServerSidePropsContext(context);
+      expect(decoratedContext.useIndex).toStrictEqual(0);
+    });
+
+    it("should set the useIndex to 0 if useIndex is null", async () => {
+      context.query.useIndex = null;
       const decoratedContext = await decorateGetServerSidePropsContext(context);
       expect(decoratedContext.useIndex).toStrictEqual(0);
     });

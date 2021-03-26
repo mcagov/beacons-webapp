@@ -5,9 +5,6 @@ jest.mock("../../src/lib/middleware", () => ({
   __esModule: true,
   parseFormData: jest.fn().mockReturnValue({}),
   updateFormCache: jest.fn(),
-  getCache: jest.fn().mockReturnValue({
-    getFlattenedRegistration: jest.fn(),
-  }),
   withCookieRedirect: jest.fn().mockImplementation((callback) => {
     return async (context) => {
       return callback(context);
@@ -15,7 +12,9 @@ jest.mock("../../src/lib/middleware", () => ({
   }),
   decorateGetServerSidePropsContext: jest.fn().mockImplementation((context) => {
     context.submissionId = "id";
-    context.registration = { getFlattenedRegistration: jest.fn() };
+    context.registration = {
+      getFlattenedRegistration: () => ({ model: "ASOS" }),
+    };
     context.useIndex = 1;
 
     return context;
@@ -65,7 +64,7 @@ describe("handlePageRequest()", () => {
       props: {
         form: formJSON,
         showCookieBanner: false,
-        submissionId: "id",
+        flattenedRegistration: { model: "ASOS" },
       },
     });
   });
@@ -101,7 +100,7 @@ describe("handlePageRequest()", () => {
       props: {
         form: formJSON,
         showCookieBanner: true,
-        submissionId: "id",
+        flattenedRegistration: { model: "ASOS" },
       },
     });
   });
@@ -124,7 +123,7 @@ describe("handlePageRequest()", () => {
       props: {
         form: formJSON,
         showCookieBanner: true,
-        submissionId: "id",
+        flattenedRegistration: { model: "ASOS" },
       },
     });
   });

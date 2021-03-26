@@ -41,7 +41,7 @@ describe("AboutBeaconOwner", () => {
 
     expect(screen.getByText("Back", { exact: true })).toHaveAttribute(
       "href",
-      "/register-a-beacon/more-details"
+      "/register-a-beacon/more-details?useIndex=0"
     );
   });
 
@@ -49,7 +49,7 @@ describe("AboutBeaconOwner", () => {
     const { container } = render(
       <AboutBeaconOwner form={emptyAboutBeaconOwnerForm} />
     );
-    const ownPath = "/register-a-beacon/about-beacon-owner";
+    const ownPath = "";
 
     const form = container.querySelectorAll("form")[1];
 

@@ -22,7 +22,7 @@ export type FormManagerFactory = (formData: CacheEntry) => FormManager;
 export interface FormPageProps {
   form: FormJSON;
   showCookieBanner?: boolean;
-  submissionId?: string;
+  flattenedRegistration?: CacheEntry;
 }
 
 export const handlePageRequest = (
@@ -56,7 +56,7 @@ const handleGetRequest = (
 ): GetServerSidePropsResult<FormPageProps> => {
   const registration: Registration = context.registration;
   const flattenedRegistration = registration.getFlattenedRegistration({
-    useIndex: parseInt(context.query.useIndex as string),
+    useIndex: context.useIndex,
   });
   const formManager = formManagerFactory(flattenedRegistration);
 
@@ -64,7 +64,7 @@ const handleGetRequest = (
     props: {
       form: formManager.serialise(),
       showCookieBanner: context.showCookieBanner,
-      submissionId: context.submissionId,
+      flattenedRegistration,
     },
   };
 };
@@ -93,11 +93,15 @@ const handlePostRequest = async (
     };
   }
 
+  const flattenedRegistration = context.registration.getFlattenedRegistration({
+    useIndex: context.useIndex,
+  });
+
   return {
     props: {
       form: formManager.serialise(),
       showCookieBanner: context.showCookieBanner,
-      submissionId: context.submissionId,
+      flattenedRegistration,
     },
   };
 };

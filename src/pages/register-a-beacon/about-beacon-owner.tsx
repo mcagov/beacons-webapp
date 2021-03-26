@@ -1,17 +1,8 @@
 import { GetServerSideProps } from "next";
 import React, { FunctionComponent } from "react";
-import { BackButton, Button } from "../../components/Button";
-import { FormErrorSummary } from "../../components/ErrorSummary";
-import {
-  Form,
-  FormFieldset,
-  FormGroup,
-  FormLegendPageHeading,
-} from "../../components/Form";
-import { Grid } from "../../components/Grid";
+import { BeaconsForm } from "../../components/BeaconsForm";
+import { FormGroup } from "../../components/Form";
 import { FormInputProps, Input } from "../../components/Input";
-import { Layout } from "../../components/Layout";
-import { IfYouNeedHelp } from "../../components/Mca";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
@@ -45,47 +36,28 @@ const AboutBeaconOwner: FunctionComponent<FormPageProps> = ({
   const pageHeading = "About the beacon owner";
 
   return (
-    <>
-      <Layout
-        navigation={<BackButton href="/register-a-beacon/more-details" />}
-        title={pageHeading}
-        pageHasErrors={form.hasErrors}
-        showCookieBanner={showCookieBanner}
-      >
-        <Grid
-          mainContent={
-            <>
-              <Form action="/register-a-beacon/about-beacon-owner">
-                <FormFieldset>
-                  <FormErrorSummary formErrors={form.errorSummary} />
-                  <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
+    <BeaconsForm
+      pageHeading={pageHeading}
+      formErrors={form.errorSummary}
+      previousPageUrl="/register-a-beacon/more-details"
+      showCookieBanner={showCookieBanner}
+    >
+      <FullName
+        value={form.fields.ownerFullName.value}
+        errorMessages={form.fields.ownerFullName.errorMessages}
+      />
 
-                  <FullName
-                    value={form.fields.ownerFullName.value}
-                    errorMessages={form.fields.ownerFullName.errorMessages}
-                  />
+      <TelephoneNumber value={form.fields.ownerTelephoneNumber.value} />
 
-                  <TelephoneNumber
-                    value={form.fields.ownerTelephoneNumber.value}
-                  />
+      <AlternativeTelephoneNumber
+        value={form.fields.ownerAlternativeTelephoneNumber.value}
+      />
 
-                  <AlternativeTelephoneNumber
-                    value={form.fields.ownerAlternativeTelephoneNumber.value}
-                  />
-
-                  <EmailAddress
-                    value={form.fields.ownerEmail.value}
-                    errorMessages={form.fields.ownerEmail.errorMessages}
-                  />
-                </FormFieldset>
-                <Button buttonText="Continue" />
-              </Form>
-              <IfYouNeedHelp />
-            </>
-          }
-        />
-      </Layout>
-    </>
+      <EmailAddress
+        value={form.fields.ownerEmail.value}
+        errorMessages={form.fields.ownerEmail.errorMessages}
+      />
+    </BeaconsForm>
   );
 };
 
