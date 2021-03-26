@@ -9,7 +9,6 @@ import { CacheEntry } from "./formCache";
 import {
   BeaconsContext,
   decorateGetServerSidePropsContext,
-  getCache,
   updateFormCache,
   withCookieRedirect,
 } from "./middleware";
@@ -59,7 +58,7 @@ const handleGetRequest = (
   context: BeaconsContext,
   formManagerFactory: FormManagerFactory
 ): GetServerSidePropsResult<FormPageProps> => {
-  const registration: Registration = getCache(context.submissionId);
+  const registration: Registration = context.registration;
   const flattenedRegistration = registration.getFlattenedRegistration({
     useIndex: parseInt(context.query.useIndex as string),
   });

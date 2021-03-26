@@ -15,6 +15,7 @@ jest.mock("../../src/lib/middleware", () => ({
   }),
   decorateGetServerSidePropsContext: jest.fn().mockImplementation((context) => {
     context.submissionId = "id";
+    context.registration = { getFlattenedRegistration: jest.fn() };
 
     return context;
   }),
