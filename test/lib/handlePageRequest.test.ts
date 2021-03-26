@@ -13,6 +13,11 @@ jest.mock("../../src/lib/middleware", () => ({
       return callback(context);
     };
   }),
+  decorateGetServerSidePropsContext: jest.fn().mockImplementation((context) => {
+    context.submissionId = "id";
+
+    return context;
+  }),
 }));
 
 describe("handlePageRequest()", () => {
@@ -45,7 +50,6 @@ describe("handlePageRequest()", () => {
 
   it("should should set the showCookieBanner to false if this is the value on the context object", async () => {
     context.req.method = "GET";
-    context.submissionId = "id";
     context.showCookieBanner = false;
     getFormGroup = () => {
       return {
@@ -80,7 +84,6 @@ describe("handlePageRequest()", () => {
   });
 
   it("should return the serialized form data on invalid form submission", async () => {
-    context.submissionId = "id";
     context.showCookieBanner = true;
     getFormGroup = () => {
       return {
@@ -104,7 +107,6 @@ describe("handlePageRequest()", () => {
   it("should return the cached formJSON when it receives a GET request", async () => {
     context.req.method = "GET";
     const nextPagePath = "/irrelevant";
-    context.submissionId = "id";
     context.showCookieBanner = true;
     getFormGroup = () => {
       return {

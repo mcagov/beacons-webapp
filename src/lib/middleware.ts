@@ -17,6 +17,8 @@ import { toArray } from "./utils";
 export type BeaconsContext = GetServerSidePropsContext & {
   showCookieBanner?: boolean;
   submissionId?: string;
+  formData?: Record<string, any>;
+  registration: Registration;
 };
 
 export function withCookieRedirect<T>(callback: GetServerSideProps<T>) {
@@ -34,18 +36,34 @@ export function withCookieRedirect<T>(callback: GetServerSideProps<T>) {
       };
     }
 
-    decorateContext(context);
-
     return callback(context);
   };
 }
 
-function decorateContext(context: GetServerSidePropsContext) {
-  const showCookieBanner = !context.req.cookies[acceptRejectCookieId];
-  const submissionId = context.req.cookies[formSubmissionCookieId];
+/**
+ * Decorator function to add beacons specific information to the `getServerSideProps` context.
+ *
+ * @param context {GetServerSidePropsContext}   The NextJS application context
+ * @returns       {Promise<BeaconsContext>}     The decorated context containing beacons specific data
+ */
+export async function decorateGetServerSidePropsContext(
+  context: GetServerSidePropsContext
+): Promise<BeaconsContext> {
+  const decoratedContext: BeaconsContext = context as BeaconsContext;
+  const showCookieBanner: boolean = !decoratedContext.req.cookies[
+    acceptRejectCookieId
+  ];
+  const submissionId: string =
+    decoratedContext.req.cookies[formSubmissionCookieId];
+  const registration: Registration = getCache(submissionId);
+  const formData = await parseFormData(context.req);
 
-  context["showCookieBanner"] = showCookieBanner;
-  context["submissionId"] = submissionId;
+  decoratedContext.showCookieBanner = showCookieBanner;
+  decoratedContext.submissionId = submissionId;
+  decoratedContext.formData = formData;
+  decoratedContext.registration = registration;
+
+  return decoratedContext;
 }
 
 export const setFormSubmissionCookie = (

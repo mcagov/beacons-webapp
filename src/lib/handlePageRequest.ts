@@ -8,8 +8,8 @@ import { FormJSON, FormManager } from "./form/formManager";
 import { CacheEntry } from "./formCache";
 import {
   BeaconsContext,
+  decorateGetServerSidePropsContext,
   getCache,
-  parseFormData,
   updateFormCache,
   withCookieRedirect,
 } from "./middleware";
@@ -38,18 +38,21 @@ export const handlePageRequest = (
   }
 ): GetServerSideProps =>
   withCookieRedirect(async (context: GetServerSidePropsContext) => {
-    const userDidSubmitForm = context.req.method === "POST";
+    const beaconsContext: BeaconsContext = await decorateGetServerSidePropsContext(
+      context
+    );
+    const userDidSubmitForm = beaconsContext.req.method === "POST";
 
     if (userDidSubmitForm) {
       return handlePostRequest(
-        context,
+        beaconsContext,
         formManagerFactory,
         transformCallback,
         onSuccessfulPostCallback
       );
     }
 
-    return handleGetRequest(context, formManagerFactory);
+    return handleGetRequest(beaconsContext, formManagerFactory);
   });
 
 const handleGetRequest = (
@@ -77,9 +80,7 @@ const handlePostRequest = async (
   transformCallback: TransformCallback = (formData) => formData,
   onSuccessfulFormPostCallback
 ): Promise<GetServerSidePropsResult<FormPageProps>> => {
-  const transformedFormData = transformCallback(
-    await parseFormData(context.req)
-  );
+  const transformedFormData = transformCallback(context.formData);
   updateFormCache(context.req.cookies, transformedFormData);
 
   const formManager = formManagerFactory(transformedFormData);
