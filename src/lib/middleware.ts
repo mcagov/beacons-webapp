@@ -53,7 +53,7 @@ export async function decorateGetServerSidePropsContext(
 
   addCookieBannerAcceptance(decoratedContext);
   addCache(decoratedContext);
-  addFormData(decoratedContext);
+  await addFormData(decoratedContext);
 
   return decoratedContext;
 }
