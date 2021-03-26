@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { FunctionComponent, ReactNode } from "react";
 
 interface ButtonGroupProps {
@@ -16,6 +17,7 @@ interface StartButtonProps {
 
 interface BackButtonProps {
   href: string;
+  includeUseIndex?: boolean;
 }
 
 interface LinkButtonProps {
@@ -66,11 +68,20 @@ export const StartButton: FunctionComponent<StartButtonProps> = ({
 
 export const BackButton: FunctionComponent<BackButtonProps> = ({
   href,
-}: BackButtonProps): JSX.Element => (
-  <Link href={href}>
-    <a className="govuk-back-link">Back</a>
-  </Link>
-);
+  includeUseIndex = true,
+}: BackButtonProps): JSX.Element => {
+  if (includeUseIndex) {
+    const router = useRouter();
+    const useIndexValue = router.query.useIndex || 0;
+    href = `${href}?useIndex=${useIndexValue}`;
+  }
+
+  return (
+    <Link href={href}>
+      <a className="govuk-back-link">Back</a>
+    </Link>
+  );
+};
 
 export const LinkButton: FunctionComponent<LinkButtonProps> = ({
   buttonText,

@@ -2,7 +2,6 @@ import {
   GetServerSideProps,
   GetServerSidePropsContext,
   GetServerSidePropsResult,
-  Redirect,
 } from "next";
 import { FormJSON, FormManager } from "./form/formManager";
 import { CacheEntry } from "./formCache";
@@ -16,9 +15,7 @@ import { Registration } from "./registration/registration";
 
 type TransformCallback = (formData: CacheEntry) => CacheEntry;
 
-export type SuccessfulPostCallback = (
-  formData: CacheEntry
-) => { redirect: Redirect };
+export type SuccessfulPostCallback = (context: BeaconsContext) => string;
 
 export type FormManagerFactory = (formData: CacheEntry) => FormManager;
 
@@ -32,9 +29,7 @@ export const handlePageRequest = (
   destinationIfValid: string,
   formManagerFactory: FormManagerFactory,
   transformCallback: TransformCallback = (formData: CacheEntry) => formData,
-  onSuccessfulPostCallback: SuccessfulPostCallback = () => {
-    return { redirect: { statusCode: 303, destination: destinationIfValid } };
-  }
+  onSuccessfulPostCallback: SuccessfulPostCallback = () => destinationIfValid
 ): GetServerSideProps =>
   withCookieRedirect(async (context: GetServerSidePropsContext) => {
     const beaconsContext: BeaconsContext = await decorateGetServerSidePropsContext(
@@ -87,7 +82,14 @@ const handlePostRequest = async (
   const formIsValid = !formManager.hasErrors();
 
   if (formIsValid) {
-    return onSuccessfulFormPostCallback(transformedFormData);
+    let destination = onSuccessfulFormPostCallback(context);
+    destination = `${destination}?useIndex=${context.useIndex}`;
+    return {
+      redirect: {
+        statusCode: 303,
+        destination,
+      },
+    };
   }
 
   return {

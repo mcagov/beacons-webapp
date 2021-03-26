@@ -15,10 +15,11 @@ import { acceptRejectCookieId, formSubmissionCookieId } from "./types";
 import { toArray } from "./utils";
 
 export type BeaconsContext = GetServerSidePropsContext & {
-  showCookieBanner?: boolean;
+  showCookieBanner: boolean;
   submissionId?: string;
-  formData?: Record<string, any>;
-  registration: Registration;
+  formData: Record<string, any>;
+  registration?: Registration;
+  useIndex: number;
 };
 
 export function withCookieRedirect<T>(callback: GetServerSideProps<T>) {
@@ -54,6 +55,7 @@ export async function decorateGetServerSidePropsContext(
   addCookieBannerAcceptance(decoratedContext);
   addCache(decoratedContext);
   await addFormData(decoratedContext);
+  addRegistrationIndexes(decoratedContext);
 
   return decoratedContext;
 }
@@ -74,6 +76,11 @@ function addCache(context: BeaconsContext): void {
 async function addFormData(context: BeaconsContext): Promise<void> {
   const formData = await parseFormData(context.req);
   context.formData = formData;
+}
+
+function addRegistrationIndexes(context: BeaconsContext): void {
+  const useIndex = parseInt(context.query.useIndex as string) || 0;
+  context.useIndex = useIndex;
 }
 
 export const setFormSubmissionCookie = (

@@ -91,23 +91,16 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
   );
 };
 
-const onSuccessfulFormCallback: SuccessfulPostCallback = (formData) => {
+const onSuccessfulFormCallback: SuccessfulPostCallback = (context) => {
   let destination: string;
-  switch (formData.environment) {
+  switch (context.formData.environment) {
     case BeaconEnvionment.MARITIME:
     case BeaconEnvionment.AVIATION:
-      destination = "/register-a-beacon/purpose";
-      break;
-    default:
-      destination = "/register-a-beacon/activity";
-  }
+      return (destination = "/register-a-beacon/purpose");
 
-  return {
-    redirect: {
-      statusCode: 303,
-      destination,
-    },
-  };
+    default:
+      return (destination = "/register-a-beacon/activity");
+  }
 };
 
 export const getServerSideProps: GetServerSideProps = handlePageRequest(
