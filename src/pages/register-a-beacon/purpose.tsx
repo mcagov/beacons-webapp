@@ -38,7 +38,7 @@ const PurposePage: FunctionComponent<FormPageProps> = ({
   return (
     <>
       <Layout
-        navigation={<BackButton href="/register-a-beacon/environment" />}
+        navigation={<BackButton href="/register-a-beacon/beacon-use" />}
         title={pageHeading}
         pageHasErrors={form.hasErrors}
         showCookieBanner={showCookieBanner}
