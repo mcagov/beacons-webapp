@@ -44,7 +44,7 @@ export function withCookieRedirect<T>(callback: GetServerSideProps<T>) {
  * Decorator function to add beacons specific information to the `getServerSideProps` context.
  *
  * @param context {GetServerSidePropsContext}   The NextJS application context
- * @returns       {Promise<BeaconsContext>}     The decorated context containing beacons specific data
+ * @returns       {Promise<BeaconsContext>}     A promise resolving to the decorated context containing application specific data
  */
 export async function decorateGetServerSidePropsContext(
   context: GetServerSidePropsContext
