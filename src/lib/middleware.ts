@@ -59,7 +59,7 @@ export async function decorateGetServerSidePropsContext(
 }
 
 function addCookieBannerAcceptance(context: BeaconsContext): void {
-  const showCookieBanner: boolean = !context.req.cookies[acceptRejectCookieId];
+  const showCookieBanner = !context.req.cookies[acceptRejectCookieId];
   context.showCookieBanner = showCookieBanner;
 }
 
