@@ -11,14 +11,12 @@ import {
   SectionHeading,
 } from "../../components/Typography";
 import { CacheEntry } from "../../lib/formCache";
-import { getCache, withCookieRedirect } from "../../lib/middleware";
-import { Registration } from "../../lib/registration/registration";
-import { BeaconUse, IRegistration } from "../../lib/registration/types";
 import {
-  formSubmissionCookieId,
-  MaritimePleasureVessel,
-  VesselCommunication,
-} from "../../lib/types";
+  decorateGetServerSidePropsContext,
+  withCookieRedirect,
+} from "../../lib/middleware";
+import { BeaconUse, IRegistration } from "../../lib/registration/types";
+import { MaritimePleasureVessel, VesselCommunication } from "../../lib/types";
 
 interface CheckYourAnswersProps {
   registration: IRegistration;
@@ -586,11 +584,10 @@ const SendYourApplication: FunctionComponent = (): JSX.Element => (
 
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   async (context: GetServerSidePropsContext) => {
-    const submissionId = context.req.cookies[formSubmissionCookieId];
-    const registration: Registration = getCache(submissionId);
+    const decoratedContext = await decorateGetServerSidePropsContext(context);
 
     return {
-      props: { registration: registration.registration },
+      props: { registration: decoratedContext.registration },
     };
   }
 );

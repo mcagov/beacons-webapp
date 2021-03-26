@@ -1,6 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { BackButton } from "../../src/components/Button";
+import {
+  BackButton,
+  BackButtonRouterIndexes,
+} from "../../src/components/Button";
 
 jest.mock("next/router", () => ({
   useRouter: jest.fn().mockImplementation(() => ({
@@ -20,8 +23,8 @@ describe("Button Components", () => {
       expect(screen.getByText("Back")).toHaveAttribute("href", "/#");
     });
 
-    it("should have the correct href attribute if the use index is specified", () => {
-      render(<BackButton href="#" includeUseIndex />);
+    it("should have the correct href attribute if the use index", () => {
+      render(<BackButtonRouterIndexes href="#" />);
       expect(screen.getByText("Back")).toHaveAttribute("href", "/#?useIndex=1");
     });
   });

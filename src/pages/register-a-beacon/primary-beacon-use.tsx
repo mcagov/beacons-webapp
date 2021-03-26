@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactNode } from "react";
 import { BackButton, Button } from "../../components/Button";
 import { FormErrorSummary } from "../../components/ErrorSummary";
 import {
@@ -47,12 +47,16 @@ const PrimaryBeaconUse: FunctionComponent<FormPageProps> = ({
 }: FormPageProps): JSX.Element => {
   const maritimePleasureVesselName = "maritimePleasureVesselUse";
 
+  const backButton: ReactNode = (
+    <BackButton href={"register-a-beacon/beacon-information"} />
+  );
+
   return (
     <Layout
       title={
         "What type of maritime pleasure vessel will you mostly use this beacon on?"
       }
-      navigation={<BackButton href="/register-a-beacon/beacon-information" />}
+      navigation={backButton}
       pageHasErrors={form.hasErrors}
       showCookieBanner={showCookieBanner}
     >

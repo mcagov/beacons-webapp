@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
-import React, { FunctionComponent } from "react";
-import { BackButton, Button } from "../../components/Button";
+import React, { FunctionComponent, ReactNode } from "react";
+import { BackButtonRouterIndexes, Button } from "../../components/Button";
 import { FormErrorSummary } from "../../components/ErrorSummary";
 import {
   Form,
@@ -70,15 +70,14 @@ const AboutTheVessel: FunctionComponent<FormPageProps> = ({
 }: FormPageProps): JSX.Element => {
   const pageHeading = "About the vessel, windfarm or rig/platform";
 
+  const backButton: ReactNode = (
+    <BackButtonRouterIndexes href="/register-a-beacon/primary-beacon-use" />
+  );
+
   return (
     <>
       <Layout
-        navigation={
-          <BackButton
-            href="/register-a-beacon/primary-beacon-use"
-            includeUseIndex={true}
-          />
-        }
+        navigation={backButton}
         title={pageHeading}
         pageHasErrors={form.hasErrors}
         showCookieBanner={showCookieBanner}

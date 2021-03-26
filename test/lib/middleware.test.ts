@@ -126,6 +126,12 @@ describe("Middleware Functions", () => {
       const decoratedContext = await decorateGetServerSidePropsContext(context);
       expect(decoratedContext.useIndex).toStrictEqual(0);
     });
+
+    it("should set the useIndex on the query param", async () => {
+      context.query.useIndex = 1;
+      const decoratedContext = await decorateGetServerSidePropsContext(context);
+      expect(decoratedContext.useIndex).toStrictEqual(1);
+    });
   });
 
   describe("setFormSubmissionCookie()", () => {

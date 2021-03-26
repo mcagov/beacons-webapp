@@ -92,14 +92,13 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
 };
 
 const onSuccessfulFormCallback: SuccessfulPostCallback = (context) => {
-  let destination: string;
   switch (context.formData.environment) {
     case BeaconEnvionment.MARITIME:
     case BeaconEnvionment.AVIATION:
-      return (destination = "/register-a-beacon/purpose");
+      return "/register-a-beacon/purpose";
 
     default:
-      return (destination = "/register-a-beacon/activity");
+      return "/register-a-beacon/activity";
   }
 };
 
