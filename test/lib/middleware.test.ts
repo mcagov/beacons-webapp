@@ -89,7 +89,7 @@ describe("Middleware Functions", () => {
     let context;
 
     beforeEach(() => {
-      context = { req: { cookies: {} } };
+      context = { req: { cookies: {} }, query: {} };
     });
 
     it("should decorate the context with false if the user has accepted the cookie policy", async () => {
@@ -120,6 +120,11 @@ describe("Middleware Functions", () => {
     it("should parse the form data and add onto the context", async () => {
       const decoratedContext = await decorateGetServerSidePropsContext(context);
       expect(decoratedContext.formData).toStrictEqual({ model: "ASOS" });
+    });
+
+    it("should set the useIndex as 0 on the context if the useIndex is not set", async () => {
+      const decoratedContext = await decorateGetServerSidePropsContext(context);
+      expect(decoratedContext.useIndex).toStrictEqual(0);
     });
   });
 

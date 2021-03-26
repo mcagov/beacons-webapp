@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { render, screen } from "@testing-library/react";
-import * as nextRouter from "next/router";
 import React from "react";
 import { BeaconsForm } from "../../src/components/BeaconsForm";
 
-(nextRouter as any).useRouter = jest.fn().mockImplementation(() => ({
-  query: {},
+jest.mock("next/router", () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    query: { useIndex: 1 },
+  })),
 }));
 
 describe("BeaconsForm Component", () => {
@@ -39,7 +39,25 @@ describe("BeaconsForm Component", () => {
     expect(screen.getByText("Beacons for life")).toBeDefined();
   });
 
-  it("should render previous page url", () => {
+  it("should render previous page url with the use index query param", () => {
+    render(
+      <BeaconsForm
+        previousPageUrl={previousPageUrl}
+        pageHeading={pageHeading}
+        showCookieBanner={showCookieBanner}
+        includeUseIndex={true}
+      >
+        {children}
+      </BeaconsForm>
+    );
+
+    expect(screen.getByText("Back", { exact: true })).toHaveAttribute(
+      "href",
+      `${previousPageUrl}?useIndex=1`
+    );
+  });
+
+  it("should render previous page url without the use index query param", () => {
     render(
       <BeaconsForm
         previousPageUrl={previousPageUrl}
@@ -52,7 +70,7 @@ describe("BeaconsForm Component", () => {
 
     expect(screen.getByText("Back", { exact: true })).toHaveAttribute(
       "href",
-      previousPageUrl
+      `${previousPageUrl}`
     );
   });
 

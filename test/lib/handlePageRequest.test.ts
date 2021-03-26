@@ -16,6 +16,7 @@ jest.mock("../../src/lib/middleware", () => ({
   decorateGetServerSidePropsContext: jest.fn().mockImplementation((context) => {
     context.submissionId = "id";
     context.registration = { getFlattenedRegistration: jest.fn() };
+    context.useIndex = 1;
 
     return context;
   }),
@@ -79,7 +80,7 @@ describe("handlePageRequest()", () => {
     expect(response).toStrictEqual({
       redirect: {
         statusCode: 303,
-        destination: nextPagePath,
+        destination: `${nextPagePath}?useIndex=1`,
       },
     });
   });

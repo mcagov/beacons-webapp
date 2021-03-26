@@ -17,6 +17,7 @@ interface BeaconsFormProps {
   formErrors?: FormError[];
   errorMessages?: string[];
   insetText?: ReactNode;
+  includeUseIndex?: boolean;
 }
 
 export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
@@ -27,6 +28,7 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
   formErrors = [],
   errorMessages = [],
   insetText = null,
+  includeUseIndex = false,
 }: BeaconsFormProps): JSX.Element => {
   let insetComponent;
   if (insetText) {
@@ -35,7 +37,9 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
 
   return (
     <Layout
-      navigation={<BackButton href={previousPageUrl} />}
+      navigation={
+        <BackButton href={previousPageUrl} includeUseIndex={includeUseIndex} />
+      }
       title={pageHeading}
       showCookieBanner={showCookieBanner}
     >

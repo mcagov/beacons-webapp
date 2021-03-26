@@ -68,11 +68,11 @@ export const StartButton: FunctionComponent<StartButtonProps> = ({
 
 export const BackButton: FunctionComponent<BackButtonProps> = ({
   href,
-  includeUseIndex = true,
+  includeUseIndex = false,
 }: BackButtonProps): JSX.Element => {
   if (includeUseIndex) {
     const router = useRouter();
-    const useIndexValue = router.query.useIndex || 0;
+    const useIndexValue = router?.query.useIndex || 0;
     href = `${href}?useIndex=${useIndexValue}`;
   }
 

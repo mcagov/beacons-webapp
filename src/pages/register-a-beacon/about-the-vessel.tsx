@@ -73,7 +73,12 @@ const AboutTheVessel: FunctionComponent<FormPageProps> = ({
   return (
     <>
       <Layout
-        navigation={<BackButton href="/register-a-beacon/primary-beacon-use" />}
+        navigation={
+          <BackButton
+            href="/register-a-beacon/primary-beacon-use"
+            includeUseIndex={true}
+          />
+        }
         title={pageHeading}
         pageHasErrors={form.hasErrors}
         showCookieBanner={showCookieBanner}
