@@ -29,7 +29,7 @@ describe("As a beacon owner, I want to submit uses for my beacon", () => {
     thenTheUrlShouldContain(purposeUrl);
   });
 
-  it("should route to the purpose page if aircraft selected", () => {
+  it("should route to the purpose page if aviation selected", () => {
     givenIHaveSelected("#aviation");
     whenIClickContinue();
 
