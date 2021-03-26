@@ -50,20 +50,30 @@ export async function decorateGetServerSidePropsContext(
   context: GetServerSidePropsContext
 ): Promise<BeaconsContext> {
   const decoratedContext: BeaconsContext = context as BeaconsContext;
-  const showCookieBanner: boolean = !decoratedContext.req.cookies[
-    acceptRejectCookieId
-  ];
-  const submissionId: string =
-    decoratedContext.req.cookies[formSubmissionCookieId];
-  const registration: Registration = getCache(submissionId);
-  const formData = await parseFormData(context.req);
 
-  decoratedContext.showCookieBanner = showCookieBanner;
-  decoratedContext.submissionId = submissionId;
-  decoratedContext.formData = formData;
-  decoratedContext.registration = registration;
+  addCookieBannerAcceptance(decoratedContext);
+  addCache(decoratedContext);
+  addFormData(decoratedContext);
 
   return decoratedContext;
+}
+
+function addCookieBannerAcceptance(context: BeaconsContext): void {
+  const showCookieBanner: boolean = !context.req.cookies[acceptRejectCookieId];
+  context.showCookieBanner = showCookieBanner;
+}
+
+function addCache(context: BeaconsContext): void {
+  const submissionId: string = context.req.cookies[formSubmissionCookieId];
+  const registration: Registration = getCache(submissionId);
+
+  context.submissionId = submissionId;
+  context.registration = registration;
+}
+
+async function addFormData(context: BeaconsContext): Promise<void> {
+  const formData = await parseFormData(context.req);
+  context.formData = formData;
 }
 
 export const setFormSubmissionCookie = (
