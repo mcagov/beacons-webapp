@@ -15,7 +15,7 @@ import { Registration } from "./registration/registration";
 
 type TransformCallback = (formData: CacheEntry) => CacheEntry;
 
-export type SuccessfulPostCallback = (context: BeaconsContext) => string;
+export type DestinationIfValidCallback = (context: BeaconsContext) => string;
 
 export type FormManagerFactory = (formData: CacheEntry) => FormManager;
 
@@ -29,7 +29,8 @@ export const handlePageRequest = (
   destinationIfValid: string,
   formManagerFactory: FormManagerFactory,
   transformCallback: TransformCallback = (formData: CacheEntry) => formData,
-  onSuccessfulPostCallback: SuccessfulPostCallback = () => destinationIfValid
+  destinationIfValidCallback: DestinationIfValidCallback = () =>
+    destinationIfValid
 ): GetServerSideProps =>
   withCookieRedirect(async (context: GetServerSidePropsContext) => {
     const beaconsContext: BeaconsContext = await decorateGetServerSidePropsContext(
@@ -42,7 +43,7 @@ export const handlePageRequest = (
         beaconsContext,
         formManagerFactory,
         transformCallback,
-        onSuccessfulPostCallback
+        destinationIfValidCallback
       );
     }
 

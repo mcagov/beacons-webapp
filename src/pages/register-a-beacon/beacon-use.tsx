@@ -7,9 +7,9 @@ import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
 import {
+  DestinationIfValidCallback,
   FormPageProps,
   handlePageRequest,
-  SuccessfulPostCallback,
 } from "../../lib/handlePageRequest";
 import { BeaconEnvionment } from "../../lib/registration/types";
 
@@ -91,7 +91,7 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
   );
 };
 
-const onSuccessfulFormCallback: SuccessfulPostCallback = (context) => {
+const onSuccessfulFormCallback: DestinationIfValidCallback = (context) => {
   switch (context.formData.environment) {
     case BeaconEnvionment.MARITIME:
     case BeaconEnvionment.AVIATION:
