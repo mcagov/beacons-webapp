@@ -7,24 +7,18 @@ import {
   Form,
   FormFieldset,
   FormGroup,
-  FormHint,
   FormLegend,
 } from "../../components/Form";
 import { Grid } from "../../components/Grid";
 import { Input } from "../../components/Input";
 import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
-import {
-  AnchorLink,
-  GovUKBody,
-  PageHeading,
-} from "../../components/Typography";
+import { GovUKBody, PageHeading } from "../../components/Typography";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { AircraftCommunication } from "../../lib/types";
-import { ofcomLicenseUrl } from "../../lib/urls";
 
 const definePageForm = ({
   aircraftVhfRadio,
@@ -73,12 +67,6 @@ const AircraftCommunications: FunctionComponent<FormPageProps> = ({
             <GovUKBody>
               This will be critical for Search and Rescue in an emergency.
             </GovUKBody>
-            <GovUKBody>
-              If you have a VHF Airband radio license you can
-              <AnchorLink href={ofcomLicenseUrl}>
-                find your Call Sign on the OFCOM website
-              </AnchorLink>
-            </GovUKBody>
 
             <Form>
               <TypesOfCommunication form={form} />
@@ -98,10 +86,7 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
 }: FormPageProps) => (
   <FormFieldset>
     <FormLegend size="small">
-      Types of communication devices onboard
-      <FormHint forId="typesOfCommunication">
-        Tick all that apply and provide as much detail as you can
-      </FormHint>
+      Tick all that apply and provide as much detail as you can
     </FormLegend>
 
     <FormGroup>
