@@ -13,7 +13,7 @@ jest.mock("../../../src/lib/handlePageRequest", () => ({
 }));
 
 describe("Activity", () => {
-  const primaryBeaconUseForm: FormJSON = {
+  const activityForm: FormJSON = {
     hasErrors: false,
     errorSummary: [],
     fields: {
@@ -29,7 +29,7 @@ describe("Activity", () => {
   };
 
   it("should have a back button which directs the user to the beacon information page", () => {
-    render(<Activity form={primaryBeaconUseForm} />);
+    render(<Activity form={activityForm} />);
 
     expect(screen.getByText("Back", { exact: true })).toHaveAttribute(
       "href",

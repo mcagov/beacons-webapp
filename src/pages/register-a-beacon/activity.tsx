@@ -45,7 +45,7 @@ const Activity: FunctionComponent<FormPageProps> = ({
 
   return (
     <BeaconsForm
-      previousPageUrl={"/register-a-beacon/beacon-information"}
+      previousPageUrl="/register-a-beacon/beacon-information"
       pageHeading={pageHeading}
       showCookieBanner={showCookieBanner}
       formErrors={form.errorSummary}
@@ -97,7 +97,7 @@ const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
         }
       />
       <RadioListItem
-        id="maritimePleasureVesselUse"
+        id="small-unpowered-vessel"
         value={MaritimePleasureVessel.SMALL_UNPOWERED}
         label="Small unpowered vessel"
         hintText="E.g. Canoe, Kayak"
