@@ -23,7 +23,7 @@ import { IfYouNeedHelp } from "../../components/Mca";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { CacheEntry } from "../../lib/formCache";
+import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { padNumberWithLeadingZeros } from "../../lib/utils";
 
@@ -58,7 +58,7 @@ const definePageForm = ({
   lastServicedDate,
   lastServicedDateMonth,
   lastServicedDateYear,
-}: CacheEntry): FormManager => {
+}: FormSubmission): FormManager => {
   return new FormManager({
     manufacturerSerialNumber: new FieldManager(manufacturerSerialNumber, [
       Validators.required(

@@ -6,7 +6,7 @@ import { FormInputProps, Input } from "../../components/Input";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { CacheEntry } from "../../lib/formCache";
+import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 
 const definePageForm = ({
@@ -14,7 +14,7 @@ const definePageForm = ({
   ownerTelephoneNumber,
   ownerAlternativeTelephoneNumber,
   ownerEmail,
-}: CacheEntry): FormManager => {
+}: FormSubmission): FormManager => {
   return new FormManager({
     ownerFullName: new FieldManager(ownerFullName, [
       Validators.required("Full name is a required field"),

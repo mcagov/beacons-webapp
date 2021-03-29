@@ -16,7 +16,7 @@ import { GovUKBody } from "../../components/Typography";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { CacheEntry } from "../../lib/formCache";
+import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 
 interface BuildingNumberAndStreetInputProps {
@@ -31,7 +31,7 @@ const definePageForm = ({
   ownerTownOrCity,
   ownerCounty,
   ownerPostcode,
-}: CacheEntry): FormManager => {
+}: FormSubmission): FormManager => {
   return new FormManager({
     ownerAddressLine1: new FieldManager(ownerAddressLine1, [
       Validators.required("Building number and street is a required field"),

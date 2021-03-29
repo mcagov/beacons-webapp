@@ -7,7 +7,7 @@ import { RadioList, RadioListItem } from "../../components/RadioList";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormJSON, FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { CacheEntry } from "../../lib/formCache";
+import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { Activity, Environment, Purpose } from "../../lib/types";
 
@@ -24,7 +24,7 @@ interface ActivityOptionsProps extends OptionsProps {
 const definePageForm = ({
   activity,
   otherActivityText,
-}: CacheEntry): FormManager => {
+}: FormSubmission): FormManager => {
   return new FormManager({
     activity: new FieldManager(activity, [
       Validators.required("Activity is a required field"),

@@ -22,7 +22,7 @@ import {
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { CacheEntry } from "../../lib/formCache";
+import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { VesselCommunication } from "../../lib/types";
 
@@ -42,7 +42,7 @@ const definePageForm = ({
   mobileTelephone,
   mobileTelephoneInput1,
   mobileTelephoneInput2,
-}: CacheEntry): FormManager => {
+}: FormSubmission): FormManager => {
   return new FormManager({
     callSign: new FieldManager(callSign),
     vhfRadio: new FieldManager(vhfRadio),

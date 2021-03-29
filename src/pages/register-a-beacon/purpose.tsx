@@ -6,12 +6,12 @@ import { RadioList, RadioListItem } from "../../components/RadioList";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { CacheEntry } from "../../lib/formCache";
+import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { BeaconEnvionment } from "../../lib/registration/types";
 import { Purpose } from "../../lib/types";
 
-const definePageForm = ({ purpose }: CacheEntry): FormManager => {
+const definePageForm = ({ purpose }: FormSubmission): FormManager => {
   return new FormManager({
     purpose: new FieldManager(purpose, [
       Validators.required("Beacon use purpose is a required field"),

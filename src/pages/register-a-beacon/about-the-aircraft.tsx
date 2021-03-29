@@ -19,7 +19,7 @@ import { TextareaCharacterCount } from "../../components/Textarea";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { CacheEntry } from "../../lib/formCache";
+import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 
 const definePageForm = ({
@@ -32,7 +32,7 @@ const definePageForm = ({
   cnOrMsnNumber,
   dongle,
   beaconPosition,
-}: CacheEntry): FormManager => {
+}: FormSubmission): FormManager => {
   return new FormManager({
     maxCapacity: new FieldManager(maxCapacity, [
       Validators.required(
