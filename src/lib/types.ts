@@ -11,15 +11,13 @@ export enum BeaconIntent {
   OTHER = "OTHER",
 }
 
-export enum MaritimePleasureType {
+export enum Activity {
   MOTOR = "MOTOR",
   SAILING = "SAILING",
   ROWING = "ROWING",
   SMALL_UNPOWERED = "SMALL_UNPOWERED",
   OTHER = "OTHER",
-}
 
-export enum MaritimeCommercialType {
   FISHING_VESSEL = "FISHING_VESSEL",
   MERCHANT_VESSEL = "MERCHANT_VESSEL",
   COMMERCIAL_SAILING_VESSEL = "COMMERCIAL_SAILING_VESSEL",
@@ -27,7 +25,6 @@ export enum MaritimeCommercialType {
   FLOATING_PLATFORM = "FLOATING_PLATFORM",
   OFFSHORE_WINDFARM = "OFFSHORE_WINDFARM",
   OFFSHORE_RIG_PLATFORM = "OFFSHORE_RIG_PLATFORM",
-  OTHER = "OTHER",
 }
 
 export enum VesselCommunication {

@@ -8,10 +8,10 @@ import { GovUKBody, GovUKList, PageHeading } from "../../components/Typography";
 import { CacheEntry } from "../../lib/formCache";
 import { getCache, withCookieRedirect } from "../../lib/middleware";
 import {
+  Activity,
   Beacon,
   BeaconInformation,
   EmergencyContacts,
-  MaritimePleasureType,
   Owner,
   Vessel,
   VesselCommunication,
@@ -150,19 +150,19 @@ const BeaconUseSection: FunctionComponent<CacheEntry> = ({
 }: any): JSX.Element => {
   let level3UseText = "";
   switch (activity) {
-    case MaritimePleasureType.MOTOR:
+    case Activity.MOTOR:
       level3UseText = "Motor vessel";
       break;
-    case MaritimePleasureType.ROWING:
+    case Activity.ROWING:
       level3UseText = "Rowing vessel";
       break;
-    case MaritimePleasureType.SAILING:
+    case Activity.SAILING:
       level3UseText = "Sailing vessel";
       break;
-    case MaritimePleasureType.SMALL_UNPOWERED:
+    case Activity.SMALL_UNPOWERED:
       level3UseText = "Small unpowered vessel";
       break;
-    case MaritimePleasureType.OTHER:
+    case Activity.OTHER:
       level3UseText = otherActivityText;
       break;
   }
