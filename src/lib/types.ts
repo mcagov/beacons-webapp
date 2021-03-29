@@ -11,12 +11,20 @@ export enum BeaconIntent {
   OTHER = "OTHER",
 }
 
-export enum MaritimePleasureVessel {
+export enum Activity {
   MOTOR = "MOTOR",
   SAILING = "SAILING",
   ROWING = "ROWING",
   SMALL_UNPOWERED = "SMALL_UNPOWERED",
   OTHER = "OTHER",
+
+  FISHING_VESSEL = "FISHING_VESSEL",
+  MERCHANT_VESSEL = "MERCHANT_VESSEL",
+  COMMERCIAL_SAILING_VESSEL = "COMMERCIAL_SAILING_VESSEL",
+  COMMERCIAL_MOTOR_PLEASURE_VESSEL = "COMMERCIAL_MOTOR_PLEASURE_VESSEL",
+  FLOATING_PLATFORM = "FLOATING_PLATFORM",
+  OFFSHORE_WINDFARM = "OFFSHORE_WINDFARM",
+  OFFSHORE_RIG_PLATFORM = "OFFSHORE_RIG_PLATFORM",
 }
 
 export enum VesselCommunication {
@@ -25,6 +33,13 @@ export enum VesselCommunication {
   PORTABLE_VHF_RADIO = "PORTABLE_VHF_RADIO",
   SATELLITE_TELEPHONE = "SATELLITE_TELEPHONE",
   MOBILE_TELEPHONE = "MOBILE_TELEPHONE",
+}
+
+export enum Environment {
+  MARITIME = "MARITIME",
+  AVIATION = "AVIATION",
+  LAND = "LAND",
+  OTHER = "OTHER",
 }
 
 export enum Purpose {
@@ -44,8 +59,6 @@ export interface Vessel {
   officialNumber: string;
   rigPlatformLocation: string;
   moreDetails: string;
-  maritimePleasureVesselUse: string;
-  otherPleasureVesselText: string;
 }
 
 export interface Aircraft {

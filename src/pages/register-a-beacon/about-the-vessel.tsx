@@ -71,7 +71,7 @@ const AboutTheVessel: FunctionComponent<FormPageProps> = ({
   const pageHeading = "About the vessel, windfarm or rig/platform";
 
   const backButton: ReactNode = (
-    <BackButtonRouterIndexes href="/register-a-beacon/primary-beacon-use" />
+    <BackButtonRouterIndexes href="/register-a-beacon/activity" />
   );
 
   return (
@@ -92,8 +92,8 @@ const AboutTheVessel: FunctionComponent<FormPageProps> = ({
 
                   <InsetText>
                     Leave anything that isn&apos;t relevant blank. Any
-                    information you do provide may help save lives in a Search &
-                    Rescue scenario.
+                    information you do provide may help save lives in a Search
+                    and Rescue scenario.
                   </InsetText>
 
                   <MaxCapacityInput

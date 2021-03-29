@@ -39,6 +39,7 @@ export interface BeaconUse {
   environment: string;
   purpose: string;
   activity: string;
+  otherActivityText: string;
 
   // Vessel comms
   callSign: string;
@@ -57,9 +58,14 @@ export interface BeaconUse {
   vesselName: string;
   vesselUse: string;
   otherVesselUseText: string;
+  portLetterNumber: string;
   homeport: string;
   areaOfOperation: string;
   beaconLocation: string;
+  imoNumber: string;
+  ssrNumber: string;
+  officialNumber: string;
+  rigPlatformLocation: string;
 
   // Generic more details on use of beacon
   moreDetails: string;

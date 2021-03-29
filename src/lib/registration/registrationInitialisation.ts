@@ -55,6 +55,7 @@ export const initBeaconUse = (): BeaconUse => {
     environment: "",
     purpose: "",
     activity: "",
+    otherActivityText: "",
 
     callSign: "",
     vhfRadio: "",
@@ -72,9 +73,14 @@ export const initBeaconUse = (): BeaconUse => {
     vesselName: "",
     vesselUse: "",
     otherVesselUseText: "",
+    portLetterNumber: "",
     homeport: "",
     areaOfOperation: "",
     beaconLocation: "",
+    imoNumber: "",
+    ssrNumber: "",
+    officialNumber: "",
+    rigPlatformLocation: "",
 
     moreDetails: "",
   };

@@ -16,7 +16,7 @@ import {
   withCookieRedirect,
 } from "../../lib/middleware";
 import { BeaconUse, IRegistration } from "../../lib/registration/types";
-import { MaritimePleasureVessel, VesselCommunication } from "../../lib/types";
+import { Activity, VesselCommunication } from "../../lib/types";
 
 interface CheckYourAnswersProps {
   registration: IRegistration;
@@ -145,25 +145,25 @@ const BeaconInformationSection: FunctionComponent<IRegistration> = ({
 );
 
 const BeaconUseSection: FunctionComponent<BeaconUse> = ({
-  vesselUse,
-  otherVesselUseText,
+  activity,
+  otherActivityText,
 }: BeaconUse): JSX.Element => {
   let level3UseText = "";
-  switch (vesselUse) {
-    case MaritimePleasureVessel.MOTOR:
+  switch (activity) {
+    case Activity.MOTOR:
       level3UseText = "Motor vessel";
       break;
-    case MaritimePleasureVessel.ROWING:
+    case Activity.ROWING:
       level3UseText = "Rowing vessel";
       break;
-    case MaritimePleasureVessel.SAILING:
+    case Activity.SAILING:
       level3UseText = "Sailing vessel";
       break;
-    case MaritimePleasureVessel.SMALL_UNPOWERED:
+    case Activity.SMALL_UNPOWERED:
       level3UseText = "Small unpowered vessel";
       break;
-    case MaritimePleasureVessel.OTHER:
-      level3UseText = otherVesselUseText;
+    case Activity.OTHER:
+      level3UseText = otherActivityText;
       break;
   }
 
@@ -173,8 +173,8 @@ const BeaconUseSection: FunctionComponent<BeaconUse> = ({
 
       <SummaryList>
         <SummaryListItem
-          labelText="Primary use of beacon"
-          href="/register-a-beacon/primary-beacon-use"
+          labelText="Primary beacon activity"
+          href="/register-a-beacon/activity"
           actionText="Change"
         >
           {"Maritime"}
