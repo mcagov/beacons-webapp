@@ -261,7 +261,7 @@ const LastServicedDate: FunctionComponent<DateInputProps> = ({
   </DateListInput>
 );
 
-const transformFormData = (formData: CacheEntry): CacheEntry => {
+const transformFormData = (formData: FormSubmission): FormSubmission => {
   formData = {
     ...formData,
     batteryExpiryDate: getISODate(
