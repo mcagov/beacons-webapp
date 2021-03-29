@@ -11,12 +11,32 @@ export enum BeaconIntent {
   OTHER = "OTHER",
 }
 
-export enum MaritimePleasureVessel {
+export enum Activity {
   MOTOR = "MOTOR",
   SAILING = "SAILING",
   ROWING = "ROWING",
   SMALL_UNPOWERED = "SMALL_UNPOWERED",
   OTHER = "OTHER",
+
+  FISHING_VESSEL = "FISHING_VESSEL",
+  MERCHANT_VESSEL = "MERCHANT_VESSEL",
+  COMMERCIAL_SAILING_VESSEL = "COMMERCIAL_SAILING_VESSEL",
+  COMMERCIAL_MOTOR_PLEASURE_VESSEL = "COMMERCIAL_MOTOR_PLEASURE_VESSEL",
+  FLOATING_PLATFORM = "FLOATING_PLATFORM",
+  OFFSHORE_WINDFARM = "OFFSHORE_WINDFARM",
+  OFFSHORE_RIG_PLATFORM = "OFFSHORE_RIG_PLATFORM",
+}
+
+export enum Environment {
+  MARITIME = "MARITIME",
+  AVIATION = "AVIATION",
+  LAND = "LAND",
+  OTHER = "OTHER",
+}
+
+export enum Purpose {
+  PLEASURE = "PLEASURE",
+  COMMERCIAL = "COMMERCIAL",
 }
 
 export interface Beacon {
@@ -40,12 +60,15 @@ export interface BeaconInformation {
 export interface Vessel {
   maxCapacity: string;
   vesselName: string;
+  beaconLocation: string;
+  portLetterNumber: string;
   homeport: string;
   areaOfOperation: string;
-  beaconLocation: string;
+  imoNumber: string;
+  ssrNumber: string;
+  officialNumber: string;
+  rigPlatformLocation: string;
   moreDetails: string;
-  maritimePleasureVesselUse: string;
-  otherPleasureVesselText: string;
 }
 
 export interface VesselCommunications {
@@ -123,6 +146,13 @@ export interface EmergencyContacts {
   emergencyContact3FullName: string;
   emergencyContact3TelephoneNumber: string;
   emergencyContact3AlternativeTelephoneNumber: string;
+}
+
+export interface BeaconUse {
+  environment: string;
+  purpose: string;
+  activity: string;
+  otherActivityText: string;
 }
 
 export const formSubmissionCookieId = "submissionId";

@@ -25,6 +25,14 @@ describe("AboutTheVessel", () => {
         value: "",
         errorMessages: [],
       },
+      beaconLocation: {
+        value: "",
+        errorMessages: [],
+      },
+      portLetterNumber: {
+        value: "",
+        errorMessages: [],
+      },
       homeport: {
         value: "",
         errorMessages: [],
@@ -33,7 +41,19 @@ describe("AboutTheVessel", () => {
         value: "",
         errorMessages: [],
       },
-      beaconLocation: {
+      imoNumber: {
+        value: "",
+        errorMessages: [],
+      },
+      ssrNumber: {
+        value: "",
+        errorMessages: [],
+      },
+      officialNumber: {
+        value: "",
+        errorMessages: [],
+      },
+      rigPlatformLocation: {
         value: "",
         errorMessages: [],
       },
@@ -45,7 +65,7 @@ describe("AboutTheVessel", () => {
 
     expect(screen.getByText("Back", { exact: true })).toHaveAttribute(
       "href",
-      "/register-a-beacon/primary-beacon-use"
+      "/register-a-beacon/activity"
     );
   });
 

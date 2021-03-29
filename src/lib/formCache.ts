@@ -4,6 +4,7 @@ import {
   Beacon,
   BeaconInformation,
   BeaconIntent,
+  BeaconUse,
   EmergencyContacts,
   Owner,
   Vessel,
@@ -17,7 +18,8 @@ type BeaconModel = Beacon &
   VesselCommunications &
   Aircraft &
   AircraftCommunications &
-  EmergencyContacts;
+  EmergencyContacts &
+  BeaconUse;
 
 // Convenience type
 export type CacheEntry = Partial<BeaconModel> & {
