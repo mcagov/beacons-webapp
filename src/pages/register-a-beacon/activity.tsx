@@ -27,11 +27,11 @@ const definePageForm = ({
 }: CacheEntry): FormManager => {
   return new FormManager({
     activity: new FieldManager(activity, [
-      Validators.required("Maritime pleasure use is a required field"),
+      Validators.required("Activity is a required field"),
     ]),
     otherActivityText: new FieldManager(
       otherActivityText,
-      [Validators.required("Other pleasure vessel text is a required field")],
+      [Validators.required("Other activity text is a required field")],
       [
         {
           dependsOn: "activity",
@@ -76,7 +76,7 @@ const ActivityPage: FunctionComponent<FormPageProps> = ({
           environment={environment}
           purpose={purpose}
           form={form}
-          listItemName={"activity"}
+          listItemName="activity"
         />
       </RadioList>
     </BeaconsForm>
@@ -140,7 +140,7 @@ const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
         defaultChecked={form.fields.activity.value === Activity.SMALL_UNPOWERED}
       />
       <RadioListItem
-        id="other-pleasure-vessel"
+        id="other-activity"
         name={listItemName}
         value={Activity.OTHER}
         label="Other"

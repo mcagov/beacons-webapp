@@ -16,6 +16,7 @@ import {
 describe("As a beacon owner, I want to submit the primary activity for my beacon", () => {
   const thisPageUrl = "/register-a-beacon/activity";
   const previousPageUrl = "/register-a-beacon/beacon-information";
+  const otherActivitySelector = "#other-activity";
 
   beforeEach(() => {
     givenIAmAt(thisPageUrl);
@@ -34,7 +35,7 @@ describe("As a beacon owner, I want to submit the primary activity for my beacon
     whenIClickContinue();
     thenIShouldSeeAnErrorMessageThatContains(requiredFieldErrorMessage);
     thenIShouldSeeAnErrorSummaryLinkThatContains(
-      "Maritime pleasure use",
+      "Activity",
       requiredFieldErrorMessage
     );
   });
@@ -59,22 +60,22 @@ describe("As a beacon owner, I want to submit the primary activity for my beacon
     thenTheUrlShouldContain("/register-a-beacon/about-the-vessel");
   });
 
-  it("displays an error if 'Other pleasure vessel' is selected, but no text is provided", () => {
-    givenIHaveSelected("#other-pleasure-vessel");
+  it("displays an error if 'Other activity' is selected, but no text is provided", () => {
+    givenIHaveSelected(otherActivitySelector);
     whenIClickContinue();
     thenIShouldSeeAnErrorMessageThatContains(
-      "Other pleasure vessel",
+      "Other activity",
       requiredFieldErrorMessage
     );
     whenIClickOnTheErrorSummaryLinkContaining(
-      "Other pleasure vessel",
+      "Other activity",
       requiredFieldErrorMessage
     );
     thenMyFocusMovesTo("#otherActivityText");
   });
 
   it("routes to the next page if there are no errors with Other pleasure vessel selected", () => {
-    givenIHaveSelected("#other-pleasure-vessel");
+    givenIHaveSelected(otherActivitySelector);
     whenIType("Surfboard", "#otherActivityText");
     whenIClickContinue();
 
