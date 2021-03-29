@@ -60,7 +60,7 @@ const AircraftCommunications: FunctionComponent<FormPageProps> = ({
 
   return (
     <Layout
-      navigation={<BackButton href="/register-a-beacon/more-details" />}
+      navigation={<BackButton href="/register-a-beacon/about-the-aircraft" />}
       title={pageHeading}
       pageHasErrors={form.hasErrors}
       showCookieBanner={showCookieBanner}
