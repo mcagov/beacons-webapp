@@ -64,7 +64,7 @@ const ActivityPage: FunctionComponent<FormPageProps> = ({
 
   return (
     <BeaconsForm
-      previousPageUrl={"/register-a-beacon/beacon-information"}
+      previousPageUrl="/register-a-beacon/beacon-information"
       pageHeading={pageHeading}
       showCookieBanner={showCookieBanner}
       formErrors={form.errorSummary}
@@ -234,7 +234,7 @@ const MaritimeCommercialOptions: FunctionComponent<OptionsProps> = ({
         }
       />
       <RadioListItem
-        id="other-commercial-vessel"
+        id="other-activity"
         name={listItemName}
         value={Activity.OTHER}
         label="Other"
