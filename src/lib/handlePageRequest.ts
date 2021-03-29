@@ -4,7 +4,7 @@ import {
   GetServerSidePropsResult,
 } from "next";
 import { FormJSON, FormManager } from "./form/formManager";
-import { CacheEntry } from "./formCache";
+import { FormSubmission } from "./formCache";
 import {
   BeaconsContext,
   decorateGetServerSidePropsContext,
@@ -13,22 +13,22 @@ import {
 } from "./middleware";
 import { Registration } from "./registration/registration";
 
-type TransformCallback = (formData: CacheEntry) => CacheEntry;
+type TransformCallback = (formData: FormSubmission) => FormSubmission;
 
 export type DestinationIfValidCallback = (context: BeaconsContext) => string;
 
-export type FormManagerFactory = (formData: CacheEntry) => FormManager;
+export type FormManagerFactory = (formData: FormSubmission) => FormManager;
 
 export interface FormPageProps {
   form: FormJSON;
   showCookieBanner?: boolean;
-  flattenedRegistration?: CacheEntry;
+  flattenedRegistration?: FormSubmission;
 }
 
 export const handlePageRequest = (
   destinationIfValid: string,
   formManagerFactory: FormManagerFactory,
-  transformCallback: TransformCallback = (formData: CacheEntry) => formData,
+  transformCallback: TransformCallback = (formData: FormSubmission) => formData,
   destinationIfValidCallback: DestinationIfValidCallback = () =>
     destinationIfValid
 ): GetServerSideProps =>

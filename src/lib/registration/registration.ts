@@ -1,4 +1,4 @@
-import { CacheEntry } from "../formCache";
+import { FormSubmission } from "../formCache";
 import { initBeacon } from "./registrationInitialisation";
 import { IRegistration } from "./types";
 
@@ -15,7 +15,7 @@ export class Registration {
     this.registration = initBeacon();
   }
 
-  public getFlattenedRegistration(indexes: Indexes): CacheEntry {
+  public getFlattenedRegistration(indexes: Indexes): FormSubmission {
     let flattenedRegistration = { ...this.registration };
     delete flattenedRegistration.uses;
 
@@ -26,13 +26,13 @@ export class Registration {
     return flattenedRegistration;
   }
 
-  public update(formData: CacheEntry): void {
+  public update(formData: FormSubmission): void {
     formData = formData || {};
     this._updateBeacon(formData);
     this._updateUse(formData);
   }
 
-  private _updateBeacon(formData: CacheEntry): void {
+  private _updateBeacon(formData: FormSubmission): void {
     Object.keys(formData)
       .filter((key: string) => !(key === Registration.USES_KEY))
       .forEach((key: string) => {
@@ -43,7 +43,7 @@ export class Registration {
       });
   }
 
-  private _updateUse(formData: CacheEntry): void {
+  private _updateUse(formData: FormSubmission): void {
     const useIndex = this._parseUseIndex(formData.useIndex);
     const use = this.registration.uses[useIndex];
 

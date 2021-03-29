@@ -2,10 +2,10 @@
 import { Registration } from "./registration/registration";
 
 // Convenience type
-export type CacheEntry = Record<string, any>;
+export type FormSubmission = Record<string, any>;
 
 export interface IFormCache {
-  update(id: string, formData?: CacheEntry): void;
+  update(id: string, formData?: FormSubmission): void;
 
   get(id: string): Registration;
 }
@@ -25,7 +25,7 @@ export class FormCacheFactory {
 class FormCache implements IFormCache {
   private _byIdToRegistration: Record<string, Registration> = {};
 
-  public update(id: string, formData: CacheEntry = {}): void {
+  public update(id: string, formData: FormSubmission = {}): void {
     const registration: Registration = this._safeGetRegistration(id);
     registration.update(formData);
   }

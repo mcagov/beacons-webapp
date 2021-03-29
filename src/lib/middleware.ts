@@ -9,7 +9,7 @@ import {
 import { NextApiRequestCookies } from "next/dist/next-server/server/api-utils";
 import parse from "urlencoded-body-parser";
 import { v4 as uuidv4 } from "uuid";
-import { CacheEntry, FormCacheFactory, IFormCache } from "./formCache";
+import { FormCacheFactory, FormSubmission, IFormCache } from "./formCache";
 import { Registration } from "./registration/registration";
 import { acceptRejectCookieId, formSubmissionCookieId } from "./types";
 import { toArray } from "./utils";
@@ -17,7 +17,7 @@ import { toArray } from "./utils";
 export type BeaconsContext = GetServerSidePropsContext & {
   showCookieBanner: boolean;
   submissionId?: string;
-  formData: Record<string, any>;
+  formData: FormSubmission;
   registration?: Registration;
   useIndex: number;
 };
@@ -125,7 +125,7 @@ const setCookieHeader = (id: string, res: ServerResponse): void => {
 
 export function updateFormCache(
   cookies: NextApiRequestCookies,
-  formData: CacheEntry,
+  formData: FormSubmission,
   cache: IFormCache = FormCacheFactory.getCache()
 ): void {
   const submissionId: string = cookies[formSubmissionCookieId];

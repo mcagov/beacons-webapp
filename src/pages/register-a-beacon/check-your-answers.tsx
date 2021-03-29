@@ -10,7 +10,7 @@ import {
   PageHeading,
   SectionHeading,
 } from "../../components/Typography";
-import { CacheEntry } from "../../lib/formCache";
+import { FormSubmission } from "../../lib/formCache";
 import {
   decorateGetServerSidePropsContext,
   withCookieRedirect,
@@ -451,11 +451,11 @@ const BeaconOwnerAddressSection: FunctionComponent<IRegistration> = ({
   );
 };
 
-const BeaconOwnerEmergencyContact1Section: FunctionComponent<CacheEntry> = ({
+const BeaconOwnerEmergencyContact1Section: FunctionComponent<FormSubmission> = ({
   emergencyContact1FullName,
   emergencyContact1TelephoneNumber,
   emergencyContact1AlternativeTelephoneNumber,
-}: CacheEntry): JSX.Element => {
+}: FormSubmission): JSX.Element => {
   const contactDetails: ReactNode = (
     <GovUKList>
       <li>{emergencyContact1TelephoneNumber}</li>
