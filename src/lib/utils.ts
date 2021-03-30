@@ -43,14 +43,14 @@ export function formatUrlQueryParams(
   url: string,
   queryParamMap: Record<string, any>
 ): string {
-  const format = (key, value) => {
+  const formatUrl = (queryParam, value) => {
     const queryStringCombiner = url.includes("?") ? "&" : "?";
-    url = `${url}${queryStringCombiner}${key}=${value}`;
+    url = `${url}${queryStringCombiner}${queryParam}=${value}`;
   };
 
-  Object.keys(queryParamMap).forEach((key) => {
-    const value = queryParamMap[key];
-    format(key, value);
+  Object.keys(queryParamMap).forEach((queryParam) => {
+    const value = queryParamMap[queryParam];
+    formatUrl(queryParam, value);
   });
 
   return url;
