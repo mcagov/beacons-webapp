@@ -13,35 +13,79 @@ import { Grid } from "../../components/Grid";
 import { Input } from "../../components/Input";
 import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
+import { TextareaCharacterCount } from "../../components/Textarea";
 import { GovUKBody, PageHeading } from "../../components/Typography";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
+import { Validators } from "../../lib/form/validators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
-import { AircraftCommunication } from "../../lib/types";
+import { AircraftCommunication, Communication } from "../../lib/types";
 
 const definePageForm = ({
-  aircraftVhfRadio,
-  aircraftVhfRadioInput,
-  aircraftSatelliteTelephone,
-  aircraftSatelliteTelephoneInput,
-  aircraftMobileTelephone,
-  aircraftMobileTelephoneInput1,
-  aircraftMobileTelephoneInput2,
-  aircraftOtherCommunications,
-  aircraftOtherCommunicationsInput,
+  satelliteTelephone,
+  satelliteTelephoneInput,
+  mobileTelephone,
+  mobileTelephoneInput1,
+  mobileTelephoneInput2,
+  otherCommunication,
+  otherCommunicationInput,
 }: CacheEntry): FormManager => {
   return new FormManager({
-    vhfRadio: new FieldManager(aircraftVhfRadio),
-    vhfRadioInput: new FieldManager(aircraftVhfRadioInput),
-    satelliteTelephoneRadio: new FieldManager(aircraftSatelliteTelephone),
-    satelliteTelephoneInput: new FieldManager(aircraftSatelliteTelephoneInput),
-    mobileTelephoneRadio: new FieldManager(aircraftMobileTelephone),
-    mobileTelephoneInput1: new FieldManager(aircraftMobileTelephoneInput1),
-    mobileTelephoneInput2: new FieldManager(aircraftMobileTelephoneInput2),
-    otherCommunicationsRadio: new FieldManager(aircraftOtherCommunications),
-    otherCommunicationsRadioInput: new FieldManager(
-      aircraftOtherCommunicationsInput
+    satelliteTelephone: new FieldManager(satelliteTelephone),
+    satelliteTelephoneInput: new FieldManager(
+      satelliteTelephoneInput,
+      [
+        Validators.required(
+          "We need your phone number if you have a satellite telephone"
+        ),
+        Validators.phoneNumber(
+          "Enter a satellite telephone number in the correct format"
+        ),
+      ],
+      [
+        {
+          dependsOn: "satelliteTelephone",
+          meetingCondition: (value) =>
+            value === Communication.SATELLITE_TELEPHONE,
+        },
+      ]
+    ),
+    mobileTelephone: new FieldManager(mobileTelephone),
+    mobileTelephoneInput1: new FieldManager(
+      mobileTelephoneInput1,
+      [
+        Validators.required(
+          "We need your telephone number if you have a mobile telephone"
+        ),
+        Validators.phoneNumber(
+          "Enter a mobile telephone number, like 07700 982736 or +447700912738"
+        ),
+      ],
+      [
+        {
+          dependsOn: "mobileTelephone",
+          meetingCondition: (value) => value === Communication.MOBILE_TELEPHONE,
+        },
+      ]
+    ),
+    mobileTelephoneInput2: new FieldManager(mobileTelephoneInput2),
+    otherCommunication: new FieldManager(otherCommunication),
+    otherCommunicationInput: new FieldManager(
+      otherCommunicationInput,
+      [
+        Validators.required("We need your other communication"),
+        Validators.maxLength(
+          "Other communication has too many characters",
+          250
+        ),
+      ],
+      [
+        {
+          dependsOn: "otherCommunication",
+          meetingCondition: (value) => value === Communication.OTHER,
+        },
+      ]
     ),
   });
 };
@@ -92,29 +136,10 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
     <FormGroup>
       <CheckboxList conditional={true}>
         <CheckboxListItem
-          id="vhfRadio"
-          value={AircraftCommunication.VHF_RADIO}
-          defaultChecked={
-            form.fields.vhfRadio.value === AircraftCommunication.VHF_RADIO
-          }
-          label="VHF Radio"
-          conditional={true}
-        >
-          <FormGroup errorMessages={form.fields.vhfRadioInput.errorMessages}>
-            <Input
-              id="vhfRadioInput"
-              label="Fixed aircraft radio numnber (optional)"
-              hintText="This is the unique radio number associated to the aircraft, it is # numbers long"
-              defaultValue={form.fields.vhfRadioInput.value}
-            />
-          </FormGroup>
-        </CheckboxListItem>
-
-        <CheckboxListItem
-          id="satelliteTelephoneRadio"
+          id="satelliteTelephone"
           value={AircraftCommunication.SATELLITE_TELEPHONE}
           defaultChecked={
-            form.fields.satelliteTelephoneRadio.value ===
+            form.fields.satelliteTelephone.value ===
             AircraftCommunication.SATELLITE_TELEPHONE
           }
           label="Satellite Telephone"
@@ -132,10 +157,10 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           </FormGroup>
         </CheckboxListItem>
         <CheckboxListItem
-          id="mobileTelephoneRadio"
+          id="mobileTelephone"
           value={AircraftCommunication.MOBILE_TELEPHONE}
           defaultChecked={
-            form.fields.mobileTelephoneRadio.value ===
+            form.fields.mobileTelephone.value ===
             AircraftCommunication.MOBILE_TELEPHONE
           }
           label="Mobile Telephone(s)"
@@ -159,6 +184,26 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
             defaultValue={form.fields.mobileTelephoneInput2.value}
             htmlAttributes={{ autoComplete: "tel" }}
           />
+        </CheckboxListItem>
+        <CheckboxListItem
+          id="otherCommunication"
+          value={Communication.OTHER}
+          defaultChecked={
+            form.fields.otherCommunication.value === Communication.OTHER
+          }
+          label="Other"
+          conditional={true}
+        >
+          <FormGroup
+            errorMessages={form.fields.otherCommunicationInput.errorMessages}
+          >
+            <TextareaCharacterCount
+              id="otherCommunicationInput"
+              label="Please provide details of how we can contact you"
+              defaultValue={form.fields.otherCommunicationInput.value}
+              maxCharacters={250}
+            />
+          </FormGroup>
         </CheckboxListItem>
       </CheckboxList>
     </FormGroup>

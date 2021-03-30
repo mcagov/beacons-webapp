@@ -24,7 +24,7 @@ import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
-import { VesselCommunication } from "../../lib/types";
+import { Communication } from "../../lib/types";
 import { ofcomLicenseUrl } from "../../lib/urls";
 
 interface FormInputProps {
@@ -67,8 +67,7 @@ const definePageForm = ({
       [
         {
           dependsOn: "fixedVhfRadio",
-          meetingCondition: (value) =>
-            value === VesselCommunication.FIXED_VHF_RADIO,
+          meetingCondition: (value) => value === Communication.FIXED_VHF_RADIO,
         },
       ]
     ),
@@ -91,7 +90,7 @@ const definePageForm = ({
         {
           dependsOn: "portableVhfRadio",
           meetingCondition: (value) =>
-            value === VesselCommunication.PORTABLE_VHF_RADIO,
+            value === Communication.PORTABLE_VHF_RADIO,
         },
       ]
     ),
@@ -110,7 +109,7 @@ const definePageForm = ({
         {
           dependsOn: "satelliteTelephone",
           meetingCondition: (value) =>
-            value === VesselCommunication.SATELLITE_TELEPHONE,
+            value === Communication.SATELLITE_TELEPHONE,
         },
       ]
     ),
@@ -128,8 +127,7 @@ const definePageForm = ({
       [
         {
           dependsOn: "mobileTelephone",
-          meetingCondition: (value) =>
-            value === VesselCommunication.MOBILE_TELEPHONE,
+          meetingCondition: (value) => value === Communication.MOBILE_TELEPHONE,
         },
       ]
     ),
@@ -147,7 +145,7 @@ const definePageForm = ({
       [
         {
           dependsOn: "otherCommunication",
-          meetingCondition: (value) => value === VesselCommunication.OTHER,
+          meetingCondition: (value) => value === Communication.OTHER,
         },
       ]
     ),
@@ -179,7 +177,7 @@ const VesselCommunications: FunctionComponent<FormPageProps> = ({
             <GovUKBody>
               If you have a radio license, VHF and/or VHF/DSC radio, you can{" "}
               <AnchorLink href={ofcomLicenseUrl}>
-                find up your Call Sign and Maritime Mobile Service Identity
+                find up your Call Sign aπnd Maritime Mobile Service Identity
                 (MMSI) number on the OFCOM website.
               </AnchorLink>
             </GovUKBody>
@@ -227,9 +225,9 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
       <CheckboxList conditional={true}>
         <CheckboxListItem
           id="vhfRadio"
-          value={VesselCommunication.VHF_RADIO}
+          value={Communication.VHF_RADIO}
           defaultChecked={
-            form.fields.vhfRadio.value === VesselCommunication.VHF_RADIO
+            form.fields.vhfRadio.value === Communication.VHF_RADIO
           }
           label="VHF Radio"
         />
@@ -237,10 +235,9 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
         <CheckboxListItem
           id="fixedVhfRadio"
           label="VHF/DSC Radio"
-          value={VesselCommunication.FIXED_VHF_RADIO}
+          value={Communication.FIXED_VHF_RADIO}
           defaultChecked={
-            form.fields.fixedVhfRadio.value ===
-            VesselCommunication.FIXED_VHF_RADIO
+            form.fields.fixedVhfRadio.value === Communication.FIXED_VHF_RADIO
           }
           conditional={true}
         >
@@ -258,10 +255,10 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
         </CheckboxListItem>
         <CheckboxListItem
           id="portableVhfRadio"
-          value={VesselCommunication.PORTABLE_VHF_RADIO}
+          value={Communication.PORTABLE_VHF_RADIO}
           defaultChecked={
             form.fields.portableVhfRadio.value ===
-            VesselCommunication.PORTABLE_VHF_RADIO
+            Communication.PORTABLE_VHF_RADIO
           }
           label="Portable VHF/DSC Radio"
           conditional={true}
@@ -279,10 +276,10 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
         </CheckboxListItem>
         <CheckboxListItem
           id="satelliteTelephone"
-          value={VesselCommunication.SATELLITE_TELEPHONE}
+          value={Communication.SATELLITE_TELEPHONE}
           defaultChecked={
             form.fields.satelliteTelephone.value ===
-            VesselCommunication.SATELLITE_TELEPHONE
+            Communication.SATELLITE_TELEPHONE
           }
           label="Satellite Telephone"
           conditional={true}
@@ -300,10 +297,9 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
         </CheckboxListItem>
         <CheckboxListItem
           id="mobileTelephone"
-          value={VesselCommunication.MOBILE_TELEPHONE}
+          value={Communication.MOBILE_TELEPHONE}
           defaultChecked={
-            form.fields.mobileTelephone.value ===
-            VesselCommunication.MOBILE_TELEPHONE
+            form.fields.mobileTelephone.value === Communication.MOBILE_TELEPHONE
           }
           label="Mobile Telephone(s)"
           conditional={true}
@@ -329,9 +325,9 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
         </CheckboxListItem>
         <CheckboxListItem
           id="otherCommunication"
-          value={VesselCommunication.OTHER}
+          value={Communication.OTHER}
           defaultChecked={
-            form.fields.otherCommunication.value === VesselCommunication.OTHER
+            form.fields.otherCommunication.value === Communication.OTHER
           }
           label="Other"
           conditional={true}

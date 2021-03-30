@@ -73,21 +73,21 @@ export interface Vessel {
 
 export interface VesselCommunications {
   callSign: string;
-  vhfRadio: VesselCommunication;
+  vhfRadio: Communication;
   fixedVhfRadio: string;
   fixedVhfRadioInput: string;
-  portableVhfRadio: VesselCommunication;
+  portableVhfRadio: Communication;
   portableVhfRadioInput: string;
-  satelliteTelephone: VesselCommunication;
+  satelliteTelephone: Communication;
   satelliteTelephoneInput: string;
-  mobileTelephone: VesselCommunication;
+  mobileTelephone: Communication;
   mobileTelephoneInput1: string;
   mobileTelephoneInput2: string;
-  otherCommunication: VesselCommunication;
+  otherCommunication: Communication;
   otherCommunicationInput: string;
 }
 
-export enum VesselCommunication {
+export enum Communication {
   VHF_RADIO = "VHF_RADIO",
   FIXED_VHF_RADIO = "FIXED_VHF_RADIO",
   PORTABLE_VHF_RADIO = "PORTABLE_VHF_RADIO",
@@ -109,15 +109,15 @@ export interface Aircraft {
 }
 
 export interface AircraftCommunications {
-  aircraftVhfRadio: AircraftCommunication;
-  aircraftVhfRadioInput: string;
-  aircraftSatelliteTelephone: AircraftCommunication;
-  aircraftSatelliteTelephoneInput: string;
-  aircraftMobileTelephone: AircraftCommunication;
-  aircraftMobileTelephoneInput1: string;
-  aircraftMobileTelephoneInput2: string;
-  aircraftOtherCommunications: AircraftCommunication;
-  aircraftOtherCommunicationsInput: string;
+  vhfRadio: AircraftCommunication;
+  vhfRadioInput: string;
+  satelliteTelephone: AircraftCommunication;
+  satelliteTelephoneInput: string;
+  mobileTelephone: AircraftCommunication;
+  mobileTelephoneInput1: string;
+  mobileTelephoneInput2: string;
+  otherCommunications: AircraftCommunication;
+  otherCommunicationsInput: string;
 }
 
 export enum AircraftCommunication {
