@@ -83,6 +83,8 @@ export interface VesselCommunications {
   mobileTelephone: VesselCommunication;
   mobileTelephoneInput1: string;
   mobileTelephoneInput2: string;
+  otherCommunication: VesselCommunication;
+  otherCommunicationInput: string;
 }
 
 export enum VesselCommunication {
@@ -91,6 +93,7 @@ export enum VesselCommunication {
   PORTABLE_VHF_RADIO = "PORTABLE_VHF_RADIO",
   SATELLITE_TELEPHONE = "SATELLITE_TELEPHONE",
   MOBILE_TELEPHONE = "MOBILE_TELEPHONE",
+  OTHER = "OTHER",
 }
 
 export interface Aircraft {
