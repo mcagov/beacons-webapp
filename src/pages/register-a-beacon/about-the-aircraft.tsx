@@ -76,7 +76,7 @@ const AboutTheAircraft: FunctionComponent<FormPageProps> = ({
           mainContent={
             <>
               <FormErrorSummary formErrors={form.errorSummary} />
-              <Form action="/register-a-beacon/about-the-aircraft">
+              <Form>
                 <FormFieldset>
                   <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
 

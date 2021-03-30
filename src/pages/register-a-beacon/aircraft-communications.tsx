@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import React, { FunctionComponent } from "react";
-import { BackButton, Button } from "../../components/Button";
+import { BackButtonRouterIndexes, Button } from "../../components/Button";
 import { CheckboxList, CheckboxListItem } from "../../components/Checkbox";
 import { FormErrorSummary } from "../../components/ErrorSummary";
 import {
@@ -100,7 +100,9 @@ const AircraftCommunications: FunctionComponent<FormPageProps> = ({
 
   return (
     <Layout
-      navigation={<BackButton href="/register-a-beacon/about-the-aircraft" />}
+      navigation={
+        <BackButtonRouterIndexes href="/register-a-beacon/about-the-aircraft" />
+      }
       title={pageHeading}
       pageHasErrors={form.hasErrors}
       showCookieBanner={showCookieBanner}
