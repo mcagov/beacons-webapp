@@ -181,7 +181,7 @@ const VesselCommunications: FunctionComponent<FormPageProps> = ({
                 (MMSI) number on the OFCOM website.
               </AnchorLink>
             </GovUKBody>
-            <Form action="/register-a-beacon/vessel-communications">
+            <Form>
               <CallSign value={form.fields.callSign.value} />
 
               <TypesOfCommunication form={form} />
