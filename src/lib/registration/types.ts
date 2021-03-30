@@ -67,6 +67,16 @@ export interface BeaconUse {
   officialNumber: string;
   rigPlatformLocation: string;
 
+  // Aircraft info
+  aircraftManufacturer: string;
+  principalAirport: string;
+  secondaryAirport: string;
+  registrationMark: string;
+  hexAddress: string;
+  cnOrMsnNumber: string;
+  dongle: string;
+  beaconPosition: string;
+
   // Generic more details on use of beacon
   moreDetails: string;
 }
@@ -84,4 +94,20 @@ export enum VesselCommunication {
   PORTABLE_VHF_RADIO = "PORTABLE_VHF_RADIO",
   SATELLITE_TELEPHONE = "SATELLITE_TELEPHONE",
   MOBILE_TELEPHONE = "MOBILE_TELEPHONE",
+}
+
+export enum Activity {
+  MOTOR = "MOTOR",
+  SAILING = "SAILING",
+  ROWING = "ROWING",
+  SMALL_UNPOWERED = "SMALL_UNPOWERED",
+  OTHER = "OTHER",
+
+  FISHING_VESSEL = "FISHING_VESSEL",
+  MERCHANT_VESSEL = "MERCHANT_VESSEL",
+  COMMERCIAL_SAILING_VESSEL = "COMMERCIAL_SAILING_VESSEL",
+  COMMERCIAL_MOTOR_PLEASURE_VESSEL = "COMMERCIAL_MOTOR_PLEASURE_VESSEL",
+  FLOATING_PLATFORM = "FLOATING_PLATFORM",
+  OFFSHORE_WINDFARM = "OFFSHORE_WINDFARM",
+  OFFSHORE_RIG_PLATFORM = "OFFSHORE_RIG_PLATFORM",
 }

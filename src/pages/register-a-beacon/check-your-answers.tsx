@@ -15,8 +15,12 @@ import {
   decorateGetServerSidePropsContext,
   withCookieRedirect,
 } from "../../lib/middleware";
-import { BeaconUse, IRegistration } from "../../lib/registration/types";
-import { Activity, VesselCommunication } from "../../lib/types";
+import {
+  Activity,
+  BeaconUse,
+  IRegistration,
+} from "../../lib/registration/types";
+import { VesselCommunication } from "../../lib/types";
 
 interface CheckYourAnswersProps {
   registration: IRegistration;

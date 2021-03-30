@@ -82,6 +82,15 @@ export const initBeaconUse = (): BeaconUse => {
     officialNumber: "",
     rigPlatformLocation: "",
 
+    aircraftManufacturer: "",
+    principalAirport: "",
+    secondaryAirport: "",
+    registrationMark: "",
+    hexAddress: "",
+    cnOrMsnNumber: "",
+    dongle: "",
+    beaconPosition: "",
+
     moreDetails: "",
   };
 };
