@@ -47,7 +47,7 @@ describe("BeaconInformationPage", () => {
 
     expect(screen.getByText("Back", { exact: true })).toHaveAttribute(
       "href",
-      "/register-a-beacon/check-beacon-details"
+      "/register-a-beacon/check-beacon-details?useIndex=0"
     );
   });
 });

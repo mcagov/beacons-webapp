@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FunctionComponent, ReactNode } from "react";
+import { formatUrlQueryParams } from "../lib/utils";
 
 interface ButtonGroupProps {
   children: ReactNode;
@@ -79,8 +80,8 @@ export const BackButtonRouterIndexes: FunctionComponent<BackButtonProps> = ({
   href,
 }: BackButtonProps): JSX.Element => {
   const router = useRouter();
-  const useIndexValue = router?.query.useIndex || 0;
-  href = `${href}?useIndex=${useIndexValue}`;
+  const useIndex = router?.query.useIndex || 0;
+  href = formatUrlQueryParams(href, { useIndex });
 
   return (
     <Link href={href}>

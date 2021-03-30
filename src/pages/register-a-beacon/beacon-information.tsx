@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import React, { FunctionComponent } from "react";
-import { BackButton, Button } from "../../components/Button";
+import { BackButtonRouterIndexes, Button } from "../../components/Button";
 import {
   DateListInput,
   DateListItem,
@@ -110,7 +110,9 @@ const BeaconInformationPage: FunctionComponent<FormPageProps> = ({
 
   return (
     <Layout
-      navigation={<BackButton href="/register-a-beacon/check-beacon-details" />}
+      navigation={
+        <BackButtonRouterIndexes href="/register-a-beacon/check-beacon-details" />
+      }
       title={pageHeading}
       pageHasErrors={form.hasErrors}
       showCookieBanner={showCookieBanner}
