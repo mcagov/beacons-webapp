@@ -177,7 +177,7 @@ const VesselCommunications: FunctionComponent<FormPageProps> = ({
             <GovUKBody>
               If you have a radio license, VHF and/or VHF/DSC radio, you can{" "}
               <AnchorLink href={ofcomLicenseUrl}>
-                find up your Call Sign aπnd Maritime Mobile Service Identity
+                find up your Call Sign and Maritime Mobile Service Identity
                 (MMSI) number on the OFCOM website.
               </AnchorLink>
             </GovUKBody>
