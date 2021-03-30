@@ -8,6 +8,10 @@ describe("AircraftCommunications", () => {
     hasErrors: false,
     errorSummary: [],
     fields: {
+      vhfRadio: {
+        value: "",
+        errorMessages: [],
+      },
       satelliteTelephone: {
         value: "",
         errorMessages: [],

@@ -23,6 +23,7 @@ import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { Communication } from "../../lib/registration/types";
 
 const definePageForm = ({
+  vhfRadio,
   satelliteTelephone,
   satelliteTelephoneInput,
   mobileTelephone,
@@ -32,6 +33,7 @@ const definePageForm = ({
   otherCommunicationInput,
 }: FormSubmission): FormManager => {
   return new FormManager({
+    vhfRadio: new FieldManager(vhfRadio),
     satelliteTelephone: new FieldManager(satelliteTelephone),
     satelliteTelephoneInput: new FieldManager(
       satelliteTelephoneInput,
@@ -135,6 +137,14 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
 
     <FormGroup>
       <CheckboxList conditional={true}>
+        <CheckboxListItem
+          id="vhfRadio"
+          value={Communication.VHF_RADIO}
+          defaultChecked={
+            form.fields.satelliteTelephone.value === Communication.VHF_RADIO
+          }
+          label="VHF Radio"
+        />
         <CheckboxListItem
           id="satelliteTelephone"
           value={Communication.SATELLITE_TELEPHONE}

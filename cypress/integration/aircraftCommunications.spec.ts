@@ -14,6 +14,7 @@ import {
 describe("As a beacon owner, I want to register details about the aircraft communications", () => {
   const pageUrl = "/register-a-beacon/aircraft-communications";
   const previousPageUrl = "/register-a-beacon/about-the-aircraft";
+  const vhfRadioCheckboxSelector = "#vhfRadio";
   const satelliteTelephoneCheckboxSelector = "#satelliteTelephone";
   const satelliteTelephoneInputSelector = "#satelliteTelephoneInput";
   const mobileTelephoneCheckboxSelector = "#mobileTelephone";
@@ -32,6 +33,7 @@ describe("As a beacon owner, I want to register details about the aircraft commu
   it("submits the form if all fields are valid", () => {
     const validPhoneNumber = "07887662534";
 
+    givenIHaveSelected(vhfRadioCheckboxSelector);
     givenIHaveSelected(satelliteTelephoneCheckboxSelector);
     givenIHaveSelected(mobileTelephoneCheckboxSelector);
     givenIHaveSelected(otherCommunicationCheckboxSelector);
