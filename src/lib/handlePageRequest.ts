@@ -12,6 +12,7 @@ import {
   withCookieRedirect,
 } from "./middleware";
 import { Registration } from "./registration/registration";
+import { formatUrlQueryParams } from "./utils";
 
 type TransformCallback = (formData: FormSubmission) => FormSubmission;
 
@@ -84,7 +85,9 @@ const handlePostRequest = async (
 
   if (formIsValid) {
     let destination = onSuccessfulFormPostCallback(context);
-    destination = `${destination}?useIndex=${context.useIndex}`;
+    destination = formatUrlQueryParams(destination, {
+      useIndex: context.useIndex,
+    });
     return {
       redirect: {
         statusCode: 303,

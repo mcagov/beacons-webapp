@@ -21,6 +21,12 @@ jest.mock("../../src/lib/middleware", () => ({
   }),
 }));
 
+jest.mock("../../src/lib/utils", () => ({
+  formatUrlQueryParams: jest
+    .fn()
+    .mockImplementation((dest) => `${dest}?useIndex=1`),
+}));
+
 describe("handlePageRequest()", () => {
   let getFormGroup;
   let context;
