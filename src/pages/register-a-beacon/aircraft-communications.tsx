@@ -20,7 +20,7 @@ import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
 import { CacheEntry } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
-import { AircraftCommunication, Communication } from "../../lib/types";
+import { Communication } from "../../lib/types";
 
 const definePageForm = ({
   satelliteTelephone,
@@ -137,10 +137,10 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
       <CheckboxList conditional={true}>
         <CheckboxListItem
           id="satelliteTelephone"
-          value={AircraftCommunication.SATELLITE_TELEPHONE}
+          value={Communication.SATELLITE_TELEPHONE}
           defaultChecked={
             form.fields.satelliteTelephone.value ===
-            AircraftCommunication.SATELLITE_TELEPHONE
+            Communication.SATELLITE_TELEPHONE
           }
           label="Satellite Telephone"
           conditional={true}
@@ -158,10 +158,9 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
         </CheckboxListItem>
         <CheckboxListItem
           id="mobileTelephone"
-          value={AircraftCommunication.MOBILE_TELEPHONE}
+          value={Communication.MOBILE_TELEPHONE}
           defaultChecked={
-            form.fields.mobileTelephone.value ===
-            AircraftCommunication.MOBILE_TELEPHONE
+            form.fields.mobileTelephone.value === Communication.MOBILE_TELEPHONE
           }
           label="Mobile Telephone(s)"
           conditional={true}

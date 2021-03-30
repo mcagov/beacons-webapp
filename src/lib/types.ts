@@ -109,22 +109,15 @@ export interface Aircraft {
 }
 
 export interface AircraftCommunications {
-  vhfRadio: AircraftCommunication;
+  vhfRadio: Communication;
   vhfRadioInput: string;
-  satelliteTelephone: AircraftCommunication;
+  satelliteTelephone: Communication;
   satelliteTelephoneInput: string;
-  mobileTelephone: AircraftCommunication;
+  mobileTelephone: Communication;
   mobileTelephoneInput1: string;
   mobileTelephoneInput2: string;
-  otherCommunications: AircraftCommunication;
+  otherCommunications: Communication;
   otherCommunicationsInput: string;
-}
-
-export enum AircraftCommunication {
-  VHF_RADIO = "VHF_RADIO",
-  SATELLITE_TELEPHONE = "SATELLITE_TELEPHONE",
-  MOBILE_TELEPHONE = "MOBILE_TELEPHONE",
-  OTHER = "OTHER",
 }
 
 export interface Owner {
