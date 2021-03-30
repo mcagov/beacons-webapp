@@ -14,7 +14,7 @@ import {
 describe("As a beacon owner and maritime pleasure vessel user", () => {
   const thisPageUrl = "/register-a-beacon/more-details";
   const nextPageUrl = "/register-a-beacon/about-beacon-owner";
-  const previousPageUrl = "/register-a-beacon/communications";
+  const previousPageUrl = "/register-a-beacon/vessel-communications";
 
   const moreDetailsTextareaSelector = "#moreDetails";
 
