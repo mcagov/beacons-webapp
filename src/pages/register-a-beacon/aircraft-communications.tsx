@@ -18,9 +18,9 @@ import { GovUKBody, PageHeading } from "../../components/Typography";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
-import { CacheEntry } from "../../lib/formCache";
+import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
-import { Communication } from "../../lib/types";
+import { Communication } from "../../lib/registration/types";
 
 const definePageForm = ({
   satelliteTelephone,
@@ -30,7 +30,7 @@ const definePageForm = ({
   mobileTelephoneInput2,
   otherCommunication,
   otherCommunicationInput,
-}: CacheEntry): FormManager => {
+}: FormSubmission): FormManager => {
   return new FormManager({
     satelliteTelephone: new FieldManager(satelliteTelephone),
     satelliteTelephoneInput: new FieldManager(
