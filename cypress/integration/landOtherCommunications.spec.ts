@@ -190,7 +190,7 @@ describe("As a beacon owner and land or other use user", () => {
 
   it("sends me to the previous page when I click the back link", () => {
     iCanClickTheBackLinkToGoToPreviousPage(
-      "/register-a-beacon/about-the-vessel"
+      "/register-a-beacon/land-other-activity"
     );
   });
 });

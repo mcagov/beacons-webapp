@@ -129,7 +129,7 @@ const LandOtherCommunications: FunctionComponent<FormPageProps> = ({
   return (
     <Layout
       navigation={
-        <BackButtonRouterIndexes href="/register-a-beacon/about-the-vessel" />
+        <BackButtonRouterIndexes href="/register-a-beacon/land-other-activity" />
       }
       title={pageHeading}
       pageHasErrors={form.hasErrors}
