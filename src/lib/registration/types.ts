@@ -34,6 +34,7 @@ export interface IRegistration {
   emergencyContact3AlternativeTelephoneNumber: string;
 
   additionalBeaconUse: string;
+
   uses: BeaconUse[];
 }
 
@@ -81,6 +82,121 @@ export interface BeaconUse {
   beaconPosition: string;
 
   // Generic more details on use of beacon
+  moreDetails: string;
+}
+
+export class SerializedRegistration {
+  beacons: Beacon[];
+}
+
+export class Beacon {
+  manufacturer: string;
+  model: string;
+  hexId: string;
+  reference: string;
+
+  manufacturerSerialNumber: string;
+  chkCode: string;
+  batteryExpiryDate: string;
+  batteryExpiryDateMonth: string;
+  batteryExpiryDateYear: string;
+  lastServicedDate: string;
+  lastServicedDateMonth: string;
+  lastServicedDateYear: string;
+
+  uses: BeaconUseNew[];
+
+  owner: Contact;
+  emergencyContacts: Contact[];
+}
+
+export class BeaconUseNew {
+  environment: string;
+  environmentOtherInput: string;
+  purpose: string;
+  activity: string;
+  otherActivityText: string;
+
+  vessel: Vessel;
+  aircraft: Aircraft;
+  landOther: LandOther;
+}
+
+export class Contact {
+  fullName: string;
+  telephoneNumber: string;
+  alternativeTelephoneNumber: string;
+  address: Address;
+}
+
+export class Address {
+  addressLine1: string;
+  addressLine2: string;
+  townOrCity: string;
+  county: string;
+  postcode: string;
+}
+
+export class Vessel {
+  maxCapacity: string;
+  vesselName: string;
+  vesselUse: string;
+  otherVesselUseText: string;
+  portLetterNumber: string;
+  homeport: string;
+  areaOfOperation: string;
+  beaconLocation: string;
+  imoNumber: string;
+  ssrNumber: string;
+  officialNumber: string;
+  rigPlatformLocation: string;
+
+  callSign: string;
+  vhfRadio: string;
+  fixedVhfRadio: string;
+  fixedVhfRadioInput: string;
+  portableVhfRadio: string;
+  portableVhfRadioInput: string;
+  satelliteTelephone: string;
+  satelliteTelephoneInput: string;
+  mobileTelephone: string;
+  mobileTelephoneInput1: string;
+  mobileTelephoneInput2: string;
+
+  moreDetails: string;
+}
+
+export class Aircraft {
+  maxCapacity: string;
+  aircraftManufacturer: string;
+  principalAirport: string;
+  secondaryAirport: string;
+  registrationMark: string;
+  hexAddress: string;
+  cnOrMsnNumber: string;
+  dongle: string;
+  beaconPosition: string;
+
+  callSign: string;
+  vhfRadio: string;
+  satelliteTelephone: string;
+  satelliteTelephoneInput: string;
+  mobileTelephone: string;
+  mobileTelephoneInput1: string;
+  mobileTelephoneInput2: string;
+
+  moreDetails: string;
+}
+
+export class LandOther {
+  portableVhfRadio: string;
+  portableVhfRadioInput: string;
+  satelliteTelephone: string;
+  satelliteTelephoneInput: string;
+  mobileTelephone: string;
+  mobileTelephoneInput1: string;
+  mobileTelephoneInput2: string;
+
   moreDetails: string;
 }
 

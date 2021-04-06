@@ -5,6 +5,7 @@ import { Layout } from "../../components/Layout";
 import { Panel } from "../../components/Panel";
 import { GovUKBody } from "../../components/Typography";
 import { WarningText } from "../../components/WarningText";
+import { BeaconApiGateway } from "../../gateways/beaconsApiGateway";
 import { GovNotifyGateway } from "../../gateways/govNotifyApiGateway";
 import {
   decorateGetServerSidePropsContext,
@@ -77,6 +78,9 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
     const registration = decoratedContext.registration.registration;
 
     let pageSubHeading;
+
+    const beaconsApiGateway = new BeaconApiGateway();
+    beaconsApiGateway.sendRegistration(registration);
 
     if (!registration.reference) {
       registration.reference = referenceNumber("A#", 7);
