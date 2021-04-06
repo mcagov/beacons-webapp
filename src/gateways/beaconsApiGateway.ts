@@ -149,6 +149,7 @@ export class BeaconApiGateway {
     beacon.owner.address.townOrCity = registration.ownerTownOrCity;
     beacon.owner.address.county = registration.ownerCounty;
     beacon.owner.address.postcode = registration.ownerPostcode;
+    beacon.owner.email = registration.ownerEmail;
 
     beacon.emergencyContacts = [];
 

@@ -126,6 +126,7 @@ export class Contact {
   fullName: string;
   telephoneNumber: string;
   alternativeTelephoneNumber: string;
+  email: string;
   address: Address;
 }
 
