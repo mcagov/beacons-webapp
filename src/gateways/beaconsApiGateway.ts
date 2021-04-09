@@ -11,7 +11,7 @@ export class BeaconApiGateway {
     const serializedRegistration = registration.serialiseToAPI();
 
     try {
-      const response = await axios.post(this.apiUrl, serializedRegistration);
+      return await axios.post(this.apiUrl, serializedRegistration);
     } catch (error) {
       return error;
     }
