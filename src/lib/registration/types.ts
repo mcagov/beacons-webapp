@@ -105,7 +105,7 @@ export interface SerializedRegistration {
   beacons: Beacon[];
 }
 
-export class Beacon {
+export interface Beacon {
   manufacturer: string;
   model: string;
   hexId: string;
@@ -122,7 +122,7 @@ export class Beacon {
   emergencyContacts: Contact[];
 }
 
-export class Contact {
+export interface Contact {
   fullName: string;
   telephoneNumber: string;
   alternativeTelephoneNumber: string;
