@@ -14,7 +14,7 @@ export class SendGovNotifyEmail {
     if (templateId) {
       return this.gateway.sendEmail(templateId, registration.ownerEmail, {
         owner_name: registration.ownerFullName,
-        reference: registration.reference,
+        reference: registration.referenceNumber,
         beacon_information: joinStrings([
           registration.manufacturer,
           registration.model,

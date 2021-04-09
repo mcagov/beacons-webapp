@@ -44,8 +44,6 @@ export class BeaconApiGateway {
           beaconUse.vessel = new Vessel();
           beaconUse.vessel.maxCapacity = oldBeaconUse.maxCapacity;
           beaconUse.vessel.vesselName = oldBeaconUse.vesselName;
-          beaconUse.vessel.vesselUse = oldBeaconUse.vesselUse;
-          beaconUse.vessel.otherVesselUseText = oldBeaconUse.otherVesselUseText;
           beaconUse.vessel.portLetterNumber = oldBeaconUse.portLetterNumber;
           beaconUse.vessel.homeport = oldBeaconUse.homeport;
           beaconUse.vessel.areaOfOperation = oldBeaconUse.areaOfOperation;
@@ -186,6 +184,7 @@ export class BeaconApiGateway {
 
   public sendRegistration(registration: IRegistration): boolean {
     const serializedRegistration = this.serializeRegistration(registration);
+
     try {
       axios.post(this.apiUrl, serializedRegistration).then(
         (response) => {

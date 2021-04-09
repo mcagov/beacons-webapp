@@ -82,8 +82,8 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
     const beaconsApiGateway = new BeaconApiGateway();
     beaconsApiGateway.sendRegistration(registration);
 
-    if (!registration.reference) {
-      registration.reference = referenceNumber("A#", 7);
+    if (!registration.referenceNumber) {
+      registration.referenceNumber = referenceNumber("A#", 7);
 
       const govNotifyGateway = new GovNotifyGateway();
       const sendGovNotifyEmailUseCase = new SendGovNotifyEmail(
@@ -99,7 +99,7 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
     }
 
     return {
-      props: { reference: registration.reference, pageSubHeading },
+      props: { reference: registration.referenceNumber, pageSubHeading },
     };
   }
 );
