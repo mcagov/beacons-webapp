@@ -110,14 +110,12 @@ export interface Beacon {
   model: string;
   hexId: string;
   referenceNumber: string;
-
   manufacturerSerialNumber: string;
   chkCode: string;
   batteryExpiryDate: string;
   lastServicedDate: string;
 
   uses: BeaconUse[];
-
   owner: Contact;
   emergencyContacts: Contact[];
 }
