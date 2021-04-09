@@ -10,20 +10,37 @@ export const iCanClickTheBackLinkToGoToPreviousPage = (
   thenTheUrlShouldContain(previousPageURL);
 };
 
-export const givenIAmAt = (url: string): void => {
+export const givenIHaveACookieSetAndIVisit = (url: string): void => {
   cy.setCookie("submissionId", v4());
   cy.visit(url);
 };
+
+export const givenIAmAt = (url: string): void => {
+  cy.visit(url);
+};
+
+export const givenIHaveBeenTo = givenIAmAt;
+export const andIHaveBeenTo = givenIAmAt;
+export const andIAmAt = givenIAmAt;
 
 export const iCanSeeAHeadingThatContains = (text: string): void => {
   cy.get("h1").contains(text);
 };
 
+export const givenIHaveClickedTheButtonContaining = (text: string): void => {
+  cy.get("button").contains(text).click();
+};
+
 export const whenIClickContinue = (): void => {
-  cy.get("button").contains("Continue").click();
+  givenIHaveClickedTheButtonContaining("Continue");
 };
 
 export const andIClickContinue = whenIClickContinue;
+export const givenIHaveClickedContinue = whenIClickContinue;
+
+export const givenIHaveClicked = (selector: string): void => {
+  cy.get(selector).click();
+};
 
 export const whenIClickOnTheErrorSummaryLinkContaining = (
   ...strings: string[]
@@ -78,4 +95,26 @@ export const thenMyFocusMovesTo = (selector: string): void => {
 
 export const givenIHaveSelected = (selector: string): void => {
   cy.get(selector).check();
+};
+export const andIHaveSelected = givenIHaveSelected;
+
+export const andIHaveEnteredNoInformation = (): void => null;
+
+export const whenIClickBack = (): void => {
+  cy.get(".govuk-back-link").click();
+};
+
+export const thenTheCheckboxShouldBeChecked = (selector: string): void => {
+  cy.get(selector).should("be.checked");
+};
+
+export const thenTheRadioButtonShouldBeSelected = thenTheCheckboxShouldBeChecked;
+
+export const thenICannotSee = (selector: string): void => {
+  cy.get(selector).should("not.exist");
+};
+
+export const thenThereAreNoErrors = (): void => {
+  thenICannotSee(".govuk-error-summary");
+  thenICannotSee(".govuk-error-message");
 };
