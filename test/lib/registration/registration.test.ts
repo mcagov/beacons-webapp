@@ -139,4 +139,82 @@ describe("Registration", () => {
       ).toBeUndefined();
     });
   });
+
+  describe("serialising the registration for the API", () => {
+    let beacon;
+    let owner;
+
+    beforeEach(() => {
+      beacon = {
+        model: "Trousers",
+        hexId: "1D0",
+        manufacturer: "ASOS",
+        referenceNumber: "ADBEFD",
+        manufacturerSerialNumber: "1234",
+        chkCode: "check",
+        batteryExpiryDate: "2020-02-01",
+        lastServicedDate: "2020-02-01",
+      };
+
+      owner = {
+        fullName: "",
+        email: "",
+        telephoneNumber: "",
+        alternativeTelephoneNumber: "",
+        townOrCity: "",
+        county: "",
+        postcode: "",
+      };
+
+      registration.update(beacon);
+    });
+
+    it("should serialise the registration for sending to the API", () => {
+      const expected = {
+        beacons: [{ ...beacon, owner: { ...owner }, emergencyContacts: [] }],
+      };
+      const json = registration.serialiseToAPI();
+
+      expect(json).toMatchObject(expected);
+      expect(json.beacons[0].uses.length).toBe(1);
+      expect(json.beacons[0].emergencyContacts.length).toBe(0);
+    });
+
+    it("should serialise multiple uses", () => {
+      registration.createUse();
+      const json = registration.serialiseToAPI();
+
+      expect(json.beacons[0].uses.length).toBe(2);
+    });
+
+    it("should serialise an emergency contact if the values are defined", () => {
+      const emergencyContacts = {
+        emergencyContact1FullName: "Mrs Beacon",
+        emergencyContact1TelephoneNumber: "0117823456",
+        emergencyContact1AlternativeTelephoneNumber: "0117823456",
+      };
+      registration.update(emergencyContacts);
+
+      const json = registration.serialiseToAPI();
+      expect(json.beacons[0].emergencyContacts.length).toBe(1);
+    });
+
+    it("should serialise all emergency contacts if the values are defined", () => {
+      const emergencyContacts = {
+        emergencyContact1FullName: "Mrs Beacon",
+        emergencyContact1TelephoneNumber: "0117823456",
+        emergencyContact1AlternativeTelephoneNumber: "0117823456",
+        emergencyContact2FullName: "Mr Beacon",
+        emergencyContact2TelephoneNumber: "0117823456",
+        emergencyContact2AlternativeTelephoneNumber: "0117823456",
+        emergencyContact3FullName: "Beacon",
+        emergencyContact3TelephoneNumber: "0117823456",
+        emergencyContact3AlternativeTelephoneNumber: "0117823456",
+      };
+      registration.update(emergencyContacts);
+
+      const json = registration.serialiseToAPI();
+      expect(json.beacons[0].emergencyContacts.length).toBe(3);
+    });
+  });
 });

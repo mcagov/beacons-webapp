@@ -101,7 +101,7 @@ export interface BeaconUse {
   mainUse: boolean;
 }
 
-export class SerializedRegistration {
+export interface SerializedRegistration {
   beacons: Beacon[];
 }
 
@@ -109,33 +109,17 @@ export class Beacon {
   manufacturer: string;
   model: string;
   hexId: string;
-  reference: string;
+  referenceNumber: string;
 
   manufacturerSerialNumber: string;
   chkCode: string;
   batteryExpiryDate: string;
-  batteryExpiryDateMonth: string;
-  batteryExpiryDateYear: string;
   lastServicedDate: string;
-  lastServicedDateMonth: string;
-  lastServicedDateYear: string;
 
-  uses: BeaconUseNew[];
+  uses: BeaconUse[];
 
   owner: Contact;
   emergencyContacts: Contact[];
-}
-
-export class BeaconUseNew {
-  environment: string;
-  environmentOtherInput: string;
-  purpose: string;
-  activity: string;
-  otherActivityText: string;
-
-  vessel: Vessel;
-  aircraft: Aircraft;
-  landOther: LandOther;
 }
 
 export class Contact {
@@ -148,69 +132,6 @@ export class Contact {
   townOrCity: string;
   county: string;
   postcode: string;
-}
-
-export class Vessel {
-  maxCapacity: string;
-  vesselName: string;
-  vesselUse: string;
-  otherVesselUseText: string;
-  portLetterNumber: string;
-  homeport: string;
-  areaOfOperation: string;
-  beaconLocation: string;
-  imoNumber: string;
-  ssrNumber: string;
-  officialNumber: string;
-  rigPlatformLocation: string;
-
-  callSign: string;
-  vhfRadio: string;
-  fixedVhfRadio: string;
-  fixedVhfRadioInput: string;
-  portableVhfRadio: string;
-  portableVhfRadioInput: string;
-  satelliteTelephone: string;
-  satelliteTelephoneInput: string;
-  mobileTelephone: string;
-  mobileTelephoneInput1: string;
-  mobileTelephoneInput2: string;
-
-  moreDetails: string;
-}
-
-export class Aircraft {
-  maxCapacity: string;
-  aircraftManufacturer: string;
-  principalAirport: string;
-  secondaryAirport: string;
-  registrationMark: string;
-  hexAddress: string;
-  cnOrMsnNumber: string;
-  dongle: string;
-  beaconPosition: string;
-
-  callSign: string;
-  vhfRadio: string;
-  satelliteTelephone: string;
-  satelliteTelephoneInput: string;
-  mobileTelephone: string;
-  mobileTelephoneInput1: string;
-  mobileTelephoneInput2: string;
-
-  moreDetails: string;
-}
-
-export class LandOther {
-  portableVhfRadio: string;
-  portableVhfRadioInput: string;
-  satelliteTelephone: string;
-  satelliteTelephoneInput: string;
-  mobileTelephone: string;
-  mobileTelephoneInput1: string;
-  mobileTelephoneInput2: string;
-
-  moreDetails: string;
 }
 
 export enum Environment {

@@ -75,14 +75,14 @@ const ApplicationCompleteWhatNext: FunctionComponent = (): JSX.Element => (
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   async (context: GetServerSidePropsContext) => {
     const decoratedContext = await decorateGetServerSidePropsContext(context);
-    const registration = decoratedContext.registration.registration;
+    const registrationClass = decoratedContext.registration;
+    const registration = registrationClass.registration;
 
     let pageSubHeading;
 
-    const beaconsApiGateway = new BeaconApiGateway();
-    beaconsApiGateway.sendRegistration(registration);
-
     if (!registration.referenceNumber) {
+      const beaconsApiGateway = new BeaconApiGateway();
+      beaconsApiGateway.sendRegistration(registrationClass);
       registration.referenceNumber = referenceNumber("A#", 7);
 
       const govNotifyGateway = new GovNotifyGateway();
