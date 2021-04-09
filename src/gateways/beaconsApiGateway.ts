@@ -13,10 +13,9 @@ import {
 } from "../lib/registration/types";
 
 export class BeaconApiGateway {
-  apiUrl;
+  private apiUrl: string;
   constructor() {
-    // this.apiUrl = process.env.BEACONS_API_URL;
-    this.apiUrl = "http://localhost:8080/spring-api";
+    this.apiUrl = process.env.BEACONS_API_URL;
   }
 
   serializeRegistration(registration: IRegistration): SerializedRegistration {

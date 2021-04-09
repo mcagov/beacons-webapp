@@ -2,7 +2,7 @@ export interface IRegistration {
   manufacturer: string;
   model: string;
   hexId: string;
-  reference: string;
+  referenceNumber: string;
 
   manufacturerSerialNumber: string;
   chkCode: string;
@@ -60,8 +60,6 @@ export interface BeaconUse {
 
   maxCapacity: string;
   vesselName: string;
-  vesselUse: string;
-  otherVesselUseText: string;
   portLetterNumber: string;
   homeport: string;
   areaOfOperation: string;
@@ -100,6 +98,7 @@ export interface BeaconUse {
 
   // Generic more details on use of beacon
   moreDetails: string;
+  mainUse: boolean;
 }
 
 export class SerializedRegistration {
