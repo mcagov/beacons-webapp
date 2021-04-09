@@ -85,7 +85,6 @@ export class Registration {
       model: registration.model,
       hexId: registration.hexId,
       referenceNumber: registration.referenceNumber,
-
       manufacturerSerialNumber: registration.manufacturerSerialNumber,
       chkCode: registration.chkCode,
       batteryExpiryDate: registration.batteryExpiryDate,
