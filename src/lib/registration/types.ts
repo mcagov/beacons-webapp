@@ -143,10 +143,6 @@ export class Contact {
   telephoneNumber: string;
   alternativeTelephoneNumber: string;
   email: string;
-  address: Address;
-}
-
-export class Address {
   addressLine1: string;
   addressLine2: string;
   townOrCity: string;
