@@ -50,7 +50,7 @@ export const initBeacon = (): IRegistration => {
 /**
  * Convenience function for returning an `empty` instance of a beacon use.
  *
- * @param mainUse {boolean}     Whether the use is the main use for a beacon
+ * @param mainUse {boolean}     Whether the use is the main use for a beacon; defaults to false
  * @returns       {BeaconUse}   JSON representation of a beacon use
  */
 export const initBeaconUse = (mainUse = false): BeaconUse => {
