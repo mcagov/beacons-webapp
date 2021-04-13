@@ -26,7 +26,7 @@ describe("As a land beacon owner,", () => {
 
     thenTheUrlShouldContain(PageURLs.landOtherCommunications);
     givenIHaveSelected("#portableVhfRadio");
-    andIType("235 762000", "#portableVhfRadioInput");
+    andIType("235 762000", "#portableVhfRadioValue");
     andIClickContinue();
 
     thenTheUrlShouldContain(PageURLs.moreDetails);
@@ -34,7 +34,7 @@ describe("As a land beacon owner,", () => {
 
     thenTheUrlShouldContain(PageURLs.landOtherCommunications);
     thenTheCheckboxShouldBeChecked("#portableVhfRadio");
-    thenTheInputShouldContain("235 762000", "#portableVhfRadioInput");
+    thenTheInputShouldContain("235 762000", "#portableVhfRadioValue");
     whenIClickBack();
 
     thenTheUrlShouldContain(PageURLs.landOtherActivity);
@@ -59,7 +59,7 @@ describe("As a land beacon owner,", () => {
 
     thenTheUrlShouldContain(PageURLs.landOtherCommunications);
     givenIHaveSelected("#portableVhfRadio");
-    andIType("235 762000", "#portableVhfRadioInput");
+    andIType("235 762000", "#portableVhfRadioValue");
     andIClickContinue();
 
     thenTheUrlShouldContain(PageURLs.moreDetails);
@@ -67,7 +67,7 @@ describe("As a land beacon owner,", () => {
 
     thenTheUrlShouldContain(PageURLs.landOtherCommunications);
     thenTheCheckboxShouldBeChecked("#portableVhfRadio");
-    thenTheInputShouldContain("235 762000", "#portableVhfRadioInput");
+    thenTheInputShouldContain("235 762000", "#portableVhfRadioValue");
     whenIClickBack();
 
     thenTheUrlShouldContain(PageURLs.landOtherActivity);

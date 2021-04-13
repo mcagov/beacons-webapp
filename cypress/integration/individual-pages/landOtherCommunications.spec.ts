@@ -15,11 +15,11 @@ import {
 describe("As a beacon owner and land or other use user", () => {
   const pageUrl = "/register-a-beacon/land-other-communications";
   const portableVhfDscRadioCheckboxSelector = "#portableVhfRadio";
-  const portableVhfDscRadioInputSelector = "#portableVhfRadioInput";
+  const portableVhfDscRadioInputSelector = "#portableVhfRadioValue";
   const satelliteTelephoneCheckboxSelector = "#satelliteTelephone";
-  const satelliteTelephoneInputSelector = "#satelliteTelephoneInput";
+  const satelliteTelephoneInputSelector = "#satelliteTelephoneValue";
   const mobileTelephoneCheckboxSelector = "#mobileTelephone";
-  const mobileTelephoneInputSelector = "#mobileTelephoneInput1";
+  const mobileTelephoneInputSelector = "#mobileTelephone1";
   const otherCommunicationSelector = "#otherCommunication";
   const otherCommunicationInputSelector = "#otherCommunicationValue";
 

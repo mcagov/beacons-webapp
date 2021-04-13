@@ -21,7 +21,7 @@ describe("LandOtherCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      portableVhfRadioInput: {
+      portableVhfRadioValue: {
         value: "",
         errorMessages: [],
       },
@@ -29,7 +29,7 @@ describe("LandOtherCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      satelliteTelephoneInput: {
+      satelliteTelephoneValue: {
         value: "",
         errorMessages: [],
       },
@@ -37,11 +37,11 @@ describe("LandOtherCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      mobileTelephoneInput1: {
+      mobileTelephone1: {
         value: "",
         errorMessages: [],
       },
-      mobileTelephoneInput2: {
+      mobileTelephone2: {
         value: "",
         errorMessages: [],
       },

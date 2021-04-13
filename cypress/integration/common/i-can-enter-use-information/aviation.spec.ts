@@ -98,12 +98,12 @@ export const iCanEditMyAircraftCommunications = (): void => {
   comms.checkedFields.forEach((field) =>
     cy.get(`#${field}`).should("be.checked")
   );
-  cy.get("#satelliteTelephoneInput").should(
+  cy.get("#satelliteTelephoneValue").should(
     "have.value",
     comms.satelliteTelephone
   );
-  cy.get("#mobileTelephoneInput1").should("have.value", comms.mobileTelephone1);
-  cy.get("#mobileTelephoneInput2").should("have.value", comms.mobileTelephone2);
+  cy.get("#mobileTelephone1").should("have.value", comms.mobileTelephone1);
+  cy.get("#mobileTelephone2").should("have.value", comms.mobileTelephone2);
   cy.get("#otherCommunicationValue").contains(comms.otherCommunication);
 };
 export const iCanEditMyAircraftDetails = (): void => {
@@ -209,16 +209,16 @@ const givenIHaveEnteredMyAircraftCommunicationDetails = (): void => {
   givenIHaveSelected("#satelliteTelephone");
   givenIHaveTyped(
     testAviationUseData.communications.satelliteTelephone,
-    "#satelliteTelephoneInput"
+    "#satelliteTelephoneValue"
   );
   givenIHaveSelected("#mobileTelephone");
   givenIHaveTyped(
     testAviationUseData.communications.mobileTelephone1,
-    "#mobileTelephoneInput1"
+    "#mobileTelephone1"
   );
   givenIHaveTyped(
     testAviationUseData.communications.mobileTelephone2,
-    "#mobileTelephoneInput2"
+    "#mobileTelephone2"
   );
   givenIHaveSelected("#otherCommunication");
   givenIHaveTyped(

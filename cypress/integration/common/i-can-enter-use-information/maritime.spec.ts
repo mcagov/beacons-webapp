@@ -128,8 +128,8 @@ export const iCanEditMyVesselCommunications = (): void => {
     "have.value",
     comms.satelliteTelephone
   );
-  cy.get("#mobileTelephoneValue").should("have.value", comms.mobileTelephone1);
-  cy.get("#mobileTelephoneValue").should("have.value", comms.mobileTelephone2);
+  cy.get("#mobileTelephone1").should("have.value", comms.mobileTelephone1);
+  cy.get("#mobileTelephone2").should("have.value", comms.mobileTelephone2);
   cy.get("#otherCommunicationValue").contains(comms.otherCommunication);
 };
 export const iCanEditMyVesselDetails = (): void => {
