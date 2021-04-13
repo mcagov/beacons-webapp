@@ -9,13 +9,8 @@ describe("Beacons API Gateway", () => {
   let registration: Registration;
 
   beforeEach(() => {
-    process.env.BEACONS_API_URL = "http://localhost:8080/spring-api";
     gateway = new BeaconsApiGateway();
     registration = new Registration();
-  });
-
-  afterEach(() => {
-    process.env.BEACONS_API_URL = undefined;
   });
 
   it("should return true if the request was successful", async () => {
