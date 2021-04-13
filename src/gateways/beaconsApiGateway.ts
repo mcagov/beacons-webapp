@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Registration } from "../lib/registration/registration";
 
-export class BeaconApiGateway {
+export class BeaconsApiGateway {
   private apiUrl: string;
   constructor() {
     this.apiUrl = process.env.BEACONS_API_URL;
@@ -11,9 +11,10 @@ export class BeaconApiGateway {
     const serializedRegistration = registration.serialiseToAPI();
 
     try {
-      return await axios.post(this.apiUrl, serializedRegistration);
+      await axios.post(this.apiUrl, serializedRegistration);
+      return true;
     } catch (error) {
-      return error;
+      return false;
     }
   }
 }
