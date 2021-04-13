@@ -40,10 +40,10 @@ export interface IRegistration {
 
 export interface BeaconUse {
   environment: string;
-  environmentOtherValue: string;
+  otherEnvironment: string;
   purpose: string;
   activity: string;
-  otherActivityText: string;
+  otherActivity: string;
   otherCommunication: string;
   otherCommunicationValue: string;
 
@@ -93,7 +93,6 @@ export interface BeaconUse {
   windfarm: string;
   windfarmLocation: string;
   windfarmPeopleCount: string;
-  otherActivity: string;
   otherActivityDescription: string;
   otherActivityLocation: string;
   otherActivityPeopleCount: string;

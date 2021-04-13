@@ -56,10 +56,10 @@ export const initBeacon = (): IRegistration => {
 export const initBeaconUse = (mainUse = false): BeaconUse => {
   return {
     environment: "",
-    environmentOtherValue: "",
+    otherEnvironment: "",
     purpose: "",
     activity: "",
-    otherActivityText: "",
+    otherActivity: "",
     otherCommunication: "",
     otherCommunicationValue: "",
 
@@ -110,7 +110,6 @@ export const initBeaconUse = (mainUse = false): BeaconUse => {
     windfarm: "",
     windfarmLocation: "",
     windfarmPeopleCount: "",
-    otherActivity: "",
     otherActivityDescription: "",
     otherActivityLocation: "",
     otherActivityPeopleCount: "",

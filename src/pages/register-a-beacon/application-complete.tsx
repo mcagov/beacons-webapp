@@ -82,6 +82,7 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
     let pageSubHeading;
 
     if (!registration.referenceNumber) {
+      registration.referenceNumber = referenceNumber("A#", 7);
       const beaconsApiGateway = new BeaconsApiGateway();
       const createRegistrationUseCase = new CreateRegistration(
         beaconsApiGateway
@@ -91,8 +92,6 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
       );
 
       if (success) {
-        registration.referenceNumber = referenceNumber("A#", 7);
-
         const govNotifyGateway = new GovNotifyGateway();
         const sendGovNotifyEmailUseCase = new SendGovNotifyEmail(
           govNotifyGateway
@@ -105,6 +104,7 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
         }
       }
     } else {
+      delete registration.referenceNumber;
       pageSubHeading =
         "We could not save your registration or send you a confirmation email. Please contact the Beacons Registry team.";
     }

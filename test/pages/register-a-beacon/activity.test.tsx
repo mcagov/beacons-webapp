@@ -17,7 +17,7 @@ describe("Activity", () => {
         value: Activity.ROWING,
         errorMessages: [],
       },
-      otherActivityText: {
+      otherActivity: {
         value: "",
         errorMessages: [],
       },
