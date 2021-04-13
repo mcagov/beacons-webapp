@@ -1,18 +1,15 @@
 import axios from "axios";
 import { BeaconsApiGateway } from "../../src/gateways/beaconsApiGateway";
-import { Registration } from "../../src/lib/registration/registration";
 
 jest.mock("axios");
 
 describe("Beacons API Gateway", () => {
   let gateway: BeaconsApiGateway;
-  let registration: Registration;
   const apiUrl = "http://localhost:8080/spring-api";
 
   beforeEach(() => {
     process.env.BEACONS_API_URL = apiUrl;
     gateway = new BeaconsApiGateway();
-    registration = new Registration();
   });
 
   afterEach(() => {
