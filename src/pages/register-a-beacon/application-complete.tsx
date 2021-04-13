@@ -12,6 +12,7 @@ import {
   withCookieRedirect,
 } from "../../lib/middleware";
 import { referenceNumber } from "../../lib/utils";
+import { CreateRegistration } from "../../useCases/createRegistration";
 import { SendGovNotifyEmail } from "../../useCases/sendGovNotifyEmail";
 
 interface ApplicationCompleteProps {
@@ -82,7 +83,10 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
 
     if (!registration.referenceNumber) {
       const beaconsApiGateway = new BeaconsApiGateway();
-      const success = await beaconsApiGateway.sendRegistration(
+      const createRegistrationUseCase = new CreateRegistration(
+        beaconsApiGateway
+      );
+      const success = await createRegistrationUseCase.execute(
         registrationClass
       );
 
