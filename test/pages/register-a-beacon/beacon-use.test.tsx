@@ -11,7 +11,7 @@ describe("BeaconUse", () => {
         value: "",
         errorMessages: [],
       },
-      environmentOtherInput: {
+      environmentOtherValue: {
         value: "",
         errorMessages: [],
       },

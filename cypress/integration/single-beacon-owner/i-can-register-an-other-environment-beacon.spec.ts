@@ -17,7 +17,7 @@ describe("As a beacon owner in an environment other than land, aviation or marit
 
     thenTheUrlShouldContain(PageURLs.environment);
     givenIHaveSelected("#other");
-    andIType("My spaceship, the Heart of Gold", "#environmentOtherInput");
+    andIType("My spaceship, the Heart of Gold", "#environmentOtherValue");
     andIClickContinue();
 
     thenTheUrlShouldContain(PageURLs.landOtherActivity);

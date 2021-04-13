@@ -18,7 +18,7 @@ describe("As a beacon owner, I want to submit uses for my beacon", () => {
   const purposeUrl = "/register-a-beacon/purpose";
   const landOrOtherActivityUrl = "/register-a-beacon/land-other-activity";
   const otherCheckboxSelector = "#other";
-  const otherInput = "#environmentOtherInput";
+  const otherInput = "#environmentOtherValue";
 
   beforeEach(() => {
     givenIHaveACookieSetAndIVisit(pageUrl);

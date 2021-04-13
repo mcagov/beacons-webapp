@@ -50,7 +50,7 @@ describe("As a land beacon owner,", () => {
   it("Other environment", () => {
     givenIHaveACookieSetAndIVisit(PageURLs.environment);
     givenIHaveSelected("#other");
-    andIType("My spaceship, the Heart of Gold", "#environmentOtherInput");
+    andIType("My spaceship, the Heart of Gold", "#environmentOtherValue");
     andIClickContinue();
 
     thenTheUrlShouldContain(PageURLs.landOtherActivity);

@@ -14,13 +14,13 @@ import {
 } from "../../lib/handlePageRequest";
 import { Environment } from "../../lib/registration/types";
 
-const getPageForm = ({ environment, environmentOtherInput }) => {
+const getPageForm = ({ environment, environmentOtherValue }) => {
   return new FormManager({
     environment: new FieldManager(environment, [
       Validators.required("Where the beacon will be used is required"),
     ]),
-    environmentOtherInput: new FieldManager(
-      environmentOtherInput,
+    environmentOtherValue: new FieldManager(
+      environmentOtherValue,
       [
         Validators.required(
           "We need to know where this beacon will be used in if you have selected other use"
@@ -96,12 +96,12 @@ const BeaconUse: FunctionComponent<FormPageProps> = ({
             conditional={true}
           >
             <FormGroup
-              errorMessages={form.fields.environmentOtherInput.errorMessages}
+              errorMessages={form.fields.environmentOtherValue.errorMessages}
             >
               <Input
-                id="environmentOtherInput"
+                id="environmentOtherValue"
                 label="Please describe your use"
-                defaultValue={form.fields.environmentOtherInput.value}
+                defaultValue={form.fields.environmentOtherValue.value}
               />
             </FormGroup>
           </RadioListItem>

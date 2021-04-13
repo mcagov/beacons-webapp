@@ -40,7 +40,7 @@ export interface IRegistration {
 
 export interface BeaconUse {
   environment: string;
-  environmentOtherInput: string;
+  environmentOtherValue: string;
   purpose: string;
   activity: string;
   otherActivityText: string;
@@ -53,12 +53,12 @@ export interface BeaconUse {
   fixedVhfRadio: string;
   fixedVhfRadioValue: string;
   portableVhfRadio: string;
-  portableVhfRadioInput: string;
+  portableVhfRadioValue: string;
   satelliteTelephone: string;
-  satelliteTelephoneInput: string;
+  satelliteTelephoneValue: string;
   mobileTelephone: string;
-  mobileTelephoneInput1: string;
-  mobileTelephoneInput2: string;
+  mobileTelephone1: string;
+  mobileTelephone2: string;
 
   maxCapacity: string;
   vesselName: string;

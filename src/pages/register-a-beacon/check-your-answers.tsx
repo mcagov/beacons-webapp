@@ -379,28 +379,28 @@ const CommunicationsSubSection: FunctionComponent<CheckYourAnswersBeaconUseSecti
           )}
           {use.vhfRadio && "VHF Radio"}
           {use.portableVhfRadio && "Portable VHF/DSC"}
-          {use.portableVhfRadioInput && (
+          {use.portableVhfRadioValue && (
             <CheckYourAnswersDataRowItem
               label="Portable MMSI"
-              value={use.portableVhfRadioInput}
+              value={use.portableVhfRadioValue}
             />
           )}
           {use.mobileTelephone && (
             <CheckYourAnswersDataRowItem
               label="Mobile telephone (1)"
-              value={use.mobileTelephoneInput1}
+              value={use.mobileTelephone1}
             />
           )}
           {use.mobileTelephone && (
             <CheckYourAnswersDataRowItem
               label="Mobile telephone (2)"
-              value={use.mobileTelephoneInput2}
+              value={use.mobileTelephone2}
             />
           )}
           {use.satelliteTelephone && (
             <CheckYourAnswersDataRowItem
               label="Satellite telephone"
-              value={use.satelliteTelephoneInput}
+              value={use.satelliteTelephoneValue}
             />
           )}
           {use.otherCommunication && (
