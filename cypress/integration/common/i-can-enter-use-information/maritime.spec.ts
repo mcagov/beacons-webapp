@@ -122,14 +122,14 @@ export const iCanEditMyVesselCommunications = (): void => {
   comms.checkedFields.forEach((field) =>
     cy.get(`#${field}`).should("be.checked")
   );
-  cy.get("#fixedVhfRadioInput").should("have.value", comms.fixedMMSI);
-  cy.get("#portableVhfRadioInput").should("have.value", comms.portableMMSI);
-  cy.get("#satelliteTelephoneInput").should(
+  cy.get("#fixedVhfRadioValue").should("have.value", comms.fixedMMSI);
+  cy.get("#portableVhfRadioValue").should("have.value", comms.portableMMSI);
+  cy.get("#satelliteTelephoneValue").should(
     "have.value",
     comms.satelliteTelephone
   );
-  cy.get("#mobileTelephoneInput1").should("have.value", comms.mobileTelephone1);
-  cy.get("#mobileTelephoneInput2").should("have.value", comms.mobileTelephone2);
+  cy.get("#mobileTelephoneValue").should("have.value", comms.mobileTelephone1);
+  cy.get("#mobileTelephoneValue").should("have.value", comms.mobileTelephone2);
   cy.get("#otherCommunicationValue").contains(comms.otherCommunication);
 };
 export const iCanEditMyVesselDetails = (): void => {
@@ -186,14 +186,14 @@ const givenIHaveEnteredMyVesselCommunicationDetails = (): void => {
   givenIAmAt(PageURLs.vesselCommunications);
   givenIHaveSelected("#vhfRadio");
   givenIHaveSelected("#fixedVhfRadio");
-  givenIHaveTyped(comms.fixedMMSI, "#fixedVhfRadioInput");
+  givenIHaveTyped(comms.fixedMMSI, "#fixedVhfRadioValue");
   givenIHaveSelected("#portableVhfRadio");
-  givenIHaveTyped(comms.portableMMSI, "#portableVhfRadioInput");
+  givenIHaveTyped(comms.portableMMSI, "#portableVhfRadioValue");
   givenIHaveSelected("#satelliteTelephone");
-  givenIHaveTyped(comms.satelliteTelephone, "#satelliteTelephoneInput");
+  givenIHaveTyped(comms.satelliteTelephone, "#satelliteTelephoneValue");
   givenIHaveSelected("#mobileTelephone");
-  givenIHaveTyped(comms.mobileTelephone1, "#mobileTelephoneInput1");
-  givenIHaveTyped(comms.mobileTelephone2, "#mobileTelephoneInput2");
+  givenIHaveTyped(comms.mobileTelephone1, "#mobileTelephone1");
+  givenIHaveTyped(comms.mobileTelephone2, "#mobileTelephone2");
   givenIHaveSelected("#otherCommunication");
   givenIHaveTyped(comms.otherCommunication, "#otherCommunicationValue");
 };
