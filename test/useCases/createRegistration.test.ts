@@ -15,7 +15,6 @@ describe("Create Registration Use Case", () => {
 
   it("should post the registration json via the api gateway", async () => {
     await useCase.execute(registration);
-
     expect(gateway.post).toHaveBeenCalledWith("registrations/register", json);
   });
 
@@ -24,7 +23,6 @@ describe("Create Registration Use Case", () => {
       return false;
     });
     const expected = await useCase.execute(registration);
-
     expect(expected).toBe(false);
   });
 
@@ -33,7 +31,6 @@ describe("Create Registration Use Case", () => {
       return true;
     });
     const expected = await useCase.execute(registration);
-
     expect(expected).toBe(true);
   });
 });
