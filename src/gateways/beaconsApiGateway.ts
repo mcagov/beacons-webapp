@@ -8,10 +8,11 @@ export class BeaconsApiGateway {
   }
 
   public async sendRegistration(registration: Registration): Promise<boolean> {
+    const url = `${this.apiUrl}/registrations/register`;
     const serializedRegistration = registration.serialiseToAPI();
 
     try {
-      await axios.post(this.apiUrl, serializedRegistration);
+      await axios.post(url, serializedRegistration);
       return true;
     } catch (error) {
       return false;

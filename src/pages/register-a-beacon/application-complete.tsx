@@ -82,17 +82,21 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
 
     if (!registration.referenceNumber) {
       const beaconsApiGateway = new BeaconsApiGateway();
-      beaconsApiGateway.sendRegistration(registrationClass);
-      registration.referenceNumber = referenceNumber("A#", 7);
+      const success = beaconsApiGateway.sendRegistration(registrationClass);
 
-      const govNotifyGateway = new GovNotifyGateway();
-      const sendGovNotifyEmailUseCase = new SendGovNotifyEmail(
-        govNotifyGateway
-      );
-      if (sendGovNotifyEmailUseCase.execute(registration)) {
-        pageSubHeading = "We have sent you a confirmation email - ";
-      } else {
-        pageSubHeading = "We could not send you a confirmation email.";
+      if (success) {
+        registration.referenceNumber = referenceNumber("A#", 7);
+
+        const govNotifyGateway = new GovNotifyGateway();
+        const sendGovNotifyEmailUseCase = new SendGovNotifyEmail(
+          govNotifyGateway
+        );
+
+        if (sendGovNotifyEmailUseCase.execute(registration)) {
+          pageSubHeading = "We have sent you a confirmation email - ";
+        } else {
+          pageSubHeading = "We could not send you a confirmation email.";
+        }
       }
     } else {
       pageSubHeading = "We could not send you a confirmation email.";
