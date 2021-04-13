@@ -19,27 +19,35 @@ describe("Beacons API Gateway", () => {
     process.env.BEACONS_API_URL = undefined;
   });
 
-  it("should return true if the request was successful", async () => {
-    const expected = await gateway.sendRegistration(registration);
-    expect(expected).toBe(true);
-  });
+  describe("Posting an entity", () => {
+    let url;
+    let json;
 
-  it("should return false if the request is unsuccessful", async () => {
-    (axios as any).post.mockImplementation(() => {
-      throw new Error();
+    beforeEach(() => {
+      url = "registrations/register";
+      json = { model: "ASOS" };
     });
 
-    const expected = await gateway.sendRegistration(registration);
-    expect(expected).toBe(false);
-  });
+    it("should return true if it posted the entity successfuly", async () => {
+      const expected = await gateway.post(url, json);
 
-  it("should be called with the correct registrations url", async () => {
-    const expectedUrl = `${apiUrl}/registrations/register`;
+      expect(expected).toBe(true);
+    });
 
-    await gateway.sendRegistration(registration);
-    expect((axios as any).post).toHaveBeenLastCalledWith(
-      expectedUrl,
-      expect.anything()
-    );
+    it("should return false if the request is unsuccessful", async () => {
+      (axios as any).post.mockImplementation(() => {
+        throw new Error();
+      });
+      const expected = await gateway.post(url, json);
+
+      expect(expected).toBe(false);
+    });
+
+    it("should send the JSON to the correct url", async () => {
+      const expectedUrl = `${apiUrl}/${url}`;
+      await gateway.post(url, json);
+
+      expect((axios as any).post).toHaveBeenLastCalledWith(expectedUrl, json);
+    });
   });
 });
