@@ -61,7 +61,7 @@ export const initBeaconUse = (mainUse = false): BeaconUse => {
     activity: "",
     otherActivityText: "",
     otherCommunication: "",
-    otherCommunicationInput: "",
+    otherCommunicationValue: "",
 
     // Communications
     callSign: "",

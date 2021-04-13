@@ -23,7 +23,7 @@ describe("As a beacon owner and maritime pleasure vessel user", () => {
   const mobileTelephoneCheckboxSelector = "#mobileTelephone";
   const mobileTelephoneInputSelector = "#mobileTelephone1";
   const otherCommunicationSelector = "#otherCommunication";
-  const otherCommunicationInputSelector = "#otherCommunicationInput";
+  const otherCommunicationInputSelector = "#otherCommunicationValue";
 
   beforeEach(() => {
     givenIHaveACookieSetAndIVisit(pageUrl);

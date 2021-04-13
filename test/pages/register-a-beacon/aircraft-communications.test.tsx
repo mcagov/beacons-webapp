@@ -36,7 +36,7 @@ describe("AircraftCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      otherCommunicationInput: {
+      otherCommunicationValue: {
         value: "",
         errorMessages: [],
       },

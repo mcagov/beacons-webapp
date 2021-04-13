@@ -406,7 +406,7 @@ const CommunicationsSubSection: FunctionComponent<CheckYourAnswersBeaconUseSecti
           {use.otherCommunication && (
             <CheckYourAnswersDataRowItem
               label="Other communication"
-              value={use.otherCommunicationInput}
+              value={use.otherCommunicationValue}
             />
           )}
         </SummaryListItem>

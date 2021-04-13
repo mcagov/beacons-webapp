@@ -16,11 +16,11 @@ describe("As a beacon owner, I want to register details about the aircraft commu
   const previousPageUrl = "/register-a-beacon/about-the-aircraft";
   const vhfRadioCheckboxSelector = "#vhfRadio";
   const satelliteTelephoneCheckboxSelector = "#satelliteTelephone";
-  const satelliteTelephoneInputSelector = "#satelliteTelephoneInput";
+  const satelliteTelephoneInputSelector = "#satelliteTelephoneValue";
   const mobileTelephoneCheckboxSelector = "#mobileTelephone";
-  const mobileTelephoneInputSelector = "#mobileTelephoneInput1";
+  const mobileTelephoneInputSelector = "#mobileTelephone1";
   const otherCommunicationCheckboxSelector = "#otherCommunication";
-  const otherCommunicationInputSelector = "#otherCommunicationInput";
+  const otherCommunicationInputSelector = "#otherCommunicationValue";
 
   beforeEach(() => {
     givenIHaveACookieSetAndIVisit(pageUrl);

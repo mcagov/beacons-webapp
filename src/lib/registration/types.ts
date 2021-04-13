@@ -45,7 +45,7 @@ export interface BeaconUse {
   activity: string;
   otherActivityText: string;
   otherCommunication: string;
-  otherCommunicationInput: string;
+  otherCommunicationValue: string;
 
   // Vessel comms
   callSign: string;

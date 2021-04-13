@@ -44,7 +44,7 @@ const definePageForm = ({
   mobileTelephone1,
   mobileTelephone2,
   otherCommunication,
-  otherCommunicationInput,
+  otherCommunicationValue,
 }: FormSubmission): FormManager => {
   return new FormManager({
     callSign: new FieldManager(callSign),
@@ -133,8 +133,8 @@ const definePageForm = ({
     ),
     mobileTelephone2: new FieldManager(mobileTelephone2),
     otherCommunication: new FieldManager(otherCommunication),
-    otherCommunicationInput: new FieldManager(
-      otherCommunicationInput,
+    otherCommunicationValue: new FieldManager(
+      otherCommunicationValue,
       [
         Validators.required("We need your other communication"),
         Validators.maxLength(
@@ -333,12 +333,12 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.otherCommunicationInput.errorMessages}
+            errorMessages={form.fields.otherCommunicationValue.errorMessages}
           >
             <TextareaCharacterCount
-              id="otherCommunicationInput"
+              id="otherCommunicationValue"
               label="Please provide details of how we can contact you"
-              defaultValue={form.fields.otherCommunicationInput.value}
+              defaultValue={form.fields.otherCommunicationValue.value}
               maxCharacters={250}
             />
           </FormGroup>

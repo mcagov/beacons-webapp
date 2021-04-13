@@ -104,7 +104,7 @@ export const iCanEditMyAircraftCommunications = (): void => {
   );
   cy.get("#mobileTelephoneInput1").should("have.value", comms.mobileTelephone1);
   cy.get("#mobileTelephoneInput2").should("have.value", comms.mobileTelephone2);
-  cy.get("#otherCommunicationInput").contains(comms.otherCommunication);
+  cy.get("#otherCommunicationValue").contains(comms.otherCommunication);
 };
 export const iCanEditMyAircraftDetails = (): void => {
   const aircraft = testAviationUseData.aircraft;
@@ -223,7 +223,7 @@ const givenIHaveEnteredMyAircraftCommunicationDetails = (): void => {
   givenIHaveSelected("#otherCommunication");
   givenIHaveTyped(
     testAviationUseData.communications.otherCommunication,
-    "#otherCommunicationInput"
+    "#otherCommunicationValue"
   );
 };
 const givenIHaveEnteredMoreDetailsAboutMyAircraft = (): void => {

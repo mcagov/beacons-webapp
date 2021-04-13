@@ -49,7 +49,7 @@ describe("LandOtherCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      otherCommunicationInput: {
+      otherCommunicationValue: {
         value: "",
         errorMessages: [],
       },

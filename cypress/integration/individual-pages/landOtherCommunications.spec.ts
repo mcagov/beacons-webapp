@@ -21,7 +21,7 @@ describe("As a beacon owner and land or other use user", () => {
   const mobileTelephoneCheckboxSelector = "#mobileTelephone";
   const mobileTelephoneInputSelector = "#mobileTelephoneInput1";
   const otherCommunicationSelector = "#otherCommunication";
-  const otherCommunicationInputSelector = "#otherCommunicationInput";
+  const otherCommunicationInputSelector = "#otherCommunicationValue";
 
   beforeEach(() => {
     givenIHaveACookieSetAndIVisit(pageUrl);
