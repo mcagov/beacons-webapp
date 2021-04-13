@@ -15,13 +15,13 @@ import {
 describe("As a beacon owner and maritime pleasure vessel user", () => {
   const pageUrl = "/register-a-beacon/vessel-communications";
   const fixedVhfDscRadioCheckboxSelector = "#fixedVhfRadio";
-  const fixedVhfDscRadioInputSelector = "#fixedVhfRadioInput";
+  const fixedVhfDscRadioInputSelector = "#fixedVhfRadioValue";
   const portableVhfDscRadioCheckboxSelector = "#portableVhfRadio";
-  const portableVhfDscRadioInputSelector = "#portableVhfRadioInput";
+  const portableVhfDscRadioInputSelector = "#portableVhfRadioValue";
   const satelliteTelephoneCheckboxSelector = "#satelliteTelephone";
-  const satelliteTelephoneInputSelector = "#satelliteTelephoneInput";
+  const satelliteTelephoneInputSelector = "#satelliteTelephoneValue";
   const mobileTelephoneCheckboxSelector = "#mobileTelephone";
-  const mobileTelephoneInputSelector = "#mobileTelephoneInput1";
+  const mobileTelephoneInputSelector = "#mobileTelephone1";
   const otherCommunicationSelector = "#otherCommunication";
   const otherCommunicationInputSelector = "#otherCommunicationInput";
 

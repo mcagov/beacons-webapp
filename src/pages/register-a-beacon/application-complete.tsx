@@ -82,7 +82,9 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
 
     if (!registration.referenceNumber) {
       const beaconsApiGateway = new BeaconsApiGateway();
-      const success = beaconsApiGateway.sendRegistration(registrationClass);
+      const success = await beaconsApiGateway.sendRegistration(
+        registrationClass
+      );
 
       if (success) {
         registration.referenceNumber = referenceNumber("A#", 7);
@@ -99,7 +101,8 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
         }
       }
     } else {
-      pageSubHeading = "We could not send you a confirmation email.";
+      pageSubHeading =
+        "We could not save your registration or send you a confirmation email. Please contact the Beacons Registry team.";
     }
 
     return {

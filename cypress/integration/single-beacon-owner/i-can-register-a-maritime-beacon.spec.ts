@@ -177,7 +177,7 @@ export const iCanEditMyVesselCommunications = (): void => {
   comms.checkedFields.forEach((field) =>
     cy.get(`#${field}`).should("be.checked")
   );
-  cy.get("#fixedVhfRadioInput").should("have.value", comms.fixedMMSI);
+  cy.get("#fixedVhfRadioValue").should("have.value", comms.fixedMMSI);
   cy.get("#portableVhfRadioInput").should("have.value", comms.portableMMSI);
   cy.get("#satelliteTelephoneInput").should(
     "have.value",
@@ -246,14 +246,14 @@ const givenIHaveEnteredMyVesselCommunicationDetails = (): void => {
   givenIAmAt(PageURLs.vesselCommunications);
   givenIHaveSelected("#vhfRadio");
   givenIHaveSelected("#fixedVhfRadio");
-  givenIHaveTyped(comms.fixedMMSI, "#fixedVhfRadioInput");
+  givenIHaveTyped(comms.fixedMMSI, "#fixedVhfRadioValue");
   givenIHaveSelected("#portableVhfRadio");
-  givenIHaveTyped(comms.portableMMSI, "#portableVhfRadioInput");
+  givenIHaveTyped(comms.portableMMSI, "#portableVhfRadioValue");
   givenIHaveSelected("#satelliteTelephone");
-  givenIHaveTyped(comms.satelliteTelephone, "#satelliteTelephoneInput");
+  givenIHaveTyped(comms.satelliteTelephone, "#satelliteTelephoneValue");
   givenIHaveSelected("#mobileTelephone");
-  givenIHaveTyped(comms.mobileTelephone1, "#mobileTelephoneInput1");
-  givenIHaveTyped(comms.mobileTelephone2, "#mobileTelephoneInput2");
+  givenIHaveTyped(comms.mobileTelephone1, "#mobileTelephone1");
+  givenIHaveTyped(comms.mobileTelephone2, "#mobileTelephone2");
   givenIHaveSelected("#otherCommunication");
   givenIHaveTyped(comms.otherCommunication, "#otherCommunicationInput");
 };

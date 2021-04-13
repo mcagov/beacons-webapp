@@ -35,14 +35,14 @@ const definePageForm = ({
   callSign,
   vhfRadio,
   fixedVhfRadio,
-  fixedVhfRadioInput,
+  fixedVhfRadioValue,
   portableVhfRadio,
-  portableVhfRadioInput,
+  portableVhfRadioValue,
   satelliteTelephone,
-  satelliteTelephoneInput,
+  satelliteTelephoneValue,
   mobileTelephone,
-  mobileTelephoneInput1,
-  mobileTelephoneInput2,
+  mobileTelephone1,
+  mobileTelephone2,
   otherCommunication,
   otherCommunicationInput,
 }: FormSubmission): FormManager => {
@@ -50,8 +50,8 @@ const definePageForm = ({
     callSign: new FieldManager(callSign),
     vhfRadio: new FieldManager(vhfRadio),
     fixedVhfRadio: new FieldManager(fixedVhfRadio),
-    fixedVhfRadioInput: new FieldManager(
-      fixedVhfRadioInput,
+    fixedVhfRadioValue: new FieldManager(
+      fixedVhfRadioValue,
       [
         Validators.required(
           "We need your MMSI number if you have a fixed VHF/DSC radio"
@@ -72,8 +72,8 @@ const definePageForm = ({
       ]
     ),
     portableVhfRadio: new FieldManager(portableVhfRadio),
-    portableVhfRadioInput: new FieldManager(
-      portableVhfRadioInput,
+    portableVhfRadioValue: new FieldManager(
+      portableVhfRadioValue,
       [
         Validators.required(
           "We need your portable MMSI number if you have a portable VHF/DSC radio"
@@ -95,8 +95,8 @@ const definePageForm = ({
       ]
     ),
     satelliteTelephone: new FieldManager(satelliteTelephone),
-    satelliteTelephoneInput: new FieldManager(
-      satelliteTelephoneInput,
+    satelliteTelephoneValue: new FieldManager(
+      satelliteTelephoneValue,
       [
         Validators.required(
           "We need your phone number if you have a satellite telephone"
@@ -114,8 +114,8 @@ const definePageForm = ({
       ]
     ),
     mobileTelephone: new FieldManager(mobileTelephone),
-    mobileTelephoneInput1: new FieldManager(
-      mobileTelephoneInput1,
+    mobileTelephone1: new FieldManager(
+      mobileTelephone1,
       [
         Validators.required(
           "We need your telephone number if you have a mobile telephone"
@@ -131,7 +131,7 @@ const definePageForm = ({
         },
       ]
     ),
-    mobileTelephoneInput2: new FieldManager(mobileTelephoneInput2),
+    mobileTelephone2: new FieldManager(mobileTelephone2),
     otherCommunication: new FieldManager(otherCommunication),
     otherCommunicationInput: new FieldManager(
       otherCommunicationInput,
@@ -244,14 +244,14 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.fixedVhfRadioInput.errorMessages}
+            errorMessages={form.fields.fixedVhfRadioValue.errorMessages}
           >
             <Input
-              id="fixedVhfRadioInput"
+              id="fixedVhfRadioValue"
               label="Fixed MMSI number"
               hintText="This is the unique MMSI number associated to the vessel, it is 9
           digits long"
-              defaultValue={form.fields.fixedVhfRadioInput.value}
+              defaultValue={form.fields.fixedVhfRadioValue.value}
             />
           </FormGroup>
         </CheckboxListItem>
@@ -266,13 +266,13 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.portableVhfRadioInput.errorMessages}
+            errorMessages={form.fields.portableVhfRadioValue.errorMessages}
           >
             <Input
-              id="portableVhfRadioInput"
+              id="portableVhfRadioValue"
               label="Portable MMSI number"
               hintText="This is the unique MMSI number associated to the portable radio and is 9 numbers long. E.g. starts with 2359xxxxx"
-              defaultValue={form.fields.portableVhfRadioInput.value}
+              defaultValue={form.fields.portableVhfRadioValue.value}
             />
           </FormGroup>
         </CheckboxListItem>
@@ -287,13 +287,13 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.satelliteTelephoneInput.errorMessages}
+            errorMessages={form.fields.satelliteTelephoneValue.errorMessages}
           >
             <Input
-              id="satelliteTelephoneInput"
+              id="satelliteTelephoneValue"
               label="Enter phone number"
               hintText="Iridium usually start: +8707, Thuraya usually start: +8821, Globalstar usually start: +3364)"
-              defaultValue={form.fields.satelliteTelephoneInput.value}
+              defaultValue={form.fields.satelliteTelephoneValue.value}
             />
           </FormGroup>
         </CheckboxListItem>
@@ -306,22 +306,20 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           label="Mobile Telephone(s)"
           conditional={true}
         >
-          <FormGroup
-            errorMessages={form.fields.mobileTelephoneInput1.errorMessages}
-          >
+          <FormGroup errorMessages={form.fields.mobileTelephone1.errorMessages}>
             <Input
-              id="mobileTelephoneInput1"
+              id="mobileTelephone1"
               label="Mobile number 1"
               inputClassName="govuk-!-margin-bottom-4"
-              defaultValue={form.fields.mobileTelephoneInput1.value}
+              defaultValue={form.fields.mobileTelephone1.value}
               htmlAttributes={{ autoComplete: "tel" }}
             />
           </FormGroup>
 
           <Input
-            id="mobileTelephoneInput2"
+            id="mobileTelephone2"
             label="Mobile number 2 (optional)"
-            defaultValue={form.fields.mobileTelephoneInput2.value}
+            defaultValue={form.fields.mobileTelephone2.value}
             htmlAttributes={{ autoComplete: "tel" }}
           />
         </CheckboxListItem>

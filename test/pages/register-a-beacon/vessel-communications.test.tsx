@@ -29,7 +29,7 @@ describe("VesselCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      fixedVhfRadioInput: {
+      fixedVhfRadioValue: {
         value: "",
         errorMessages: [],
       },
@@ -37,7 +37,7 @@ describe("VesselCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      portableVhfRadioInput: {
+      portableVhfRadioValue: {
         value: "",
         errorMessages: [],
       },
@@ -45,7 +45,7 @@ describe("VesselCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      satelliteTelephoneInput: {
+      satelliteTelephoneValue: {
         value: "",
         errorMessages: [],
       },
@@ -53,11 +53,11 @@ describe("VesselCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      mobileTelephoneInput1: {
+      mobileTelephone1: {
         value: "",
         errorMessages: [],
       },
-      mobileTelephoneInput2: {
+      mobileTelephone2: {
         value: "",
         errorMessages: [],
       },
@@ -106,8 +106,8 @@ describe("VesselCommunications", () => {
       <VesselCommunications form={emptyVesselCommunicationsForm} />
     );
 
-    const mobilePhoneInput1 = container.querySelector("#mobileTelephoneInput1");
-    const mobilePhoneInput2 = container.querySelector("#mobileTelephoneInput2");
+    const mobilePhoneInput1 = container.querySelector("#mobileTelephone1");
+    const mobilePhoneInput2 = container.querySelector("#mobileTelephone2");
 
     expect(mobilePhoneInput1).toHaveAttribute("autocomplete", "tel");
     expect(mobilePhoneInput2).toHaveAttribute("autocomplete", "tel");
@@ -121,7 +121,7 @@ describe("VesselCommunications", () => {
     );
 
     const satelliteTelephoneNumberInput = container.querySelector(
-      "#satelliteTelephoneInput"
+      "#satelliteTelephoneValue"
     );
 
     expect(satelliteTelephoneNumberInput).not.toHaveAttribute("autocomplete");

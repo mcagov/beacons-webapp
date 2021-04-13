@@ -51,7 +51,7 @@ export interface BeaconUse {
   callSign: string;
   vhfRadio: string;
   fixedVhfRadio: string;
-  fixedVhfRadioInput: string;
+  fixedVhfRadioValue: string;
   portableVhfRadio: string;
   portableVhfRadioInput: string;
   satelliteTelephone: string;

@@ -54,7 +54,6 @@ export const initBeacon = (): IRegistration => {
  * @returns       {BeaconUse}   JSON representation of a beacon use
  */
 export const initBeaconUse = (mainUse = false): BeaconUse => {
-  // TODO: Update type for beacon use once other L2/L3 pages are in
   return {
     environment: "",
     environmentOtherInput: "",
@@ -68,7 +67,7 @@ export const initBeaconUse = (mainUse = false): BeaconUse => {
     callSign: "",
     vhfRadio: "",
     fixedVhfRadio: "",
-    fixedVhfRadioInput: "",
+    fixedVhfRadioValue: "",
     portableVhfRadio: "",
     portableVhfRadioInput: "",
     satelliteTelephone: "",

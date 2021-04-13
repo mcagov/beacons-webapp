@@ -371,10 +371,10 @@ const CommunicationsSubSection: FunctionComponent<CheckYourAnswersBeaconUseSecti
         >
           <CheckYourAnswersDataRowItem label="Callsign" value={use.callSign} />
           {use.fixedVhfRadio && "Fixed VHF/DSC"}
-          {use.fixedVhfRadioInput && (
+          {use.fixedVhfRadioValue && (
             <CheckYourAnswersDataRowItem
               label="MMSI"
-              value={use.fixedVhfRadioInput}
+              value={use.fixedVhfRadioValue}
             />
           )}
           {use.vhfRadio && "VHF Radio"}
