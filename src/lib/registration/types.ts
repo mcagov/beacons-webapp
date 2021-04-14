@@ -41,10 +41,10 @@ export interface IRegistration {
 
 export interface BeaconUse {
   environment: string;
-  otherEnvironment: string;
+  environmentOtherInput: string;
   purpose: string;
   activity: string;
-  otherActivity: string;
+  otherActivityText: string;
   otherCommunication: string;
   otherCommunicationInput: string;
 

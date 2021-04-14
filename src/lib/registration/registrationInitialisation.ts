@@ -57,10 +57,10 @@ export const initBeacon = (): IRegistration => {
 export const initBeaconUse = (mainUse = false): BeaconUse => {
   return {
     environment: "",
-    otherEnvironment: "",
+    environmentOtherInput: "",
     purpose: "",
     activity: "",
-    otherActivity: "",
+    otherActivityText: "",
     otherCommunication: "",
     otherCommunicationInput: "",
 

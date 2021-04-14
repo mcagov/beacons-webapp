@@ -114,14 +114,14 @@ export class CreateRegistration {
       environment: use.environment,
       purpose: use.purpose,
       activity: use.activity,
-      otherEnvironment: use.otherEnvironment,
-      otherActivity: use.otherActivity,
+      otherEnvironment: use.environmentOtherInput,
+      otherActivity: use.otherActivityText,
     };
 
     switch (use.environment) {
       case Environment.MARITIME:
     }
 
-    return use;
+    return serialisedUse;
   }
 }
