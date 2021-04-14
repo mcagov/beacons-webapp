@@ -49,15 +49,17 @@ const MoreDetails: FunctionComponent<FormPageProps> = ({
     [Environment.AVIATION]: PageURLs.aircraftCommunications,
     [Environment.LAND]: PageURLs.landOtherCommunications,
     [Environment.OTHER]: PageURLs.landOtherCommunications,
+    "": PageURLs.start,
   };
-  const previousUrl = previousPageUrlMap[environment] || PageURLs.start;
 
   const pageHeading = "Provide more details that could help in a search";
 
   return (
     <>
       <Layout
-        navigation={<BackButtonRouterIndexes href={previousUrl} />}
+        navigation={
+          <BackButtonRouterIndexes href={previousPageUrlMap[environment]} />
+        }
         title={pageHeading}
         pageHasErrors={form.hasErrors}
         showCookieBanner={showCookieBanner}

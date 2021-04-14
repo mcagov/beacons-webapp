@@ -16,7 +16,7 @@ describe("AircraftCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      satelliteTelephoneValue: {
+      satelliteTelephoneInput: {
         value: "",
         errorMessages: [],
       },
@@ -24,11 +24,11 @@ describe("AircraftCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      mobileTelephone1: {
+      mobileTelephoneInput1: {
         value: "",
         errorMessages: [],
       },
-      mobileTelephone2: {
+      mobileTelephoneInput2: {
         value: "",
         errorMessages: [],
       },
@@ -36,7 +36,7 @@ describe("AircraftCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      otherCommunicationValue: {
+      otherCommunicationInput: {
         value: "",
         errorMessages: [],
       },

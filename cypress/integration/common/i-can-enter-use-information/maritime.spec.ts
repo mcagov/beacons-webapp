@@ -128,9 +128,9 @@ export const iCanEditMyVesselCommunications = (): void => {
     "have.value",
     comms.satelliteTelephone
   );
-  cy.get("#mobileTelephone1").should("have.value", comms.mobileTelephone1);
-  cy.get("#mobileTelephone2").should("have.value", comms.mobileTelephone2);
-  cy.get("#otherCommunicationValue").contains(comms.otherCommunication);
+  cy.get("#mobileTelephoneInput1").should("have.value", comms.mobileTelephone1);
+  cy.get("#mobileTelephoneInput2").should("have.value", comms.mobileTelephone2);
+  cy.get("#otherCommunicationInput").contains(comms.otherCommunication);
 };
 export const iCanEditMyVesselDetails = (): void => {
   const vessel = testMaritimeUseData.vessel;
@@ -192,10 +192,10 @@ const givenIHaveEnteredMyVesselCommunicationDetails = (): void => {
   givenIHaveSelected("#satelliteTelephone");
   givenIHaveTyped(comms.satelliteTelephone, "#satelliteTelephoneValue");
   givenIHaveSelected("#mobileTelephone");
-  givenIHaveTyped(comms.mobileTelephone1, "#mobileTelephone1");
-  givenIHaveTyped(comms.mobileTelephone2, "#mobileTelephone2");
+  givenIHaveTyped(comms.mobileTelephone1, "#mobileTelephoneInput1");
+  givenIHaveTyped(comms.mobileTelephone2, "#mobileTelephoneInput2");
   givenIHaveSelected("#otherCommunication");
-  givenIHaveTyped(comms.otherCommunication, "#otherCommunicationValue");
+  givenIHaveTyped(comms.otherCommunication, "#otherCommunicationInput");
 };
 const givenIHaveEnteredMoreDetailsAboutMyVessel = (): void => {
   givenIAmAt(PageURLs.moreDetails);

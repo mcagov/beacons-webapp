@@ -56,26 +56,26 @@ export const initBeacon = (): IRegistration => {
  */
 export const initBeaconUse = (mainUse = false): BeaconUse => {
   return {
-    environment: null,
+    environment: "",
     otherEnvironment: "",
-    purpose: null,
-    activity: null,
+    purpose: "",
+    activity: "",
     otherActivity: "",
     otherCommunication: "",
-    otherCommunicationValue: "",
+    otherCommunicationInput: "",
 
     // Communications
     callSign: "",
     vhfRadio: "",
     fixedVhfRadio: "",
-    fixedVhfRadioValue: "",
+    fixedVhfRadioInput: "",
     portableVhfRadio: "",
-    portableVhfRadioValue: "",
+    portableVhfRadioInput: "",
     satelliteTelephone: "",
-    satelliteTelephoneValue: "",
+    satelliteTelephoneInput: "",
     mobileTelephone: "",
-    mobileTelephone1: "",
-    mobileTelephone2: "",
+    mobileTelephoneInput1: "",
+    mobileTelephoneInput2: "",
 
     // Vessel info
     maxCapacity: "",

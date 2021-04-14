@@ -19,9 +19,9 @@ describe("As a beacon owner and land or other use user", () => {
   const satelliteTelephoneCheckboxSelector = "#satelliteTelephone";
   const satelliteTelephoneInputSelector = "#satelliteTelephoneValue";
   const mobileTelephoneCheckboxSelector = "#mobileTelephone";
-  const mobileTelephoneInputSelector = "#mobileTelephone1";
+  const mobileTelephoneInputSelector = "#mobileTelephoneInput1";
   const otherCommunicationSelector = "#otherCommunication";
-  const otherCommunicationInputSelector = "#otherCommunicationValue";
+  const otherCommunicationInputSelector = "#otherCommunicationInput";
 
   beforeEach(() => {
     givenIHaveACookieSetAndIVisit(pageUrl);

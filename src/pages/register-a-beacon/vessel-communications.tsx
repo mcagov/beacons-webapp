@@ -35,23 +35,23 @@ const definePageForm = ({
   callSign,
   vhfRadio,
   fixedVhfRadio,
-  fixedVhfRadioValue,
+  fixedVhfRadioInput,
   portableVhfRadio,
-  portableVhfRadioValue,
+  portableVhfRadioInput,
   satelliteTelephone,
-  satelliteTelephoneValue,
+  satelliteTelephoneInput,
   mobileTelephone,
-  mobileTelephone1,
-  mobileTelephone2,
+  mobileTelephoneInput1,
+  mobileTelephoneInput2,
   otherCommunication,
-  otherCommunicationValue,
+  otherCommunicationInput,
 }: FormSubmission): FormManager => {
   return new FormManager({
     callSign: new FieldManager(callSign),
     vhfRadio: new FieldManager(vhfRadio),
     fixedVhfRadio: new FieldManager(fixedVhfRadio),
-    fixedVhfRadioValue: new FieldManager(
-      fixedVhfRadioValue,
+    fixedVhfRadioInput: new FieldManager(
+      fixedVhfRadioInput,
       [
         Validators.required(
           "We need your MMSI number if you have a fixed VHF/DSC radio"
@@ -72,8 +72,8 @@ const definePageForm = ({
       ]
     ),
     portableVhfRadio: new FieldManager(portableVhfRadio),
-    portableVhfRadioValue: new FieldManager(
-      portableVhfRadioValue,
+    portableVhfRadioInput: new FieldManager(
+      portableVhfRadioInput,
       [
         Validators.required(
           "We need your portable MMSI number if you have a portable VHF/DSC radio"
@@ -95,8 +95,8 @@ const definePageForm = ({
       ]
     ),
     satelliteTelephone: new FieldManager(satelliteTelephone),
-    satelliteTelephoneValue: new FieldManager(
-      satelliteTelephoneValue,
+    satelliteTelephoneInput: new FieldManager(
+      satelliteTelephoneInput,
       [
         Validators.required(
           "We need your phone number if you have a satellite telephone"
@@ -114,8 +114,8 @@ const definePageForm = ({
       ]
     ),
     mobileTelephone: new FieldManager(mobileTelephone),
-    mobileTelephone1: new FieldManager(
-      mobileTelephone1,
+    mobileTelephoneInput1: new FieldManager(
+      mobileTelephoneInput1,
       [
         Validators.required(
           "We need your telephone number if you have a mobile telephone"
@@ -131,10 +131,10 @@ const definePageForm = ({
         },
       ]
     ),
-    mobileTelephone2: new FieldManager(mobileTelephone2),
+    mobileTelephoneInput2: new FieldManager(mobileTelephoneInput2),
     otherCommunication: new FieldManager(otherCommunication),
-    otherCommunicationValue: new FieldManager(
-      otherCommunicationValue,
+    otherCommunicationInput: new FieldManager(
+      otherCommunicationInput,
       [
         Validators.required("We need your other communication"),
         Validators.maxLength(
@@ -244,14 +244,14 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.fixedVhfRadioValue.errorMessages}
+            errorMessages={form.fields.fixedVhfRadioInput.errorMessages}
           >
             <Input
-              id="fixedVhfRadioValue"
+              id="fixedVhfRadioInput"
               label="Fixed MMSI number"
               hintText="This is the unique MMSI number associated to the vessel, it is 9
           digits long"
-              defaultValue={form.fields.fixedVhfRadioValue.value}
+              defaultValue={form.fields.fixedVhfRadioInput.value}
             />
           </FormGroup>
         </CheckboxListItem>
@@ -266,13 +266,13 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.portableVhfRadioValue.errorMessages}
+            errorMessages={form.fields.portableVhfRadioInput.errorMessages}
           >
             <Input
-              id="portableVhfRadioValue"
+              id="portableVhfRadioInput"
               label="Portable MMSI number"
               hintText="This is the unique MMSI number associated to the portable radio and is 9 numbers long. E.g. starts with 2359xxxxx"
-              defaultValue={form.fields.portableVhfRadioValue.value}
+              defaultValue={form.fields.portableVhfRadioInput.value}
             />
           </FormGroup>
         </CheckboxListItem>
@@ -287,13 +287,13 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.satelliteTelephoneValue.errorMessages}
+            errorMessages={form.fields.satelliteTelephoneInput.errorMessages}
           >
             <Input
-              id="satelliteTelephoneValue"
+              id="satelliteTelephoneInput"
               label="Enter phone number"
               hintText="Iridium usually start: +8707, Thuraya usually start: +8821, Globalstar usually start: +3364)"
-              defaultValue={form.fields.satelliteTelephoneValue.value}
+              defaultValue={form.fields.satelliteTelephoneInput.value}
             />
           </FormGroup>
         </CheckboxListItem>
@@ -306,20 +306,22 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           label="Mobile Telephone(s)"
           conditional={true}
         >
-          <FormGroup errorMessages={form.fields.mobileTelephone1.errorMessages}>
+          <FormGroup
+            errorMessages={form.fields.mobileTelephoneInput1.errorMessages}
+          >
             <Input
-              id="mobileTelephone1"
+              id="mobileTelephoneInput1"
               label="Mobile number 1"
               inputClassName="govuk-!-margin-bottom-4"
-              defaultValue={form.fields.mobileTelephone1.value}
+              defaultValue={form.fields.mobileTelephoneInput1.value}
               htmlAttributes={{ autoComplete: "tel" }}
             />
           </FormGroup>
 
           <Input
-            id="mobileTelephone2"
+            id="mobileTelephoneInput2"
             label="Mobile number 2 (optional)"
-            defaultValue={form.fields.mobileTelephone2.value}
+            defaultValue={form.fields.mobileTelephoneInput2.value}
             htmlAttributes={{ autoComplete: "tel" }}
           />
         </CheckboxListItem>
@@ -333,12 +335,12 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.otherCommunicationValue.errorMessages}
+            errorMessages={form.fields.otherCommunicationInput.errorMessages}
           >
             <TextareaCharacterCount
-              id="otherCommunicationValue"
+              id="otherCommunicationInput"
               label="Please provide details of how we can contact you"
-              defaultValue={form.fields.otherCommunicationValue.value}
+              defaultValue={form.fields.otherCommunicationInput.value}
               maxCharacters={250}
             />
           </FormGroup>

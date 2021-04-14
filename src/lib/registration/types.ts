@@ -46,20 +46,20 @@ export interface BeaconUse {
   activity: string;
   otherActivity: string;
   otherCommunication: string;
-  otherCommunicationValue: string;
+  otherCommunicationInput: string;
 
   // Vessel comms
   callSign: string;
   vhfRadio: string;
   fixedVhfRadio: string;
-  fixedVhfRadioValue: string;
+  fixedVhfRadioInput: string;
   portableVhfRadio: string;
-  portableVhfRadioValue: string;
+  portableVhfRadioInput: string;
   satelliteTelephone: string;
-  satelliteTelephoneValue: string;
+  satelliteTelephoneInput: string;
   mobileTelephone: string;
-  mobileTelephone1: string;
-  mobileTelephone2: string;
+  mobileTelephoneInput1: string;
+  mobileTelephoneInput2: string;
 
   maxCapacity: string;
   vesselName: string;

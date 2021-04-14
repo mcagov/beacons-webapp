@@ -29,7 +29,7 @@ describe("VesselCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      fixedVhfRadioValue: {
+      fixedVhfRadioInput: {
         value: "",
         errorMessages: [],
       },
@@ -37,7 +37,7 @@ describe("VesselCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      portableVhfRadioValue: {
+      portableVhfRadioInput: {
         value: "",
         errorMessages: [],
       },
@@ -45,7 +45,7 @@ describe("VesselCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      satelliteTelephoneValue: {
+      satelliteTelephoneInput: {
         value: "",
         errorMessages: [],
       },
@@ -53,11 +53,11 @@ describe("VesselCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      mobileTelephone1: {
+      mobileTelephoneInput1: {
         value: "",
         errorMessages: [],
       },
-      mobileTelephone2: {
+      mobileTelephoneInput2: {
         value: "",
         errorMessages: [],
       },
@@ -65,7 +65,7 @@ describe("VesselCommunications", () => {
         value: "",
         errorMessages: [],
       },
-      otherCommunicationValue: {
+      otherCommunicationInput: {
         value: "",
         errorMessages: [],
       },
@@ -106,8 +106,8 @@ describe("VesselCommunications", () => {
       <VesselCommunications form={emptyVesselCommunicationsForm} />
     );
 
-    const mobilePhoneInput1 = container.querySelector("#mobileTelephone1");
-    const mobilePhoneInput2 = container.querySelector("#mobileTelephone2");
+    const mobilePhoneInput1 = container.querySelector("#mobileTelephoneInput1");
+    const mobilePhoneInput2 = container.querySelector("#mobileTelephoneInput2");
 
     expect(mobilePhoneInput1).toHaveAttribute("autocomplete", "tel");
     expect(mobilePhoneInput2).toHaveAttribute("autocomplete", "tel");

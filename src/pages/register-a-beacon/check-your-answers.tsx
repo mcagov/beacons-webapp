@@ -371,42 +371,42 @@ const CommunicationsSubSection: FunctionComponent<CheckYourAnswersBeaconUseSecti
         >
           <CheckYourAnswersDataRowItem label="Callsign" value={use.callSign} />
           {use.fixedVhfRadio && "Fixed VHF/DSC"}
-          {use.fixedVhfRadioValue && (
+          {use.fixedVhfRadioInput && (
             <CheckYourAnswersDataRowItem
               label="MMSI"
-              value={use.fixedVhfRadioValue}
+              value={use.fixedVhfRadioInput}
             />
           )}
           {use.vhfRadio && "VHF Radio"}
           {use.portableVhfRadio && "Portable VHF/DSC"}
-          {use.portableVhfRadioValue && (
+          {use.portableVhfRadioInput && (
             <CheckYourAnswersDataRowItem
               label="Portable MMSI"
-              value={use.portableVhfRadioValue}
+              value={use.portableVhfRadioInput}
             />
           )}
           {use.mobileTelephone && (
             <CheckYourAnswersDataRowItem
               label="Mobile telephone (1)"
-              value={use.mobileTelephone1}
+              value={use.mobileTelephoneInput1}
             />
           )}
           {use.mobileTelephone && (
             <CheckYourAnswersDataRowItem
               label="Mobile telephone (2)"
-              value={use.mobileTelephone2}
+              value={use.mobileTelephoneInput2}
             />
           )}
           {use.satelliteTelephone && (
             <CheckYourAnswersDataRowItem
               label="Satellite telephone"
-              value={use.satelliteTelephoneValue}
+              value={use.satelliteTelephoneInput}
             />
           )}
           {use.otherCommunication && (
             <CheckYourAnswersDataRowItem
               label="Other communication"
-              value={use.otherCommunicationValue}
+              value={use.otherCommunicationInput}
             />
           )}
         </SummaryListItem>

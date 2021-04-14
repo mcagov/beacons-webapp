@@ -25,18 +25,18 @@ import { Communication } from "../../lib/registration/types";
 const definePageForm = ({
   vhfRadio,
   satelliteTelephone,
-  satelliteTelephoneValue,
+  satelliteTelephoneInput,
   mobileTelephone,
-  mobileTelephone1,
-  mobileTelephone2,
+  mobileTelephoneInput1,
+  mobileTelephoneInput2,
   otherCommunication,
-  otherCommunicationValue,
+  otherCommunicationInput,
 }: FormSubmission): FormManager => {
   return new FormManager({
     vhfRadio: new FieldManager(vhfRadio),
     satelliteTelephone: new FieldManager(satelliteTelephone),
-    satelliteTelephoneValue: new FieldManager(
-      satelliteTelephoneValue,
+    satelliteTelephoneInput: new FieldManager(
+      satelliteTelephoneInput,
       [
         Validators.required(
           "We need your phone number if you have a satellite telephone"
@@ -54,8 +54,8 @@ const definePageForm = ({
       ]
     ),
     mobileTelephone: new FieldManager(mobileTelephone),
-    mobileTelephone1: new FieldManager(
-      mobileTelephone1,
+    mobileTelephoneInput1: new FieldManager(
+      mobileTelephoneInput1,
       [
         Validators.required(
           "We need your telephone number if you have a mobile telephone"
@@ -71,10 +71,10 @@ const definePageForm = ({
         },
       ]
     ),
-    mobileTelephone2: new FieldManager(mobileTelephone2),
+    mobileTelephoneInput2: new FieldManager(mobileTelephoneInput2),
     otherCommunication: new FieldManager(otherCommunication),
-    otherCommunicationValue: new FieldManager(
-      otherCommunicationValue,
+    otherCommunicationInput: new FieldManager(
+      otherCommunicationInput,
       [
         Validators.required("We need your other communication"),
         Validators.maxLength(
@@ -158,13 +158,13 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.satelliteTelephoneValue.errorMessages}
+            errorMessages={form.fields.satelliteTelephoneInput.errorMessages}
           >
             <Input
-              id="satelliteTelephoneValue"
+              id="satelliteTelephoneInput"
               label="Enter phone number"
               hintText="Iridium start: +8816, Inmarsat (ISAT, FLEET, BGAN) start +870, Thuraya start: +8821, Globalstar start: +3364"
-              defaultValue={form.fields.satelliteTelephoneValue.value}
+              defaultValue={form.fields.satelliteTelephoneInput.value}
             />
           </FormGroup>
         </CheckboxListItem>
@@ -177,20 +177,22 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           label="Mobile Telephone(s)"
           conditional={true}
         >
-          <FormGroup errorMessages={form.fields.mobileTelephone1.errorMessages}>
+          <FormGroup
+            errorMessages={form.fields.mobileTelephoneInput1.errorMessages}
+          >
             <Input
-              id="mobileTelephone1"
+              id="mobileTelephoneInput1"
               label="Mobile number 1"
               inputClassName="govuk-!-margin-bottom-4"
-              defaultValue={form.fields.mobileTelephone1.value}
+              defaultValue={form.fields.mobileTelephoneInput1.value}
               htmlAttributes={{ autoComplete: "tel" }}
             />
           </FormGroup>
 
           <Input
-            id="mobileTelephone2"
+            id="mobileTelephoneInput2"
             label="Mobile number 2 (optional)"
-            defaultValue={form.fields.mobileTelephone2.value}
+            defaultValue={form.fields.mobileTelephoneInput2.value}
             htmlAttributes={{ autoComplete: "tel" }}
           />
         </CheckboxListItem>
@@ -204,12 +206,12 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
           conditional={true}
         >
           <FormGroup
-            errorMessages={form.fields.otherCommunicationValue.errorMessages}
+            errorMessages={form.fields.otherCommunicationInput.errorMessages}
           >
             <TextareaCharacterCount
-              id="otherCommunicationValue"
+              id="otherCommunicationInput"
               label="Please provide details of how we can contact you"
-              defaultValue={form.fields.otherCommunicationValue.value}
+              defaultValue={form.fields.otherCommunicationInput.value}
               maxCharacters={250}
             />
           </FormGroup>

@@ -79,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
     const registrationClass = decoratedContext.registration;
     const registration = registrationClass.registration;
 
-    let pageSubHeading;
+    let pageSubHeading = "We have sent you a confirmation email - ";
 
     if (!registration.referenceNumber) {
       registration.referenceNumber = referenceNumber("A#", 7);
@@ -102,11 +102,11 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
         } else {
           pageSubHeading = "We could not send you a confirmation email.";
         }
+      } else {
+        delete registration.referenceNumber;
+        pageSubHeading =
+          "We could not save your registration or send you a confirmation email. Please contact the Beacons Registry team.";
       }
-    } else {
-      delete registration.referenceNumber;
-      pageSubHeading =
-        "We could not save your registration or send you a confirmation email. Please contact the Beacons Registry team.";
     }
 
     return {
