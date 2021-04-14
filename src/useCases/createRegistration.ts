@@ -15,16 +15,18 @@ export class CreateRegistration {
   }
 
   public async execute(registration: IRegistration): Promise<boolean> {
-    const registrationJson = this.serialiseToAPI(registration);
+    const registrationJson = this.serialiseRegistrationForAPI(registration);
 
     return this.apiGateway.post(this.registrationsEndpoint, registrationJson);
   }
 
-  public serialiseToAPI(registration: IRegistration): SerializedRegistration {
+  public serialiseRegistrationForAPI(
+    registration: IRegistration
+  ): SerializedRegistration {
     const beacon = this.serialiseBeacon(registration);
     const owner = this.serialiseOwner(registration);
     const emergencyContacts = this.serialiseEmergencyContacts(registration);
-    const uses = registration.uses;
+    const uses = this.serialiseUses(registration.uses);
 
     return {
       beacons: [{ ...beacon, owner, emergencyContacts, uses }],
@@ -112,14 +114,16 @@ export class CreateRegistration {
 
     serialisedUse = {
       environment: use.environment,
-      purpose: use.purpose,
       activity: use.activity,
       otherEnvironment: use.environmentOtherInput,
       otherActivity: use.otherActivityText,
+      moreDetails: use.moreDetails,
+      mainUse: use.mainUse,
     };
 
     switch (use.environment) {
       case Environment.MARITIME:
+        serialisedUse = { ...serialisedUse, purpose: use.purpose };
     }
 
     return serialisedUse;
