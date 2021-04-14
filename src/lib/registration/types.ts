@@ -2,6 +2,7 @@ export interface IRegistration {
   manufacturer: string;
   model: string;
   hexId: string;
+  beaconType: BeaconType;
   referenceNumber: string;
 
   manufacturerSerialNumber: string;
@@ -131,6 +132,12 @@ export interface Contact {
   townOrCity: string;
   county: string;
   postcode: string;
+}
+
+export enum BeaconType {
+  PLB = "PLB",
+  EPIRB = "EPIRB",
+  ELT = "ELT",
 }
 
 export enum Environment {
