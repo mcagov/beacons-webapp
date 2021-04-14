@@ -24,7 +24,6 @@ import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
 import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
-import { Communication } from "../../lib/registration/types";
 import { ofcomLicenseUrl } from "../../lib/urls";
 
 interface FormInputProps {
@@ -67,7 +66,7 @@ const definePageForm = ({
       [
         {
           dependsOn: "fixedVhfRadio",
-          meetingCondition: (value) => value === Communication.FIXED_VHF_RADIO,
+          meetingCondition: (value) => value === "true",
         },
       ]
     ),
@@ -89,8 +88,7 @@ const definePageForm = ({
       [
         {
           dependsOn: "portableVhfRadio",
-          meetingCondition: (value) =>
-            value === Communication.PORTABLE_VHF_RADIO,
+          meetingCondition: (value) => value === "true",
         },
       ]
     ),
@@ -108,8 +106,7 @@ const definePageForm = ({
       [
         {
           dependsOn: "satelliteTelephone",
-          meetingCondition: (value) =>
-            value === Communication.SATELLITE_TELEPHONE,
+          meetingCondition: (value) => value === "true",
         },
       ]
     ),
@@ -127,7 +124,7 @@ const definePageForm = ({
       [
         {
           dependsOn: "mobileTelephone",
-          meetingCondition: (value) => value === Communication.MOBILE_TELEPHONE,
+          meetingCondition: (value) => value === "true",
         },
       ]
     ),
@@ -145,7 +142,7 @@ const definePageForm = ({
       [
         {
           dependsOn: "otherCommunication",
-          meetingCondition: (value) => value === Communication.OTHER,
+          meetingCondition: (value) => value === "true",
         },
       ]
     ),

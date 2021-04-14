@@ -139,15 +139,15 @@ describe("string to boolean function", () => {
     expect(stringToBoolean(undefined)).toBe(false);
   });
 
-  it("should return true if `TRUE`", () => {
+  it("should return true if the value is TRUE", () => {
     expect(stringToBoolean("TRUE")).toBe(true);
   });
 
-  it("should return true if `true`", () => {
+  it("should return true if the value is true", () => {
     expect(stringToBoolean("true")).toBe(true);
   });
 
-  it("should return false if not true", () => {
+  it("should return false if the value is false", () => {
     expect(stringToBoolean("false")).toBe(false);
   });
 });

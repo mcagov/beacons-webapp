@@ -102,9 +102,10 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
         );
 
         if (emailSuccess) {
-          pageSubHeading = "We have sent you a confirmation email - ";
+          pageSubHeading = "We have sent you a confirmation email.";
         } else {
-          pageSubHeading = "We could not send you a confirmation email.";
+          pageSubHeading =
+            "We could not send you a confirmation email. But we have registered your beacon under the following reference id.";
         }
       } else {
         delete registration.referenceNumber;
