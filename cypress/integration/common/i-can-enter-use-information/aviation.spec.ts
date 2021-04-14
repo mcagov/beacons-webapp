@@ -209,7 +209,7 @@ const givenIHaveEnteredMyAircraftCommunicationDetails = (): void => {
   givenIHaveSelected("#satelliteTelephone");
   givenIHaveTyped(
     testAviationUseData.communications.satelliteTelephone,
-    "#satelliteTelephoneValue"
+    "#satelliteTelephoneInput"
   );
   givenIHaveSelected("#mobileTelephone");
   givenIHaveTyped(

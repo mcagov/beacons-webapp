@@ -17,7 +17,7 @@ describe("As a beacon owner in an environment other than land, aviation or marit
 
     thenTheUrlShouldContain(PageURLs.environment);
     givenIHaveSelected("#other");
-    andIType("My spaceship, the Heart of Gold", "#environmentOtherValue");
+    andIType("My spaceship, the Heart of Gold", "#environmentOtherInput");
     andIClickContinue();
 
     thenTheUrlShouldContain(PageURLs.landOtherActivity);
@@ -26,7 +26,7 @@ describe("As a beacon owner in an environment other than land, aviation or marit
 
     thenTheUrlShouldContain(PageURLs.landOtherCommunications);
     givenIHaveSelected("#portableVhfRadio");
-    andIType("235 762000", "#portableVhfRadioValue");
+    andIType("235 762000", "#portableVhfRadioInput");
     andIClickContinue();
 
     thenTheUrlShouldContain(PageURLs.moreDetails);
@@ -34,7 +34,7 @@ describe("As a beacon owner in an environment other than land, aviation or marit
 
     thenTheUrlShouldContain(PageURLs.landOtherCommunications);
     thenTheCheckboxShouldBeChecked("#portableVhfRadio");
-    thenTheInputShouldContain("235 762000", "#portableVhfRadioValue");
+    thenTheInputShouldContain("235 762000", "#portableVhfRadioInput");
     whenIClickBack();
 
     thenTheUrlShouldContain(PageURLs.landOtherActivity);

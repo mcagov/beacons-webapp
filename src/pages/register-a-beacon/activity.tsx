@@ -28,14 +28,14 @@ interface ActivityOptionsProps extends OptionsProps {
 
 const definePageForm = ({
   activity,
-  otherActivity,
+  otherActivityText,
 }: FormSubmission): FormManager => {
   return new FormManager({
     activity: new FieldManager(activity, [
       Validators.required("Activity is a required field"),
     ]),
-    otherActivity: new FieldManager(
-      otherActivity,
+    otherActivityText: new FieldManager(
+      otherActivityText,
       [Validators.required("Other activity text is a required field")],
       [
         {
@@ -160,11 +160,11 @@ const MaritimePleasureOptions: FunctionComponent<OptionsProps> = ({
         defaultChecked={form.fields.activity.value === Activity.OTHER}
         conditional={true}
       >
-        <FormGroup errorMessages={form.fields.otherActivity.errorMessages}>
+        <FormGroup errorMessages={form.fields.otherActivityText.errorMessages}>
           <Input
-            id="otherActivity"
+            id="otherActivityText"
             label="Please describe your use"
-            defaultValue={form.fields.otherActivity.value}
+            defaultValue={form.fields.otherActivityText.value}
           />
         </FormGroup>
       </RadioListItem>
@@ -248,11 +248,11 @@ const MaritimeCommercialOptions: FunctionComponent<OptionsProps> = ({
         defaultChecked={form.fields.activity.value === Activity.OTHER}
         conditional={true}
       >
-        <FormGroup errorMessages={form.fields.otherActivity.errorMessages}>
+        <FormGroup errorMessages={form.fields.otherActivityText.errorMessages}>
           <Input
-            id="otherActivity"
+            id="otherActivityText"
             label="Please describe your use"
-            defaultValue={form.fields.otherActivity.value}
+            defaultValue={form.fields.otherActivityText.value}
           />
         </FormGroup>
       </RadioListItem>
@@ -313,11 +313,11 @@ const AviationPleasureOptions: FunctionComponent<OptionsProps> = ({
         defaultChecked={form.fields.activity.value === Activity.OTHER}
         conditional={true}
       >
-        <FormGroup errorMessages={form.fields.otherActivity.errorMessages}>
+        <FormGroup errorMessages={form.fields.otherActivityText.errorMessages}>
           <Input
-            id="otherActivity"
+            id="otherActivityText"
             label="Please describe your use"
-            defaultValue={form.fields.otherActivity.value}
+            defaultValue={form.fields.otherActivityText.value}
           />
         </FormGroup>
       </RadioListItem>
@@ -386,11 +386,11 @@ const AviationCommercialOptions: FunctionComponent<OptionsProps> = ({
         defaultChecked={form.fields.activity.value === Activity.OTHER}
         conditional={true}
       >
-        <FormGroup errorMessages={form.fields.otherActivity.errorMessages}>
+        <FormGroup errorMessages={form.fields.otherActivityText.errorMessages}>
           <Input
-            id="otherActivity"
+            id="otherActivityText"
             label="Please describe your use"
-            defaultValue={form.fields.otherActivity.value}
+            defaultValue={form.fields.otherActivityText.value}
           />
         </FormGroup>
       </RadioListItem>

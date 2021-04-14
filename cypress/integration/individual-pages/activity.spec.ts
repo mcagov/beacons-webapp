@@ -49,6 +49,6 @@ describe("As a beacon owner, I want to submit the primary activity for my beacon
       "Other activity",
       requiredFieldErrorMessage
     );
-    thenMyFocusMovesTo("#otherActivity");
+    thenMyFocusMovesTo("#otherActivityText");
   });
 });
