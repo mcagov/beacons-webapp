@@ -167,15 +167,14 @@ export class Registration {
   }
 
   private _serialiseUse(use: BeaconUse) {
-    let serialisedUse = { ...use };
+    const serialisedUse = { ...use };
     const environment = serialisedUse.environment;
 
     switch (environment) {
-      case Environment.MARITIME:
-
       case Environment.LAND:
       case Environment.OTHER:
         delete serialisedUse.purpose;
+        break;
     }
 
     return serialisedUse;
