@@ -90,8 +90,8 @@ describe("LandOtherCommunications", () => {
       <LandOtherCommunications form={emptyLandOtherCommunicationsForm} />
     );
 
-    const mobilePhoneInput1 = container.querySelector("#mobileTelephoneInput1");
-    const mobilePhoneInput2 = container.querySelector("#mobileTelephoneInput2");
+    const mobilePhoneInput1 = container.querySelector("#mobileTelephone1");
+    const mobilePhoneInput2 = container.querySelector("#mobileTelephone2");
 
     expect(mobilePhoneInput1).toHaveAttribute("autocomplete", "tel");
     expect(mobilePhoneInput2).toHaveAttribute("autocomplete", "tel");
@@ -105,7 +105,7 @@ describe("LandOtherCommunications", () => {
     );
 
     const satelliteTelephoneNumberInput = container.querySelector(
-      "#satelliteTelephoneInput"
+      "#satelliteTelephoneValue"
     );
 
     expect(satelliteTelephoneNumberInput).not.toHaveAttribute("autocomplete");
