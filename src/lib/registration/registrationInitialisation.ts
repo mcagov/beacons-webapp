@@ -58,7 +58,7 @@ export const initBeaconUse = (mainUse = false): BeaconUse => {
   return {
     environment: "",
     environmentOtherInput: "",
-    purpose: null,
+    purpose: "",
     activity: "",
     otherActivityText: "",
     otherCommunication: "",

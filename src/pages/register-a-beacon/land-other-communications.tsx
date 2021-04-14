@@ -171,11 +171,7 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
       <CheckboxList conditional={true}>
         <CheckboxListItem
           id="portableVhfRadio"
-          value={Communication.PORTABLE_VHF_RADIO}
-          defaultChecked={
-            form.fields.portableVhfRadio.value ===
-            Communication.PORTABLE_VHF_RADIO
-          }
+          defaultChecked={form.fields.portableVhfRadio.value === "true"}
           label="Portable VHF/DSC Radio"
           conditional={true}
         >
@@ -192,11 +188,7 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
         </CheckboxListItem>
         <CheckboxListItem
           id="satelliteTelephone"
-          value={Communication.SATELLITE_TELEPHONE}
-          defaultChecked={
-            form.fields.satelliteTelephone.value ===
-            Communication.SATELLITE_TELEPHONE
-          }
+          defaultChecked={form.fields.satelliteTelephone.value === "true"}
           label="Satellite Telephone"
           conditional={true}
         >
@@ -213,10 +205,7 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
         </CheckboxListItem>
         <CheckboxListItem
           id="mobileTelephone"
-          value={Communication.MOBILE_TELEPHONE}
-          defaultChecked={
-            form.fields.mobileTelephone.value === Communication.MOBILE_TELEPHONE
-          }
+          defaultChecked={form.fields.mobileTelephone.value === "true"}
           label="Mobile Telephone(s)"
           conditional={true}
         >
@@ -241,10 +230,7 @@ const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
         </CheckboxListItem>
         <CheckboxListItem
           id="otherCommunication"
-          value={Communication.OTHER}
-          defaultChecked={
-            form.fields.otherCommunication.value === Communication.OTHER
-          }
+          defaultChecked={form.fields.otherCommunication.value === "true"}
           label="Other"
           conditional={true}
         >

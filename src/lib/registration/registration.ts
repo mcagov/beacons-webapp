@@ -1,4 +1,5 @@
 import { FormSubmission } from "../formCache";
+import { stringToBoolean } from "../utils";
 import { initBeacon, initBeaconUse } from "./registrationInitialisation";
 import { BeaconUse, Contact, IRegistration } from "./types";
 
@@ -85,6 +86,7 @@ export class Registration {
       model: registration.model,
       hexId: registration.hexId,
       referenceNumber: registration.referenceNumber,
+      beaconType: registration.beaconType,
 
       manufacturerSerialNumber: registration.manufacturerSerialNumber,
       chkCode: registration.chkCode,
@@ -169,17 +171,17 @@ export class Registration {
       activity: use.activity,
       otherActivity: use.activity,
       callSign: use.callSign,
-      vhfRadio: use.vhfRadio,
-      fixedVhfRadio: use.fixedVhfRadio,
+      vhfRadio: stringToBoolean(use.vhfRadio),
+      fixedVhfRadio: stringToBoolean(use.fixedVhfRadio),
       fixedVhfRadioValue: use.fixedVhfRadioInput,
-      portableVhfRadio: use.portableVhfRadio,
+      portableVhfRadio: stringToBoolean(use.portableVhfRadio),
       portableVhfRadioValue: use.portableVhfRadioInput,
-      satelliteTelephone: use.satelliteTelephone,
+      satelliteTelephone: stringToBoolean(use.satelliteTelephone),
       satelliteTelephoneValue: use.satelliteTelephoneInput,
-      mobileTelephone: use.mobileTelephone,
+      mobileTelephone: stringToBoolean(use.mobileTelephone),
       mobileTelephone1: use.mobileTelephoneInput1,
       mobileTelephone2: use.mobileTelephoneInput2,
-      otherCommunication: use.otherCommunication,
+      otherCommunication: stringToBoolean(use.otherCommunication),
       otherCommunicationValue: use.otherCommunicationInput,
       maxCapacity: use.maxCapacity,
       vesselName: use.vesselName,
@@ -198,7 +200,7 @@ export class Registration {
       registrationMark: use.registrationMark,
       hexAddress: use.hexAddress,
       cnOrMsnNumber: use.cnOrMsnNumber,
-      dongle: use.dongle,
+      dongle: stringToBoolean(use.dongle),
       beaconPosition: use.beaconPosition,
       workingRemotelyLocation: use.workingRemotelyLocation,
       workingRemotelyPeopleCount: use.workingRemotelyPeopleCount,

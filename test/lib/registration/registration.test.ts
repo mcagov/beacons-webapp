@@ -3,7 +3,7 @@ import {
   initBeacon,
   initBeaconUse,
 } from "../../../src/lib/registration/registrationInitialisation";
-import { Environment } from "../../../src/lib/registration/types";
+import { BeaconType, Environment } from "../../../src/lib/registration/types";
 
 describe("Registration", () => {
   let registration: Registration;
@@ -148,6 +148,7 @@ describe("Registration", () => {
       beacon = {
         model: "Trousers",
         hexId: "1D0",
+        beaconType: BeaconType.PLB,
         manufacturer: "ASOS",
         referenceNumber: "ADBEFD",
         manufacturerSerialNumber: "1234",
@@ -162,17 +163,17 @@ describe("Registration", () => {
         activity: "",
         otherActivity: "",
         callSign: "",
-        vhfRadio: "",
-        fixedVhfRadio: "",
+        vhfRadio: false,
+        fixedVhfRadio: false,
         fixedVhfRadioValue: "",
-        portableVhfRadio: "",
+        portableVhfRadio: false,
         portableVhfRadioValue: "",
-        satelliteTelephone: "",
+        satelliteTelephone: false,
         satelliteTelephoneValue: "",
-        mobileTelephone: "",
+        mobileTelephone: false,
         mobileTelephone1: "",
         mobileTelephone2: "",
-        otherCommunication: "",
+        otherCommunication: false,
         otherCommunicationValue: "",
         maxCapacity: "",
         vesselName: "",
@@ -191,7 +192,7 @@ describe("Registration", () => {
         registrationMark: "",
         hexAddress: "",
         cnOrMsnNumber: "",
-        dongle: "",
+        dongle: false,
         beaconPosition: "",
         workingRemotelyLocation: "",
         workingRemotelyPeopleCount: "",
