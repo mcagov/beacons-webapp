@@ -121,7 +121,7 @@ describe("VesselCommunications", () => {
     );
 
     const satelliteTelephoneNumberInput = container.querySelector(
-      "#satelliteTelephoneValue"
+      "#satelliteTelephoneInput"
     );
 
     expect(satelliteTelephoneNumberInput).not.toHaveAttribute("autocomplete");
