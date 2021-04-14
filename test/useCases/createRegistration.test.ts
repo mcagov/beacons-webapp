@@ -1,33 +1,30 @@
-import { initBeacon } from "../../src/lib/registration/registrationInitialisation";
-import { Environment } from "../../src/lib/registration/types";
 import { CreateRegistration } from "../../src/useCases/createRegistration";
 
 describe("Create Registration Use Case", () => {
   let gateway;
-  let formRegistration;
+  let registration;
+  let json;
   let useCase;
-  let registrationsEndpoint;
 
   beforeEach(() => {
-    registrationsEndpoint = "registrations/register";
-    formRegistration = initBeacon();
+    json = { model: "ASOS" };
     gateway = { post: jest.fn() };
+    registration = { serialiseToAPI: jest.fn().mockImplementation(() => json) };
     useCase = new CreateRegistration(gateway);
   });
 
-  it("should post the registration json via the api gateway with the correct url", async () => {
-    await useCase.execute(formRegistration);
-    expect(gateway.post).toHaveBeenCalledWith(
-      registrationsEndpoint,
-      expect.anything()
-    );
+  it("should post the registration json via the api gateway", async () => {
+    await useCase.execute(registration);
+
+    expect(gateway.post).toHaveBeenCalledWith("registrations/register", json);
   });
 
   it("should return true if the request is successful", async () => {
     gateway.post.mockImplementation(() => {
       return false;
     });
-    const expected = await useCase.execute(formRegistration);
+    const expected = await useCase.execute(registration);
+
     expect(expected).toBe(false);
   });
 
@@ -35,112 +32,8 @@ describe("Create Registration Use Case", () => {
     gateway.post.mockImplementation(() => {
       return true;
     });
-    const expected = await useCase.execute(formRegistration);
+    const expected = await useCase.execute(registration);
+
     expect(expected).toBe(true);
-  });
-
-  describe("when serialising the registration json", () => {
-    let expectedJson;
-    let beaconInformation;
-    let uses;
-    let emergencyContacts;
-    let owner;
-
-    beforeEach(() => {
-      beaconInformation = {
-        hexId: "",
-        manufacturer: "",
-        model: "",
-        referenceNumber: "",
-        manufacturerSerialNumber: "",
-        chkCode: "",
-        batteryExpiryDate: "",
-        lastServicedDate: "",
-      };
-      uses = [
-        {
-          environment: "",
-          activity: "",
-          otherEnvironment: "",
-          otherActivity: "",
-          mainUse: true,
-          moreDetails: "",
-        },
-      ];
-      emergencyContacts = [];
-      owner = {
-        fullName: "",
-        email: "",
-        telephoneNumber: "",
-        alternativeTelephoneNumber: "",
-        addressLine1: "",
-        addressLine2: "",
-        townOrCity: "",
-        county: "",
-        postcode: "",
-      };
-
-      expectedJson = {
-        ...beaconInformation,
-        uses,
-        emergencyContacts,
-        owner,
-      };
-    });
-
-    const assertRegistrationSerialisedCorrectly = async () => {
-      await useCase.execute(formRegistration);
-      expect(gateway.post).toHaveBeenLastCalledWith(registrationsEndpoint, {
-        beacons: [expectedJson],
-      });
-    };
-
-    it("should capture the top-level beacon information", async () => {
-      await assertRegistrationSerialisedCorrectly();
-    });
-
-    describe("when serialing emergency contact information", () => {
-      let emergencyContact;
-
-      beforeEach(() => {
-        emergencyContact = {
-          fullName: "Martha",
-          telephoneNumber: "07713567974",
-          alternativeTelephoneNumber: "07713567974",
-        };
-      });
-
-      it("should add the three emergency contacts", async () => {
-        emergencyContacts.push(emergencyContact);
-        emergencyContacts.push(emergencyContact);
-        emergencyContacts.push(emergencyContact);
-
-        formRegistration.emergencyContact1FullName = emergencyContact.fullName;
-        formRegistration.emergencyContact1TelephoneNumber =
-          emergencyContact.telephoneNumber;
-        formRegistration.emergencyContact1AlternativeTelephoneNumber =
-          emergencyContact.alternativeTelephoneNumber;
-
-        formRegistration.emergencyContact2FullName = emergencyContact.fullName;
-        formRegistration.emergencyContact2TelephoneNumber =
-          emergencyContact.telephoneNumber;
-        formRegistration.emergencyContact2AlternativeTelephoneNumber =
-          emergencyContact.alternativeTelephoneNumber;
-
-        formRegistration.emergencyContact3FullName = emergencyContact.fullName;
-        formRegistration.emergencyContact3TelephoneNumber =
-          emergencyContact.telephoneNumber;
-        formRegistration.emergencyContact3AlternativeTelephoneNumber =
-          emergencyContact.alternativeTelephoneNumber;
-
-        await assertRegistrationSerialisedCorrectly();
-      });
-    });
-
-    it("should capture the use information for a maritime -> pleasure user", async () => {
-      formRegistration.uses[0].environment = Environment.MARITIME;
-      uses[0].purpose = "";
-      await useCase.execute(formRegistration);
-    });
   });
 });
