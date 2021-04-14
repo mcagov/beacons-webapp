@@ -1,11 +1,6 @@
 import { FormSubmission } from "../formCache";
 import { initBeacon, initBeaconUse } from "./registrationInitialisation";
-import {
-  BeaconUse,
-  Environment,
-  IRegistration,
-  SerializedRegistration,
-} from "./types";
+import { BeaconUse, Contact, IRegistration } from "./types";
 
 type Indexes = {
   useIndex: number;
@@ -71,7 +66,7 @@ export class Registration {
     return Math.min(useIndex, beaconUseLength);
   }
 
-  public serialiseToAPI(): SerializedRegistration {
+  public serialiseToAPI() {
     const beacon = this._serialiseBeacon();
     const owner = this._serialiseOwner();
     const emergencyContacts = this._serialiseEmergencyContacts();
@@ -114,7 +109,7 @@ export class Registration {
     };
   }
 
-  private _serialiseEmergencyContacts() {
+  private _serialiseEmergencyContacts(): Contact[] {
     const registration = this.registration;
     const emergencyContacts = [];
 
@@ -167,16 +162,51 @@ export class Registration {
   }
 
   private _serialiseUse(use: BeaconUse) {
-    const serialisedUse = { ...use };
-    const environment = serialisedUse.environment;
-
-    switch (environment) {
-      case Environment.LAND:
-      case Environment.OTHER:
-        delete serialisedUse.purpose;
-        break;
-    }
-
-    return serialisedUse;
+    return {
+      environment: use.environment,
+      purpose: use.purpose ? use.purpose : null,
+      otherEnvironment: use.environmentOtherInput,
+      activity: use.activity,
+      otherActivity: use.activity,
+      callSign: use.callSign,
+      vhfRadio: use.vhfRadio,
+      fixedVhfRadio: use.fixedVhfRadio,
+      fixedVhfRadioValue: use.fixedVhfRadioInput,
+      portableVhfRadio: use.portableVhfRadio,
+      portableVhfRadioValue: use.portableVhfRadioInput,
+      satelliteTelephone: use.satelliteTelephone,
+      satelliteTelephoneValue: use.satelliteTelephoneInput,
+      mobileTelephone: use.mobileTelephone,
+      mobileTelephone1: use.mobileTelephoneInput1,
+      mobileTelephone2: use.mobileTelephoneInput2,
+      otherCommunication: use.otherCommunication,
+      otherCommunicationValue: use.otherCommunicationInput,
+      maxCapacity: use.maxCapacity,
+      vesselName: use.vesselName,
+      portLetterNumber: use.portLetterNumber,
+      homeport: use.homeport,
+      areaOfOperation: use.areaOfOperation,
+      beaconLocation: use.beaconLocation,
+      imoNumber: use.imoNumber,
+      ssrNumber: use.ssrNumber,
+      officialNumber: use.officialNumber,
+      rigPlatformLocation: use.rigPlatformLocation,
+      mainUse: use.mainUse,
+      aircraftManufacturer: use.aircraftManufacturer,
+      principalAirport: use.principalAirport,
+      secondaryAirport: use.secondaryAirport,
+      registrationMark: use.registrationMark,
+      hexAddress: use.hexAddress,
+      cnOrMsnNumber: use.cnOrMsnNumber,
+      dongle: use.dongle,
+      beaconPosition: use.beaconPosition,
+      workingRemotelyLocation: use.workingRemotelyLocation,
+      workingRemotelyPeopleCount: use.workingRemotelyPeopleCount,
+      windfarmLocation: use.windfarmLocation,
+      windfarmPeopleCount: use.windfarmPeopleCount,
+      otherActivityLocation: use.otherActivityLocation,
+      otherActivityPeopleCount: use.otherActivityPeopleCount,
+      moreDetails: use.moreDetails,
+    };
   }
 }

@@ -141,6 +141,7 @@ describe("Registration", () => {
 
   describe("serialising the registration for the API", () => {
     let beacon;
+    let use;
     let owner;
 
     beforeEach(() => {
@@ -153,6 +154,52 @@ describe("Registration", () => {
         chkCode: "check",
         batteryExpiryDate: "2020-02-01",
         lastServicedDate: "2020-02-01",
+      };
+      use = {
+        environment: "",
+        otherEnvironment: "",
+        purpose: null,
+        activity: "",
+        otherActivity: "",
+        callSign: "",
+        vhfRadio: "",
+        fixedVhfRadio: "",
+        fixedVhfRadioValue: "",
+        portableVhfRadio: "",
+        portableVhfRadioValue: "",
+        satelliteTelephone: "",
+        satelliteTelephoneValue: "",
+        mobileTelephone: "",
+        mobileTelephone1: "",
+        mobileTelephone2: "",
+        otherCommunication: "",
+        otherCommunicationValue: "",
+        maxCapacity: "",
+        vesselName: "",
+        portLetterNumber: "",
+        homeport: "",
+        areaOfOperation: "",
+        beaconLocation: "",
+        imoNumber: "",
+        ssrNumber: "",
+        officialNumber: "",
+        rigPlatformLocation: "",
+        mainUse: true,
+        aircraftManufacturer: "",
+        principalAirport: "",
+        secondaryAirport: "",
+        registrationMark: "",
+        hexAddress: "",
+        cnOrMsnNumber: "",
+        dongle: "",
+        beaconPosition: "",
+        workingRemotelyLocation: "",
+        workingRemotelyPeopleCount: "",
+        windfarmLocation: "",
+        windfarmPeopleCount: "",
+        otherActivityLocation: "",
+        otherActivityPeopleCount: "",
+        moreDetails: "",
       };
 
       owner = {
@@ -177,6 +224,11 @@ describe("Registration", () => {
       expect(json).toMatchObject(expected);
       expect(json.beacons[0].uses.length).toBe(1);
       expect(json.beacons[0].emergencyContacts.length).toBe(0);
+    });
+
+    it("should serialise the use", () => {
+      const json = registration.serialiseToAPI();
+      expect(json.beacons[0].uses[0]).toStrictEqual(use);
     });
 
     it("should serialise multiple uses", () => {
