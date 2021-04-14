@@ -177,5 +177,7 @@ export class Registration {
       case Environment.OTHER:
         delete serialisedUse.purpose;
     }
+
+    return serialisedUse;
   }
 }

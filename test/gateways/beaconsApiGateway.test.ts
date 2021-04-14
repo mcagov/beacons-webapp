@@ -26,7 +26,7 @@ describe("Beacons API Gateway", () => {
     });
 
     it("should return true if it posted the entity successfuly", async () => {
-      const expected = await gateway.post(url, json);
+      const expected = await gateway.sendRegistration(json);
       expect(expected).toBe(true);
     });
 
@@ -34,13 +34,13 @@ describe("Beacons API Gateway", () => {
       (axios as any).post.mockImplementation(() => {
         throw new Error();
       });
-      const expected = await gateway.post(url, json);
+      const expected = await gateway.sendRegistration(json);
       expect(expected).toBe(false);
     });
 
     it("should send the JSON to the correct url", async () => {
       const expectedUrl = `${apiUrl}/${url}`;
-      await gateway.post(url, json);
+      await gateway.sendRegistration(json);
       expect((axios as any).post).toHaveBeenLastCalledWith(expectedUrl, json);
     });
   });

@@ -8,7 +8,7 @@ describe("Create Registration Use Case", () => {
 
   beforeEach(() => {
     json = { model: "ASOS" };
-    gateway = { post: jest.fn() };
+    gateway = { sendRegistration: jest.fn() };
     registration = { serialiseToAPI: jest.fn().mockImplementation(() => json) };
     useCase = new CreateRegistration(gateway);
   });
@@ -16,11 +16,11 @@ describe("Create Registration Use Case", () => {
   it("should post the registration json via the api gateway", async () => {
     await useCase.execute(registration);
 
-    expect(gateway.post).toHaveBeenCalledWith("registrations/register", json);
+    expect(gateway.sendRegistration).toHaveBeenCalledWith(json);
   });
 
   it("should return true if the request is successful", async () => {
-    gateway.post.mockImplementation(() => {
+    gateway.sendRegistration.mockImplementation(() => {
       return false;
     });
     const expected = await useCase.execute(registration);
@@ -29,7 +29,7 @@ describe("Create Registration Use Case", () => {
   });
 
   it("should return false if the request is unsuccessful", async () => {
-    gateway.post.mockImplementation(() => {
+    gateway.sendRegistration.mockImplementation(() => {
       return true;
     });
     const expected = await useCase.execute(registration);
