@@ -1,28 +1,30 @@
+import { initBeacon } from "../../src/lib/registration/registrationInitialisation";
 import { CreateRegistration } from "../../src/useCases/createRegistration";
 
 describe("Create Registration Use Case", () => {
   let gateway;
-  let registration;
-  let json;
+  let formRegistration;
   let useCase;
 
   beforeEach(() => {
-    json = { model: "ASOS" };
+    formRegistration = initBeacon();
     gateway = { post: jest.fn() };
-    registration = { serialiseToAPI: jest.fn().mockImplementation(() => json) };
     useCase = new CreateRegistration(gateway);
   });
 
-  it("should post the registration json via the api gateway", async () => {
-    await useCase.execute(registration);
-    expect(gateway.post).toHaveBeenCalledWith("registrations/register", json);
+  it("should post the registration json via the api gateway with the correct url", async () => {
+    await useCase.execute(formRegistration);
+    expect(gateway.post).toHaveBeenCalledWith(
+      "registrations/register",
+      expect.anything()
+    );
   });
 
   it("should return true if the request is successful", async () => {
     gateway.post.mockImplementation(() => {
       return false;
     });
-    const expected = await useCase.execute(registration);
+    const expected = await useCase.execute(formRegistration);
     expect(expected).toBe(false);
   });
 
@@ -30,7 +32,7 @@ describe("Create Registration Use Case", () => {
     gateway.post.mockImplementation(() => {
       return true;
     });
-    const expected = await useCase.execute(registration);
+    const expected = await useCase.execute(formRegistration);
     expect(expected).toBe(true);
   });
 });

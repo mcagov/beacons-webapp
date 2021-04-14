@@ -8,12 +8,12 @@ describe("Beacons API Gateway", () => {
   const apiUrl = "http://localhost:8080/spring-api";
 
   beforeEach(() => {
-    process.env.BEACONS_API_URL = apiUrl;
+    process.env.API_URL = apiUrl;
     gateway = new BeaconsApiGateway();
   });
 
   afterEach(() => {
-    process.env.BEACONS_API_URL = undefined;
+    process.env.API_URL = undefined;
   });
 
   describe("Posting an entity", () => {

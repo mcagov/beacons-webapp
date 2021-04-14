@@ -1,5 +1,7 @@
 import { BeaconsApiGateway } from "../gateways/beaconsApiGateway";
 import {
+  BeaconUse,
+  Environment,
   IRegistration,
   SerializedRegistration,
 } from "../lib/registration/types";
@@ -19,9 +21,9 @@ export class CreateRegistration {
   }
 
   public serialiseToAPI(registration: IRegistration): SerializedRegistration {
-    const beacon = this._serialiseBeacon(registration);
-    const owner = this._serialiseOwner(registration);
-    const emergencyContacts = this._serialiseEmergencyContacts(registration);
+    const beacon = this.serialiseBeacon(registration);
+    const owner = this.serialiseOwner(registration);
+    const emergencyContacts = this.serialiseEmergencyContacts(registration);
     const uses = registration.uses;
 
     return {
@@ -29,7 +31,7 @@ export class CreateRegistration {
     };
   }
 
-  private _serialiseBeacon(registration: IRegistration) {
+  private serialiseBeacon(registration: IRegistration) {
     return {
       manufacturer: registration.manufacturer,
       model: registration.model,
@@ -42,7 +44,7 @@ export class CreateRegistration {
     };
   }
 
-  private _serialiseOwner(registration: IRegistration) {
+  private serialiseOwner(registration: IRegistration) {
     return {
       fullName: registration.ownerFullName,
       email: registration.ownerEmail,
@@ -56,7 +58,7 @@ export class CreateRegistration {
     };
   }
 
-  private _serialiseEmergencyContacts(registration: IRegistration) {
+  private serialiseEmergencyContacts(registration: IRegistration) {
     const emergencyContacts = [];
 
     if (
@@ -99,5 +101,27 @@ export class CreateRegistration {
     }
 
     return emergencyContacts;
+  }
+
+  private serialiseUses(uses: BeaconUse[]) {
+    return uses.map((use: BeaconUse) => this.serialiseUse(use));
+  }
+
+  private serialiseUse(use: BeaconUse) {
+    let serialisedUse;
+
+    serialisedUse = {
+      environment: use.environment,
+      purpose: use.purpose,
+      activity: use.activity,
+      otherEnvironment: use.otherEnvironment,
+      otherActivity: use.otherActivity,
+    };
+
+    switch (use.environment) {
+      case Environment.MARITIME:
+    }
+
+    return use;
   }
 }

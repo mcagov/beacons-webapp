@@ -3,7 +3,7 @@ import axios from "axios";
 export class BeaconsApiGateway {
   private apiUrl: string;
   constructor() {
-    this.apiUrl = process.env.BEACONS_API_URL;
+    this.apiUrl = process.env.API_URL;
   }
 
   public async post(endpoint: string, json: any): Promise<boolean> {
