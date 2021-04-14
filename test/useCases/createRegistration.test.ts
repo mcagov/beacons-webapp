@@ -1,4 +1,5 @@
 import { initBeacon } from "../../src/lib/registration/registrationInitialisation";
+import { Environment } from "../../src/lib/registration/types";
 import { CreateRegistration } from "../../src/useCases/createRegistration";
 
 describe("Create Registration Use Case", () => {
@@ -34,5 +35,11 @@ describe("Create Registration Use Case", () => {
     });
     const expected = await useCase.execute(formRegistration);
     expect(expected).toBe(true);
+  });
+
+  xdescribe("when serialising the registration json", () => {
+    it("should capture the use information for a maritime -> pleasure user", async () => {
+      formRegistration.uses[0].environment = Environment.MARITIME;
+    });
   });
 });

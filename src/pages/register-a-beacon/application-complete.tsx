@@ -76,8 +76,7 @@ const ApplicationCompleteWhatNext: FunctionComponent = (): JSX.Element => (
 export const getServerSideProps: GetServerSideProps = withCookieRedirect(
   async (context: GetServerSidePropsContext) => {
     const decoratedContext = await decorateGetServerSidePropsContext(context);
-    const registrationClass = decoratedContext.registration;
-    const registration = registrationClass.registration;
+    const registration = decoratedContext.registration.registration;
 
     let pageSubHeading = "We have sent you a confirmation email - ";
 
@@ -87,9 +86,7 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
       const createRegistrationUseCase = new CreateRegistration(
         beaconsApiGateway
       );
-      const success = await createRegistrationUseCase.execute(
-        registrationClass
-      );
+      const success = await createRegistrationUseCase.execute(registration);
 
       if (success) {
         const govNotifyGateway = new GovNotifyGateway();
