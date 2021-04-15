@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { Grid } from "../../components/Grid";
 import { Layout } from "../../components/Layout";
 import { Panel } from "../../components/Panel";
-import { GovUKBody } from "../../components/Typography";
+import { GovUKBody, SectionHeading } from "../../components/Typography";
 import { WarningText } from "../../components/WarningText";
 import { BeaconsApiGateway } from "../../gateways/beaconsApiGateway";
 import { GovNotifyGateway } from "../../gateways/govNotifyApiGateway";
@@ -61,7 +61,7 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
 
 const ApplicationCompleteWhatNext: FunctionComponent = (): JSX.Element => (
   <>
-    <h2 className="govuk-heading-m">What happens next</h2>
+    <SectionHeading>What happens next</SectionHeading>
     <GovUKBody>
       We&apos;ve sent your application to register a UK encoded 406MHz beacon to
       The Maritime and Coastguard Beacon Registry office.
@@ -87,6 +87,7 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
       const createRegistrationUseCase = new CreateRegistration(
         beaconsApiGateway
       );
+      console.log(createRegistrationUseCase);
       const success = await createRegistrationUseCase.execute(
         registrationClass
       );
