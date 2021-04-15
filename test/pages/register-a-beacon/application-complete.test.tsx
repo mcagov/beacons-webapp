@@ -69,7 +69,7 @@ describe("ApplicationCompletePage", () => {
       expect(mockSendGovNotifyExecute).toHaveBeenCalled();
     });
 
-    it("should create the registration, and return the registration number if the email cannot be sent", async () => {
+    it("should create the registration, and return the reference number if the email cannot be sent", async () => {
       mockCreateRegistrationExecute.mockImplementation(() =>
         Promise.resolve(true)
       );
