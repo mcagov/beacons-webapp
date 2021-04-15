@@ -8,7 +8,7 @@ export class SendGovNotifyEmail {
     this.gateway = GovNotifyApiGateway;
   }
 
-  public execute(registration: IRegistration): boolean {
+  public async execute(registration: IRegistration): Promise<boolean> {
     const templateId = process.env.GOV_NOTIFY_CUSTOMER_EMAIL_TEMPLATE;
 
     if (templateId) {

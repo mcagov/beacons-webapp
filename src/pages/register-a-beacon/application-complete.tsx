@@ -79,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
     const registrationClass = decoratedContext.registration;
     const registration = decoratedContext.registration.registration;
 
-    let pageSubHeading = "We have sent you a confirmation email - ";
+    let pageSubHeading;
 
     if (!registration.referenceNumber) {
       registration.referenceNumber = referenceNumber("A#", 7);
