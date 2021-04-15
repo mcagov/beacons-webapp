@@ -3,8 +3,6 @@ import React from "react";
 import ApplicationCompletePage, {
   getServerSideProps,
 } from "../../../src/pages/register-a-beacon/application-complete";
-import { CreateRegistration } from "../../../src/useCases/createRegistration";
-import { SendGovNotifyEmail } from "../../../src/useCases/sendGovNotifyEmail";
 
 jest.mock("../../../src/lib/middleware", () => ({
   _esModule: true,
@@ -23,8 +21,19 @@ jest.mock("../../../src/lib/middleware", () => ({
 }));
 jest.mock("../../../src/gateways/beaconsApiGateway");
 jest.mock("../../../src/gateways/govNotifyApiGateway");
-jest.mock("../../../src/useCases/sendGovNotifyEmail");
-jest.mock("../../../src/useCases/createRegistration");
+
+const mockSendGovNotifyExecute = jest.fn();
+jest.mock("../../../src/useCases/sendGovNotifyEmail", () => ({
+  SendGovNotifyEmail: jest.fn().mockImplementation(() => ({
+    execute: mockSendGovNotifyExecute,
+  })),
+}));
+const mockCreateRegistrationExecute = jest.fn();
+jest.mock("../../../src/useCases/createRegistration", () => ({
+  CreateRegistration: jest.fn().mockImplementation(() => ({
+    execute: mockCreateRegistrationExecute,
+  })),
+}));
 
 describe("ApplicationCompletePage", () => {
   it("should render correctly", () => {
@@ -35,21 +44,41 @@ describe("ApplicationCompletePage", () => {
     let context;
 
     beforeEach(() => {
-      (CreateRegistration as any).execute.mockImplementation(() => true);
-      (SendGovNotifyEmail as any).execute.mockImplementation(() => true);
       context = {};
     });
 
     it("should not have a refernece number if creating the registration is unsuccessful", async () => {
-      const props = await getServerSideProps(context);
+      mockCreateRegistrationExecute.mockImplementation(() =>
+        Promise.resolve(false)
+      );
+      const result = await getServerSideProps(context);
 
-      expect(props.reference).toBeUndefined();
+      expect(result.props.reference).toBeUndefined();
+      expect(mockSendGovNotifyExecute).not.toHaveBeenCalled();
     });
 
     it("should create the registration, send the email via gov notify and return the reference number", async () => {
-      const props = await getServerSideProps(context);
+      mockCreateRegistrationExecute.mockImplementation(() =>
+        Promise.resolve(true)
+      );
+      mockSendGovNotifyExecute.mockImplementation(() => Promise.resolve(true));
+      const result = await getServerSideProps(context);
 
-      expect(props.reference.length).toBe(7);
+      expect(result.props.reference.length).toBe(7);
+      expect(mockCreateRegistrationExecute).toHaveBeenCalled();
+      expect(mockSendGovNotifyExecute).toHaveBeenCalled();
+    });
+
+    it("should create the registration, and return the registration number if the email cannot be sent", async () => {
+      mockCreateRegistrationExecute.mockImplementation(() =>
+        Promise.resolve(true)
+      );
+      mockSendGovNotifyExecute.mockImplementation(() => Promise.resolve(false));
+      const result = await getServerSideProps(context);
+
+      expect(result.props.reference.length).toBe(7);
+      expect(mockCreateRegistrationExecute).toHaveBeenCalled();
+      expect(mockSendGovNotifyExecute).toHaveBeenCalled();
     });
   });
 });

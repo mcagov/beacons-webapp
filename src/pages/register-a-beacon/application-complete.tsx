@@ -87,7 +87,6 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
       const createRegistrationUseCase = new CreateRegistration(
         beaconsApiGateway
       );
-      console.log(createRegistrationUseCase);
       const success = await createRegistrationUseCase.execute(
         registrationClass
       );
