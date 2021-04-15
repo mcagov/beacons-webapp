@@ -10,6 +10,7 @@ describe("Gov Notify API Gateway", () => {
   let personalisation;
 
   beforeEach(() => {
+    NotifyClient.mockClear();
     gateway = new GovNotifyGateway();
     emailTemplateId = "template-id";
     email = "Hello Beacon Person!";
