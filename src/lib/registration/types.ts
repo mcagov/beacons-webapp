@@ -103,37 +103,6 @@ export interface BeaconUse {
   mainUse: boolean;
 }
 
-export interface SerializedRegistration {
-  beacons: Beacon[];
-}
-
-export interface Beacon {
-  manufacturer: string;
-  model: string;
-  hexId: string;
-  referenceNumber: string;
-  manufacturerSerialNumber: string;
-  chkCode: string;
-  batteryExpiryDate: string;
-  lastServicedDate: string;
-
-  uses: BeaconUse[];
-  owner: Contact;
-  emergencyContacts: Contact[];
-}
-
-export interface Contact {
-  fullName: string;
-  telephoneNumber: string;
-  alternativeTelephoneNumber: string;
-  email: string;
-  addressLine1: string;
-  addressLine2: string;
-  townOrCity: string;
-  county: string;
-  postcode: string;
-}
-
 export enum BeaconType {
   PLB = "PLB",
   EPIRB = "EPIRB",
