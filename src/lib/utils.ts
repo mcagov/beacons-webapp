@@ -20,6 +20,20 @@ export function toUpperCase(value: string): string {
 }
 
 /**
+ * Convenience function for making an enum value, that could be nullish, user friendly i.e. underscores removed and sentence-cased.
+ *
+ * @param value {string}   The string value; could be null
+ * @returns     {string}   The string value made user friendly
+ */
+export function makeEnumValueUserFriendly(value: string): string {
+  if (value) {
+    value = value.replace(/_/g, " ");
+    return sentenceCase(value);
+  }
+  return value;
+}
+
+/**
  * Given the provided string is a number, pads the value with zeros until it reaches the target length.
  *
  * @param value        {string}   The number as a string
@@ -58,6 +72,10 @@ export function joinStrings(strings: Array<string>): string {
   return output.join(", ");
 }
 
+export function sentenceCase(string: string): string {
+  return string[0].toUpperCase() + string.slice(1).toLowerCase();
+}
+
 export function formatUrlQueryParams(
   url: string,
   queryParamMap: Record<string, any>
@@ -79,6 +97,18 @@ export function formatUrlQueryParams(
 
 export function stringToBoolean(value: string): boolean {
   return value ? value.toLocaleLowerCase() === "true" : false;
+}
+
+export function useRankString(number: number): string {
+  const map = {
+    1: "main",
+    2: "second",
+    3: "third",
+    4: "fourth",
+    5: "fifth",
+  };
+
+  return map[number];
 }
 
 export type Callback<T> = (t: T) => void;

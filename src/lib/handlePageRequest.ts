@@ -3,6 +3,8 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from "next";
+import { BasicAuthGateway } from "../gateways/basicAuthGateway";
+import { AuthenticateUser } from "../useCases/authenticateUser";
 import { FormJSON, FormManager } from "./form/formManager";
 import { FormSubmission } from "./formCache";
 import {
@@ -12,6 +14,7 @@ import {
   withCookieRedirect,
 } from "./middleware";
 import { Registration } from "./registration/registration";
+import { IRegistration } from "./registration/types";
 import { formatUrlQueryParams } from "./utils";
 
 type TransformCallback = (formData: FormSubmission) => FormSubmission;
@@ -23,7 +26,9 @@ export type FormManagerFactory = (formData: FormSubmission) => FormManager;
 export interface FormPageProps {
   form: FormJSON;
   showCookieBanner?: boolean;
+  registration?: IRegistration;
   flattenedRegistration?: FormSubmission;
+  useIndex?: number;
 }
 
 export const handlePageRequest = (
@@ -34,6 +39,10 @@ export const handlePageRequest = (
     destinationIfValid
 ): GetServerSideProps =>
   withCookieRedirect(async (context: GetServerSidePropsContext) => {
+    const authGateway = new BasicAuthGateway();
+    const authUseCase = new AuthenticateUser(authGateway);
+    await authUseCase.execute(context);
+
     const beaconsContext: BeaconsContext = await decorateGetServerSidePropsContext(
       context
     );
@@ -56,6 +65,7 @@ const handleGetRequest = (
   formManagerFactory: FormManagerFactory
 ): GetServerSidePropsResult<FormPageProps> => {
   const registration: Registration = context.registration;
+
   const flattenedRegistration = registration.getFlattenedRegistration({
     useIndex: context.useIndex,
   });
@@ -65,7 +75,9 @@ const handleGetRequest = (
     props: {
       form: formManager.serialise(),
       showCookieBanner: context.showCookieBanner,
+      registration: registration.getRegistration(),
       flattenedRegistration,
+      useIndex: context.useIndex,
     },
   };
 };
@@ -76,6 +88,7 @@ const handlePostRequest = async (
   transformCallback: TransformCallback = (formData) => formData,
   onSuccessfulFormPostCallback
 ): Promise<GetServerSidePropsResult<FormPageProps>> => {
+  const registration: Registration = context.registration;
   const transformedFormData = transformCallback(context.formData);
   updateFormCache(context.submissionId, transformedFormData);
 
@@ -104,6 +117,7 @@ const handlePostRequest = async (
     props: {
       form: formManager.serialise(),
       showCookieBanner: context.showCookieBanner,
+      registration: registration.getRegistration(),
       flattenedRegistration,
     },
   };

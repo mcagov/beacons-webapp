@@ -34,8 +34,6 @@ export interface IRegistration {
   emergencyContact3TelephoneNumber: string;
   emergencyContact3AlternativeTelephoneNumber: string;
 
-  additionalBeaconUse: string;
-
   uses: BeaconUse[];
 }
 
@@ -101,6 +99,7 @@ export interface BeaconUse {
   // Generic more details on use of beacon
   moreDetails: string;
   mainUse: boolean;
+  additionalBeaconUse: string;
 }
 
 export enum BeaconType {
@@ -152,4 +151,9 @@ export enum Activity {
   WINDFARM = "WINDFARM",
 
   OTHER = "OTHER",
+}
+
+export enum AdditionalUses {
+  YES = "true",
+  NO = "false",
 }

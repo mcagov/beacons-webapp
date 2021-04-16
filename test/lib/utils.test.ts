@@ -1,5 +1,6 @@
 import {
   formatUrlQueryParams,
+  makeEnumValueUserFriendly,
   padNumberWithLeadingZeros,
   stringToBoolean,
   toArray,
@@ -56,7 +57,21 @@ describe("to upper case function", () => {
   });
 });
 
-describe("padding function", () => {
+describe("make enum value user friendly function", () => {
+  it("should return the value unchanged if the value is null", () => {
+    expect(makeEnumValueUserFriendly(null)).toBe(null);
+  });
+
+  it("should return the value sentence-cased", () => {
+    expect(makeEnumValueUserFriendly("UPPERCASE")).toBe("Uppercase");
+  });
+
+  it("should replace underscores with spaces and return the value sentence-cased", () => {
+    expect(makeEnumValueUserFriendly("UPPER_CASE")).toBe("Upper case");
+  });
+});
+
+describe("pad number with leading zeros function", () => {
   it("should not pad an empty string", () => {
     expect(padNumberWithLeadingZeros("")).toBe("");
   });

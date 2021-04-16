@@ -56,7 +56,7 @@ const ActivityPage: FunctionComponent<FormPageProps> = ({
   const purpose = flattenedRegistration.purpose;
 
   const pageHeading = `Please select the ${purpose.toLowerCase()} ${environment.toLowerCase()} activity that best describes how the beacon will be used`;
-  const insetText = (
+  const pageText = (
     <>
       <GovUKBody>
         This information will help us plan any Search and Rescue response that
@@ -75,7 +75,7 @@ const ActivityPage: FunctionComponent<FormPageProps> = ({
       showCookieBanner={showCookieBanner}
       formErrors={form.errorSummary}
       errorMessages={form.fields.activity.errorMessages}
-      insetText={insetText}
+      pageText={pageText}
     >
       <RadioList conditional={true}>
         <ActivityOptions
@@ -109,7 +109,7 @@ export const ActivityOptions: FunctionComponent<ActivityOptionsProps> = ({
     );
 
   throw new Error(
-    "Environment or purpose not found.  User needs to enter evironment and purpose on previous pages."
+    "Environment or purpose not found.  User needs to enter environment and purpose on previous pages."
   );
 };
 

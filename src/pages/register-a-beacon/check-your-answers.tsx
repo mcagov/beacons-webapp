@@ -19,6 +19,11 @@ import {
   Environment,
   IRegistration,
 } from "../../lib/registration/types";
+import {
+  makeEnumValueUserFriendly,
+  sentenceCase,
+  useRankString,
+} from "../../lib/utils";
 
 interface CheckYourAnswersProps {
   registration: IRegistration;
@@ -161,7 +166,7 @@ const BeaconUseSection: FunctionComponent<CheckYourAnswersBeaconUseSectionProps>
   index,
   use,
 }: CheckYourAnswersBeaconUseSectionProps): JSX.Element => {
-  const href = `/register-a-beacon/envionment?useIndex=${index}"`;
+  const href = `/register-a-beacon/beacon-use?useIndex=${index}`;
   let aboutTheSection = <></>;
   let commsSection = <></>;
   switch (use.environment) {
@@ -206,13 +211,21 @@ const BeaconUseSection: FunctionComponent<CheckYourAnswersBeaconUseSectionProps>
   }
   return (
     <>
-      <SectionHeading>Use {index + 1} for the beacon </SectionHeading>
+      <SectionHeading>
+        {sentenceCase(useRankString(index + 1))} use for the beacon
+      </SectionHeading>
 
       <SummaryList>
         <SummaryListItem labelText="Beacon use" href={href} actionText="Change">
-          <CheckYourAnswersDataRowItem value={use.environment} />
-          <CheckYourAnswersDataRowItem value={use.purpose} />
-          <CheckYourAnswersDataRowItem value={use.activity} />
+          <CheckYourAnswersDataRowItem
+            value={makeEnumValueUserFriendly(use.environment)}
+          />
+          <CheckYourAnswersDataRowItem
+            value={makeEnumValueUserFriendly(use.purpose)}
+          />
+          <CheckYourAnswersDataRowItem
+            value={makeEnumValueUserFriendly(use.activity)}
+          />
         </SummaryListItem>
       </SummaryList>
       {aboutTheSection}
@@ -226,7 +239,7 @@ const AboutTheVesselSubSection: FunctionComponent<CheckYourAnswersBeaconUseSecti
   index,
   use,
 }: CheckYourAnswersBeaconUseSectionProps): JSX.Element => {
-  const href = `/register-a-beacon/about-the-vessel?useIndex=${index}"`;
+  const href = `/register-a-beacon/about-the-vessel?useIndex=${index}`;
   return (
     <>
       <SummaryList>
@@ -300,7 +313,7 @@ const AboutTheAircraftSubSection: FunctionComponent<CheckYourAnswersBeaconUseSec
   index,
   use,
 }: CheckYourAnswersBeaconUseSectionProps): JSX.Element => {
-  const href = `/register-a-beacon/about-the-aircraft?useIndex=${index}"`;
+  const href = `/register-a-beacon/about-the-aircraft?useIndex=${index}`;
 
   return (
     <>

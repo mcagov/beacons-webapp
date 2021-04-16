@@ -14,6 +14,7 @@ jest.mock("../../src/lib/middleware", () => ({
     context.submissionId = "id";
     context.registration = {
       getFlattenedRegistration: () => ({ model: "ASOS" }),
+      getRegistration: () => ({}),
     };
     context.useIndex = 1;
 
@@ -26,6 +27,7 @@ jest.mock("../../src/lib/utils", () => ({
     .fn()
     .mockImplementation((dest) => `${dest}?useIndex=1`),
 }));
+jest.mock("../../src/gateways/basicAuthGateway");
 
 describe("handlePageRequest()", () => {
   let getFormGroup;
@@ -66,7 +68,7 @@ describe("handlePageRequest()", () => {
 
     const response = await handlePageRequest("/", getFormGroup)(context);
 
-    expect(response).toStrictEqual({
+    expect(response).toMatchObject({
       props: {
         form: formJSON,
         showCookieBanner: false,
@@ -82,7 +84,7 @@ describe("handlePageRequest()", () => {
       getFormGroup
     )(context);
 
-    expect(response).toStrictEqual({
+    expect(response).toMatchObject({
       redirect: {
         statusCode: 303,
         destination: `${nextPagePath}?useIndex=1`,
@@ -102,7 +104,7 @@ describe("handlePageRequest()", () => {
 
     const response = await handlePageRequest("/", getFormGroup)(context);
 
-    expect(response).toStrictEqual({
+    expect(response).toMatchObject({
       props: {
         form: formJSON,
         showCookieBanner: true,
@@ -125,7 +127,7 @@ describe("handlePageRequest()", () => {
       getFormGroup
     )(context);
 
-    expect(response).toStrictEqual({
+    expect(response).toMatchObject({
       props: {
         form: formJSON,
         showCookieBanner: true,

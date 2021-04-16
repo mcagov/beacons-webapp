@@ -5,9 +5,9 @@ import { BackButton, BackButtonRouterIndexes, Button } from "./Button";
 import { FormErrorSummary } from "./ErrorSummary";
 import { Form, FormFieldset, FormGroup, FormLegendPageHeading } from "./Form";
 import { Grid } from "./Grid";
-import { InsetText } from "./InsetText";
 import { Layout } from "./Layout";
 import { IfYouNeedHelp } from "./Mca";
+import { GovUKBody } from "./Typography";
 
 interface BeaconsFormProps {
   children: ReactNode;
@@ -16,7 +16,7 @@ interface BeaconsFormProps {
   showCookieBanner: boolean;
   formErrors?: FormError[];
   errorMessages?: string[];
-  insetText?: ReactNode;
+  pageText?: string | ReactNode;
   includeUseIndex?: boolean;
 }
 
@@ -27,19 +27,17 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
   showCookieBanner,
   formErrors = [],
   errorMessages = [],
-  insetText = null,
+  pageText = null,
   includeUseIndex = true,
 }: BeaconsFormProps): JSX.Element => {
-  let insetComponent: ReactNode;
-  if (insetText) {
-    insetComponent = <InsetText>{insetText}</InsetText>;
-  }
-
   const backButton: ReactNode = includeUseIndex ? (
     <BackButtonRouterIndexes href={previousPageUrl} />
   ) : (
     <BackButton href={previousPageUrl} />
   );
+
+  const pageTextComponent: ReactNode =
+    typeof pageText === "string" ? <GovUKBody>{pageText}</GovUKBody> : pageText;
 
   return (
     <Layout
@@ -55,10 +53,10 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
               <FormGroup errorMessages={errorMessages}>
                 <FormFieldset>
                   <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
+                  {pageTextComponent}
                 </FormFieldset>
-                {insetComponent}
                 {children}
-                <HiddenInput />
+                <HiddenFormMetadata />
               </FormGroup>
               <Button buttonText="Continue" />
             </Form>
@@ -70,7 +68,7 @@ export const BeaconsForm: FunctionComponent<BeaconsFormProps> = ({
   );
 };
 
-const HiddenInput: FunctionComponent = () => {
+const HiddenFormMetadata: FunctionComponent = () => {
   const router = useRouter();
   const useIndexValue = router?.query.useIndex || 0;
 
