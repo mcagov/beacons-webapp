@@ -7,6 +7,7 @@ import {
   Activity,
   BeaconType,
   Environment,
+  Purpose,
 } from "../../../src/lib/registration/types";
 
 describe("Registration", () => {
@@ -164,7 +165,6 @@ describe("Registration", () => {
       use = {
         environment: Environment.MARITIME,
         otherEnvironment: "",
-        purpose: null,
         activity: Activity.OTHER,
         otherActivity: "On my boat",
         callSign: "callSign",
@@ -289,6 +289,14 @@ describe("Registration", () => {
       const json = registration.serialiseToAPI();
 
       expect(json.beacons[0].uses.length).toBe(2);
+    });
+
+    it("should serialise the purpose if it is defined", () => {
+      registration.update({ useIndex: 0, purpose: Purpose.PLEASURE });
+      use["purpose"] = Purpose.PLEASURE;
+      const json = registration.serialiseToAPI();
+
+      expect(json.beacons[0].uses[0]).toStrictEqual(use);
     });
   });
 });

@@ -1,7 +1,7 @@
 import { FormSubmission } from "../formCache";
 import { stringToBoolean } from "../utils";
 import { initBeacon, initBeaconUse } from "./registrationInitialisation";
-import { BeaconUse, Contact, IRegistration } from "./types";
+import { BeaconUse, IRegistration } from "./types";
 
 type Indexes = {
   useIndex: number;
@@ -111,7 +111,7 @@ export class Registration {
     };
   }
 
-  private _serialiseEmergencyContacts(): Contact[] {
+  private _serialiseEmergencyContacts() {
     const registration = this.registration;
     const emergencyContacts = [];
 
@@ -164,9 +164,8 @@ export class Registration {
   }
 
   private _serialiseUse(use: BeaconUse) {
-    return {
+    const serialisedUse = {
       environment: use.environment,
-      purpose: use.purpose ? use.purpose : null,
       otherEnvironment: use.environmentOtherInput,
       activity: use.activity,
       otherActivity: use.otherActivityText,
@@ -210,5 +209,9 @@ export class Registration {
       otherActivityPeopleCount: use.otherActivityPeopleCount,
       moreDetails: use.moreDetails,
     };
+
+    if (use.purpose) serialisedUse["purpose"] = use.purpose;
+
+    return serialisedUse;
   }
 }
