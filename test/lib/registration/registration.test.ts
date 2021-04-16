@@ -148,6 +148,7 @@ describe("Registration", () => {
     let use;
     let owner;
     let emergencyContact;
+    let formData;
 
     beforeEach(() => {
       beacon = {
@@ -224,7 +225,7 @@ describe("Registration", () => {
         alternativeTelephoneNumber: "0117823457",
       };
 
-      const formData = {
+      formData = {
         ...beacon,
         ...use,
         fixedVhfRadioInput: use.fixedVhfRadioValue,
@@ -282,11 +283,14 @@ describe("Registration", () => {
       expect(json.beacons[0].emergencyContacts.length).toBe(3);
     });
 
-    it("should serialise multiple uses", () => {
+    it("should serialise a second use", () => {
       registration.createUse();
+      registration.update({ useIndex: 1, ...formData });
       const json = registration.serialiseToAPI();
+      use.mainUse = false;
 
       expect(json.beacons[0].uses.length).toBe(2);
+      expect(json.beacons[0].uses[1]).toStrictEqual(use);
     });
 
     it("should serialise the purpose if it is defined", () => {

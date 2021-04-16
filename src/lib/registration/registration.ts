@@ -161,10 +161,13 @@ export class Registration {
   private _serialiseUses() {
     const uses = this.registration.uses;
 
-    return uses.map((use) => this._serialiseUse(use));
+    return uses.map((use, index) => {
+      const mainUse = index === 0;
+      return this._serialiseUse(use, mainUse);
+    });
   }
 
-  private _serialiseUse(use: BeaconUse) {
+  private _serialiseUse(use: BeaconUse, mainUse: boolean) {
     const serialisedUse = {
       environment: use.environment,
       otherEnvironment: use.environmentOtherInput,
@@ -192,7 +195,7 @@ export class Registration {
       ssrNumber: use.ssrNumber,
       officialNumber: use.officialNumber,
       rigPlatformLocation: use.rigPlatformLocation,
-      mainUse: use.mainUse,
+      mainUse,
       aircraftManufacturer: use.aircraftManufacturer,
       principalAirport: use.principalAirport,
       secondaryAirport: use.secondaryAirport,

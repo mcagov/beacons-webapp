@@ -42,17 +42,16 @@ export const initBeacon = (): IRegistration => {
     emergencyContact3TelephoneNumber: "",
     emergencyContact3AlternativeTelephoneNumber: "",
 
-    uses: [initBeaconUse(true)],
+    uses: [initBeaconUse()],
   };
 };
 
 /**
  * Convenience function for returning an `empty` instance of a beacon use.
  *
- * @param mainUse {boolean}     Whether the use is the main use for a beacon; defaults to false
- * @returns       {BeaconUse}   JSON representation of a beacon use
+ * @returns {BeaconUse}   JSON representation of a beacon use
  */
-export const initBeaconUse = (mainUse = false): BeaconUse => {
+export const initBeaconUse = (): BeaconUse => {
   return {
     environment: "",
     environmentOtherInput: "",
@@ -114,7 +113,6 @@ export const initBeaconUse = (mainUse = false): BeaconUse => {
     otherActivityPeopleCount: "",
 
     moreDetails: "",
-    mainUse,
     additionalBeaconUse: "",
   };
 };

@@ -97,7 +97,6 @@ export interface BeaconUse {
 
   // Generic more details on use of beacon
   moreDetails: string;
-  mainUse: boolean;
   additionalBeaconUse: string;
 }
 
