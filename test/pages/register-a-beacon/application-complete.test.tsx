@@ -47,7 +47,7 @@ describe("ApplicationCompletePage", () => {
       context = {};
     });
 
-    it("should not have a refernece number if creating the registration is unsuccessful", async () => {
+    it("should not have a reference number if creating the registration is unsuccessful", async () => {
       mockCreateRegistrationExecute.mockImplementation(() =>
         Promise.resolve(false)
       );
