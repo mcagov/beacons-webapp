@@ -169,7 +169,7 @@ export class Registration {
       purpose: use.purpose ? use.purpose : null,
       otherEnvironment: use.environmentOtherInput,
       activity: use.activity,
-      otherActivity: use.activity,
+      otherActivity: use.otherActivityText,
       callSign: use.callSign,
       vhfRadio: stringToBoolean(use.vhfRadio),
       fixedVhfRadio: stringToBoolean(use.fixedVhfRadio),

@@ -3,7 +3,11 @@ import {
   initBeacon,
   initBeaconUse,
 } from "../../../src/lib/registration/registrationInitialisation";
-import { BeaconType, Environment } from "../../../src/lib/registration/types";
+import {
+  Activity,
+  BeaconType,
+  Environment,
+} from "../../../src/lib/registration/types";
 
 describe("Registration", () => {
   let registration: Registration;
@@ -143,6 +147,7 @@ describe("Registration", () => {
     let beacon;
     let use;
     let owner;
+    let emergencyContact;
 
     beforeEach(() => {
       beacon = {
@@ -157,79 +162,126 @@ describe("Registration", () => {
         lastServicedDate: "2020-02-01",
       };
       use = {
-        environment: "",
+        environment: Environment.MARITIME,
         otherEnvironment: "",
         purpose: null,
-        activity: "",
-        otherActivity: "",
-        callSign: "",
+        activity: Activity.OTHER,
+        otherActivity: "On my boat",
+        callSign: "callSign",
         vhfRadio: false,
         fixedVhfRadio: false,
-        fixedVhfRadioValue: "",
+        fixedVhfRadioValue: "0117",
         portableVhfRadio: false,
-        portableVhfRadioValue: "",
+        portableVhfRadioValue: "0118",
         satelliteTelephone: false,
-        satelliteTelephoneValue: "",
+        satelliteTelephoneValue: "0119",
         mobileTelephone: false,
-        mobileTelephone1: "",
-        mobileTelephone2: "",
+        mobileTelephone1: "01178123456",
+        mobileTelephone2: "01178123457",
         otherCommunication: false,
-        otherCommunicationValue: "",
-        maxCapacity: "",
-        vesselName: "",
-        portLetterNumber: "",
-        homeport: "",
-        areaOfOperation: "",
-        beaconLocation: "",
-        imoNumber: "",
-        ssrNumber: "",
-        officialNumber: "",
-        rigPlatformLocation: "",
+        otherCommunicationValue: "Via email",
+        maxCapacity: 22,
+        vesselName: "My lucky boat",
+        portLetterNumber: "12345",
+        homeport: "Bristol",
+        areaOfOperation: "Newport",
+        beaconLocation: "In my carry bag",
+        imoNumber: "123456",
+        ssrNumber: "123456",
+        officialNumber: "123456",
+        rigPlatformLocation: "On the rig",
         mainUse: true,
-        aircraftManufacturer: "",
-        principalAirport: "",
-        secondaryAirport: "",
-        registrationMark: "",
-        hexAddress: "",
-        cnOrMsnNumber: "",
+        aircraftManufacturer: "Boeing",
+        principalAirport: "Bristol",
+        secondaryAirport: "Cardiff",
+        registrationMark: "Reg mark",
+        hexAddress: "123456",
+        cnOrMsnNumber: "123456",
         dongle: false,
-        beaconPosition: "",
-        workingRemotelyLocation: "",
-        workingRemotelyPeopleCount: "",
-        windfarmLocation: "",
-        windfarmPeopleCount: "",
-        otherActivityLocation: "",
-        otherActivityPeopleCount: "",
-        moreDetails: "",
+        beaconPosition: "Carry bag",
+        workingRemotelyLocation: "Bristol",
+        workingRemotelyPeopleCount: "10",
+        windfarmLocation: "10",
+        windfarmPeopleCount: "10",
+        otherActivityLocation: "Taunton",
+        otherActivityPeopleCount: "10",
+        moreDetails: "Blue boat, tracked in SafeTrx",
       };
 
       owner = {
-        fullName: "",
-        email: "",
-        telephoneNumber: "",
-        alternativeTelephoneNumber: "",
-        townOrCity: "",
-        county: "",
-        postcode: "",
+        fullName: "Mrs Martha",
+        email: "martha@mca.gov.uk",
+        telephoneNumber: "0117892136545",
+        alternativeTelephoneNumber: "0117892136545",
+        addressLine1: "6",
+        addressLine2: "Points West",
+        townOrCity: "Bristol",
+        county: "Bristol",
+        postcode: "BS17YG",
       };
 
-      registration.update(beacon);
+      emergencyContact = {
+        fullName: "Mrs Beacon",
+        telephoneNumber: "0117823456",
+        alternativeTelephoneNumber: "0117823457",
+      };
+
+      const formData = {
+        ...beacon,
+        ...use,
+        fixedVhfRadioInput: use.fixedVhfRadioValue,
+        portableVhfRadioInput: use.portableVhfRadioValue,
+        otherCommunicationInput: use.otherCommunicationValue,
+        satelliteTelephoneInput: use.satelliteTelephoneValue,
+        mobileTelephoneInput1: use.mobileTelephone1,
+        mobileTelephoneInput2: use.mobileTelephone2,
+        otherActivityText: use.otherActivity,
+        ownerFullName: owner.fullName,
+        ownerEmail: owner.email,
+        ownerTelephoneNumber: owner.telephoneNumber,
+        ownerAlternativeTelephoneNumber: owner.alternativeTelephoneNumber,
+        ownerAddressLine1: owner.addressLine1,
+        ownerAddressLine2: owner.addressLine2,
+        ownerTownOrCity: owner.townOrCity,
+        ownerCounty: owner.county,
+        ownerPostcode: owner.postcode,
+        emergencyContact1FullName: emergencyContact.fullName,
+        emergencyContact1TelephoneNumber: emergencyContact.telephoneNumber,
+        emergencyContact1AlternativeTelephoneNumber:
+          emergencyContact.alternativeTelephoneNumber,
+        emergencyContact2FullName: emergencyContact.fullName,
+        emergencyContact2TelephoneNumber: emergencyContact.telephoneNumber,
+        emergencyContact2AlternativeTelephoneNumber:
+          emergencyContact.alternativeTelephoneNumber,
+        emergencyContact3FullName: emergencyContact.fullName,
+        emergencyContact3TelephoneNumber: emergencyContact.telephoneNumber,
+        emergencyContact3AlternativeTelephoneNumber:
+          emergencyContact.alternativeTelephoneNumber,
+      };
+
+      registration.update(formData);
     });
 
     it("should serialise the registration for sending to the API", () => {
       const expected = {
-        beacons: [{ ...beacon, owner: { ...owner }, emergencyContacts: [] }],
+        beacons: [
+          {
+            ...beacon,
+            uses: [use],
+            owner: { ...owner },
+            emergencyContacts: [
+              emergencyContact,
+              emergencyContact,
+              emergencyContact,
+            ],
+          },
+        ],
       };
       const json = registration.serialiseToAPI();
 
       expect(json).toMatchObject(expected);
       expect(json.beacons[0].uses.length).toBe(1);
-      expect(json.beacons[0].emergencyContacts.length).toBe(0);
-    });
-
-    it("should serialise the use", () => {
-      const json = registration.serialiseToAPI();
-      expect(json.beacons[0].uses[0]).toStrictEqual(use);
+      expect(json.beacons[0].emergencyContacts.length).toBe(3);
     });
 
     it("should serialise multiple uses", () => {
@@ -237,36 +289,6 @@ describe("Registration", () => {
       const json = registration.serialiseToAPI();
 
       expect(json.beacons[0].uses.length).toBe(2);
-    });
-
-    it("should serialise an emergency contact if the values are defined", () => {
-      const emergencyContacts = {
-        emergencyContact1FullName: "Mrs Beacon",
-        emergencyContact1TelephoneNumber: "0117823456",
-        emergencyContact1AlternativeTelephoneNumber: "0117823456",
-      };
-      registration.update(emergencyContacts);
-
-      const json = registration.serialiseToAPI();
-      expect(json.beacons[0].emergencyContacts.length).toBe(1);
-    });
-
-    it("should serialise all emergency contacts if the values are defined", () => {
-      const emergencyContacts = {
-        emergencyContact1FullName: "Mrs Beacon",
-        emergencyContact1TelephoneNumber: "0117823456",
-        emergencyContact1AlternativeTelephoneNumber: "0117823456",
-        emergencyContact2FullName: "Mr Beacon",
-        emergencyContact2TelephoneNumber: "0117823456",
-        emergencyContact2AlternativeTelephoneNumber: "0117823456",
-        emergencyContact3FullName: "Beacon",
-        emergencyContact3TelephoneNumber: "0117823456",
-        emergencyContact3AlternativeTelephoneNumber: "0117823456",
-      };
-      registration.update(emergencyContacts);
-
-      const json = registration.serialiseToAPI();
-      expect(json.beacons[0].emergencyContacts.length).toBe(3);
     });
   });
 });
