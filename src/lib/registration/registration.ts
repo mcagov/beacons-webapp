@@ -69,6 +69,7 @@ export class Registration {
     return Math.min(useIndex, beaconUseLength);
   }
 
+  // TODO: Define return type once domain/form objects have been defined
   public serialiseToAPI() {
     const beacon = this._serialiseBeacon();
     const owner = this._serialiseOwner();
