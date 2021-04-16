@@ -88,7 +88,6 @@ export class Registration {
       model: registration.model,
       hexId: registration.hexId,
       referenceNumber: registration.referenceNumber,
-      beaconType: registration.beaconType,
 
       manufacturerSerialNumber: registration.manufacturerSerialNumber,
       chkCode: registration.chkCode,
