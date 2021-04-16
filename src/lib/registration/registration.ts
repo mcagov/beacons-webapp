@@ -182,7 +182,6 @@ export class Registration {
       mobileTelephone2: use.mobileTelephoneInput2,
       otherCommunication: stringToBoolean(use.otherCommunication),
       otherCommunicationValue: use.otherCommunicationInput,
-      maxCapacity: use.maxCapacity,
       vesselName: use.vesselName,
       portLetterNumber: use.portLetterNumber,
       homeport: use.homeport,
@@ -211,6 +210,9 @@ export class Registration {
     };
 
     if (use.purpose) serialisedUse["purpose"] = use.purpose;
+
+    if (Number.isInteger(use.maxCapacity))
+      serialisedUse["maxCapacity"] = use.maxCapacity;
 
     return serialisedUse;
   }

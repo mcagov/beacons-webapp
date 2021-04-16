@@ -292,8 +292,24 @@ describe("Registration", () => {
     });
 
     it("should serialise the purpose if it is defined", () => {
-      registration.update({ useIndex: 0, purpose: Purpose.PLEASURE });
+      registration.update({ purpose: Purpose.PLEASURE });
       use["purpose"] = Purpose.PLEASURE;
+      const json = registration.serialiseToAPI();
+
+      expect(json.beacons[0].uses[0]).toStrictEqual(use);
+    });
+
+    it("should not serialise the max capacity if it is not a number", () => {
+      registration.update({ maxCapacity: "not a number" });
+      delete use.maxCapacity;
+      const json = registration.serialiseToAPI();
+
+      expect(json.beacons[0].uses[0]).toStrictEqual(use);
+    });
+
+    it("should not serialise the max capacity if it is not a whole number", () => {
+      registration.update({ maxCapacity: "0.112" });
+      delete use.maxCapacity;
       const json = registration.serialiseToAPI();
 
       expect(json.beacons[0].uses[0]).toStrictEqual(use);
