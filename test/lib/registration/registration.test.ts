@@ -5,7 +5,6 @@ import {
 } from "../../../src/lib/registration/registrationInitialisation";
 import {
   Activity,
-  BeaconType,
   Environment,
   Purpose,
 } from "../../../src/lib/registration/types";
@@ -154,7 +153,6 @@ describe("Registration", () => {
       beacon = {
         model: "Trousers",
         hexId: "1D0",
-        beaconType: BeaconType.PLB,
         manufacturer: "ASOS",
         referenceNumber: "ADBEFD",
         manufacturerSerialNumber: "1234",

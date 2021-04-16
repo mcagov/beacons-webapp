@@ -1,4 +1,4 @@
-import { BeaconType, BeaconUse, IRegistration } from "./types";
+import { BeaconUse, IRegistration } from "./types";
 
 /**
  * Convenience function for returning an `empty` instance of a beacon registration.
@@ -10,7 +10,6 @@ export const initBeacon = (): IRegistration => {
     manufacturer: "",
     model: "",
     hexId: "",
-    beaconType: BeaconType.PLB,
 
     referenceNumber: "",
 

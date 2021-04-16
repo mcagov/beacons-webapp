@@ -2,7 +2,6 @@ export interface IRegistration {
   manufacturer: string;
   model: string;
   hexId: string;
-  beaconType: BeaconType;
   referenceNumber: string;
 
   manufacturerSerialNumber: string;
@@ -100,12 +99,6 @@ export interface BeaconUse {
   moreDetails: string;
   mainUse: boolean;
   additionalBeaconUse: string;
-}
-
-export enum BeaconType {
-  PLB = "PLB",
-  EPIRB = "EPIRB",
-  ELT = "ELT",
 }
 
 export enum Environment {
