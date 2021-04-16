@@ -77,12 +77,6 @@ export function formatUrlQueryParams(
   return url;
 }
 
-/**
- * Convencience function for determining whether a string is a boolean value of `true`.
- *
- * @param value {string}   The value to check
- * @returns     {boolean}  Whether the value is true
- */
 export function stringToBoolean(value: string): boolean {
   return value ? value.toLocaleLowerCase() === "true" : false;
 }
