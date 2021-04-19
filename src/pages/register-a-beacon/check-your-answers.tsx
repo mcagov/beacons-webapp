@@ -195,16 +195,7 @@ const BeaconUseSection: FunctionComponent<CheckYourAnswersBeaconUseSectionProps>
         <CommunicationsSubSection
           index={index}
           use={use}
-          href={"/register-a-beacon/land-other-communications"}
-        />
-      );
-      break;
-    case Environment.OTHER:
-      commsSection = (
-        <CommunicationsSubSection
-          index={index}
-          use={use}
-          href={"/register-a-beacon/land-other-communications"}
+          href={"/register-a-beacon/land-communications"}
         />
       );
       break;

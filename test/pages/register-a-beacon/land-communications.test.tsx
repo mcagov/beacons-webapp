@@ -5,7 +5,7 @@ import { FormJSON } from "../../../src/lib/form/formManager";
 import { handlePageRequest } from "../../../src/lib/handlePageRequest";
 import LandOtherCommunications, {
   getServerSideProps,
-} from "../../../src/pages/register-a-beacon/land-other-communications";
+} from "../../../src/pages/register-a-beacon/land-communications";
 
 jest.mock("../../../src/lib/handlePageRequest", () => ({
   __esModule: true,

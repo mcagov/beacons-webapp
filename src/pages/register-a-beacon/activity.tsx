@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactNode } from "react";
 import { BeaconsForm } from "../../components/BeaconsForm";
 import { FormGroup } from "../../components/Form";
 import { Input } from "../../components/Input";
@@ -29,6 +29,13 @@ interface ActivityOptionsProps extends OptionsProps {
 const definePageForm = ({
   activity,
   otherActivityText,
+  workingRemotelyLocation,
+  workingRemotelyPeopleCount,
+  windfarmLocation,
+  windfarmPeopleCount,
+  otherActivityDescription,
+  otherActivityLocation,
+  otherActivityPeopleCount,
 }: FormSubmission): FormManager => {
   return new FormManager({
     activity: new FieldManager(activity, [
@@ -37,6 +44,97 @@ const definePageForm = ({
     otherActivityText: new FieldManager(
       otherActivityText,
       [Validators.required("Other activity text is a required field")],
+      [
+        {
+          dependsOn: "activity",
+          meetingCondition: (value) => value === Activity.OTHER,
+        },
+      ]
+    ),
+    workingRemotelyLocation: new FieldManager(
+      workingRemotelyLocation,
+      [Validators.required("Enter the location where you work remotely")],
+      [
+        {
+          dependsOn: "activity",
+          meetingCondition: (value) => value === Activity.WORKING_REMOTELY,
+        },
+      ]
+    ),
+    workingRemotelyPeopleCount: new FieldManager(
+      workingRemotelyPeopleCount,
+      [
+        Validators.required(
+          "Enter how many people tend to be with you when you work remotely"
+        ),
+        Validators.wholeNumber(
+          "Enter a whole number for the typical/maximum number of people that tend to be with you when you work remotely"
+        ),
+      ],
+      [
+        {
+          dependsOn: "activity",
+          meetingCondition: (value) => value === Activity.WORKING_REMOTELY,
+        },
+      ]
+    ),
+    windfarmLocation: new FieldManager(
+      windfarmLocation,
+      [Validators.required("Enter the location of the windfarm")],
+      [
+        {
+          dependsOn: "activity",
+          meetingCondition: (value) => value === Activity.WINDFARM,
+        },
+      ]
+    ),
+    windfarmPeopleCount: new FieldManager(
+      windfarmPeopleCount,
+      [
+        Validators.required(
+          "Enter how many people tend to be with you when you work at a windfarm"
+        ),
+        Validators.wholeNumber(
+          "Enter a whole number for the typical/maximum number of people that tend to be with you are at the windfarm"
+        ),
+      ],
+      [
+        {
+          dependsOn: "activity",
+          meetingCondition: (value) => value === Activity.WINDFARM,
+        },
+      ]
+    ),
+    otherActivityDescription: new FieldManager(
+      otherActivityDescription,
+      [Validators.required("Enter a description for your activity")],
+      [
+        {
+          dependsOn: "activity",
+          meetingCondition: (value) => value === Activity.OTHER,
+        },
+      ]
+    ),
+    otherActivityLocation: new FieldManager(
+      otherActivityLocation,
+      [Validators.required("Enter where you use your beacon")],
+      [
+        {
+          dependsOn: "activity",
+          meetingCondition: (value) => value === Activity.OTHER,
+        },
+      ]
+    ),
+    otherActivityPeopleCount: new FieldManager(
+      otherActivityPeopleCount,
+      [
+        Validators.required(
+          "Enter how many people tend to be with you when you use your beacon"
+        ),
+        Validators.wholeNumber(
+          "Enter a whole number for the typical/maximum number of people that tend to be with you when you use your beacon"
+        ),
+      ],
       [
         {
           dependsOn: "activity",
@@ -56,15 +154,21 @@ const ActivityPage: FunctionComponent<FormPageProps> = ({
   const purpose = flattenedRegistration.purpose;
 
   const pageHeading = `Please select the ${purpose.toLowerCase()} ${environment.toLowerCase()} activity that best describes how the beacon will be used`;
+  let vesselDescriptionText: ReactNode;
+  if (environment === Environment.MARITIME) {
+    vesselDescriptionText = (
+      <GovUKBody>
+        We will ask you for a full description of any vessels later in the form
+      </GovUKBody>
+    );
+  }
   const pageText = (
     <>
       <GovUKBody>
         This information will help us plan any Search and Rescue response that
         may be required in future.
       </GovUKBody>
-      <GovUKBody>
-        We will ask you for a full description of any vessels later in the form
-      </GovUKBody>
+      {vesselDescriptionText}
     </>
   );
 
@@ -107,6 +211,8 @@ export const ActivityOptions: FunctionComponent<ActivityOptionsProps> = ({
     return (
       <AviationCommercialOptions form={form} listItemName={listItemName} />
     );
+  if (environment === Environment.LAND)
+    return <LandOptions form={form} listItemName={listItemName} />;
 
   throw new Error(
     "Environment or purpose not found.  User needs to enter environment and purpose on previous pages."
@@ -398,6 +504,147 @@ const AviationCommercialOptions: FunctionComponent<OptionsProps> = ({
   );
 };
 
+const LandOptions: FunctionComponent<OptionsProps> = ({
+  form,
+  listItemName,
+}: OptionsProps) => {
+  return (
+    <RadioList conditional={true}>
+      <RadioListItem
+        id="driving"
+        name={listItemName}
+        value={Activity.DRIVING}
+        defaultChecked={form.fields.activity.value === Activity.DRIVING}
+        label="Driving"
+      />
+      <RadioListItem
+        id="cycling"
+        name={listItemName}
+        value={Activity.CYCLING}
+        defaultChecked={form.fields.activity.value === Activity.CYCLING}
+        label="Cycling"
+      />
+      <RadioListItem
+        id="climbingMountaineering"
+        name={listItemName}
+        value={Activity.CLIMBING_MOUNTAINEERING}
+        defaultChecked={
+          form.fields.activity.value === Activity.CLIMBING_MOUNTAINEERING
+        }
+        label="Climbing or mountaineering"
+      />
+      <RadioListItem
+        id="skiing"
+        name={listItemName}
+        value={Activity.SKIING}
+        defaultChecked={form.fields.activity.value === Activity.SKIING}
+        label="Skiing"
+      />
+      <RadioListItem
+        id="walkingHiking"
+        name={listItemName}
+        value={Activity.WALKING_HIKING}
+        defaultChecked={form.fields.activity.value === Activity.WALKING_HIKING}
+        label="Walking or hiking"
+      />
+      <RadioListItem
+        id="workingRemotely"
+        name={listItemName}
+        value={Activity.WORKING_REMOTELY}
+        defaultChecked={
+          form.fields.activity.value === Activity.WORKING_REMOTELY
+        }
+        label="Working remotely"
+        hintText="E.g. forestry worker, estate manager, tree surgeon, engineer, council worker"
+        conditional={true}
+      >
+        <FormGroup
+          errorMessages={form.fields.workingRemotelyLocation.errorMessages}
+        >
+          <Input
+            id="workingRemotelyLocation"
+            label="Where will you be using the beacon?"
+            hintText="You can enter a place name, area, or latitude and longitude"
+            defaultValue={form.fields.workingRemotelyLocation.value}
+          />
+        </FormGroup>
+        <FormGroup
+          errorMessages={form.fields.workingRemotelyPeopleCount.errorMessages}
+        >
+          <Input
+            id="workingRemotelyPeopleCount"
+            label="What is the typical/maximum number of people with you?"
+            defaultValue={form.fields.workingRemotelyPeopleCount.value}
+          />
+        </FormGroup>
+      </RadioListItem>
+      <RadioListItem
+        id="windfarm"
+        name={listItemName}
+        value={Activity.WINDFARM}
+        defaultChecked={form.fields.activity.value === Activity.WINDFARM}
+        label="Working on a windfarm"
+        conditional={true}
+      >
+        <FormGroup errorMessages={form.fields.windfarmLocation.errorMessages}>
+          <Input
+            id="windfarmLocation"
+            label="Where will you be using the beacon?"
+            hintText="You can enter a place name, area, or latitude and longitude"
+            defaultValue={form.fields.windfarmLocation.value}
+          />
+        </FormGroup>
+        <FormGroup
+          errorMessages={form.fields.windfarmPeopleCount.errorMessages}
+        >
+          <Input
+            id="windfarmPeopleCount"
+            label="What is the typical/maximum number of people with you?"
+            defaultValue={form.fields.windfarmPeopleCount.value}
+          />
+        </FormGroup>
+      </RadioListItem>
+      <RadioListItem
+        id="otherActivity"
+        name={listItemName}
+        value={Activity.OTHER}
+        defaultChecked={form.fields.activity.value === Activity.OTHER}
+        label="Other"
+        conditional={true}
+      >
+        <FormGroup
+          errorMessages={form.fields.otherActivityDescription.errorMessages}
+        >
+          <Input
+            id="otherActivityText"
+            label="Please describe your use"
+            defaultValue={form.fields.otherActivityText.value}
+          />
+        </FormGroup>
+        <FormGroup
+          errorMessages={form.fields.otherActivityLocation.errorMessages}
+        >
+          <Input
+            id="otherActivityLocation"
+            label="Where will you be using your beacon?"
+            hintText="You can enter a place name, area or latitude and longitude"
+            defaultValue={form.fields.otherActivityLocation.value}
+          />
+        </FormGroup>
+        <FormGroup
+          errorMessages={form.fields.otherActivityPeopleCount.errorMessages}
+        >
+          <Input
+            id="otherActivityPeopleCount"
+            label="What is the typical/max number of people with you?"
+            defaultValue={form.fields.otherActivityPeopleCount.value}
+          />
+        </FormGroup>
+      </RadioListItem>
+    </RadioList>
+  );
+};
+
 const onSuccessfulFormCallback: DestinationIfValidCallback = (context) => {
   const flattenedRegistration = context.registration.getFlattenedRegistration({
     useIndex: context.useIndex,
@@ -409,6 +656,8 @@ const onSuccessfulFormCallback: DestinationIfValidCallback = (context) => {
       return "/register-a-beacon/about-the-vessel";
     case Environment.AVIATION:
       return "/register-a-beacon/about-the-aircraft";
+    case Environment.LAND:
+      return "/register-a-beacon/land-communications";
     case null:
       return "/register-a-beacon/beacon-use";
     default:

@@ -1,3 +1,4 @@
+import { testLandUseData } from "../common/happy-path-test-data.spec";
 import {
   andIClickContinue,
   givenIHaveACookieSetAndIVisit,
@@ -171,18 +172,27 @@ describe("As a beacon owner and land or other use user", () => {
   });
 
   it("submits the form if all fields are valid", () => {
-    const validMMSI = "123456789";
-    const validPhoneNumber = "07887662534";
-
     givenIHaveSelected(portableVhfDscRadioCheckboxSelector);
     givenIHaveSelected(satelliteTelephoneCheckboxSelector);
     givenIHaveSelected(mobileTelephoneCheckboxSelector);
     givenIHaveSelected(otherCommunicationSelector);
 
-    whenIType(validMMSI, portableVhfDscRadioInputSelector);
-    whenIType(validPhoneNumber, satelliteTelephoneInputSelector);
-    whenIType(validPhoneNumber, mobileTelephoneInputSelector);
-    whenIType("Other comms", otherCommunicationInputSelector);
+    whenIType(
+      testLandUseData.communications.portableMMSI,
+      portableVhfDscRadioInputSelector
+    );
+    whenIType(
+      testLandUseData.communications.satelliteTelephone,
+      satelliteTelephoneInputSelector
+    );
+    whenIType(
+      testLandUseData.communications.mobileTelephone1,
+      mobileTelephoneInputSelector
+    );
+    whenIType(
+      testLandUseData.communications.otherCommunication,
+      otherCommunicationInputSelector
+    );
     andIClickContinue();
 
     thenTheUrlShouldContain("/register-a-beacon/more-details");

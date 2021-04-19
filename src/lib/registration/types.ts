@@ -108,7 +108,6 @@ export enum Environment {
   MARITIME = "MARITIME",
   AVIATION = "AVIATION",
   LAND = "LAND",
-  OTHER = "OTHER",
 }
 
 export enum Purpose {

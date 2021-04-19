@@ -136,3 +136,26 @@ export const testMaritimeCommercialUseData = {
     activity: Activity.MOTOR,
   },
 };
+
+export const testLandUseData = {
+  type: {
+    environment: Environment.LAND,
+    activity: Activity.CYCLING,
+  },
+  communications: {
+    checkedFields: [
+      "vhfRadio",
+      "fixedVhfRadio",
+      "portableVhfRadio",
+      "satelliteTelephone",
+      "mobileTelephone",
+      "otherCommunication",
+    ],
+    portableMMSI: "235107781",
+    satelliteTelephone: "+881677722112",
+    mobileTelephone1: "07162 738203",
+    mobileTelephone2: "01728 392022",
+    otherCommunication: "Carrier pigeon, goes by the name of Raleigh",
+  },
+  moreDetails: "My bicycle is blue and red.",
+};

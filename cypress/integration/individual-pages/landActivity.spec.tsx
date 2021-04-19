@@ -1,3 +1,4 @@
+import { PageURLs } from "../../../src/lib/urls";
 import {
   andIClickContinue,
   givenIHaveACookieSetAndIVisit,
@@ -29,16 +30,15 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
   const otherActivityPeopleCountSelector = "#otherActivityPeopleCount";
 
   beforeEach(() => {
-    givenIHaveACookieSetAndIVisit(thisPageUrl);
+    givenIHaveACookieSetAndIVisit(PageURLs.landOtherActivity);
   });
 
   it("sends me to the previous page when I click the back link", () => {
-    iCanClickTheBackLinkToGoToPreviousPage(previousPageUrl);
+    iCanClickTheBackLinkToGoToPreviousPage(PageURLs.environment);
   });
 
   it("submits the form if all fields are valid", () => {
     givenIHaveSelected(drivingSelector);
-    givenIHaveSelected(cyclingSelector);
 
     andIClickContinue();
 

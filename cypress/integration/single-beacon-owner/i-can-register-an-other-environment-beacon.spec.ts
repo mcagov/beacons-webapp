@@ -24,7 +24,7 @@ describe("As a beacon owner in an environment other than land, aviation or marit
     givenIHaveSelected("#cycling");
     andIClickContinue();
 
-    thenTheUrlShouldContain(PageURLs.landOtherCommunications);
+    thenTheUrlShouldContain(PageURLs.landCommunications);
     givenIHaveSelected("#portableVhfRadio");
     andIType("235 762000", "#portableVhfRadioInput");
     andIClickContinue();
@@ -32,7 +32,7 @@ describe("As a beacon owner in an environment other than land, aviation or marit
     thenTheUrlShouldContain(PageURLs.moreDetails);
     whenIClickBack();
 
-    thenTheUrlShouldContain(PageURLs.landOtherCommunications);
+    thenTheUrlShouldContain(PageURLs.landCommunications);
     thenTheCheckboxShouldBeChecked("#portableVhfRadio");
     thenTheInputShouldContain("235 762000", "#portableVhfRadioInput");
     whenIClickBack();
