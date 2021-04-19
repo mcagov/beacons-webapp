@@ -30,6 +30,7 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
   const otherActivityPeopleCountSelector = "#otherActivityPeopleCount";
 
   beforeEach(() => {
+    // TODO: go to env page and set land use selected for validation errors below
     givenIHaveACookieSetAndIVisit(PageURLs.landOtherActivity);
   });
 
