@@ -27,92 +27,43 @@ interface ActivityOptionsProps extends OptionsProps {
   purpose: string;
 }
 
+const activityMatchingCondition = (activity: Activity) => ({
+  dependsOn: "activity",
+  meetingCondition: (value) => value === activity,
+});
+
+const environmentIsLandMatchingCondition = {
+  dependsOn: "environment",
+  meetingCondition: (value) => value === Environment.LAND,
+};
+
 const definePageForm = ({
+  environment,
   activity,
   otherActivityText,
+  otherActivityLocation,
+  otherActivityPeopleCount,
   workingRemotelyLocation,
   workingRemotelyPeopleCount,
   windfarmLocation,
   windfarmPeopleCount,
-  otherActivityLocation,
-  otherActivityPeopleCount,
 }: FormSubmission): FormManager => {
   return new FormManager({
+    environment: new FieldManager(environment),
     activity: new FieldManager(activity, [
       Validators.required("Activity is a required field"),
     ]),
     otherActivityText: new FieldManager(
       otherActivityText,
       [Validators.required("Enter a description for your activity")],
-      [
-        {
-          dependsOn: "activity",
-          meetingCondition: (value) => value === Activity.OTHER,
-        },
-      ]
-    ),
-    workingRemotelyLocation: new FieldManager(
-      workingRemotelyLocation,
-      [Validators.required("Enter the location where you work remotely")],
-      [
-        {
-          dependsOn: "activity",
-          meetingCondition: (value) => value === Activity.WORKING_REMOTELY,
-        },
-      ]
-    ),
-    workingRemotelyPeopleCount: new FieldManager(
-      workingRemotelyPeopleCount,
-      [
-        Validators.required(
-          "Enter how many people tend to be with you when you work remotely"
-        ),
-        Validators.wholeNumber(
-          "Enter a whole number for the typical/maximum number of people that tend to be with you when you work remotely"
-        ),
-      ],
-      [
-        {
-          dependsOn: "activity",
-          meetingCondition: (value) => value === Activity.WORKING_REMOTELY,
-        },
-      ]
-    ),
-    windfarmLocation: new FieldManager(
-      windfarmLocation,
-      [Validators.required("Enter the location of the windfarm")],
-      [
-        {
-          dependsOn: "activity",
-          meetingCondition: (value) => value === Activity.WINDFARM,
-        },
-      ]
-    ),
-    windfarmPeopleCount: new FieldManager(
-      windfarmPeopleCount,
-      [
-        Validators.required(
-          "Enter how many people tend to be with you when you work at a windfarm"
-        ),
-        Validators.wholeNumber(
-          "Enter a whole number for the typical/maximum number of people that tend to be with you are at the windfarm"
-        ),
-      ],
-      [
-        {
-          dependsOn: "activity",
-          meetingCondition: (value) => value === Activity.WINDFARM,
-        },
-      ]
+      [activityMatchingCondition(Activity.OTHER)]
     ),
     otherActivityLocation: new FieldManager(
       otherActivityLocation,
       [Validators.required("Enter where you use your beacon")],
       [
-        {
-          dependsOn: "activity",
-          meetingCondition: (value) => value === Activity.OTHER,
-        },
+        activityMatchingCondition(Activity.OTHER),
+        environmentIsLandMatchingCondition,
       ]
     ),
     otherActivityPeopleCount: new FieldManager(
@@ -126,11 +77,43 @@ const definePageForm = ({
         ),
       ],
       [
-        {
-          dependsOn: "activity",
-          meetingCondition: (value) => value === Activity.OTHER,
-        },
+        activityMatchingCondition(Activity.OTHER),
+        environmentIsLandMatchingCondition,
       ]
+    ),
+    workingRemotelyLocation: new FieldManager(
+      workingRemotelyLocation,
+      [Validators.required("Enter the location where you work remotely")],
+      [activityMatchingCondition(Activity.WORKING_REMOTELY)]
+    ),
+    workingRemotelyPeopleCount: new FieldManager(
+      workingRemotelyPeopleCount,
+      [
+        Validators.required(
+          "Enter how many people tend to be with you when you work remotely"
+        ),
+        Validators.wholeNumber(
+          "Enter a whole number for the typical/maximum number of people that tend to be with you when you work remotely"
+        ),
+      ],
+      [activityMatchingCondition(Activity.WORKING_REMOTELY)]
+    ),
+    windfarmLocation: new FieldManager(
+      windfarmLocation,
+      [Validators.required("Enter the location of the windfarm")],
+      [activityMatchingCondition(Activity.WINDFARM)]
+    ),
+    windfarmPeopleCount: new FieldManager(
+      windfarmPeopleCount,
+      [
+        Validators.required(
+          "Enter how many people tend to be with you when you work at a windfarm"
+        ),
+        Validators.wholeNumber(
+          "Enter a whole number for the typical/maximum number of people that tend to be with you are at the windfarm"
+        ),
+      ],
+      [activityMatchingCondition(Activity.WINDFARM)]
     ),
   });
 };
@@ -525,7 +508,7 @@ const LandOptions: FunctionComponent<OptionsProps> = ({
         label="Cycling"
       />
       <RadioListItem
-        id="climbingMountaineering"
+        id="climbing-mountaineering"
         name={listItemName}
         value={Activity.CLIMBING_MOUNTAINEERING}
         defaultChecked={
@@ -541,14 +524,14 @@ const LandOptions: FunctionComponent<OptionsProps> = ({
         label="Skiing"
       />
       <RadioListItem
-        id="walkingHiking"
+        id="walking-hiking"
         name={listItemName}
         value={Activity.WALKING_HIKING}
         defaultChecked={form.fields.activity.value === Activity.WALKING_HIKING}
         label="Walking or hiking"
       />
       <RadioListItem
-        id="workingRemotely"
+        id="working-remotely"
         name={listItemName}
         value={Activity.WORKING_REMOTELY}
         defaultChecked={
@@ -605,7 +588,7 @@ const LandOptions: FunctionComponent<OptionsProps> = ({
         </FormGroup>
       </RadioListItem>
       <RadioListItem
-        id="otherActivity"
+        id="other-activity"
         name={listItemName}
         value={Activity.OTHER}
         defaultChecked={form.fields.activity.value === Activity.OTHER}
