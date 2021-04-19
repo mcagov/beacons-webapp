@@ -8,7 +8,6 @@ export enum PageURLs {
   environment = "/register-a-beacon/beacon-use",
   purpose = "/register-a-beacon/purpose",
   activity = "/register-a-beacon/activity",
-  landOtherActivity = "/register-a-beacon/land-activity",
   aboutTheVessel = "/register-a-beacon/about-the-vessel",
   aboutTheAircraft = "/register-a-beacon/about-the-aircraft",
   vesselCommunications = "/register-a-beacon/vessel-communications",
