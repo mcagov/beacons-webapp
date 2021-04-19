@@ -34,7 +34,6 @@ const definePageForm = ({
   workingRemotelyPeopleCount,
   windfarmLocation,
   windfarmPeopleCount,
-  otherActivityDescription,
   otherActivityLocation,
   otherActivityPeopleCount,
 }: FormSubmission): FormManager => {
@@ -44,7 +43,7 @@ const definePageForm = ({
     ]),
     otherActivityText: new FieldManager(
       otherActivityText,
-      [Validators.required("Other activity text is a required field")],
+      [Validators.required("Enter a description for your activity")],
       [
         {
           dependsOn: "activity",
@@ -103,16 +102,6 @@ const definePageForm = ({
         {
           dependsOn: "activity",
           meetingCondition: (value) => value === Activity.WINDFARM,
-        },
-      ]
-    ),
-    otherActivityDescription: new FieldManager(
-      otherActivityDescription,
-      [Validators.required("Enter a description for your activity")],
-      [
-        {
-          dependsOn: "activity",
-          meetingCondition: (value) => value === Activity.OTHER,
         },
       ]
     ),
@@ -623,9 +612,7 @@ const LandOptions: FunctionComponent<OptionsProps> = ({
         label="Other"
         conditional={true}
       >
-        <FormGroup
-          errorMessages={form.fields.otherActivityDescription.errorMessages}
-        >
+        <FormGroup errorMessages={form.fields.otherActivityText.errorMessages}>
           <Input
             id="otherActivityText"
             label="Please describe your use"

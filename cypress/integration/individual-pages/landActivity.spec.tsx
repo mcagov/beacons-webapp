@@ -1,23 +1,20 @@
 import { PageURLs } from "../../../src/lib/urls";
 import {
   andIClickContinue,
+  andIHaveSelected,
   givenIHaveACookieSetAndIVisit,
   givenIHaveSelected,
   iCanClickTheBackLinkToGoToPreviousPage,
   thenIShouldSeeAnErrorMessageThatContains,
+  thenIShouldSeeFormErrors,
   thenMyFocusMovesTo,
   thenTheUrlShouldContain,
   whenIClickOnTheErrorSummaryLinkContaining,
   whenIType,
 } from "../common/selectors-and-assertions.spec";
 
-describe("As a beacon owner, I want to register how I use my beacon in the land/other environment", () => {
-  const thisPageUrl = "/register-a-beacon/land-other-activity";
-  const previousPageUrl = "/register-a-beacon/beacon-use";
-  const nextPageUrl = "/register-a-beacon/land-other-communication";
-
+describe("As a beacon owner, I want to register how I use my beacon in the land environment", () => {
   const drivingSelector = "#driving";
-  const cyclingSelector = "#cycling";
   const workingRemotelySelector = "#workingRemotely";
   const workingRemotelyLocationSelector = "#workingRemotelyLocation";
   const workingRemotelyPeopleCountSelector = "#workingRemotelyPeopleCount";
@@ -25,13 +22,14 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
   const windfarmLocationSelector = "#windfarmLocation";
   const windfarmPeopleCountSelector = "#windfarmPeopleCount";
   const otherActivitySelector = "#otherActivity";
-  const otherActivityDescriptionSelector = "#otherActivityDescription";
+  const otherActivityTextSelector = "#otherActivityText";
   const otherActivityLocationSelector = "#otherActivityLocation";
   const otherActivityPeopleCountSelector = "#otherActivityPeopleCount";
 
   beforeEach(() => {
-    // TODO: go to env page and set land use selected for validation errors below
-    givenIHaveACookieSetAndIVisit(PageURLs.landOtherActivity);
+    givenIHaveACookieSetAndIVisit(PageURLs.environment);
+    andIHaveSelected("#land");
+    andIClickContinue();
   });
 
   it("sends me to the previous page when I click the back link", () => {
@@ -43,7 +41,7 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
 
     andIClickContinue();
 
-    thenTheUrlShouldContain(nextPageUrl);
+    thenTheUrlShouldContain(PageURLs.landCommunications);
   });
 
   describe("the Working remotely option", () => {
@@ -74,13 +72,13 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
 
       whenIType(" ", workingRemotelyPeopleCountSelector);
       andIClickContinue();
-      thenIShouldSeeAnErrorMessageThatContains(...requiredFieldErrorMessage);
       whenIClickOnTheErrorSummaryLinkContaining(...requiredFieldErrorMessage);
+      thenIShouldSeeFormErrors(...requiredFieldErrorMessage);
       thenMyFocusMovesTo(workingRemotelyPeopleCountSelector);
 
       whenIType("not a number", workingRemotelyPeopleCountSelector);
       andIClickContinue();
-      thenIShouldSeeAnErrorMessageThatContains(...mustBeANumberErrormessage);
+      thenIShouldSeeFormErrors(...mustBeANumberErrormessage);
       whenIClickOnTheErrorSummaryLinkContaining(...mustBeANumberErrormessage);
       thenMyFocusMovesTo(workingRemotelyPeopleCountSelector);
     });
@@ -93,7 +91,7 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
       givenIHaveSelected(windfarmSelector);
       whenIType(" ", windfarmLocationSelector);
       andIClickContinue();
-      thenIShouldSeeAnErrorMessageThatContains(...expectedErrorMessage);
+      thenIShouldSeeFormErrors(...expectedErrorMessage);
       whenIClickOnTheErrorSummaryLinkContaining(...expectedErrorMessage);
       thenMyFocusMovesTo(windfarmLocationSelector);
     });
@@ -114,13 +112,13 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
 
       whenIType(" ", windfarmPeopleCountSelector);
       andIClickContinue();
-      thenIShouldSeeAnErrorMessageThatContains(...requiredFieldErrorMessage);
+      thenIShouldSeeFormErrors(...requiredFieldErrorMessage);
       whenIClickOnTheErrorSummaryLinkContaining(...requiredFieldErrorMessage);
       thenMyFocusMovesTo(windfarmPeopleCountSelector);
 
       whenIType("not a number", windfarmPeopleCountSelector);
       andIClickContinue();
-      thenIShouldSeeAnErrorMessageThatContains(...mustBeANumberErrormessage);
+      thenIShouldSeeFormErrors(...mustBeANumberErrormessage);
       whenIClickOnTheErrorSummaryLinkContaining(...mustBeANumberErrormessage);
       thenMyFocusMovesTo(windfarmPeopleCountSelector);
     });
@@ -131,11 +129,11 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
       const expectedErrorMessage = ["Enter a description", "activity"];
 
       givenIHaveSelected(otherActivitySelector);
-      whenIType(" ", otherActivityDescriptionSelector);
+      whenIType(" ", otherActivityTextSelector);
       andIClickContinue();
-      thenIShouldSeeAnErrorMessageThatContains(...expectedErrorMessage);
+      thenIShouldSeeFormErrors(...expectedErrorMessage);
       whenIClickOnTheErrorSummaryLinkContaining(...expectedErrorMessage);
-      thenMyFocusMovesTo(otherActivityDescriptionSelector);
+      thenMyFocusMovesTo(otherActivityTextSelector);
     });
 
     it("requires an activity location if the Other checkbox is selected", () => {
@@ -144,7 +142,7 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
       givenIHaveSelected(otherActivitySelector);
       whenIType(" ", otherActivityLocationSelector);
       andIClickContinue();
-      thenIShouldSeeAnErrorMessageThatContains(...expectedErrorMessage);
+      thenIShouldSeeFormErrors(...expectedErrorMessage);
       whenIClickOnTheErrorSummaryLinkContaining(...expectedErrorMessage);
       thenMyFocusMovesTo(otherActivityLocationSelector);
     });
@@ -161,13 +159,13 @@ describe("As a beacon owner, I want to register how I use my beacon in the land/
 
       whenIType(" ", otherActivityPeopleCountSelector);
       andIClickContinue();
-      thenIShouldSeeAnErrorMessageThatContains(...requiredFieldErrorMessage);
+      thenIShouldSeeFormErrors(...requiredFieldErrorMessage);
       whenIClickOnTheErrorSummaryLinkContaining(...requiredFieldErrorMessage);
       thenMyFocusMovesTo(otherActivityPeopleCountSelector);
 
       whenIType("not a number", otherActivityPeopleCountSelector);
       andIClickContinue();
-      thenIShouldSeeAnErrorMessageThatContains(...mustBeANumberErrormessage);
+      thenIShouldSeeFormErrors(...mustBeANumberErrormessage);
       whenIClickOnTheErrorSummaryLinkContaining(...mustBeANumberErrormessage);
       thenMyFocusMovesTo(otherActivityPeopleCountSelector);
     });
