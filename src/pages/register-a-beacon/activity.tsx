@@ -15,6 +15,7 @@ import {
   handlePageRequest,
 } from "../../lib/handlePageRequest";
 import { Activity, Environment, Purpose } from "../../lib/registration/types";
+import { PageURLs } from "../../lib/urls";
 
 interface OptionsProps {
   form: FormJSON;
@@ -171,10 +172,20 @@ const ActivityPage: FunctionComponent<FormPageProps> = ({
       {vesselDescriptionText}
     </>
   );
+  let previousPageUrl: string = "/";
+  if (
+    environment === Environment.MARITIME ||
+    environment === Environment.AVIATION
+  ) {
+    previousPageUrl = PageURLs.purpose;
+  }
+  if (environment === Environment.LAND) {
+    previousPageUrl = PageURLs.environment;
+  }
 
   return (
     <BeaconsForm
-      previousPageUrl="/register-a-beacon/purpose"
+      previousPageUrl={previousPageUrl}
       pageHeading={pageHeading}
       showCookieBanner={showCookieBanner}
       formErrors={form.errorSummary}

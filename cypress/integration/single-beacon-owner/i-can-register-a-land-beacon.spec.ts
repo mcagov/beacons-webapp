@@ -15,12 +15,13 @@ import {
 import { andIHaveNoFurtherUses } from "../common/i-can-enter-use-information/generic.spec";
 import {
   givenIHaveEnteredMyLandUse,
+  iCanGoBackAndEditMyLandUse,
   iCanSeeMyLandUse,
 } from "../common/i-can-enter-use-information/land.spec";
 import { thenTheUrlShouldContain } from "../common/selectors-and-assertions.spec";
 
 describe("As a land beacon owner,", () => {
-  it.only("I can register my beacon", () => {
+  it("I can register my beacon", () => {
     givenIHaveEnteredMyBeaconDetails();
     givenIHaveEnteredMyLandUse();
     andIHaveNoFurtherUses();
@@ -36,5 +37,6 @@ describe("As a land beacon owner,", () => {
     iCanSeeMyPersonalDetails();
     iCanSeeMyAddressDetails();
     iCanSeeMyEmergencyContactDetails();
+    iCanGoBackAndEditMyLandUse();
   });
 });

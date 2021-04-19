@@ -144,8 +144,6 @@ export const testLandUseData = {
   },
   communications: {
     checkedFields: [
-      "vhfRadio",
-      "fixedVhfRadio",
       "portableVhfRadio",
       "satelliteTelephone",
       "mobileTelephone",

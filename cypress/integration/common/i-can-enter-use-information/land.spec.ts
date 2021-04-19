@@ -4,10 +4,7 @@ import {
 } from "../../../../src/lib/registration/types";
 import { PageURLs } from "../../../../src/lib/urls";
 import { makeEnumValueUserFriendly } from "../../../../src/lib/utils";
-import {
-  testAviationPleasureUseData,
-  testLandUseData,
-} from "../happy-path-test-data.spec";
+import { testLandUseData } from "../happy-path-test-data.spec";
 import {
   iCanEditMyAdditionalBeaconInformation,
   iCanEditMyBeaconDetails,
@@ -65,10 +62,7 @@ export const iCanGoBackAndEditMyLandUse = (): void => {
   whenIClickBack();
   iCanEditMyLandCommunications();
   whenIClickBack();
-
-  whenIClickBack();
   iCanEditMyLandActivity();
-  whenIClickBack();
   whenIClickBack();
   iCanEditMyEnvironment(Environment.LAND);
   whenIClickBack();
@@ -94,7 +88,7 @@ export const iCanEditMyLandCommunications = (): void => {
 };
 
 export const iCanEditMyLandActivity = (): void => {
-  cy.get(`input[value="${testAviationPleasureUseData.type.activity}"]`).should(
+  cy.get(`input[value="${testLandUseData.type.activity}"]`).should(
     "be.checked"
   );
 };
