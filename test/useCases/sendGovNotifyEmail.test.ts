@@ -14,7 +14,7 @@ describe("Send Gov Notify Email", () => {
   });
 
   it("should not send an email if the gov notify template id is not set", async () => {
-    const result = await await useCase.execute({});
+    const result = await useCase.execute({});
 
     expect(gateway.sendEmail).not.toHaveBeenCalled();
     expect(result).toBe(false);
