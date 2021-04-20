@@ -1,31 +1,18 @@
 import { GetServerSideProps } from "next";
 import React, { FunctionComponent } from "react";
-import { BackButtonRouterIndexes, Button } from "../../components/Button";
+import { BeaconsForm } from "../../components/BeaconsForm";
 import { CheckboxList, CheckboxListItem } from "../../components/Checkbox";
-import { FormErrorSummary } from "../../components/ErrorSummary";
-import {
-  Form,
-  FormFieldset,
-  FormGroup,
-  FormLegend,
-} from "../../components/Form";
-import { Grid } from "../../components/Grid";
+import { FormGroup, FormLegend } from "../../components/Form";
 import { Input } from "../../components/Input";
-import { Layout } from "../../components/Layout";
-import { IfYouNeedHelp } from "../../components/Mca";
 import { TextareaCharacterCount } from "../../components/Textarea";
-import {
-  AnchorLink,
-  GovUKBody,
-  PageHeading,
-} from "../../components/Typography";
+import { AnchorLink, GovUKBody } from "../../components/Typography";
 import { FieldManager } from "../../lib/form/fieldManager";
 import { FormManager } from "../../lib/form/formManager";
 import { Validators } from "../../lib/form/validators";
 import { FormSubmission } from "../../lib/formCache";
 import { FormPageProps, handlePageRequest } from "../../lib/handlePageRequest";
 import { Communication } from "../../lib/registration/types";
-import { ofcomLicenseUrl } from "../../lib/urls";
+import { ofcomLicenseUrl, PageURLs } from "../../lib/urls";
 
 const definePageForm = ({
   portableVhfRadio,
@@ -122,146 +109,134 @@ const LandOtherCommunications: FunctionComponent<FormPageProps> = ({
 }: FormPageProps): JSX.Element => {
   const pageHeading = "How can we communicate with you?";
 
-  return (
-    <Layout
-      navigation={
-        <BackButtonRouterIndexes href="/register-a-beacon/activity" />
-      }
-      title={pageHeading}
-      pageHasErrors={form.hasErrors}
-      showCookieBanner={showCookieBanner}
-    >
-      <Grid
-        mainContent={
-          <>
-            <PageHeading>{pageHeading}</PageHeading>
-            <FormErrorSummary formErrors={form.errorSummary} />
-            <GovUKBody>
-              This will be critical for Search and Rescue in an emergency.
-            </GovUKBody>
-            <GovUKBody>
-              If you have a radio license, VHF and/or VHF/DSC radio, you can{" "}
-              <AnchorLink href={ofcomLicenseUrl}>
-                find up your Call Sign and Maritime Mobile Service Identity
-                (MMSI) number on the OFCOM website.
-              </AnchorLink>
-            </GovUKBody>
-            <Form>
-              <TypesOfCommunication form={form} />
+  const pageText = (
+    <>
+      <GovUKBody>
+        This will be critical for Search and Rescue in an emergency.
+      </GovUKBody>
+      <GovUKBody>
+        If you have a radio license, VHF and/or VHF/DSC radio, you can{" "}
+        <AnchorLink href={ofcomLicenseUrl}>
+          find up your Call Sign and Maritime Mobile Service Identity (MMSI)
+          number on the OFCOM website.
+        </AnchorLink>
+      </GovUKBody>
+      <FormLegend size="small">
+        Tick all that apply and provide as much detail as you can
+      </FormLegend>
+    </>
+  );
 
-              <Button buttonText="Continue" />
-            </Form>
-            <IfYouNeedHelp />
-          </>
-        }
-      />
-    </Layout>
+  return (
+    <BeaconsForm
+      pageHeading={pageHeading}
+      previousPageUrl={PageURLs.activity}
+      formErrors={form.errorSummary}
+      showCookieBanner={showCookieBanner}
+      pageText={pageText}
+    >
+      <TypesOfCommunication form={form} />
+    </BeaconsForm>
   );
 };
 
 const TypesOfCommunication: FunctionComponent<FormPageProps> = ({
   form,
 }: FormPageProps) => (
-  <FormFieldset>
-    <FormLegend size="small">
-      Tick all that apply and provide as much detail as you can
-    </FormLegend>
-
-    <FormGroup>
-      <CheckboxList conditional={true}>
-        <CheckboxListItem
-          id="portableVhfRadio"
-          value={Communication.PORTABLE_VHF_RADIO}
-          defaultChecked={
-            form.fields.portableVhfRadio.value ===
-            Communication.PORTABLE_VHF_RADIO
-          }
-          label="Portable VHF/DSC Radio"
-          conditional={true}
+  <FormGroup>
+    <CheckboxList conditional={true}>
+      <CheckboxListItem
+        id="portableVhfRadio"
+        value={Communication.PORTABLE_VHF_RADIO}
+        defaultChecked={
+          form.fields.portableVhfRadio.value ===
+          Communication.PORTABLE_VHF_RADIO
+        }
+        label="Portable VHF/DSC Radio"
+        conditional={true}
+      >
+        <FormGroup
+          errorMessages={form.fields.portableVhfRadioInput.errorMessages}
         >
-          <FormGroup
-            errorMessages={form.fields.portableVhfRadioInput.errorMessages}
-          >
-            <Input
-              id="portableVhfRadioInput"
-              label="Portable MMSI number"
-              hintText="This is the unique MMSI number associated to the portable radio and is 9 numbers long. E.g. starts with 2359xxxxx"
-              defaultValue={form.fields.portableVhfRadioInput.value}
-            />
-          </FormGroup>
-        </CheckboxListItem>
-        <CheckboxListItem
-          id="satelliteTelephone"
-          value={Communication.SATELLITE_TELEPHONE}
-          defaultChecked={
-            form.fields.satelliteTelephone.value ===
-            Communication.SATELLITE_TELEPHONE
-          }
-          label="Satellite Telephone"
-          conditional={true}
-        >
-          <FormGroup
-            errorMessages={form.fields.satelliteTelephoneInput.errorMessages}
-          >
-            <Input
-              id="satelliteTelephoneInput"
-              label="Enter phone number"
-              hintText="Iridium usually start: +8707, Thuraya usually start: +8821, Globalstar usually start: +3364)"
-              defaultValue={form.fields.satelliteTelephoneInput.value}
-            />
-          </FormGroup>
-        </CheckboxListItem>
-        <CheckboxListItem
-          id="mobileTelephone"
-          value={Communication.MOBILE_TELEPHONE}
-          defaultChecked={
-            form.fields.mobileTelephone.value === Communication.MOBILE_TELEPHONE
-          }
-          label="Mobile Telephone(s)"
-          conditional={true}
-        >
-          <FormGroup
-            errorMessages={form.fields.mobileTelephoneInput1.errorMessages}
-          >
-            <Input
-              id="mobileTelephoneInput1"
-              label="Mobile number 1"
-              inputClassName="govuk-!-margin-bottom-4"
-              defaultValue={form.fields.mobileTelephoneInput1.value}
-              htmlAttributes={{ autoComplete: "tel" }}
-            />
-          </FormGroup>
-
           <Input
-            id="mobileTelephoneInput2"
-            label="Mobile number 2 (optional)"
-            defaultValue={form.fields.mobileTelephoneInput2.value}
+            id="portableVhfRadioInput"
+            label="Portable MMSI number"
+            hintText="This is the unique MMSI number associated to the portable radio and is 9 numbers long. E.g. starts with 2359xxxxx"
+            defaultValue={form.fields.portableVhfRadioInput.value}
+          />
+        </FormGroup>
+      </CheckboxListItem>
+      <CheckboxListItem
+        id="satelliteTelephone"
+        value={Communication.SATELLITE_TELEPHONE}
+        defaultChecked={
+          form.fields.satelliteTelephone.value ===
+          Communication.SATELLITE_TELEPHONE
+        }
+        label="Satellite Telephone"
+        conditional={true}
+      >
+        <FormGroup
+          errorMessages={form.fields.satelliteTelephoneInput.errorMessages}
+        >
+          <Input
+            id="satelliteTelephoneInput"
+            label="Enter phone number"
+            hintText="Iridium usually start: +8707, Thuraya usually start: +8821, Globalstar usually start: +3364)"
+            defaultValue={form.fields.satelliteTelephoneInput.value}
+          />
+        </FormGroup>
+      </CheckboxListItem>
+      <CheckboxListItem
+        id="mobileTelephone"
+        value={Communication.MOBILE_TELEPHONE}
+        defaultChecked={
+          form.fields.mobileTelephone.value === Communication.MOBILE_TELEPHONE
+        }
+        label="Mobile Telephone(s)"
+        conditional={true}
+      >
+        <FormGroup
+          errorMessages={form.fields.mobileTelephoneInput1.errorMessages}
+        >
+          <Input
+            id="mobileTelephoneInput1"
+            label="Mobile number 1"
+            inputClassName="govuk-!-margin-bottom-4"
+            defaultValue={form.fields.mobileTelephoneInput1.value}
             htmlAttributes={{ autoComplete: "tel" }}
           />
-        </CheckboxListItem>
-        <CheckboxListItem
-          id="otherCommunication"
-          value={Communication.OTHER}
-          defaultChecked={
-            form.fields.otherCommunication.value === Communication.OTHER
-          }
-          label="Other"
-          conditional={true}
+        </FormGroup>
+
+        <Input
+          id="mobileTelephoneInput2"
+          label="Mobile number 2 (optional)"
+          defaultValue={form.fields.mobileTelephoneInput2.value}
+          htmlAttributes={{ autoComplete: "tel" }}
+        />
+      </CheckboxListItem>
+      <CheckboxListItem
+        id="otherCommunication"
+        value={Communication.OTHER}
+        defaultChecked={
+          form.fields.otherCommunication.value === Communication.OTHER
+        }
+        label="Other"
+        conditional={true}
+      >
+        <FormGroup
+          errorMessages={form.fields.otherCommunicationInput.errorMessages}
         >
-          <FormGroup
-            errorMessages={form.fields.otherCommunicationInput.errorMessages}
-          >
-            <TextareaCharacterCount
-              id="otherCommunicationInput"
-              label="Please provide details of how we can contact you"
-              defaultValue={form.fields.otherCommunicationInput.value}
-              maxCharacters={250}
-            />
-          </FormGroup>
-        </CheckboxListItem>
-      </CheckboxList>
-    </FormGroup>
-  </FormFieldset>
+          <TextareaCharacterCount
+            id="otherCommunicationInput"
+            label="Please provide details of how we can contact you"
+            defaultValue={form.fields.otherCommunicationInput.value}
+            maxCharacters={250}
+          />
+        </FormGroup>
+      </CheckboxListItem>
+    </CheckboxList>
+  </FormGroup>
 );
 
 export const getServerSideProps: GetServerSideProps = handlePageRequest(
