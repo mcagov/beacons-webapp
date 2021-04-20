@@ -118,6 +118,17 @@ const definePageForm = ({
   });
 };
 
+const getPageHeading = (purpose: Purpose, environment: Environment): string => {
+  let pageHeading = "Please select the ";
+  if (environment !== Environment.LAND) {
+    pageHeading += `${purpose.toLowerCase()} `;
+  }
+
+  pageHeading += `${environment.toLowerCase()} activity that best describes how the beacon will be used`;
+
+  return pageHeading;
+};
+
 const ActivityPage: FunctionComponent<FormPageProps> = ({
   form,
   showCookieBanner,
@@ -126,7 +137,7 @@ const ActivityPage: FunctionComponent<FormPageProps> = ({
   const environment = flattenedRegistration.environment;
   const purpose = flattenedRegistration.purpose;
 
-  const pageHeading = `Please select the ${purpose.toLowerCase()} ${environment.toLowerCase()} activity that best describes how the beacon will be used`;
+  const pageHeading = getPageHeading(purpose, environment);
   let vesselDescriptionText: ReactNode;
   if (environment === Environment.MARITIME) {
     vesselDescriptionText = (
@@ -144,7 +155,7 @@ const ActivityPage: FunctionComponent<FormPageProps> = ({
       {vesselDescriptionText}
     </>
   );
-  let previousPageUrl: string = "/";
+  let previousPageUrl = "/";
   if (
     environment === Environment.MARITIME ||
     environment === Environment.AVIATION
