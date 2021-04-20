@@ -37,7 +37,7 @@ export const iCanEditMyLandCommunications = (): void => {
     cy.get(`#${field}`).should("be.checked")
   );
   cy.get("#satelliteTelephoneInput").should(
-    "have.value",
+    "contain.value",
     comms.satelliteTelephone
   );
   cy.get("#mobileTelephoneInput1").should(
