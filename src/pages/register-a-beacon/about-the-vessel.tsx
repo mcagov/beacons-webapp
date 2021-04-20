@@ -64,8 +64,8 @@ const AboutTheVessel: FunctionComponent<FormPageProps> = ({
 
   const pageText: ReactNode = (
     <InsetText>
-      Leave anything that isn't relevant blank. Any information you do provide
-      may help save lives in a Search and Rescue scenario.
+      Leave anything that isn&apos;t relevant blank. Any information you do
+      provide may help save lives in a Search and Rescue scenario.
     </InsetText>
   );
 

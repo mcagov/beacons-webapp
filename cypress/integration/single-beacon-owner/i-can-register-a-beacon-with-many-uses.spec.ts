@@ -30,7 +30,6 @@ import {
   iCanEditMyAviationActivity,
   iCanEditMyAviationEnvironment,
   iCanEditMyAviationPurpose,
-  iCanSeeMyAviationUse,
 } from "../common/i-can-enter-use-information/aviation.spec";
 import {
   andIHaveAnotherUse,
@@ -66,35 +65,7 @@ import {
 } from "../common/selectors-and-assertions.spec";
 
 describe("As a single beacon owner with many uses,", () => {
-  it("I can register my beacon for a maritime and an aviation use", () => {
-    givenIHaveEnteredMyBeaconDetails();
-    iCanSeeAPageHeadingThatContains("main use");
-    givenIHaveEnteredMyMaritimeUse(Purpose.PLEASURE);
-    andIHaveAnotherUse();
-    iCanSeeAPageHeadingThatContains("second use");
-    givenIHaveEnteredMyAviationUse(Purpose.PLEASURE);
-    andIHaveNoFurtherUses();
-
-    givenIHaveEnteredMyPersonalDetails();
-    givenIHaveEnteredMyAddressDetails();
-    givenIHaveEnteredMyEmergencyContactDetails();
-
-    thenTheUrlShouldContain(PageURLs.checkYourAnswers);
-    iCanSeeMyBeaconDetails();
-    iCanSeeMyAdditionalBeaconInformation();
-    iCanSeeASectionHeadingThatContains("Main use");
-    iCanSeeMyMaritimeUse(Purpose.PLEASURE);
-    iCanSeeASectionHeadingThatContains("Second use");
-    iCanSeeMyAviationUse(Purpose.PLEASURE);
-    iCanSeeMyPersonalDetails();
-    iCanSeeMyAddressDetails();
-    iCanSeeMyEmergencyContactDetails();
-
-    iCanGoBackThroughTheFormInReverse();
-    iCanClickEveryChangeButtonToEditMyRegistration();
-  });
-
-  it("I can register my beacon for a land, maritime, and aviation use", () => {
+  it.only("I can register my beacon for a land, maritime pleasure, and aviation pleasure use", () => {
     givenIHaveEnteredMyBeaconDetails();
     iCanSeeAPageHeadingThatContains("main use");
     givenIHaveEnteredMyLandUse();
@@ -120,60 +91,7 @@ describe("As a single beacon owner with many uses,", () => {
     iCanSeeMyPersonalDetails();
     iCanSeeMyAddressDetails();
     iCanSeeMyEmergencyContactDetails();
-
-    whenIClickBack();
-    iCanEditMyEmergencyContactDetails();
-    whenIClickBack();
-    iCanEditMyAddressDetails();
-    whenIClickBack();
-    iCanEditMyPersonalDetails();
-    whenIClickBack();
-    iCanEditMyAdditionalUsesChoice(AdditionalUses.NO);
-    whenIClickBack();
-    iCanEditMyAdditionalAviationUseInformation();
-    whenIClickBack();
-    iCanEditMyAircraftCommunications();
-    whenIClickBack();
-    iCanEditMyAircraftDetails();
-    whenIClickBack();
-    iCanEditMyAviationActivity();
-    whenIClickBack();
-    iCanEditMyAviationPurpose(Purpose.PLEASURE);
-    whenIClickBack();
-    iCanEditMyEnvironment(Environment.AVIATION);
-    iCanSeeAPageHeadingThatContains("third use");
-    whenIClickBack();
-    iCanEditMyAdditionalUsesChoice(AdditionalUses.YES);
-    whenIClickBack();
-    iCanEditMyAdditionalMaritimeUseInformation();
-    whenIClickBack();
-    iCanEditMyVesselCommunications();
-    whenIClickBack();
-    iCanEditMyVesselDetails();
-    whenIClickBack();
-    iCanEditMyMaritimeActivity();
-    whenIClickBack();
-    iCanEditMyMaritimePurpose(Purpose.PLEASURE);
-    whenIClickBack();
-    iCanEditMyEnvironment(Environment.MARITIME);
-    iCanSeeAPageHeadingThatContains("second use");
-    whenIClickBack();
-    iCanEditMyAdditionalUsesChoice(AdditionalUses.YES);
-    whenIClickBack();
-    iCanEditMyAdditionalLandUseInformation();
-    whenIClickBack();
-    iCanEditMyLandCommunications();
-    whenIClickBack();
-    iCanEditMyLandActivity();
-    whenIClickBack();
-    iCanEditMyLandEnvironment();
-    whenIClickBack();
-    iCanEditMyAdditionalBeaconInformation();
-    whenIClickBack();
-    iCanEditMyBeaconDetails();
-    whenIClickBack();
-    iAmAt(PageURLs.start);
-    // iCanClickEveryChangeButtonToEditMyRegistration();
+    iCanGoBackThroughTheFormInReverse();
   });
 });
 
@@ -198,7 +116,7 @@ const iCanGoBackThroughTheFormInReverse = () => {
   iCanEditMyAviationPurpose(Purpose.PLEASURE);
   whenIClickBack();
   iCanEditMyEnvironment(Environment.AVIATION);
-  iCanSeeAPageHeadingThatContains("second use");
+  iCanSeeAPageHeadingThatContains("third use");
   whenIClickBack();
   iCanEditMyAdditionalUsesChoice(AdditionalUses.YES);
   whenIClickBack();
@@ -213,13 +131,24 @@ const iCanGoBackThroughTheFormInReverse = () => {
   iCanEditMyMaritimePurpose(Purpose.PLEASURE);
   whenIClickBack();
   iCanEditMyEnvironment(Environment.MARITIME);
-  iCanSeeAPageHeadingThatContains("main use");
+  iCanSeeAPageHeadingThatContains("second use");
+  whenIClickBack();
+  iCanEditMyAdditionalUsesChoice(AdditionalUses.YES);
+  whenIClickBack();
+  iCanEditMyAdditionalLandUseInformation();
+  whenIClickBack();
+  iCanEditMyLandCommunications();
+  whenIClickBack();
+  iCanEditMyLandActivity();
+  whenIClickBack();
+  iCanEditMyLandEnvironment();
   whenIClickBack();
   iCanEditMyAdditionalBeaconInformation();
   whenIClickBack();
   iCanEditMyBeaconDetails();
   whenIClickBack();
   iAmAt(PageURLs.start);
+  iCanClickEveryChangeButtonToEditMyRegistration();
 };
 
 const iCanClickEveryChangeButtonToEditMyRegistration = () => {
@@ -228,18 +157,22 @@ const iCanClickEveryChangeButtonToEditMyRegistration = () => {
   const changeLinkAssertions = {
     [PageURLs.checkBeaconDetails]: iCanEditMyBeaconDetails,
     [PageURLs.beaconInformation]: iCanEditMyAdditionalBeaconInformation,
-    [PageURLs.environment + "?useIndex=0"]: iCanEditMyMaritimeEnvironment,
-    [PageURLs.aboutTheVessel + "?useIndex=0"]: iCanEditMyVesselDetails,
+    [PageURLs.environment + "?useIndex=0"]: iCanEditMyLandActivity,
+    [PageURLs.landCommunications + "?useIndex=0"]: iCanEditMyLandCommunications,
+    [PageURLs.moreDetails +
+    "?useIndex=0"]: iCanEditMyAdditionalLandUseInformation,
+    [PageURLs.environment + "?useIndex=1"]: iCanEditMyMaritimeEnvironment,
+    [PageURLs.aboutTheVessel + "?useIndex=1"]: iCanEditMyVesselDetails,
     [PageURLs.vesselCommunications +
-    "?useIndex=0"]: iCanEditMyVesselCommunications,
+    "?useIndex=1"]: iCanEditMyVesselCommunications,
     [PageURLs.moreDetails +
-    "?useIndex=0"]: iCanEditMyAdditionalMaritimeUseInformation,
-    [PageURLs.environment + "?useIndex=1"]: iCanEditMyAviationEnvironment,
-    [PageURLs.aboutTheAircraft + "?useIndex=1"]: iCanEditMyAircraftDetails,
+    "?useIndex=1"]: iCanEditMyAdditionalMaritimeUseInformation,
+    [PageURLs.environment + "?useIndex=2"]: iCanEditMyAviationEnvironment,
+    [PageURLs.aboutTheAircraft + "?useIndex=2"]: iCanEditMyAircraftDetails,
     [PageURLs.aircraftCommunications +
-    "?useIndex=1"]: iCanEditMyAircraftCommunications,
+    "?useIndex=2"]: iCanEditMyAircraftCommunications,
     [PageURLs.moreDetails +
-    "?useIndex=1"]: iCanEditMyAdditionalAviationUseInformation,
+    "?useIndex=2"]: iCanEditMyAdditionalAviationUseInformation,
     [PageURLs.aboutBeaconOwner]: iCanEditMyPersonalDetails,
     [PageURLs.beaconOwnerAddress]: iCanEditMyAddressDetails,
     [PageURLs.emergencyContact]: iCanEditMyEmergencyContactDetails,
