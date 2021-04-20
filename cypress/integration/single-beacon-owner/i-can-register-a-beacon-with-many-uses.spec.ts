@@ -157,7 +157,7 @@ const iCanClickEveryChangeButtonToEditMyRegistration = () => {
   const changeLinkAssertions = {
     [PageURLs.checkBeaconDetails]: iCanEditMyBeaconDetails,
     [PageURLs.beaconInformation]: iCanEditMyAdditionalBeaconInformation,
-    [PageURLs.environment + "?useIndex=0"]: iCanEditMyLandActivity,
+    [PageURLs.environment + "?useIndex=0"]: iCanEditMyLandEnvironment,
     [PageURLs.landCommunications + "?useIndex=0"]: iCanEditMyLandCommunications,
     [PageURLs.moreDetails +
     "?useIndex=0"]: iCanEditMyAdditionalLandUseInformation,
