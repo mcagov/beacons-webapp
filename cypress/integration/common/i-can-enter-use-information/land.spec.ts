@@ -60,8 +60,8 @@ export const iCanEditMyLandActivity = (): void => {
   );
 };
 
-export const iCanEditMyAdditionalLandUseInformation = (): void => {
-  cy.get("textarea").contains(testLandUseData.moreDetails);
+export const iCanEditMyAdditionalLandUseMoreDetails = (): void => {
+  cy.get("textarea").should("contain.value", testLandUseData.moreDetails);
 };
 
 export const iCanSeeMyLandUse = (): void => {

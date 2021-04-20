@@ -28,7 +28,7 @@ import {
 } from "../common/i-can-enter-use-information/generic.spec";
 import {
   givenIHaveEnteredMyLandUse,
-  iCanEditMyAdditionalLandUseInformation,
+  iCanEditMyAdditionalLandUseMoreDetails,
   iCanEditMyLandActivity,
   iCanEditMyLandCommunications,
   iCanSeeMyLandUse,
@@ -50,7 +50,7 @@ describe("As a land beacon owner", () => {
     whenIClickBack();
     iCanEditMyAdditionalUsesChoice(AdditionalUses.NO);
     whenIClickBack();
-    iCanEditMyAdditionalLandUseInformation();
+    iCanEditMyAdditionalLandUseMoreDetails();
     whenIClickBack();
     iCanEditMyLandCommunications();
     whenIClickBack();

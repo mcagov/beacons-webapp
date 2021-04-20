@@ -39,7 +39,7 @@ import {
 } from "../common/i-can-enter-use-information/generic.spec";
 import {
   givenIHaveEnteredMyLandUse,
-  iCanEditMyAdditionalLandUseInformation,
+  iCanEditMyAdditionalLandUseMoreDetails,
   iCanEditMyLandActivity,
   iCanEditMyLandCommunications,
   iCanEditMyLandEnvironment,
@@ -135,7 +135,7 @@ const iCanGoBackThroughTheFormInReverse = () => {
   whenIClickBack();
   iCanEditMyAdditionalUsesChoice(AdditionalUses.YES);
   whenIClickBack();
-  iCanEditMyAdditionalLandUseInformation();
+  iCanEditMyAdditionalLandUseMoreDetails();
   whenIClickBack();
   iCanEditMyLandCommunications();
   whenIClickBack();
@@ -160,7 +160,7 @@ const iCanClickEveryChangeButtonToEditMyRegistration = () => {
     [PageURLs.environment + "?useIndex=0"]: iCanEditMyLandEnvironment,
     [PageURLs.landCommunications + "?useIndex=0"]: iCanEditMyLandCommunications,
     [PageURLs.moreDetails +
-    "?useIndex=0"]: iCanEditMyAdditionalLandUseInformation,
+    "?useIndex=0"]: iCanEditMyAdditionalLandUseMoreDetails,
     [PageURLs.environment + "?useIndex=1"]: iCanEditMyMaritimeEnvironment,
     [PageURLs.aboutTheVessel + "?useIndex=1"]: iCanEditMyVesselDetails,
     [PageURLs.vesselCommunications +
