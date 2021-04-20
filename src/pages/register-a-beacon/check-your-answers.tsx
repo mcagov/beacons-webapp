@@ -41,7 +41,7 @@ interface CheckYourAnswersBeaconUseSectionProps {
   href?: string;
 }
 
-const noData = "no data";
+const noData = "-";
 
 const CheckYourAnswersPage: FunctionComponent<CheckYourAnswersProps> = ({
   registration,
