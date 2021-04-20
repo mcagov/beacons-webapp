@@ -39,6 +39,14 @@ import {
   iCanEditMyEnvironment,
 } from "../common/i-can-enter-use-information/generic.spec";
 import {
+  givenIHaveEnteredMyLandUse,
+  iCanEditMyAdditionalLandUseInformation,
+  iCanEditMyLandActivity,
+  iCanEditMyLandCommunications,
+  iCanEditMyLandEnvironment,
+  iCanSeeMyLandUse,
+} from "../common/i-can-enter-use-information/land.spec";
+import {
   givenIHaveEnteredMyMaritimeUse,
   iCanEditMyAdditionalMaritimeUseInformation,
   iCanEditMyMaritimeActivity,
@@ -84,6 +92,88 @@ describe("As a single beacon owner with many uses,", () => {
 
     iCanGoBackThroughTheFormInReverse();
     iCanClickEveryChangeButtonToEditMyRegistration();
+  });
+
+  it("I can register my beacon for a land, maritime, and aviation use", () => {
+    givenIHaveEnteredMyBeaconDetails();
+    iCanSeeAPageHeadingThatContains("main use");
+    givenIHaveEnteredMyLandUse();
+    andIHaveAnotherUse();
+    iCanSeeAPageHeadingThatContains("second use");
+    givenIHaveEnteredMyMaritimeUse(Purpose.PLEASURE);
+    andIHaveAnotherUse();
+    iCanSeeAPageHeadingThatContains("third use");
+    givenIHaveEnteredMyAviationUse(Purpose.PLEASURE);
+    andIHaveNoFurtherUses();
+
+    givenIHaveEnteredMyPersonalDetails();
+    givenIHaveEnteredMyAddressDetails();
+    givenIHaveEnteredMyEmergencyContactDetails();
+
+    thenTheUrlShouldContain(PageURLs.checkYourAnswers);
+    iCanSeeMyBeaconDetails();
+    iCanSeeMyAdditionalBeaconInformation();
+    iCanSeeASectionHeadingThatContains("Main use");
+    iCanSeeMyLandUse();
+    iCanSeeASectionHeadingThatContains("Second use");
+    iCanSeeMyMaritimeUse(Purpose.PLEASURE);
+    iCanSeeMyPersonalDetails();
+    iCanSeeMyAddressDetails();
+    iCanSeeMyEmergencyContactDetails();
+
+    whenIClickBack();
+    iCanEditMyEmergencyContactDetails();
+    whenIClickBack();
+    iCanEditMyAddressDetails();
+    whenIClickBack();
+    iCanEditMyPersonalDetails();
+    whenIClickBack();
+    iCanEditMyAdditionalUsesChoice(AdditionalUses.NO);
+    whenIClickBack();
+    iCanEditMyAdditionalAviationUseInformation();
+    whenIClickBack();
+    iCanEditMyAircraftCommunications();
+    whenIClickBack();
+    iCanEditMyAircraftDetails();
+    whenIClickBack();
+    iCanEditMyAviationActivity();
+    whenIClickBack();
+    iCanEditMyAviationPurpose(Purpose.PLEASURE);
+    whenIClickBack();
+    iCanEditMyEnvironment(Environment.AVIATION);
+    iCanSeeAPageHeadingThatContains("third use");
+    whenIClickBack();
+    iCanEditMyAdditionalUsesChoice(AdditionalUses.YES);
+    whenIClickBack();
+    iCanEditMyAdditionalMaritimeUseInformation();
+    whenIClickBack();
+    iCanEditMyVesselCommunications();
+    whenIClickBack();
+    iCanEditMyVesselDetails();
+    whenIClickBack();
+    iCanEditMyMaritimeActivity();
+    whenIClickBack();
+    iCanEditMyMaritimePurpose(Purpose.PLEASURE);
+    whenIClickBack();
+    iCanEditMyEnvironment(Environment.MARITIME);
+    iCanSeeAPageHeadingThatContains("second use");
+    whenIClickBack();
+    iCanEditMyAdditionalUsesChoice(AdditionalUses.YES);
+    whenIClickBack();
+    iCanEditMyAdditionalLandUseInformation();
+    whenIClickBack();
+    iCanEditMyLandCommunications();
+    whenIClickBack();
+    iCanEditMyLandActivity();
+    whenIClickBack();
+    iCanEditMyLandEnvironment();
+    whenIClickBack();
+    iCanEditMyAdditionalBeaconInformation();
+    whenIClickBack();
+    iCanEditMyBeaconDetails();
+    whenIClickBack();
+    iAmAt(PageURLs.start);
+    // iCanClickEveryChangeButtonToEditMyRegistration();
   });
 });
 
