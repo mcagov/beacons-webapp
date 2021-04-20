@@ -1,32 +1,15 @@
-import {
-  AdditionalUses,
-  Environment,
-} from "../../../../src/lib/registration/types";
+import { Environment } from "../../../../src/lib/registration/types";
 import { PageURLs } from "../../../../src/lib/urls";
 import { makeEnumValueUserFriendly } from "../../../../src/lib/utils";
 import { testLandUseData } from "../happy-path-test-data.spec";
 import {
-  iCanEditMyAdditionalBeaconInformation,
-  iCanEditMyBeaconDetails,
-} from "../i-can-enter-beacon-information.spec";
-import {
-  iCanEditMyAddressDetails,
-  iCanEditMyEmergencyContactDetails,
-  iCanEditMyPersonalDetails,
-} from "../i-can-enter-owner-information.spec";
-import {
   andIClickContinue,
   givenIHaveSelected,
   givenIHaveTyped,
-  iAmAt,
   iCanSeeAPageHeadingThatContains,
   thenTheUrlShouldContain,
-  whenIClickBack,
 } from "../selectors-and-assertions.spec";
-import {
-  iCanEditMyAdditionalUsesChoice,
-  iCanEditMyEnvironment,
-} from "./generic.spec";
+import { iCanEditMyEnvironment } from "./generic.spec";
 
 export const givenIHaveEnteredMyLandUse = (): void => {
   thenTheUrlShouldContain(PageURLs.environment);
@@ -48,31 +31,6 @@ export const givenIHaveEnteredMyLandUse = (): void => {
   andIClickContinue();
 };
 
-export const iCanGoBackAndEditMyLandUse = (): void => {
-  whenIClickBack();
-  iCanEditMyEmergencyContactDetails();
-  whenIClickBack();
-  iCanEditMyAddressDetails();
-  whenIClickBack();
-  iCanEditMyPersonalDetails();
-  whenIClickBack();
-  iCanEditMyAdditionalUsesChoice(AdditionalUses.NO);
-  whenIClickBack();
-  iCanEditMyAdditionalLandUseInformation();
-  whenIClickBack();
-  iCanEditMyLandCommunications();
-  whenIClickBack();
-  iCanEditMyLandActivity();
-  whenIClickBack();
-  iCanEditMyEnvironment(Environment.LAND);
-  whenIClickBack();
-  iCanEditMyAdditionalBeaconInformation();
-  whenIClickBack();
-  iCanEditMyBeaconDetails();
-  whenIClickBack();
-  iAmAt(PageURLs.start);
-};
-
 export const iCanEditMyLandCommunications = (): void => {
   const comms = testLandUseData.communications;
   comms.checkedFields.forEach((field) =>
@@ -82,9 +40,18 @@ export const iCanEditMyLandCommunications = (): void => {
     "have.value",
     comms.satelliteTelephone
   );
-  cy.get("#mobileTelephoneInput1").should("have.value", comms.mobileTelephone1);
-  cy.get("#mobileTelephoneInput2").should("have.value", comms.mobileTelephone2);
-  cy.get("#otherCommunicationInput").contains(comms.otherCommunication);
+  cy.get("#mobileTelephoneInput1").should(
+    "contain.value",
+    comms.mobileTelephone1
+  );
+  cy.get("#mobileTelephoneInput2").should(
+    "contain.value",
+    comms.mobileTelephone2
+  );
+  cy.get("#otherCommunicationInput").should(
+    "contain.value",
+    comms.otherCommunication
+  );
 };
 
 export const iCanEditMyLandActivity = (): void => {
