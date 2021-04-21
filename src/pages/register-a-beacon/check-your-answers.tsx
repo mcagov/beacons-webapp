@@ -113,8 +113,11 @@ const BeaconDetailsSection: FunctionComponent<IRegistration> = ({
         href={PageURLs.checkBeaconDetails}
         actionText="Change"
       >
-        <CheckYourAnswersDataRowItem value={manufacturer} />
-        <CheckYourAnswersDataRowItem value={model} />
+        <CheckYourAnswersDataRowItem
+          label="Manufacturer"
+          value={manufacturer}
+        />
+        <CheckYourAnswersDataRowItem label="Model" value={model} />
         <CheckYourAnswersDataRowItem label="Hex ID/UIN" value={hexId} />
       </SummaryListItem>
     </SummaryList>
