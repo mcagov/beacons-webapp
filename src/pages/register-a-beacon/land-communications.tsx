@@ -103,7 +103,7 @@ const definePageForm = ({
   });
 };
 
-const LandOtherCommunications: FunctionComponent<FormPageProps> = ({
+const LandCommunications: FunctionComponent<FormPageProps> = ({
   form,
   showCookieBanner,
 }: FormPageProps): JSX.Element => {
@@ -244,4 +244,4 @@ export const getServerSideProps: GetServerSideProps = handlePageRequest(
   definePageForm
 );
 
-export default LandOtherCommunications;
+export default LandCommunications;
