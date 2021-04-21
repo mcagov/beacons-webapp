@@ -40,6 +40,25 @@ import {
 } from "../common/selectors-and-assertions.spec";
 
 describe("As a land beacon owner", () => {
+  it("I can register my beacon", () => {
+    givenIHaveEnteredMyBeaconDetails();
+    givenIHaveEnteredMyLandUse();
+    andIHaveNoFurtherUses();
+
+    givenIHaveEnteredMyPersonalDetails();
+    givenIHaveEnteredMyAddressDetails();
+    givenIHaveEnteredMyEmergencyContactDetails();
+
+    thenTheUrlShouldContain(PageURLs.checkYourAnswers);
+    iCanSeeMyBeaconDetails();
+    iCanSeeMyAdditionalBeaconInformation();
+    iCanSeeMyLandUse();
+    iCanSeeMyPersonalDetails();
+    iCanSeeMyAddressDetails();
+    iCanSeeMyEmergencyContactDetails();
+    iCanGoBackAndEditMyLandUse();
+  });
+
   const iCanGoBackAndEditMyLandUse = (): void => {
     whenIClickBack();
     iCanEditMyEmergencyContactDetails();
@@ -64,23 +83,4 @@ describe("As a land beacon owner", () => {
     whenIClickBack();
     iAmAt(PageURLs.start);
   };
-
-  it("I can register my beacon", () => {
-    givenIHaveEnteredMyBeaconDetails();
-    givenIHaveEnteredMyLandUse();
-    andIHaveNoFurtherUses();
-
-    givenIHaveEnteredMyPersonalDetails();
-    givenIHaveEnteredMyAddressDetails();
-    givenIHaveEnteredMyEmergencyContactDetails();
-
-    thenTheUrlShouldContain(PageURLs.checkYourAnswers);
-    iCanSeeMyBeaconDetails();
-    iCanSeeMyAdditionalBeaconInformation();
-    iCanSeeMyLandUse();
-    iCanSeeMyPersonalDetails();
-    iCanSeeMyAddressDetails();
-    iCanSeeMyEmergencyContactDetails();
-    iCanGoBackAndEditMyLandUse();
-  });
 });

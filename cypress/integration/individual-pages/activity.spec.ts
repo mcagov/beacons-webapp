@@ -80,7 +80,7 @@ describe("As a beacon owner, I want to submit the primary activity for my beacon
     });
   });
 
-  describe("As a aviation, pleasure owner", () => {
+  describe("As an aviation, pleasure owner", () => {
     beforeEach(() => {
       givenIHaveSelected("#aviation");
       andIClickContinue();

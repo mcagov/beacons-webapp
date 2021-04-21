@@ -89,12 +89,10 @@ const handlePostRequest = async (
   onSuccessfulFormPostCallback
 ): Promise<GetServerSidePropsResult<FormPageProps>> => {
   const registration: Registration = context.registration;
-  updateFormCache(context.submissionId, transformCallback(context.formData));
-  const flattenedRegistration = registration.getFlattenedRegistration({
-    useIndex: context.useIndex,
-  });
+  const transformedFormData = transformCallback(context.formData);
+  updateFormCache(context.submissionId, transformedFormData);
 
-  const formManager = formManagerFactory(flattenedRegistration);
+  const formManager = formManagerFactory(transformedFormData);
   formManager.markAsDirty();
   const formIsValid = !formManager.hasErrors();
 

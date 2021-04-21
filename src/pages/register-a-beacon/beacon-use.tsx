@@ -103,10 +103,10 @@ const onSuccessfulFormCallback: DestinationIfValidCallback = (context) => {
   switch (context.formData.environment) {
     case Environment.MARITIME:
     case Environment.AVIATION:
-      return "/register-a-beacon/purpose";
+      return PageURLs.purpose;
 
     default:
-      return "/register-a-beacon/activity";
+      return PageURLs.activity;
   }
 };
 

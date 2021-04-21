@@ -183,6 +183,7 @@ const ActivityPage: FunctionComponent<FormPageProps> = ({
           listItemName="activity"
         />
       </RadioList>
+      <input type="hidden" name="environment" value={environment} />
     </BeaconsForm>
   );
 };

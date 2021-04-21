@@ -41,14 +41,19 @@ describe("As a beacon owner, I want to register multiple uses for my beacon", ()
     thenTheUrlShouldContain(PageURLs.aboutBeaconOwner);
   });
 
-  it("should redirect the user to update the newly created use if they are not currently updating the latest use", () => {
+  it("should redirect the user to update a new use if the use they are currently updating is not the latest use", () => {
     givenIAmAt(PageURLs.environment);
     givenIHaveEnteredMyLandUse();
     andIHaveAnotherUse();
     givenIHaveEnteredMyLandUse();
 
-    givenIAmAt(`${PageURLs.additionalUse}?useIndex=0`);
+    givenIAmViewingTheAdditionalBeaconUsePageForMyFirstUse();
     whenIClickContinue();
+    // TODO: Check nothing is selected on the page
     thenTheUrlShouldContain(`${PageURLs.environment}?useIndex=2`);
   });
+
+  const givenIAmViewingTheAdditionalBeaconUsePageForMyFirstUse = () => {
+    givenIAmAt(`${PageURLs.additionalUse}?useIndex=0`);
+  };
 });
