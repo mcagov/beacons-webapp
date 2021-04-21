@@ -109,6 +109,10 @@ const handlePostRequest = async (
     };
   }
 
+  const flattenedRegistration = context.registration.getFlattenedRegistration({
+    useIndex: context.useIndex,
+  });
+
   return {
     props: {
       form: formManager.serialise(),

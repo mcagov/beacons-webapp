@@ -41,7 +41,7 @@ describe("As a beacon owner, I want to register multiple uses for my beacon", ()
     thenTheUrlShouldContain(PageURLs.aboutBeaconOwner);
   });
 
-  it.only("should redirect the user to update a new use if the use they are currently updating is not the latest use", () => {
+  it("should redirect the user to update a new use if the use they are currently updating is not the latest use", () => {
     givenIAmAt(PageURLs.environment);
     givenIHaveEnteredMyLandUse();
     andIHaveAnotherUse();
