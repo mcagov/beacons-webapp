@@ -8,9 +8,12 @@ import { WarningText } from "../../components/WarningText";
 import { BeaconsApiGateway } from "../../gateways/beaconsApiGateway";
 import { GovNotifyGateway } from "../../gateways/govNotifyApiGateway";
 import {
+  clearFormCache,
+  clearFormSubmissionCookie,
   decorateGetServerSidePropsContext,
   withCookieRedirect,
 } from "../../lib/middleware";
+import { formSubmissionCookieId } from "../../lib/types";
 import { referenceNumber } from "../../lib/utils";
 import { CreateRegistration } from "../../useCases/createRegistration";
 import { SendGovNotifyEmail } from "../../useCases/sendGovNotifyEmail";
@@ -63,8 +66,8 @@ const ApplicationCompleteWhatNext: FunctionComponent = (): JSX.Element => (
   <>
     <SectionHeading>What happens next</SectionHeading>
     <GovUKBody>
-      We&apos;ve sent your application to register a UK encoded 406MHz beacon to
-      The Maritime and Coastguard Beacon Registry office.
+      We&apos;ve sent your application to register a UK encoded 406 MHz beacon
+      to The Maritime and Coastguard Beacon Registry office.
     </GovUKBody>
     <GovUKBody>
       They will contact you either to confirm your registration, or to ask for
@@ -113,6 +116,9 @@ export const getServerSideProps: GetServerSideProps = withCookieRedirect(
           "We could not save your registration or send you a confirmation email. Please contact the Beacons Registry team.";
       }
     }
+
+    clearFormCache(context.req.cookies[formSubmissionCookieId]);
+    clearFormSubmissionCookie(context);
 
     return {
       props: { reference: registration.referenceNumber, pageSubHeading },

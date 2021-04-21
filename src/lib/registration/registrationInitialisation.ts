@@ -54,7 +54,6 @@ export const initBeacon = (): IRegistration => {
 export const initBeaconUse = (): BeaconUse => {
   return {
     environment: "",
-    environmentOtherInput: "",
     purpose: "",
     activity: "",
     otherActivityText: "",
