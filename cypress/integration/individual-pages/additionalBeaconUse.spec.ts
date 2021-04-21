@@ -41,7 +41,7 @@ describe("As a beacon owner, I want to register multiple uses for my beacon", ()
     thenTheUrlShouldContain(PageURLs.aboutBeaconOwner);
   });
 
-  it("should redirect the user to update a new use if the use they are currently updating is not the latest use", () => {
+  it.only("should redirect the user to update a new use if the use they are currently updating is not the latest use", () => {
     givenIAmAt(PageURLs.environment);
     givenIHaveEnteredMyLandUse();
     andIHaveAnotherUse();
@@ -49,11 +49,17 @@ describe("As a beacon owner, I want to register multiple uses for my beacon", ()
 
     givenIAmViewingTheAdditionalBeaconUsePageForMyFirstUse();
     whenIClickContinue();
-    // TODO: Check nothing is selected on the page
-    thenTheUrlShouldContain(`${PageURLs.environment}?useIndex=2`);
+
+    thenNoUseShouldBeSelected();
   });
 
   const givenIAmViewingTheAdditionalBeaconUsePageForMyFirstUse = () => {
     givenIAmAt(`${PageURLs.additionalUse}?useIndex=0`);
+  };
+
+  const thenNoUseShouldBeSelected = () => {
+    cy.get("form").within(() => {
+      cy.get("input").should("not.be.checked");
+    });
   };
 });
