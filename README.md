@@ -51,12 +51,18 @@ Our approach to testing:
 
 - **Testing the rendering of React components**. We use [React testing library](https://testing-library.com/docs/react-testing-library/intro/) with Jest to ensure the rednered pages are what the user expects to see.
 - **Testing logic**. We segregate frontend logic from components by defining reusable TypeScript functions in `src/lib/`. Unit tests for these functions using Jest are in `test/lib`.
+- **Contract testing**. We use Jest as the testing framework for testing the contracts between external services
 - **End-to-end testing**. We use [Cypress](https://docs.cypress.io/guides/overview/why-cypress.html) to ensure the logic of the frontend matches the requirements.
 
 ### Running unit tests
 
 - `npm run test` -- Runs all unit tests in the `test/` directory
 - `npm run test:watch` -- Runs unit tests in watch mode
+
+### Running contract tests
+
+- `npm run test:contract` -- Runs all the contract tests in the `contractTest/` director
+- `npm run test:contract:watch` -- Runs the contract tests in watch mode
 
 ### Running Cypress tests
 
