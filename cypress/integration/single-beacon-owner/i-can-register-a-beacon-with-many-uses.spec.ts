@@ -30,6 +30,7 @@ import {
   iCanEditMyAviationActivity,
   iCanEditMyAviationEnvironment,
   iCanEditMyAviationPurpose,
+  iCanSeeMyAviationUse,
 } from "../common/i-can-enter-use-information/aviation.spec";
 import {
   andIHaveAnotherUse,
@@ -88,6 +89,7 @@ describe("As a single beacon owner with many uses", () => {
     iCanSeeMyLandUse();
     iCanSeeASectionHeadingThatContains("Second use");
     iCanSeeMyMaritimeUse(Purpose.PLEASURE);
+    iCanSeeMyAviationUse(Purpose.PLEASURE);
     iCanSeeMyPersonalDetails();
     iCanSeeMyAddressDetails();
     iCanSeeMyEmergencyContactDetails();
