@@ -171,7 +171,6 @@ export class Registration {
   private _serialiseUse(use: BeaconUse, mainUse: boolean) {
     const serialisedUse = {
       environment: use.environment,
-      otherEnvironment: use.environmentOtherInput,
       activity: use.activity,
       otherActivity: use.otherActivityText,
       callSign: use.callSign,
