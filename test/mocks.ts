@@ -11,7 +11,7 @@ export const getMockRegistration = () => ({
       ...getMockBeacon(),
       uses: [getMockUse()],
       owner: getMockOwner(),
-      emergencyContact: [getMockEmergencyContact()],
+      emergencyContacts: [getMockEmergencyContact()],
     },
   ],
 });
@@ -23,8 +23,8 @@ export const getMockBeacon = () => ({
   referenceNumber: "ADBEFD",
   manufacturerSerialNumber: "1234",
   chkCode: "check",
-  batteryExpiryDate: "2020-02-01",
-  lastServicedDate: "2020-02-01",
+  batteryExpiryDate: new Date().toISOString(),
+  lastServicedDate: new Date().toISOString(),
 });
 
 export const getMockUse = () => ({
