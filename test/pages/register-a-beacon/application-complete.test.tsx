@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
+import { formSubmissionCookieId } from "../../../src/lib/types";
 import ApplicationCompletePage, {
   getServerSideProps,
 } from "../../../src/pages/register-a-beacon/application-complete";
@@ -18,6 +19,8 @@ jest.mock("../../../src/lib/middleware", () => ({
       },
     },
   })),
+  clearFormCache: jest.fn(),
+  clearFormSubmissionCookie: jest.fn(),
 }));
 jest.mock("../../../src/gateways/beaconsApiGateway");
 jest.mock("../../../src/gateways/govNotifyApiGateway");
@@ -44,7 +47,7 @@ describe("ApplicationCompletePage", () => {
     let context;
 
     beforeEach(() => {
-      context = {};
+      context = { req: { cookies: { [formSubmissionCookieId]: "1" } } };
     });
 
     it("should not have a reference number if creating the registration is unsuccessful", async () => {
