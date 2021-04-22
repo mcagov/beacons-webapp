@@ -5,7 +5,8 @@ export const getCacheMock = (): jest.Mocked<IFormCache> => {
   return { get: jest.fn(), update: jest.fn(), clear: jest.fn() };
 };
 
-export const getMockRegistration = () => ({
+// TODO: Update `any` type once domain/form objects are defined
+export const getMockRegistration = (): any => ({
   beacons: [
     {
       ...getMockBeacon(),
@@ -16,7 +17,8 @@ export const getMockRegistration = () => ({
   ],
 });
 
-export const getMockBeacon = () => ({
+// TODO: Update `any` type once domain/form objects are defined
+export const getMockBeacon = (): any => ({
   model: "Trousers",
   hexId: "1D0",
   manufacturer: "ASOS",
@@ -27,7 +29,8 @@ export const getMockBeacon = () => ({
   lastServicedDate: new Date().toISOString(),
 });
 
-export const getMockUse = () => ({
+// TODO: Update `any` type once domain/form objects are defined
+export const getMockUse = (): any => ({
   environment: Environment.MARITIME,
   activity: Activity.OTHER,
   otherActivity: "On my boat",
@@ -72,7 +75,8 @@ export const getMockUse = () => ({
   moreDetails: "Blue boat, tracked in SafeTrx",
 });
 
-export const getMockOwner = () => ({
+// TODO: Update `any` type once domain/form objects are defined
+export const getMockOwner = (): any => ({
   fullName: "Mrs Martha",
   email: "martha@mca.gov.uk",
   telephoneNumber: "0117892136545",
@@ -84,7 +88,8 @@ export const getMockOwner = () => ({
   postcode: "BS17YG",
 });
 
-export const getMockEmergencyContact = () => ({
+// TODO: Update `any` type once domain/form objects are defined
+export const getMockEmergencyContact = (): any => ({
   fullName: "Mrs Beacon",
   telephoneNumber: "0117823456",
   alternativeTelephoneNumber: "0117823457",
