@@ -11,7 +11,7 @@ const clientSecret = process.env.AZURE_B2C_CLIENT_SECRET;
 
 const accessTokenUrl = `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/token`;
 const requestTokenUrl = `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/token`;
-const authorizationUrl = `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/authorize?response_type=code+id_token&response_mode=form_post&p=${userFlow}`;
+const authorizationUrl = `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/authorize?response_type=code+id_token&response_mode=form_post`;
 
 const options: NextAuthOptions = {
   session: {
@@ -46,13 +46,18 @@ const options: NextAuthOptions = {
       clientSecret,
       tenantId,
       idToken: true,
-      protection: "none",
+      protection: "state",
     },
   ],
   callbacks: {
     session: async (session, profile) => {
       session.user["id"] = profile.sub;
       return session;
+    },
+    redirect: async (url, baseUrl) => {
+      console.log("URL", url);
+      console.log("BASE URL", baseUrl);
+      return "http://localhost:3000/help/cookies";
     },
   },
 };
