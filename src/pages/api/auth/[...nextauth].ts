@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { NextAuthOptions } from "next-auth";
+import { NextApiHandler } from "next-auth/internals/utils";
 import { toArray } from "../../../lib/utils";
 
 const tenantName = process.env.AZURE_B2C_TENANT_NAME;
@@ -16,7 +17,7 @@ const options: NextAuthOptions = {
   session: {
     jwt: true,
   },
-  secret: process.env.JWT_SECRET, // TODO: needs to be set
+  secret: process.env.JWT_SECRET,
   debug: true,
   providers: [
     {
@@ -56,5 +57,7 @@ const options: NextAuthOptions = {
   },
 };
 
-export default (req: NextApiRequest, res: NextApiResponse) =>
-  NextAuth(req, res, options);
+export default (
+  req: NextApiRequest,
+  res: NextApiResponse
+): ReturnType<NextApiHandler> => NextAuth(req, res, options);
