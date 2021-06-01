@@ -42,10 +42,6 @@ const ServiceStartPage: FunctionComponent<ServiceStartPageProps> = ({
         title={pageHeading}
         showCookieBanner={showCookieBanner}
       >
-        <p>
-          SESSION: ID: {(session?.user as any)?.id} Name: {session?.user?.name}{" "}
-          Email: {session?.user?.email}
-        </p>
         <Grid
           mainContent={
             <>
