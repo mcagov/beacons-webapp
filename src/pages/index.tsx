@@ -1,4 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { useSession } from "next-auth/client";
 import React, { FunctionComponent } from "react";
 import Aside from "../components/Aside";
 import { BreadcrumbList, BreadcrumbListItem } from "../components/Breadcrumb";
@@ -30,6 +31,10 @@ const ServiceStartPage: FunctionComponent<ServiceStartPageProps> = ({
   const pageHeading =
     "Register a UK 406 MHz Beacon for commercial or pleasure use";
 
+  const [session, loading] = useSession();
+
+  console.log("session", session);
+
   return (
     <>
       <Layout
@@ -37,6 +42,10 @@ const ServiceStartPage: FunctionComponent<ServiceStartPageProps> = ({
         title={pageHeading}
         showCookieBanner={showCookieBanner}
       >
+        <p>
+          SESSION: ID: {(session?.user as any)?.id} Name: {session?.user?.name}{" "}
+          Email: {session?.user?.email}
+        </p>
         <Grid
           mainContent={
             <>
