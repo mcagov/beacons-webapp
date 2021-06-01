@@ -46,7 +46,7 @@ const options: NextAuthOptions = {
       clientSecret,
       tenantId,
       idToken: true,
-      protection: "state",
+      protection: "none",
     },
   ],
   callbacks: {
