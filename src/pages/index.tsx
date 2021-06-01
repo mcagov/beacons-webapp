@@ -1,5 +1,4 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { useSession } from "next-auth/client";
 import React, { FunctionComponent } from "react";
 import Aside from "../components/Aside";
 import { BreadcrumbList, BreadcrumbListItem } from "../components/Breadcrumb";
@@ -30,10 +29,6 @@ const ServiceStartPage: FunctionComponent<ServiceStartPageProps> = ({
 }: ServiceStartPageProps): JSX.Element => {
   const pageHeading =
     "Register a UK 406 MHz Beacon for commercial or pleasure use";
-
-  const [session, loading] = useSession();
-
-  console.log("session", session);
 
   return (
     <>

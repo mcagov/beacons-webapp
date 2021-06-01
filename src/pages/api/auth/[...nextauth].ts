@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import { toArray } from "../../../lib/utils";
 
@@ -6,6 +7,10 @@ const tenantId = process.env.AZURE_B2C_TENANT_ID;
 const userFlow = process.env.AZURE_B2C_LOGIN_FLOW;
 const clientId = process.env.AZURE_B2C_CLIENT_ID;
 const clientSecret = process.env.AZURE_B2C_CLIENT_SECRET;
+
+const accessTokenUrl = `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/token`;
+const requestTokenUrl = `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/token`;
+const authorizationUrl = `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/authorize?response_type=code+id_token&response_mode=form_post&p=${userFlow}`;
 
 const options: NextAuthOptions = {
   session: {
@@ -23,9 +28,9 @@ const options: NextAuthOptions = {
       params: {
         grant_type: "authorization_code",
       },
-      accessTokenUrl: `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/token`,
-      requestTokenUrl: `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/token`,
-      authorizationUrl: `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${userFlow}/oauth2/v2.0/authorize?response_type=code+id_token&response_mode=form_post&p=${userFlow}`,
+      accessTokenUrl,
+      requestTokenUrl,
+      authorizationUrl,
       profileUrl: "https://graph.microsoft.com/oidc/userinfo",
       profile: (profile) => {
         const emails = toArray(profile.emails as any);
@@ -51,4 +56,5 @@ const options: NextAuthOptions = {
   },
 };
 
-export default (req, res) => NextAuth(req, res, options);
+export default (req: NextApiRequest, res: NextApiResponse) =>
+  NextAuth(req, res, options);
