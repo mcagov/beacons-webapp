@@ -1,5 +1,4 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { signIn, useSession } from "next-auth/client";
 import React, { FunctionComponent } from "react";
 import Aside from "../components/Aside";
 import { BreadcrumbList, BreadcrumbListItem } from "../components/Breadcrumb";
@@ -30,10 +29,6 @@ const ServiceStartPage: FunctionComponent<ServiceStartPageProps> = ({
 }: ServiceStartPageProps): JSX.Element => {
   const pageHeading =
     "Register a UK 406 MHz Beacon for commercial or pleasure use";
-
-  const [session] = useSession();
-
-  console.log(session);
 
   return (
     <>
@@ -124,16 +119,6 @@ const AboutTheService: FunctionComponent = (): JSX.Element => (
     </WarningText>
 
     <StartButton href="/register-a-beacon/check-beacon-details" />
-    <button
-      onClick={() =>
-        signIn("azureb2c", {
-          callbackUrl: "http://localhost:3000/help/cookies",
-          redirect: true,
-        })
-      }
-    >
-      Sign In to Azure B2C
-    </button>
   </>
 );
 

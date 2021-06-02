@@ -17,6 +17,10 @@ const options: NextAuthOptions = {
   session: {
     jwt: true,
   },
+  jwt: {
+    encryption: true,
+    secret: process.env.JWT_SECRET,
+  },
   secret: process.env.JWT_SECRET,
   debug: true,
   providers: [
@@ -46,19 +50,14 @@ const options: NextAuthOptions = {
       clientSecret,
       tenantId,
       idToken: true,
-      protection: "none", // see: https://github.com/nextauthjs/next-auth/issues/1179
+      protection: "none", // see: https://github.com/nextauthjs/next-auth/issues/468#issuecomment-663769334.  Next Auth uses Double
     },
   ],
   callbacks: {
     session: async (session, profile) => {
       session.user["id"] = profile.sub;
+      console.log(session);
       return session;
-    },
-    redirect: async (url, baseUrl) => {
-      console.log("URL", url);
-      console.log("BASE URL", baseUrl);
-      console.log("HELP", "http://localhost:3000/help/cookies");
-      return "http://localhost:3000/help/cookies";
     },
   },
 };
