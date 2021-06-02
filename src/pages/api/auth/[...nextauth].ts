@@ -46,7 +46,7 @@ const options: NextAuthOptions = {
       clientSecret,
       tenantId,
       idToken: true,
-      protection: "state",
+      protection: "none", // see: https://github.com/nextauthjs/next-auth/issues/1179
     },
   ],
   callbacks: {
@@ -57,6 +57,7 @@ const options: NextAuthOptions = {
     redirect: async (url, baseUrl) => {
       console.log("URL", url);
       console.log("BASE URL", baseUrl);
+      console.log("HELP", "http://localhost:3000/help/cookies");
       return "http://localhost:3000/help/cookies";
     },
   },
