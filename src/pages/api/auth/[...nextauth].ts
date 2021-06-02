@@ -50,7 +50,7 @@ const options: NextAuthOptions = {
       clientSecret,
       tenantId,
       idToken: true,
-      protection: "none", // see: https://github.com/nextauthjs/next-auth/issues/468#issuecomment-663769334.  Next Auth uses Double
+      protection: "none", // see: https://github.com/nextauthjs/next-auth/issues/468#issuecomment-663769334
     },
   ],
   callbacks: {
@@ -58,6 +58,22 @@ const options: NextAuthOptions = {
       session.user["id"] = profile.sub;
       console.log(session);
       return session;
+    },
+    redirect: async (url, baseUrl) => {
+      console.log(url);
+      const number = Math.random();
+      return `http://localhost:3000/help/cookies/${number}`;
+    },
+  },
+  cookies: {
+    callbackUrl: {
+      name: "next-auth.callback-url",
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
     },
   },
 };
