@@ -3,6 +3,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import { NextApiHandler } from "next-auth/internals/utils";
 import { toArray } from "../../../lib/utils";
 
+const debug = process.env.NODE_ENV !== "production";
 const tenantName = process.env.AZURE_B2C_TENANT_NAME;
 const tenantId = process.env.AZURE_B2C_TENANT_ID;
 const userFlow = process.env.AZURE_B2C_LOGIN_FLOW;
@@ -22,7 +23,7 @@ const options: NextAuthOptions = {
     secret: process.env.JWT_SECRET,
   },
   secret: process.env.JWT_SECRET,
-  debug: true,
+  debug,
   providers: [
     {
       id: "azureb2c",
