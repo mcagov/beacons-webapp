@@ -56,13 +56,10 @@ const options: NextAuthOptions = {
   callbacks: {
     session: async (session, profile) => {
       session.user["id"] = profile.sub;
-      console.log(session);
       return session;
     },
     redirect: async (url, baseUrl) => {
-      console.log(url);
-      const number = Math.random();
-      return `http://localhost:3000/help/cookies/${number}`;
+      return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
   cookies: {
