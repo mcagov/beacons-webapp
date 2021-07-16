@@ -2,7 +2,6 @@ import { IAppContainer } from "../../src/lib/appContainer";
 import { submitRegistration } from "../../src/useCases/submitRegistration";
 
 describe("submitRegistration()", () => {
-  const accountHolderEmail = "beacons@beacons.com";
   const mockRegistration = {
     serialiseToAPI: jest.fn().mockReturnValue({ model: "ASOS" }),
     setReferenceNumber: jest.fn(),
@@ -19,13 +18,14 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: jest.fn(),
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
-    await submitRegistration(container)(
-      "submissionId",
-      "accountHolderId",
-      accountHolderEmail
-    );
+    await submitRegistration(container)("submissionId", "accountHolderId");
 
     expect(mockRetrieveAuthToken).toHaveBeenCalledTimes(1);
   });
@@ -39,13 +39,14 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: mockSendRegistrationToApi,
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
-    await submitRegistration(container)(
-      "submissionId",
-      "accountHolderId",
-      accountHolderEmail
-    );
+    await submitRegistration(container)("submissionId", "accountHolderId");
 
     expect(mockSendRegistrationToApi).toHaveBeenCalledTimes(1);
   });
@@ -60,13 +61,14 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: mockSendRegistrationToApi,
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
-    await submitRegistration(container)(
-      "submissionId",
-      "accountHolderId",
-      accountHolderEmail
-    );
+    await submitRegistration(container)("submissionId", "accountHolderId");
 
     expect(mockRegistration.setReferenceNumber).toHaveBeenCalled();
   });
@@ -80,13 +82,14 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: mockSendRegistrationToApi,
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
-    await submitRegistration(container)(
-      "submissionId",
-      "accountHolderId",
-      accountHolderEmail
-    );
+    await submitRegistration(container)("submissionId", "accountHolderId");
 
     expect(mockRegistration.setReferenceNumber).toHaveBeenCalled();
   });
@@ -100,13 +103,14 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: mockSendRegistrationToApi,
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
-    await submitRegistration(container)(
-      "submissionId",
-      "accountHolderId",
-      accountHolderEmail
-    );
+    await submitRegistration(container)("submissionId", "accountHolderId");
 
     expect(mockRegistration.setReferenceNumber).toHaveBeenCalled();
   });
@@ -121,13 +125,14 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(true),
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
-    await submitRegistration(container)(
-      "submissionId",
-      "accountHolderId",
-      email
-    );
+    await submitRegistration(container)("submissionId", "accountHolderId");
 
     expect(mockSendConfirmationEmail).toHaveBeenCalledWith(
       expect.anything(),
@@ -143,12 +148,16 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(true),
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
     const result = await submitRegistration(container)(
       "submissionId",
-      "accountHolderId",
-      accountHolderEmail
+      "accountHolderId"
     );
 
     expect(result).toStrictEqual({
@@ -166,12 +175,16 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(true),
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
     const result = await submitRegistration(container)(
       "submissionId",
-      "accountHolderId",
-      accountHolderEmail
+      "accountHolderId"
     );
 
     expect(result).toStrictEqual({
@@ -192,12 +205,16 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(true),
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
     const result = await submitRegistration(container)(
       "submissionId",
-      "accountHolderId",
-      accountHolderEmail
+      "accountHolderId"
     );
 
     expect(result.referenceNumber.length).toBeDefined();
@@ -211,12 +228,16 @@ describe("submitRegistration()", () => {
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(false),
       },
+      accountHolderApiGateway: {
+        getAccountHolderDetails: jest.fn(async () => ({
+          email: "beacons@beacons.com",
+        })),
+      },
     };
 
     const result = await submitRegistration(container)(
       "submissionId",
-      "accountHolderId",
-      accountHolderEmail
+      "accountHolderId"
     );
 
     expect(result.referenceNumber).toEqual("");

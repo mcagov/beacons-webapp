@@ -2,8 +2,7 @@ import { IAppContainer } from "../lib/appContainer";
 
 export type SubmitRegistrationFn = (
   submissionId: string,
-  accountHolderId: string,
-  accountHolderEmail: string
+  accountHolderId: string
 ) => Promise<ISubmitRegistrationResult>;
 
 export interface ISubmitRegistrationResult {
@@ -18,6 +17,7 @@ export const submitRegistration =
     getCachedRegistration,
     getAccessToken,
     beaconsApiGateway,
+    accountHolderApiGateway,
   }: Partial<IAppContainer>): SubmitRegistrationFn =>
   async (submissionId: string, accountHolderId: string) => {
     const registration = await getCachedRegistration(submissionId);
@@ -30,6 +30,13 @@ export const submitRegistration =
       registration.serialiseToAPI(),
       accessToken
     );
+
+    const accountHolderEmail: string = (
+      await accountHolderApiGateway.getAccountHolderDetails(
+        accountHolderId,
+        accessToken
+      )
+    ).email;
 
     const confirmationEmailSent = beaconRegistered
       ? await sendConfirmationEmail(
