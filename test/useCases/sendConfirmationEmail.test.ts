@@ -11,7 +11,6 @@ describe("Send Gov Notify Email", () => {
       govNotifyGateway: {
         sendEmail: mockSendEmail,
       },
-      getSession: {},
     };
     registration = {
       model: "ASOS",
