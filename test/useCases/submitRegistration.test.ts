@@ -2,6 +2,7 @@ import { IAppContainer } from "../../src/lib/appContainer";
 import { submitRegistration } from "../../src/useCases/submitRegistration";
 
 describe("submitRegistration()", () => {
+  const accountHolderEmail = "beacons@beacons.com";
   const mockRegistration = {
     serialiseToAPI: jest.fn().mockReturnValue({ model: "ASOS" }),
     setReferenceNumber: jest.fn(),
@@ -20,7 +21,11 @@ describe("submitRegistration()", () => {
       },
     };
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container)(
+      "submissionId",
+      "accountHolderId",
+      accountHolderEmail
+    );
 
     expect(mockRetrieveAuthToken).toHaveBeenCalledTimes(1);
   });
@@ -36,7 +41,11 @@ describe("submitRegistration()", () => {
       },
     };
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container)(
+      "submissionId",
+      "accountHolderId",
+      accountHolderEmail
+    );
 
     expect(mockSendRegistrationToApi).toHaveBeenCalledTimes(1);
   });
@@ -53,7 +62,11 @@ describe("submitRegistration()", () => {
       },
     };
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container)(
+      "submissionId",
+      "accountHolderId",
+      accountHolderEmail
+    );
 
     expect(mockRegistration.setReferenceNumber).toHaveBeenCalled();
   });
@@ -69,7 +82,11 @@ describe("submitRegistration()", () => {
       },
     };
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container)(
+      "submissionId",
+      "accountHolderId",
+      accountHolderEmail
+    );
 
     expect(mockRegistration.setReferenceNumber).toHaveBeenCalled();
   });
@@ -85,12 +102,17 @@ describe("submitRegistration()", () => {
       },
     };
 
-    await submitRegistration(container)("submissionId", null);
+    await submitRegistration(container)(
+      "submissionId",
+      "accountHolderId",
+      accountHolderEmail
+    );
 
     expect(mockRegistration.setReferenceNumber).toHaveBeenCalled();
   });
 
   it("attempts to send a confirmation email if registration was successful", async () => {
+    const email = "beacons@beacons.com";
     const mockSendConfirmationEmail = jest.fn();
     const container: Partial<IAppContainer> = {
       getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
@@ -101,9 +123,16 @@ describe("submitRegistration()", () => {
       },
     };
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container)(
+      "submissionId",
+      "accountHolderId",
+      email
+    );
 
-    expect(mockSendConfirmationEmail).toHaveBeenCalledTimes(1);
+    expect(mockSendConfirmationEmail).toHaveBeenCalledWith(
+      expect.anything(),
+      email
+    );
   });
 
   it("returns the result when the registration was a success and the email was sent", async () => {
@@ -118,7 +147,8 @@ describe("submitRegistration()", () => {
 
     const result = await submitRegistration(container)(
       "submissionId",
-      "accountHolderId"
+      "accountHolderId",
+      accountHolderEmail
     );
 
     expect(result).toStrictEqual({
@@ -140,7 +170,8 @@ describe("submitRegistration()", () => {
 
     const result = await submitRegistration(container)(
       "submissionId",
-      "accountHolderId"
+      "accountHolderId",
+      accountHolderEmail
     );
 
     expect(result).toStrictEqual({
@@ -165,7 +196,8 @@ describe("submitRegistration()", () => {
 
     const result = await submitRegistration(container)(
       "submissionId",
-      "accountHolderId"
+      "accountHolderId",
+      accountHolderEmail
     );
 
     expect(result.referenceNumber.length).toBeDefined();
@@ -183,7 +215,8 @@ describe("submitRegistration()", () => {
 
     const result = await submitRegistration(container)(
       "submissionId",
-      "accountHolderId"
+      "accountHolderId",
+      accountHolderEmail
     );
 
     expect(result.referenceNumber).toEqual("");

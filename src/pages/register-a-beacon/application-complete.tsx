@@ -90,16 +90,22 @@ const ApplicationCompleteYourBeaconRegistryAccount: FunctionComponent =
 export const getServerSideProps: GetServerSideProps = withContainer(
   async (context: BeaconsGetServerSidePropsContext) => {
     /* Retrieve injected use case(s) */
-    const { submitRegistration, getAccountHolderId } = context.container;
+    const { submitRegistration, getAccountHolderId, getSession } =
+      context.container;
 
     /* Page logic */
     if (!verifyFormSubmissionCookieIsSet(context))
       return redirectUserTo(PageURLs.start);
 
     try {
+      const accountHolderEmail: string = await (
+        await getSession(context)
+      ).user.email;
+
       const result = await submitRegistration(
         retrieveUserFormSubmissionId(context),
-        await getAccountHolderId(context)
+        await getAccountHolderId(context),
+        accountHolderEmail
       );
 
       const pageSubHeading = (result: ISubmitRegistrationResult) => {
