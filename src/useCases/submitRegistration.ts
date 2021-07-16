@@ -19,11 +19,7 @@ export const submitRegistration =
     getAccessToken,
     beaconsApiGateway,
   }: Partial<IAppContainer>): SubmitRegistrationFn =>
-  async (
-    submissionId: string,
-    accountHolderId: string,
-    accountHolderEmail: string
-  ) => {
+  async (submissionId: string, accountHolderId: string) => {
     const registration = await getCachedRegistration(submissionId);
     const accessToken = await getAccessToken();
 
