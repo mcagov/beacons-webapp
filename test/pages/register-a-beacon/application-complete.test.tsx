@@ -27,6 +27,9 @@ describe("ApplicationCompletePage", () => {
       mockContainer = {
         submitRegistration: mockSubmitRegistration,
         getAccountHolderId: jest.fn().mockResolvedValue("account-holder-id"),
+        getSession: jest.fn(async () => ({
+          user: { email: "beacons@beacons.com" },
+        })),
       };
     });
 
@@ -62,7 +65,8 @@ describe("ApplicationCompletePage", () => {
 
       expect(mockSubmitRegistration).toHaveBeenCalledWith(
         userRegistrationId,
-        accountHolderId
+        accountHolderId,
+        "beacons@beacons.com"
       );
     });
 
