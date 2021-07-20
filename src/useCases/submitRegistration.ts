@@ -31,12 +31,11 @@ export const submitRegistration =
       accessToken
     );
 
-    const accountHolderEmail: string = (
+    const { email: accountHolderEmail } =
       await accountHolderApiGateway.getAccountHolderDetails(
         accountHolderId,
         accessToken
-      )
-    ).email;
+      );
 
     const confirmationEmailSent = beaconRegistered
       ? await sendConfirmationEmail(
