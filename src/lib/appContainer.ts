@@ -1,3 +1,4 @@
+import { IncomingMessage } from "http";
 import { getSession } from "next-auth/client";
 import { AadAuthGateway, IAuthGateway } from "../gateways/aadAuthGateway";
 import {
@@ -20,6 +21,7 @@ import {
   IUserSessionGateway,
   UserSessionGateway,
 } from "../gateways/userSessionGateway";
+import { parseFormDataAs } from "../lib/middleware";
 import {
   authenticateUser,
   AuthenticateUserFn,
@@ -62,6 +64,10 @@ import {
   submitRegistration,
   SubmitRegistrationFn,
 } from "../useCases/submitRegistration";
+import {
+  updateAccountHolder,
+  UpdateAccountHolderFn,
+} from "../useCases/updateAccountHolder";
 
 export interface IAppContainer {
   /* Use cases */
@@ -74,7 +80,9 @@ export interface IAppContainer {
   deleteCachedUse: DeleteCachedUseFn;
   getAccessToken: GetAccessTokenFn;
   getSession: GetSessionFn;
+  parseFormDataAs<T>(request: IncomingMessage): Promise<T>;
   getOrCreateAccountHolder: GetOrCreateAccountHolderFn;
+  updateAccountHolder: UpdateAccountHolderFn;
   getAccountHolderId: GetAccountHolderIdFn;
   getBeaconsByAccountHolderId: GetBeaconsByAccountHolderIdFn;
 
@@ -96,6 +104,7 @@ export const getAppContainer = (overrides?: IAppContainer): IAppContainer => {
     clearCachedRegistration: clearCachedRegistration,
     deleteCachedUse: deleteCachedUse,
     getSession: getSession,
+    parseFormDataAs: parseFormDataAs,
 
     /* Composite use cases requiring access to other use cases */
     get getAccessToken() {
@@ -112,6 +121,9 @@ export const getAppContainer = (overrides?: IAppContainer): IAppContainer => {
     },
     get getOrCreateAccountHolder() {
       return getOrCreateAccountHolder(this);
+    },
+    get updateAccountHolder() {
+      return updateAccountHolder(this);
     },
     get getAccountHolderId() {
       return getAccountHolderId(this);
