@@ -12,8 +12,6 @@ import {
   withContainer,
 } from "../../lib/container";
 import { PageURLs } from "../../lib/urls";
-import { getBeaconsByAccountHolderId } from "../../useCases/getAccountBeacons";
-import { getOrCreateAccountHolder } from "../../useCases/getOrCreateAccountHolder";
 import { formatUses } from "../../utils/formatUses";
 
 export interface YourBeaconRegistyAccountPageProps {
@@ -35,12 +33,10 @@ export const YourBeaconRegistyAccount: FunctionComponent<YourBeaconRegistyAccoun
           mainContent={
             <>
               <PageHeading>{pageHeading}</PageHeading>
-              <YourDetails
-                accountHolderDetails={accountHolderDetails}
-              ></YourDetails>
-              <YourBeacons beacons={beacons}></YourBeacons>
-              <RegisterANewBeacon></RegisterANewBeacon>
-              <Contact></Contact>
+              <YourDetails accountHolderDetails={accountHolderDetails} />
+              <YourBeacons beacons={beacons} />
+              <RegisterANewBeacon />
+              <Contact />
             </>
           }
         />
@@ -75,11 +71,11 @@ const YourDetails: FunctionComponent<IYourDetailsProps> = ({
           <dt className="govuk-summary-list__key">Account holder details</dt>
           <dd className="govuk-summary-list__value">
             {fullName}
-            <br></br>
+            <br />
             {telephoneNumber}
             {alternativeTelephoneNumber && (
               <view>
-                <br></br>
+                <br />
                 {alternativeTelephoneNumber}
               </view>
             )}
@@ -92,49 +88,49 @@ const YourDetails: FunctionComponent<IYourDetailsProps> = ({
             <view>{addressLine1}</view>
             {addressLine2 && (
               <view>
-                <br></br>
+                <br />
                 {addressLine2}
               </view>
             )}
             {addressLine3 && (
               <view>
-                <br></br>
+                <br />
                 {addressLine3}
               </view>
             )}
             {addressLine4 && (
               <view>
-                <br></br>
+                <br />
                 {addressLine4}
               </view>
             )}
             {addressLine4 && (
               <view>
-                <br></br>
+                <br />
                 {addressLine4}
               </view>
             )}
             {addressLine4 && (
               <view>
-                <br></br>
+                <br />
                 {addressLine4}
               </view>
             )}
             {townOrCity && (
               <view>
-                <br></br>
+                <br />
                 {townOrCity}
               </view>
             )}
             {county && (
               <view>
-                <br></br>
+                <br />
                 {county}
               </view>
             )}
             {postcode && (
               <view>
-                <br></br>
+                <br />
                 {postcode}
               </view>
             )}
@@ -146,7 +142,7 @@ const YourDetails: FunctionComponent<IYourDetailsProps> = ({
           <dd className="govuk-summary-list__value">
             <view>{email}</view>
             <view>
-              <br></br>
+              <br />
             </view>
           </dd>
         </div>
@@ -230,12 +226,11 @@ const Contact: FunctionComponent = (): JSX.Element => (
 
 export const getServerSideProps: GetServerSideProps = withContainer(
   async (context: BeaconsGetServerSidePropsContext) => {
-    const accountHolderDetails = await getOrCreateAccountHolder(
-      context.container
-    )(context);
-    const beacons = await getBeaconsByAccountHolderId(context.container)(
-      accountHolderDetails.id
-    );
+    const { getOrCreateAccountHolder, getBeaconsByAccountHolderId } =
+      context.container;
+
+    const accountHolderDetails = await getOrCreateAccountHolder(context);
+    const beacons = await getBeaconsByAccountHolderId(accountHolderDetails.id);
 
     return {
       props: {
