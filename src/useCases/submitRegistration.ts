@@ -1,4 +1,4 @@
-import { IAppContainer } from "../lib/appContainer";
+import { appContainer, IAppContainer } from "../lib/appContainer";
 
 export type SubmitRegistrationFn = (
   submissionId: string,
@@ -17,7 +17,7 @@ export const submitRegistration =
     getCachedRegistration,
     beaconsApiGateway,
     beaconsApiAuthGateway,
-  }: Partial<IAppContainer>): SubmitRegistrationFn =>
+  }: Partial<IAppContainer> = appContainer): SubmitRegistrationFn =>
   async (submissionId: string, accountHolderId: string) => {
     const registration = await getCachedRegistration(submissionId);
     const accessToken = await beaconsApiAuthGateway.getAccessToken();

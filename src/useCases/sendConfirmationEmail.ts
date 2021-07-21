@@ -1,4 +1,4 @@
-import { IAppContainer } from "../lib/appContainer";
+import { appContainer, IAppContainer } from "../lib/appContainer";
 import { IRegistration } from "../lib/registration/types";
 import { joinStrings } from "../lib/writingStyle";
 
@@ -7,7 +7,9 @@ export type SendConfirmationEmailFn = (
 ) => Promise<boolean>;
 
 export const sendConfirmationEmail =
-  ({ govNotifyGateway }: IAppContainer): SendConfirmationEmailFn =>
+  ({
+    govNotifyGateway,
+  }: Partial<IAppContainer> = appContainer): SendConfirmationEmailFn =>
   async (registration) => {
     const templateId = process.env.GOV_NOTIFY_CUSTOMER_EMAIL_TEMPLATE;
 

@@ -1,4 +1,4 @@
-import { IAppContainer } from "../lib/appContainer";
+import { appContainer, IAppContainer } from "../lib/appContainer";
 import { BeaconsGetServerSidePropsContext } from "../lib/container";
 
 export type GetAccountHolderIdFn = (
@@ -7,12 +7,12 @@ export type GetAccountHolderIdFn = (
 
 export const getAccountHolderId =
   ({
-    getSession,
+    userSessionGateway,
     beaconsApiAuthGateway,
     accountHolderApiGateway,
-  }: IAppContainer): GetAccountHolderIdFn =>
+  }: Partial<IAppContainer> = appContainer): GetAccountHolderIdFn =>
   async (context: BeaconsGetServerSidePropsContext) => {
-    const session = await getSession(context);
+    const session = await userSessionGateway.getSession(context);
 
     return await accountHolderApiGateway.getAccountHolderId(
       session.user.authId,

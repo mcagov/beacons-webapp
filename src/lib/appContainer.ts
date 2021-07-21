@@ -1,4 +1,3 @@
-import { getSession } from "next-auth/client";
 import { AadAuthGateway, IAuthGateway } from "../gateways/aadAuthGateway";
 import {
   AccountHolderApiGateway,
@@ -48,7 +47,6 @@ import {
   getOrCreateAccountHolder,
   GetOrCreateAccountHolderFn,
 } from "../useCases/getOrCreateAccountHolder";
-import { GetSessionFn } from "../useCases/getSession";
 import {
   saveCachedRegistration,
   SaveCachedRegistrationFn,
@@ -72,7 +70,6 @@ export interface IAppContainer {
   clearCachedRegistration: ClearCachedRegistrationFn;
   deleteCachedUse: DeleteCachedUseFn;
 
-  getSession: GetSessionFn;
   getOrCreateAccountHolder: GetOrCreateAccountHolderFn;
   getAccountHolderId: GetAccountHolderIdFn;
   getBeaconsByAccountHolderId: GetBeaconsByAccountHolderIdFn;
@@ -94,18 +91,11 @@ export const getAppContainer = (overrides?: IAppContainer): IAppContainer => {
     saveCachedRegistration: saveCachedRegistration,
     clearCachedRegistration: clearCachedRegistration,
     deleteCachedUse: deleteCachedUse,
-    getSession: getSession,
+    submitRegistration: submitRegistration,
+    authenticateUser: authenticateUser,
+    sendConfirmationEmail: sendConfirmationEmail,
 
     /* Composite use cases requiring access to other use cases */
-    get authenticateUser() {
-      return authenticateUser(this);
-    },
-    get submitRegistration() {
-      return submitRegistration(this);
-    },
-    get sendConfirmationEmail() {
-      return sendConfirmationEmail(this);
-    },
     get getOrCreateAccountHolder() {
       return getOrCreateAccountHolder(this);
     },

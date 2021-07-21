@@ -37,9 +37,11 @@ describe("YourBeaconRegistyAccount", () => {
         beaconsApiAuthGateway: {
           getAccessToken: jest.fn(),
         },
-        getSession: jest
-          .fn()
-          .mockResolvedValue({ user: { id: "a-session-id" } }),
+        userSessionGateway: {
+          getSession: jest
+            .fn()
+            .mockResolvedValue({ user: { id: "a-session-id" } }),
+        },
       };
       const container = getAppContainer(mocks as IAppContainer);
       const context: Partial<BeaconsGetServerSidePropsContext> = {

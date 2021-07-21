@@ -9,7 +9,11 @@ describe("The getOrCreateAccountHolder use case", () => {
     const testId = "test-account-id";
     const testAccountHolder: Partial<IAccountHolderDetails> = { id: testId };
     const container: Partial<IAppContainer> = {
-      getSession: jest.fn().mockResolvedValue({ user: { id: "a-session-id" } }),
+      userSessionGateway: {
+        getSession: jest
+          .fn()
+          .mockResolvedValue({ user: { id: "a-session-id" } }),
+      },
       accountHolderApiGateway: {
         getAccountHolderId: jest.fn().mockResolvedValue(testId),
         createAccountHolder: jest.fn(),
@@ -34,7 +38,11 @@ describe("The getOrCreateAccountHolder use case", () => {
 
   it("creates a new account holder if one is not found for a given auth id", async () => {
     const container: Partial<IAppContainer> = {
-      getSession: jest.fn().mockResolvedValue({ user: { id: "a-session-id" } }),
+      userSessionGateway: {
+        getSession: jest
+          .fn()
+          .mockResolvedValue({ user: { id: "a-session-id" } }),
+      },
       accountHolderApiGateway: {
         getAccountHolderId: jest.fn().mockResolvedValue(null),
         createAccountHolder: jest.fn(),

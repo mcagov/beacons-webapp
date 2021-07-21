@@ -13,7 +13,11 @@ describe("The getAccountHolderId use case", () => {
         getAccountBeacons: jest.fn(),
         getAccountHolderDetails: jest.fn(),
       },
-      getSession: jest.fn().mockResolvedValue({ user: { id: "a-session-id" } }),
+      userSessionGateway: {
+        getSession: jest
+          .fn()
+          .mockResolvedValue({ user: { id: "a-session-id" } }),
+      },
       beaconsApiAuthGateway: {
         getAccessToken: jest.fn(),
       },
@@ -30,7 +34,11 @@ describe("The getAccountHolderId use case", () => {
 
   it("return null if account holder is not found for a given auth id", async () => {
     const container: Partial<IAppContainer> = {
-      getSession: jest.fn().mockResolvedValue({ user: { id: "a-session-id" } }),
+      userSessionGateway: {
+        getSession: jest
+          .fn()
+          .mockResolvedValue({ user: { id: "a-session-id" } }),
+      },
       accountHolderApiGateway: {
         getAccountHolderId: jest.fn().mockResolvedValue(null),
         createAccountHolder: jest.fn(),
