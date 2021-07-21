@@ -1,16 +1,7 @@
-import { CachedRegistrationGateway } from "../gateways/CachedRegistrationGateway";
-import { RedisCachedRegistrationGateway } from "../gateways/RedisCachedRegistrationGateway";
+import { appContainer, IAppContainer } from "../lib/appContainer";
 
-export type DeleteCachedUseFn = (
-  submissionId: string,
-  useIndex: number,
-  cachedRegistrationGateway?: CachedRegistrationGateway
-) => Promise<void>;
-
-export const deleteCachedUse: DeleteCachedUseFn = async (
-  submissionId,
-  useIndex,
-  cachedRegistrationGateway = new RedisCachedRegistrationGateway()
-) => {
-  await cachedRegistrationGateway.deleteUse(submissionId, useIndex);
-};
+export const deleteCachedUse =
+  ({ cachedRegistrationGateway }: Partial<IAppContainer> = appContainer) =>
+  async (submissionId: string, useIndex: number): Promise<void> => {
+    await cachedRegistrationGateway.deleteUse(submissionId, useIndex);
+  };

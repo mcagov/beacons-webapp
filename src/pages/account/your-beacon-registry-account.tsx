@@ -230,6 +230,7 @@ export const getServerSideProps: GetServerSideProps = withContainer(
       context.container;
 
     const accountHolderDetails = await getOrCreateAccountHolder(context);
+
     const beacons = await getBeaconsByAccountHolderId(accountHolderDetails.id);
 
     return {

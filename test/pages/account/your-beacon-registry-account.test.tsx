@@ -1,6 +1,6 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { getAppContainer, IAppContainer } from "../../../src/lib/appContainer";
+import { IAppContainer } from "../../../src/lib/appContainer";
 import { BeaconsGetServerSidePropsContext } from "../../../src/lib/container";
 import { getServerSideProps } from "../../../src/pages/account/your-beacon-registry-account";
 import { accountHolderFixture } from "../../fixtures/accountHolder.fixture";
@@ -11,7 +11,7 @@ import {
 import { beaconFixtures } from "../../fixtures/beacons.fixture";
 import { manyBeaconsApiResponseFixture } from "../../fixtures/manyBeaconsApiResponse.fixture";
 
-describe("YourBeaconRegistyAccount", () => {
+describe("YourBeaconRegistryAccount", () => {
   describe("GetServerSideProps", () => {
     const server = setupServer(
       rest.get("*/account-holder/auth-id/:authId", (req, res, ctx) => {
@@ -32,18 +32,15 @@ describe("YourBeaconRegistyAccount", () => {
       server.close();
     });
 
-    it("should contain correct account details for a given user", async () => {
-      const mocks: Partial<IAppContainer> = {
-        beaconsApiAuthGateway: {
-          getAccessToken: jest.fn(),
-        },
-        userSessionGateway: {
-          getSession: jest
-            .fn()
-            .mockResolvedValue({ user: { id: "a-session-id" } }),
-        },
+    it("should return correct account details for a given user", async () => {
+      const container: Partial<IAppContainer> = {
+        getOrCreateAccountHolder: jest
+          .fn()
+          .mockResolvedValue(accountHolderFixture),
+        getBeaconsByAccountHolderId: jest
+          .fn()
+          .mockResolvedValue(beaconFixtures),
       };
-      const container = getAppContainer(mocks as IAppContainer);
       const context: Partial<BeaconsGetServerSidePropsContext> = {
         container: container as IAppContainer,
       };

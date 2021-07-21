@@ -2,14 +2,8 @@ import { GetServerSidePropsContext } from "next";
 import { IBasicAuthGateway } from "../gateways/basicAuthGateway";
 import { appContainer, IAppContainer } from "../lib/appContainer";
 
-export type AuthenticateUserFn = (
-  context: GetServerSidePropsContext
-) => Promise<void>;
-
 export const authenticateUser =
-  ({
-    basicAuthGateway,
-  }: Partial<IAppContainer> = appContainer): AuthenticateUserFn =>
+  ({ basicAuthGateway }: Partial<IAppContainer> = appContainer) =>
   async (context: GetServerSidePropsContext): Promise<void> => {
     await basicAuthGateway.authenticate(context.req, context.res);
   };

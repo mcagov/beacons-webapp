@@ -1,17 +1,18 @@
-import { CachedRegistrationGateway } from "../../src/gateways/CachedRegistrationGateway";
 import { deleteCachedUse } from "../../src/useCases/deleteCachedUse";
 
 describe("deleteCachedUse", () => {
   it("calls the injected CachedRegistrationGateway to delete the cached use", async () => {
     const submissionId = "test-submissionId";
     const useIndex = 0;
-    const cachedRegistrationGateway: CachedRegistrationGateway = {
-      deleteUse: jest.fn(),
+    const container = {
+      cachedRegistrationGateway: {
+        deleteUse: jest.fn(),
+      },
     };
 
-    await deleteCachedUse(submissionId, useIndex, cachedRegistrationGateway);
+    await deleteCachedUse(container)(submissionId, useIndex);
 
-    expect(cachedRegistrationGateway.deleteUse).toHaveBeenCalledWith(
+    expect(container.cachedRegistrationGateway.deleteUse).toHaveBeenCalledWith(
       submissionId,
       useIndex
     );
@@ -20,14 +21,16 @@ describe("deleteCachedUse", () => {
   it("throws if there is an error during deletion", async () => {
     const submissionId = "test-submissionId";
     const useIndex = 0;
-    const cachedRegistrationGateway: CachedRegistrationGateway = {
-      deleteUse: jest.fn().mockImplementation(() => {
-        throw new Error();
-      }),
+    const container = {
+      cachedRegistrationGateway: {
+        deleteUse: jest.fn().mockImplementation(() => {
+          throw new Error();
+        }),
+      },
     };
 
     await expect(
-      deleteCachedUse(submissionId, useIndex, cachedRegistrationGateway)
+      deleteCachedUse(container)(submissionId, useIndex)
     ).rejects.toThrow();
   });
 });
