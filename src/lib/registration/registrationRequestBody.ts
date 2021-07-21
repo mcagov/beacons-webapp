@@ -3,6 +3,7 @@ export interface IRegistrationRequestBody {
 }
 
 interface IBeaconRequestBody {
+  accountHolderId: string;
   manufacturer: string;
   model: string;
   hexId: string;
@@ -78,4 +79,5 @@ export interface IUseRequestBody {
   otherActivityLocation: string;
   otherActivityPeopleCount: string;
   moreDetails: string;
+  maxCapacity: number;
 }
