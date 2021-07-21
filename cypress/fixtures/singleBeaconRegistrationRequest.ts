@@ -3,7 +3,7 @@ import { IRegistrationRequestBody } from "../../src/lib/registration/registratio
 export const singleBeaconRegistrationRequest: IRegistrationRequestBody = {
   beacons: [
     {
-      accountHolderId: "replace-with-test-account-holder-id",
+      accountHolderId: "12345",
       hexId: "1D0EA08C52FFBFF",
       manufacturer: "Ocean Signal",
       model: "EPIRB1",
@@ -33,7 +33,6 @@ export const singleBeaconRegistrationRequest: IRegistrationRequestBody = {
           otherCommunication: true,
           otherCommunicationValue: "On my telephone",
           vesselName: "HMS Victory",
-          maxCapacity: 180,
           portLetterNumber: "1",
           homeport: "England",
           beaconLocation: "Carry bag",

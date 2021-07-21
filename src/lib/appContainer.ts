@@ -32,7 +32,6 @@ import {
   deleteCachedUse,
   DeleteCachedUseFn,
 } from "../useCases/deleteCachedUse";
-import { getAccessToken, GetAccessTokenFn } from "../useCases/getAccessToken";
 import {
   getBeaconsByAccountHolderId,
   GetBeaconsByAccountHolderIdFn,
@@ -72,7 +71,7 @@ export interface IAppContainer {
   saveCachedRegistration: SaveCachedRegistrationFn;
   clearCachedRegistration: ClearCachedRegistrationFn;
   deleteCachedUse: DeleteCachedUseFn;
-  getAccessToken: GetAccessTokenFn;
+
   getSession: GetSessionFn;
   getOrCreateAccountHolder: GetOrCreateAccountHolderFn;
   getAccountHolderId: GetAccountHolderIdFn;
@@ -98,9 +97,6 @@ export const getAppContainer = (overrides?: IAppContainer): IAppContainer => {
     getSession: getSession,
 
     /* Composite use cases requiring access to other use cases */
-    get getAccessToken() {
-      return getAccessToken(this);
-    },
     get authenticateUser() {
       return authenticateUser(this);
     },

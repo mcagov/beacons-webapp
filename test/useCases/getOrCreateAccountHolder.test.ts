@@ -16,7 +16,9 @@ describe("The getOrCreateAccountHolder use case", () => {
         getAccountBeacons: jest.fn(),
         getAccountHolderDetails: jest.fn().mockResolvedValue(testAccountHolder),
       },
-      getAccessToken: jest.fn(),
+      beaconsApiAuthGateway: {
+        getAccessToken: jest.fn(),
+      },
     };
     const context: Partial<GetServerSidePropsContext> = {};
     const functionToTest = await getOrCreateAccountHolder(
@@ -39,7 +41,9 @@ describe("The getOrCreateAccountHolder use case", () => {
         getAccountBeacons: jest.fn(),
         getAccountHolderDetails: jest.fn(),
       },
-      getAccessToken: jest.fn(),
+      beaconsApiAuthGateway: {
+        getAccessToken: jest.fn(),
+      },
     };
     const context: Partial<GetServerSidePropsContext> = {};
     const functionToTest = await getOrCreateAccountHolder(

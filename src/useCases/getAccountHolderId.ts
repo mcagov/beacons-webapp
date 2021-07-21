@@ -8,18 +8,14 @@ export type GetAccountHolderIdFn = (
 export const getAccountHolderId =
   ({
     getSession,
-    getAccessToken,
+    beaconsApiAuthGateway,
     accountHolderApiGateway,
   }: IAppContainer): GetAccountHolderIdFn =>
   async (context: BeaconsGetServerSidePropsContext) => {
     const session = await getSession(context);
-    const authId: string = session.user.authId;
-    const accessToken = await getAccessToken();
 
-    const accountHolderId = await accountHolderApiGateway.getAccountHolderId(
-      authId,
-      accessToken
+    return await accountHolderApiGateway.getAccountHolderId(
+      session.user.authId,
+      await beaconsApiAuthGateway.getAccessToken()
     );
-
-    return accountHolderId;
   };

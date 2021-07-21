@@ -7,12 +7,12 @@ export type GetBeaconsByAccountHolderIdFn = (
 
 export const getBeaconsByAccountHolderId =
   ({
-    getAccessToken,
+    beaconsApiAuthGateway,
     accountHolderApiGateway,
   }: IAppContainer): GetBeaconsByAccountHolderIdFn =>
   async (accountId: string) => {
-    const accessToken = await getAccessToken();
-    const accountHolderDetails =
-      await accountHolderApiGateway.getAccountBeacons(accountId, accessToken);
-    return accountHolderDetails;
+    return await accountHolderApiGateway.getAccountBeacons(
+      accountId,
+      await beaconsApiAuthGateway.getAccessToken()
+    );
   };

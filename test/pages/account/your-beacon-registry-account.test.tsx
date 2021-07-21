@@ -34,7 +34,9 @@ describe("YourBeaconRegistyAccount", () => {
 
     it("should contain correct account details for a given user", async () => {
       const mocks: Partial<IAppContainer> = {
-        getAccessToken: jest.fn(),
+        beaconsApiAuthGateway: {
+          getAccessToken: jest.fn(),
+        },
         getSession: jest
           .fn()
           .mockResolvedValue({ user: { id: "a-session-id" } }),

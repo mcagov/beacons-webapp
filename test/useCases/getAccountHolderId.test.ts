@@ -14,7 +14,9 @@ describe("The getAccountHolderId use case", () => {
         getAccountHolderDetails: jest.fn(),
       },
       getSession: jest.fn().mockResolvedValue({ user: { id: "a-session-id" } }),
-      getAccessToken: jest.fn(),
+      beaconsApiAuthGateway: {
+        getAccessToken: jest.fn(),
+      },
     };
     const context: Partial<GetServerSidePropsContext> = {};
     const functionToTest = await getAccountHolderId(container as IAppContainer);
@@ -35,7 +37,9 @@ describe("The getAccountHolderId use case", () => {
         getAccountBeacons: jest.fn(),
         getAccountHolderDetails: jest.fn(),
       },
-      getAccessToken: jest.fn(),
+      beaconsApiAuthGateway: {
+        getAccessToken: jest.fn(),
+      },
     };
     const context: Partial<GetServerSidePropsContext> = {};
     const functionToTest = await getAccountHolderId(container as IAppContainer);

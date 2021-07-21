@@ -9,14 +9,14 @@ export type GetOrCreateAccountHolderFn = (
 export const getOrCreateAccountHolder =
   ({
     getSession,
-    getAccessToken,
+    beaconsApiAuthGateway,
     accountHolderApiGateway,
   }: IAppContainer): GetOrCreateAccountHolderFn =>
   async (context: BeaconsGetServerSidePropsContext) => {
     const session = await getSession(context);
     const authId: string = session.user.authId;
     const email: string = session.user.email;
-    const accessToken = await getAccessToken();
+    const accessToken = await beaconsApiAuthGateway.getAccessToken();
 
     const accountHolderId = await accountHolderApiGateway.getAccountHolderId(
       authId,
