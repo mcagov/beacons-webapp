@@ -10,7 +10,7 @@ export interface ISubmitRegistrationResult {
 export const submitRegistration =
   ({
     sendConfirmationEmail,
-    getAccessToken,
+    beaconsApiAuthGateway,
     beaconsApiGateway,
     accountHolderApiGateway,
   }: IAppContainer) =>
@@ -18,7 +18,7 @@ export const submitRegistration =
     registration: IRegistration,
     accountHolderId: string
   ): Promise<ISubmitRegistrationResult> => {
-    const accessToken = await getAccessToken();
+    const accessToken = await beaconsApiAuthGateway.getAccessToken();
 
     const registrationWithReferenceNumberAndAccountHolder = {
       ...registration,

@@ -6,12 +6,13 @@ import { Layout } from "../../components/Layout";
 import { Panel } from "../../components/Panel";
 import { GovUKBody, SectionHeading } from "../../components/Typography";
 import { WarningText } from "../../components/WarningText";
-import { verifyFormSubmissionCookieIsSet } from "../../lib/cookies";
-import { clearFormSubmissionCookie } from "../../lib/middleware";
+import {
+  clearFormSubmissionCookie,
+  withCookieRedirect,
+} from "../../lib/middleware";
 import { BeaconsGetServerSidePropsContext } from "../../lib/middleware/BeaconsGetServerSidePropsContext";
 import { withContainer } from "../../lib/middleware/withContainer";
 import { withSession } from "../../lib/middleware/withSession";
-import { redirectUserTo } from "../../lib/redirectUserTo";
 import { retrieveUserFormSubmissionId } from "../../lib/retrieveUserFormSubmissionId";
 import { PageURLs } from "../../lib/urls";
 import { ISubmitRegistrationResult } from "../../useCases/submitRegistration";
@@ -86,47 +87,47 @@ const ApplicationCompleteYourBeaconRegistryAccount: FunctionComponent =
     </>
   );
 
-export const getServerSideProps: GetServerSideProps = withSession(
-  withContainer(async (context: BeaconsGetServerSidePropsContext) => {
-    /* Retrieve injected use case(s) */
-    const { submitRegistration, getAccountHolderId } = context.container;
+export const getServerSideProps: GetServerSideProps = withCookieRedirect(
+  withSession(
+    withContainer(async (context: BeaconsGetServerSidePropsContext) => {
+      /* Retrieve injected use case(s) */
+      const { submitRegistration, getAccountHolderId, getCachedRegistration } =
+        context.container;
 
-    /* Page logic */
-    if (!verifyFormSubmissionCookieIsSet(context))
-      return redirectUserTo(PageURLs.start);
+      /* Page logic */
+      try {
+        const result = await submitRegistration(
+          await getCachedRegistration(retrieveUserFormSubmissionId(context)),
+          await getAccountHolderId(context.session)
+        );
 
-    try {
-      const result = await submitRegistration(
-        retrieveUserFormSubmissionId(context),
-        await getAccountHolderId(context.session)
-      );
+        const pageSubHeading = (result: ISubmitRegistrationResult) => {
+          if (result.beaconRegistered && result.confirmationEmailSent)
+            return "We have sent you a confirmation email.";
+          if (result.beaconRegistered && !result.confirmationEmailSent)
+            return "We could not send you a confirmation email. But we have registered your beacon under the following reference id.";
+          return "We could not save your registration or send you a confirmation email. Please contact the Beacons Registry team.";
+        };
 
-      const pageSubHeading = (result: ISubmitRegistrationResult) => {
-        if (result.beaconRegistered && result.confirmationEmailSent)
-          return "We have sent you a confirmation email.";
-        if (result.beaconRegistered && !result.confirmationEmailSent)
-          return "We could not send you a confirmation email. But we have registered your beacon under the following reference id.";
-        return "We could not save your registration or send you a confirmation email. Please contact the Beacons Registry team.";
-      };
+        clearFormSubmissionCookie(context);
 
-      clearFormSubmissionCookie(context);
-
-      return {
-        props: {
-          reference: result.referenceNumber,
-          pageSubHeading: pageSubHeading(result),
-        },
-      };
-    } catch {
-      return {
-        props: {
-          reference: "",
-          pageSubHeading:
-            "There was an error while registering your beacon.  Please contact the Beacons Registry team.",
-        },
-      };
-    }
-  })
+        return {
+          props: {
+            reference: result.referenceNumber,
+            pageSubHeading: pageSubHeading(result),
+          },
+        };
+      } catch {
+        return {
+          props: {
+            reference: "",
+            pageSubHeading:
+              "There was an error while registering your beacon.  Please contact the Beacons Registry team.",
+          },
+        };
+      }
+    })
+  )
 );
 
 export default ApplicationCompletePage;

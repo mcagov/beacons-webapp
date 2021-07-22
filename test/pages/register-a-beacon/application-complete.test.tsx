@@ -7,6 +7,7 @@ import ApplicationCompletePage, {
   getServerSideProps,
 } from "../../../src/pages/register-a-beacon/application-complete";
 import { ISubmitRegistrationResult } from "../../../src/useCases/submitRegistration";
+import { registrationFixture } from "../../fixtures/registration.fixture";
 
 describe("ApplicationCompletePage", () => {
   it("should render correctly", () => {
@@ -25,6 +26,7 @@ describe("ApplicationCompletePage", () => {
 
     beforeEach(() => {
       mockContainer = {
+        getCachedRegistration: jest.fn().mockResolvedValue(registrationFixture),
         submitRegistration: mockSubmitRegistration,
         getAccountHolderId: jest.fn().mockResolvedValue("account-holder-id"),
       };
@@ -49,12 +51,9 @@ describe("ApplicationCompletePage", () => {
     });
 
     it("should attempt to submit the user's registration", async () => {
-      const userRegistrationId = "user-form-submission-cookie-id";
       const accountHolderId = "account-holder-id";
       const context = {
-        req: {
-          cookies: { [formSubmissionCookieId]: userRegistrationId },
-        },
+        req: { cookies: { [formSubmissionCookieId]: "test-cookie-uuid" } },
         res: createResponse(),
         container: mockContainer,
         session: { user: { authId: "a-session-id" } },
@@ -63,7 +62,7 @@ describe("ApplicationCompletePage", () => {
       await getServerSideProps(context as any);
 
       expect(mockSubmitRegistration).toHaveBeenCalledWith(
-        userRegistrationId,
+        registrationFixture,
         accountHolderId
       );
     });

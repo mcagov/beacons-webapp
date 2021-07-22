@@ -55,10 +55,7 @@ import {
   sendConfirmationEmail,
   SendConfirmationEmailFn,
 } from "../useCases/sendConfirmationEmail";
-import {
-  submitRegistration,
-  SubmitRegistrationFn,
-} from "../useCases/submitRegistration";
+import { submitRegistration } from "../useCases/submitRegistration";
 import {
   updateAccountHolder,
   UpdateAccountHolderFn,
@@ -68,7 +65,7 @@ import { parseFormDataAs } from "./middleware";
 export interface IAppContainer {
   /* Use cases */
   authenticateUser: AuthenticateUserFn;
-  submitRegistration: SubmitRegistrationFn;
+  submitRegistration;
   sendConfirmationEmail: SendConfirmationEmailFn;
   getCachedRegistration: GetCachedRegistrationFn;
   saveCachedRegistration: SaveCachedRegistrationFn;
