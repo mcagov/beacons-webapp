@@ -78,4 +78,5 @@ export interface IUseRequestBody {
   otherActivityLocation: string;
   otherActivityPeopleCount: string;
   moreDetails: string;
+  maxCapacity: number;
 }
