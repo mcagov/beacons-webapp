@@ -10,26 +10,20 @@ jest.mock("axios");
 
 describe("Beacons API Gateway", () => {
   let gateway: BeaconsApiGateway;
-  let apiUrl: string;
-  let token: string;
+  const apiUrl = "http://localhost:8080/spring-api";
+  const token = "mock_access_token";
+  const endpoint = "registrations/register";
 
   beforeEach(() => {
-    apiUrl = "http://localhost:8080/spring-api";
     gateway = new BeaconsApiGateway(apiUrl);
-    token = "mock_access_token";
   });
 
   describe("Posting an entity", () => {
-    let endpoint;
-    let json;
-
-    beforeEach(() => {
-      endpoint = "registrations/register";
-      json = { model: "ASOS" };
-    });
-
     it("should return true if it posted the entity successfully", async () => {
-      const expected = await gateway.sendRegistration(json, token);
+      const expected = await gateway.sendRegistration(
+        registrationFixture,
+        token
+      );
       expect(expected).toBe(true);
     });
 
@@ -37,16 +31,19 @@ describe("Beacons API Gateway", () => {
       (axios as any).post.mockImplementation(() => {
         throw new Error();
       });
-      const expected = await gateway.sendRegistration(json, token);
+      const expected = await gateway.sendRegistration(
+        registrationFixture,
+        token
+      );
       expect(expected).toBe(false);
     });
 
     it("should send the JSON to the correct url", async () => {
       const expectedUrl = `${apiUrl}/${endpoint}`;
-      await gateway.sendRegistration(json, token);
+      await gateway.sendRegistration(registrationFixture, token);
       expect((axios as any).post).toHaveBeenLastCalledWith(
         expectedUrl,
-        json,
+        registrationRequestBodyFixture,
         expect.anything()
       );
     });

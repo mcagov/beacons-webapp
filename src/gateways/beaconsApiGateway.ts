@@ -15,7 +15,7 @@ export interface IDeleteBeaconRequest {
 
 export interface IBeaconsApiGateway {
   sendRegistration: (
-    json: IRegistrationRequestBody,
+    registration: IRegistration,
     accessToken: string
   ) => Promise<boolean>;
 
@@ -34,13 +34,13 @@ export class BeaconsApiGateway implements IBeaconsApiGateway {
   }
 
   public async sendRegistration(
-    json: IRegistrationRequestBody,
+    registration: IRegistration,
     accessToken: string
   ): Promise<boolean> {
     const url = `${this.apiUrl}/${this.registrationsEndpoint}`;
 
     try {
-      await axios.post(url, json, {
+      await axios.post(url, registrationToRequestBody(registration), {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       return true;
