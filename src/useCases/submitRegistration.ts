@@ -1,9 +1,5 @@
 import { IAppContainer } from "../lib/appContainer";
-
-export type SubmitRegistrationFn = (
-  submissionId: string,
-  accountHolderId: string
-) => Promise<ISubmitRegistrationResult>;
+import { IRegistration } from "../lib/registration/types";
 
 export interface ISubmitRegistrationResult {
   beaconRegistered: boolean;
@@ -14,20 +10,24 @@ export interface ISubmitRegistrationResult {
 export const submitRegistration =
   ({
     sendConfirmationEmail,
-    getCachedRegistration,
     getAccessToken,
     beaconsApiGateway,
     accountHolderApiGateway,
-  }: Partial<IAppContainer>): SubmitRegistrationFn =>
-  async (submissionId: string, accountHolderId: string) => {
-    const registration = await getCachedRegistration(submissionId);
+  }: IAppContainer) =>
+  async (
+    registration: IRegistration,
+    accountHolderId: string
+  ): Promise<ISubmitRegistrationResult> => {
     const accessToken = await getAccessToken();
 
-    registration.setReferenceNumber(referenceNumber("A#", 7));
-    registration.setAccountHolderId(accountHolderId);
+    const registrationWithReferenceNumberAndAccountHolder = {
+      ...registration,
+      referenceNumber: referenceNumber("A#", 7),
+      accountHolderId: accountHolderId,
+    };
 
     const beaconRegistered = await beaconsApiGateway.sendRegistration(
-      registration.serialiseToAPI(),
+      registrationWithReferenceNumberAndAccountHolder,
       accessToken
     );
 
@@ -39,17 +39,17 @@ export const submitRegistration =
 
     const confirmationEmailSent = beaconRegistered
       ? await sendConfirmationEmail(
-          registration.getRegistration(),
+          registrationWithReferenceNumberAndAccountHolder,
           accountHolderEmail
         )
       : false;
 
-    if (!beaconRegistered) registration.setReferenceNumber("");
-
     return {
       beaconRegistered,
       confirmationEmailSent,
-      referenceNumber: registration.getRegistration().referenceNumber || "",
+      referenceNumber: beaconRegistered
+        ? registrationWithReferenceNumberAndAccountHolder.referenceNumber
+        : "",
     };
   };
 

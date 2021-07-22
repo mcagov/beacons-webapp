@@ -1,31 +1,27 @@
 import { IAppContainer } from "../../src/lib/appContainer";
 import { submitRegistration } from "../../src/useCases/submitRegistration";
+import { registrationFixture } from "../fixtures/registration.fixture";
 
 describe("submitRegistration()", () => {
-  const mockRegistration = {
-    serialiseToAPI: jest.fn().mockReturnValue({ model: "ASOS" }),
-    setReferenceNumber: jest.fn(),
-    setAccountHolderId: jest.fn(),
-    getRegistration: jest.fn().mockReturnValue({ model: "ASOS" }),
-  };
-
   it("requests an access token from the beaconsApiAuthGateway", async () => {
     const mockRetrieveAuthToken = jest.fn();
     const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
       getAccessToken: mockRetrieveAuthToken,
       sendConfirmationEmail: jest.fn(),
       beaconsApiGateway: {
         sendRegistration: jest.fn(),
-      },
+      } as any,
       accountHolderApiGateway: {
         getAccountHolderDetails: jest.fn(async () => ({
           email: "beacons@beacons.com",
         })),
-      },
+      } as any,
     };
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container as IAppContainer)(
+      registrationFixture,
+      "accountHolderId"
+    );
 
     expect(mockRetrieveAuthToken).toHaveBeenCalledTimes(1);
   });
@@ -33,20 +29,22 @@ describe("submitRegistration()", () => {
   it("attempts to send the registration to the beacons API", async () => {
     const mockSendRegistrationToApi = jest.fn();
     const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
       getAccessToken: jest.fn(),
       sendConfirmationEmail: jest.fn(),
       beaconsApiGateway: {
         sendRegistration: mockSendRegistrationToApi,
-      },
+      } as any,
       accountHolderApiGateway: {
         getAccountHolderDetails: jest.fn(async () => ({
           email: "beacons@beacons.com",
         })),
-      },
+      } as any,
     };
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container as IAppContainer)(
+      registrationFixture,
+      "accountHolderId"
+    );
 
     expect(mockSendRegistrationToApi).toHaveBeenCalledTimes(1);
   });
@@ -55,84 +53,85 @@ describe("submitRegistration()", () => {
     // TODO: Move setting the registration number to the API and delete this test
     const mockSendRegistrationToApi = jest.fn();
     const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
-      getAccessToken: jest.fn(),
+      getAccessToken: jest.fn().mockResolvedValue("test-access-token"),
       sendConfirmationEmail: jest.fn(),
       beaconsApiGateway: {
         sendRegistration: mockSendRegistrationToApi,
-      },
+      } as any,
       accountHolderApiGateway: {
         getAccountHolderDetails: jest.fn(async () => ({
           email: "beacons@beacons.com",
         })),
-      },
+      } as any,
     };
+    const oneOrMoreNonWhitespaceCharacters = /\S+/;
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container as IAppContainer)(
+      registrationFixture,
+      "accountHolderId"
+    );
 
-    expect(mockRegistration.setReferenceNumber).toHaveBeenCalled();
+    expect(mockSendRegistrationToApi).toHaveBeenCalledWith(
+      expect.objectContaining({
+        referenceNumber: expect.stringMatching(
+          oneOrMoreNonWhitespaceCharacters
+        ),
+      }),
+      expect.anything()
+    );
   });
 
   it("sets the account holder id before sending to the beacons API", async () => {
     const mockSendRegistrationToApi = jest.fn();
     const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
-      getAccessToken: jest.fn(),
+      getAccessToken: jest.fn().mockResolvedValue("test-access-token"),
       sendConfirmationEmail: jest.fn(),
       beaconsApiGateway: {
         sendRegistration: mockSendRegistrationToApi,
-      },
+      } as any,
       accountHolderApiGateway: {
         getAccountHolderDetails: jest.fn(async () => ({
           email: "beacons@beacons.com",
         })),
-      },
+      } as any,
     };
+    const oneOrMoreNonWhitespaceCharacters = /\S+/;
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container as IAppContainer)(
+      registrationFixture,
+      "accountHolderId"
+    );
 
-    expect(mockRegistration.setReferenceNumber).toHaveBeenCalled();
-  });
-
-  it("account holder id accepts null value without throwing", async () => {
-    const mockSendRegistrationToApi = jest.fn();
-    const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
-      getAccessToken: jest.fn(),
-      sendConfirmationEmail: jest.fn(),
-      beaconsApiGateway: {
-        sendRegistration: mockSendRegistrationToApi,
-      },
-      accountHolderApiGateway: {
-        getAccountHolderDetails: jest.fn(async () => ({
-          email: "beacons@beacons.com",
-        })),
-      },
-    };
-
-    await submitRegistration(container)("submissionId", "accountHolderId");
-
-    expect(mockRegistration.setReferenceNumber).toHaveBeenCalled();
+    expect(mockSendRegistrationToApi).toHaveBeenCalledWith(
+      expect.objectContaining({
+        accountHolderId: expect.stringMatching(
+          oneOrMoreNonWhitespaceCharacters
+        ),
+      }),
+      "test-access-token"
+    );
   });
 
   it("attempts to send a confirmation email if registration was successful", async () => {
     const email = "beacons@beacons.com";
     const mockSendConfirmationEmail = jest.fn();
     const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
       getAccessToken: jest.fn(),
       sendConfirmationEmail: mockSendConfirmationEmail,
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(true),
-      },
+      } as any,
       accountHolderApiGateway: {
         getAccountHolderDetails: jest.fn(async () => ({
           email: "beacons@beacons.com",
         })),
-      },
+      } as any,
     };
 
-    await submitRegistration(container)("submissionId", "accountHolderId");
+    await submitRegistration(container as IAppContainer)(
+      registrationFixture,
+      "accountHolderId"
+    );
 
     expect(mockSendConfirmationEmail).toHaveBeenCalledWith(
       expect.anything(),
@@ -142,21 +141,20 @@ describe("submitRegistration()", () => {
 
   it("returns the result when the registration was a success and the email was sent", async () => {
     const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
       getAccessToken: jest.fn(),
       sendConfirmationEmail: jest.fn().mockResolvedValue(true),
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(true),
-      },
+      } as any,
       accountHolderApiGateway: {
         getAccountHolderDetails: jest.fn(async () => ({
           email: "beacons@beacons.com",
         })),
-      },
+      } as any,
     };
 
-    const result = await submitRegistration(container)(
-      "submissionId",
+    const result = await submitRegistration(container as IAppContainer)(
+      registrationFixture,
       "accountHolderId"
     );
 
@@ -169,21 +167,20 @@ describe("submitRegistration()", () => {
 
   it("returns the result when the registration was a success but the email was not sent", async () => {
     const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
       getAccessToken: jest.fn(),
       sendConfirmationEmail: jest.fn().mockResolvedValue(false),
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(true),
-      },
+      } as any,
       accountHolderApiGateway: {
         getAccountHolderDetails: jest.fn(async () => ({
           email: "beacons@beacons.com",
         })),
-      },
+      } as any,
     };
 
-    const result = await submitRegistration(container)(
-      "submissionId",
+    const result = await submitRegistration(container as IAppContainer)(
+      registrationFixture,
       "accountHolderId"
     );
 
@@ -195,25 +192,21 @@ describe("submitRegistration()", () => {
   });
 
   it("returns a registration number when the registration was a success", async () => {
-    mockRegistration.getRegistration = jest
-      .fn()
-      .mockReturnValue({ registrationNumber: "success" });
     const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
       getAccessToken: jest.fn(),
       sendConfirmationEmail: jest.fn().mockResolvedValue(false),
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(true),
-      },
+      } as any,
       accountHolderApiGateway: {
         getAccountHolderDetails: jest.fn(async () => ({
           email: "beacons@beacons.com",
         })),
-      },
+      } as any,
     };
 
-    const result = await submitRegistration(container)(
-      "submissionId",
+    const result = await submitRegistration(container as IAppContainer)(
+      registrationFixture,
       "accountHolderId"
     );
 
@@ -222,21 +215,20 @@ describe("submitRegistration()", () => {
 
   it("returns an empty registration number when the registration failed", async () => {
     const container: Partial<IAppContainer> = {
-      getCachedRegistration: jest.fn().mockResolvedValue(mockRegistration),
       getAccessToken: jest.fn(),
       sendConfirmationEmail: jest.fn().mockResolvedValue(false),
       beaconsApiGateway: {
         sendRegistration: jest.fn().mockResolvedValue(false),
-      },
+      } as any,
       accountHolderApiGateway: {
         getAccountHolderDetails: jest.fn(async () => ({
           email: "beacons@beacons.com",
         })),
-      },
+      } as any,
     };
 
-    const result = await submitRegistration(container)(
-      "submissionId",
+    const result = await submitRegistration(container as IAppContainer)(
+      registrationFixture,
       "accountHolderId"
     );
 
