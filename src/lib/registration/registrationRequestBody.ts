@@ -2,7 +2,7 @@ export interface IRegistrationRequestBody {
   beacons: IBeaconRequestBody[];
 }
 
-interface IBeaconRequestBody {
+export interface IBeaconRequestBody {
   manufacturer: string;
   model: string;
   hexId: string;
@@ -16,7 +16,7 @@ interface IBeaconRequestBody {
   uses: IUseRequestBody[];
 }
 
-interface IOwnerRequestBody {
+export interface IOwnerRequestBody {
   fullName: string;
   email: string;
   telephoneNumber: string;
@@ -28,7 +28,7 @@ interface IOwnerRequestBody {
   postcode: string;
 }
 
-interface IEmergencyContactRequestBody {
+export interface IEmergencyContactRequestBody {
   fullName: string;
   telephoneNumber: string;
   alternativeTelephoneNumber: string;

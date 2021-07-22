@@ -40,5 +40,5 @@ export const registrationFixture: IRegistration = {
   emergencyContact3AlternativeTelephoneNumber:
     "emergencyContact3AlternativeTelephoneNumber",
 
-  uses: [getMockUse()],
+  uses: [getMockUse(), getMockUse()],
 };

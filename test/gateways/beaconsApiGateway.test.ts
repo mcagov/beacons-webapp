@@ -3,8 +3,6 @@ import {
   BeaconsApiGateway,
   registrationToRequestBody,
 } from "../../src/gateways/beaconsApiGateway";
-import { IRegistrationRequestBody } from "../../src/lib/registration/registrationRequestBody";
-import { IRegistration } from "../../src/lib/registration/types";
 import { registrationFixture } from "../fixtures/registration.fixture";
 import { registrationRequestBodyFixture } from "../fixtures/registrationRequestBody.fixture";
 
@@ -99,12 +97,8 @@ describe("Beacons API Gateway", () => {
 
 describe("registrationToRequestBody", () => {
   it("maps an IRegistration to an IRegistrationRequestBody", () => {
-    const registration: IRegistration = registrationFixture;
-    const expectedRequestBody: IRegistrationRequestBody =
-      registrationRequestBodyFixture;
-
-    expect(registrationToRequestBody(registration)).toStrictEqual(
-      expectedRequestBody
+    expect(registrationToRequestBody(registrationFixture)).toStrictEqual(
+      registrationRequestBodyFixture
     );
   });
 });
