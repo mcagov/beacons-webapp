@@ -1,5 +1,12 @@
 import axios from "axios";
-import { BeaconsApiGateway } from "../../src/gateways/beaconsApiGateway";
+import {
+  BeaconsApiGateway,
+  registrationToRequestBody,
+} from "../../src/gateways/beaconsApiGateway";
+import { IRegistrationRequestBody } from "../../src/lib/registration/registrationRequestBody";
+import { IRegistration } from "../../src/lib/registration/types";
+import { registrationFixture } from "../fixtures/registration.fixture";
+import { registrationRequestBodyFixture } from "../fixtures/registrationRequestBody.fixture";
 
 jest.mock("axios");
 
@@ -87,5 +94,17 @@ describe("Beacons API Gateway", () => {
         expect.anything()
       );
     });
+  });
+});
+
+describe("registrationToRequestBody", () => {
+  it("maps an IRegistration to an IRegistrationRequestBody", () => {
+    const registration: IRegistration = registrationFixture;
+    const expectedRequestBody: IRegistrationRequestBody =
+      registrationRequestBodyFixture;
+
+    expect(registrationToRequestBody(registration)).toStrictEqual(
+      expectedRequestBody
+    );
   });
 });
