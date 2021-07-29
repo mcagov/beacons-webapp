@@ -19,7 +19,7 @@ describe("YourBeaconRegistryAccount", () => {
       }),
       rest.get("*/account-holder/:accountId", (req, res, ctx) => {
         return res(
-          ctx.json({ ...accountDetailsResponseJson("Tesy McTestface") })
+          ctx.json({ ...accountDetailsResponseJson("Testy McTestface") })
         );
       }),
       rest.get("*/account-holder/:accountId/beacons", (req, res, ctx) => {

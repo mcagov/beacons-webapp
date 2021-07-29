@@ -5,7 +5,7 @@ export const accountHolderFixture: IAccountHolderDetails = deepFreeze({
   id: "cb2e9fd2-45bb-4865-a04c-add5bb7c34a7",
   authId: "replace-with-test-auth-id",
   email: "testy@mctestface.com",
-  fullName: "Tesy McTestface",
+  fullName: "Testy McTestface",
   telephoneNumber: "01178 657123",
   alternativeTelephoneNumber: "",
   addressLine1: "Flat 42",
