@@ -51,7 +51,7 @@ describe("UpdateAccount", () => {
       expect(fields.addressLine2.value).toEqual("Testington Towers");
       expect(fields.townOrCity.value).toEqual("Testville");
       expect(fields.county.value).toEqual("Testershire");
-      expect(fields.postcode.value).toEqual("TS1 23A");
+      expect(fields.postcode.value).toEqual("TS1 5AE");
       expect(fields.email.value).toEqual("testy@mctestface.com");
     });
 
