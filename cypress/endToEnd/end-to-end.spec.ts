@@ -35,7 +35,6 @@ describe("As user with an account", () => {
     givenIHaveACookieSetAndHaveSignedInIVisit(PageURLs.updateAccount);
     givenIHaveFilledInUpdateAccountDetailsPage();
     iCanSeeMyAccountDetails();
-    givenIHaveEnteredMyBeaconDetails();
     givenIHaveClicked(".govuk-button");
     givenIHaveEnteredMyBeaconDetails();
     givenIHaveEnteredMyLandUse();
