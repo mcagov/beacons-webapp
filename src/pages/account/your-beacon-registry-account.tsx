@@ -11,9 +11,11 @@ import {
 } from "../../components/Typography";
 import { IAccountHolderDetails } from "../../entities/accountHolderDetails";
 import { IBeacon } from "../../entities/beacon";
+import { accountDetailsFormManager } from "../../lib/form/formManagers/accountDetailsFormManager";
 import { BeaconsGetServerSidePropsContext } from "../../lib/middleware/BeaconsGetServerSidePropsContext";
 import { withContainer } from "../../lib/middleware/withContainer";
 import { withSession } from "../../lib/middleware/withSession";
+import { redirectUserTo } from "../../lib/redirectUserTo";
 import { PageURLs } from "../../lib/urls";
 import { formatUses } from "../../utils/formatUses";
 
@@ -252,6 +254,11 @@ export const getServerSideProps: GetServerSideProps = withSession(
     const accountHolderDetails = await getOrCreateAccountHolder(
       context.session
     );
+
+    if (accountDetailsFormManager(accountHolderDetails).asDirty().hasErrors()) {
+      return redirectUserTo(PageURLs.updateAccount);
+    }
+
     const beacons = await getBeaconsByAccountHolderId(accountHolderDetails.id);
 
     return {

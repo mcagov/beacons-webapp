@@ -14,10 +14,8 @@ import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
 import { GovUKBody, SectionHeading } from "../../components/Typography";
 import { IAccountHolderDetails } from "../../entities/accountHolderDetails";
-import { FieldManager } from "../../lib/form/fieldManager";
-import { FormJSON, FormManager } from "../../lib/form/formManager";
-import { Validators } from "../../lib/form/validators";
-import { FormSubmission } from "../../lib/formCache";
+import { FormJSON } from "../../lib/form/formManager";
+import { accountDetailsFormManager } from "../../lib/form/formManagers/accountDetailsFormManager";
 import { BeaconsGetServerSidePropsContext } from "../../lib/middleware/BeaconsGetServerSidePropsContext";
 import { withContainer } from "../../lib/middleware/withContainer";
 import { withSession } from "../../lib/middleware/withSession";
@@ -29,37 +27,6 @@ export interface UpdateAccountPageProps {
   form: FormJSON;
   accountHolderDetails: IAccountHolderDetails;
 }
-
-const definePageForm = ({
-  fullName,
-  telephoneNumber,
-  addressLine1,
-  addressLine2,
-  townOrCity,
-  county,
-  postcode,
-  email,
-}: FormSubmission): FormManager => {
-  return new FormManager({
-    fullName: new FieldManager(fullName, [
-      Validators.required("Full name is a required field"),
-    ]),
-    telephoneNumber: new FieldManager(telephoneNumber),
-    addressLine1: new FieldManager(addressLine1, [
-      Validators.required("Building number and street is a required field"),
-    ]),
-    addressLine2: new FieldManager(addressLine2),
-    townOrCity: new FieldManager(townOrCity, [
-      Validators.required("Town or city is a required field"),
-    ]),
-    county: new FieldManager(county),
-    postcode: new FieldManager(postcode, [
-      Validators.required("Postcode is a required field"),
-      Validators.postcode("Postcode must be a valid UK postcode"),
-    ]),
-    email: new FieldManager(email),
-  });
-};
 
 const UpdateAccount: FunctionComponent<UpdateAccountPageProps> = ({
   form,
@@ -194,7 +161,7 @@ export const getServerSideProps: GetServerSideProps = withSession(
     if (!userDidSubmitForm(context)) {
       return {
         props: {
-          form: definePageForm(
+          form: accountDetailsFormManager(
             accountUpdateFields(await getOrCreateAccountHolder(context.session))
           ).serialise(),
         },
@@ -202,7 +169,7 @@ export const getServerSideProps: GetServerSideProps = withSession(
     }
 
     const formData = await parseFormDataAs<AccountUpdateFields>(context.req);
-    const formManager = definePageForm(formData).asDirty();
+    const formManager = accountDetailsFormManager(formData).asDirty();
     if (formManager.hasErrors()) {
       return {
         props: {
