@@ -13,6 +13,6 @@ export const accountHolderFixture: IAccountHolderDetails = deepFreeze({
   addressLine3: "",
   addressLine4: "",
   townOrCity: "Testville",
-  postcode: "TS1 23A",
+  postcode: "TS1 5AE",
   county: "Testershire",
 });
