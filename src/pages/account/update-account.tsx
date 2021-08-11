@@ -41,7 +41,7 @@ const UpdateAccount: FunctionComponent<UpdateAccountPageProps> = ({
           <>
             <FormErrorSummary formErrors={form.errorSummary} />
             <Form>
-              <FormGroup errorMessages={[]}>
+              <FormGroup>
                 <FormFieldset>
                   <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
                   <GovUKBody>

@@ -1,7 +1,7 @@
-import { FormSubmission } from "../../formCache";
-import { FieldManager } from "../fieldManager";
-import { FormManager } from "../formManager";
-import { Validators } from "../validators";
+import { FormSubmission } from "../../../presenters/formSubmission";
+import { FieldManager } from "../FieldManager";
+import { FormManager } from "../FormManager";
+import { Validators } from "../Validators";
 
 export const accountDetailsFormManager = ({
   fullName,
