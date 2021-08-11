@@ -1,19 +1,23 @@
-import { IAppContainer } from "../lib/appContainer";
-import { IRegistration } from "../lib/registration/types";
+import { Registration } from "../entities/Registration";
+import { EmailServiceGateway } from "../gateways/interfaces/EmailServiceGateway";
 import { joinStrings } from "../lib/writingStyle";
 
 export type SendConfirmationEmailFn = (
-  registration: IRegistration,
+  registration: Registration,
   email: string
 ) => Promise<boolean>;
 
+interface Dependencies {
+  emailServiceGateway: EmailServiceGateway;
+}
+
 export const sendConfirmationEmail =
-  ({ govNotifyGateway }: IAppContainer): SendConfirmationEmailFn =>
+  ({ emailServiceGateway }: Dependencies): SendConfirmationEmailFn =>
   async (registration, email) => {
     const templateId = process.env.GOV_NOTIFY_CUSTOMER_EMAIL_TEMPLATE;
 
     if (templateId) {
-      return govNotifyGateway.sendEmail(templateId, email, {
+      return emailServiceGateway.sendEmail(templateId, email, {
         owner_name: registration.ownerFullName,
         reference: registration.referenceNumber,
         beacon_information: joinStrings([

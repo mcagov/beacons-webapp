@@ -1,4 +1,4 @@
-import { IAppContainer } from "./../lib/appContainer";
+import { IAppContainer } from "../lib/IAppContainer";
 
 export type DeleteBeaconFn = (
   reason: string,
@@ -11,13 +11,12 @@ export interface IDeleteBeaconResult {
 }
 
 export const deleteBeacon =
-  ({ beaconsApiGateway, getAccessToken }: IAppContainer): DeleteBeaconFn =>
+  ({ beaconGateway }: IAppContainer): DeleteBeaconFn =>
   async (reason, beaconId, accountHolderId) => {
-    const accessToken = await getAccessToken();
-
-    const success = await beaconsApiGateway.deleteBeacon(
-      { reason, beaconId, accountHolderId },
-      accessToken
-    );
+    const success = await beaconGateway.deleteBeacon({
+      reason,
+      beaconId,
+      accountHolderId,
+    });
     return { success };
   };

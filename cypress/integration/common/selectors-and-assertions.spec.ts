@@ -1,5 +1,4 @@
 import { v4 } from "uuid";
-import { PageURLs } from "../../../src/lib/urls";
 
 export const requiredFieldErrorMessage = "required field";
 export const tooManyCharactersErrorMessage = "too many characters";
@@ -11,13 +10,6 @@ export const iCanClickTheBackLinkToGoToPreviousPage = (
   thenTheUrlShouldContain(previousPageURL);
 };
 
-export const givenIHaveBeenToTheStartPageAndClickedStartNow = (): void => {
-  // Creates an empty Registration object linked to the user's session
-  givenIHaveBeenTo(PageURLs.start);
-  givenIHaveClicked(".govuk-button--start");
-  // TODO: when we have sign up/sign in flow set up, update this to sign up/sign in user
-};
-
 export const givenIHaveACookieSetAndIVisit = (url: string): void => {
   cy.setCookie("submissionId", v4());
   cy.visit(url);
@@ -26,11 +18,15 @@ export const givenIHaveACookieSetAndIVisit = (url: string): void => {
 export const givenIHaveACookieSetAndHaveSignedInIVisit = (
   url: string
 ): void => {
+  givenIHaveACookieSetAndHaveSignedIn();
+  cy.visit(url);
+};
+
+export const givenIHaveACookieSetAndHaveSignedIn = (): void => {
   cy.setCookie("submissionId", v4());
   cy.setCookie("next-auth.session-token", Cypress.env("SESSION_TOKEN"), {
     log: false,
   });
-  cy.visit(url);
 };
 
 export const givenIAmAt = (url: string): void => {
@@ -38,7 +34,7 @@ export const givenIAmAt = (url: string): void => {
 };
 
 export const givenIHaveBeenTo = givenIAmAt;
-export const andIHaveBeenTo = givenIAmAt;
+export const whenIAmAt = givenIAmAt;
 export const andIAmAt = givenIAmAt;
 export const iAmAt = givenIAmAt;
 

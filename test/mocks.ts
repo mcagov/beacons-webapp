@@ -1,19 +1,9 @@
-import { IFormCache } from "../src/lib/formCache";
+import { BeaconUse } from "../src/entities/BeaconUse";
 import {
   Activity,
-  BeaconUse,
   Environment,
   Purpose,
-} from "../src/lib/registration/types";
-
-export const getCacheMock = (): jest.Mocked<IFormCache> => {
-  return {
-    get: jest.fn(),
-    update: jest.fn(),
-    clear: jest.fn(),
-    set: jest.fn(),
-  };
-};
+} from "../src/lib/deprecatedRegistration/types";
 
 // TODO: Update `any` type once domain/form objects are defined
 export const getMockBeacon = (): any => ({

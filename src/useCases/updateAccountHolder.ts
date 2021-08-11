@@ -1,27 +1,19 @@
-import { IAccountHolderDetails } from "../entities/accountHolderDetails";
-import { IAppContainer } from "../lib/appContainer";
+import { AccountHolder } from "../entities/AccountHolder";
+import { IAppContainer } from "../lib/IAppContainer";
 
 export type UpdateAccountHolderFn = (
   id: string,
-  accountHolderUpdate: IAccountHolderDetails
-) => Promise<IAccountHolderDetails>;
+  accountHolderUpdate: AccountHolder
+) => Promise<AccountHolder>;
 
 export const updateAccountHolder =
-  ({
-    getAccessToken,
-    accountHolderApiGateway,
-  }: IAppContainer): UpdateAccountHolderFn =>
+  ({ accountHolderGateway }: IAppContainer): UpdateAccountHolderFn =>
   async (
     id: string,
-    accountHolderUpdate: IAccountHolderDetails
-  ): Promise<IAccountHolderDetails> => {
-    const accessToken = await getAccessToken();
-    const updatedAccountHolder =
-      await accountHolderApiGateway.updateAccountHolderDetails(
-        id,
-        accountHolderUpdate,
-        accessToken
-      );
-
-    return updatedAccountHolder;
+    accountHolderUpdate: AccountHolder
+  ): Promise<AccountHolder> => {
+    return await accountHolderGateway.updateAccountHolderDetails(
+      id,
+      accountHolderUpdate
+    );
   };

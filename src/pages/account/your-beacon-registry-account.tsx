@@ -9,20 +9,20 @@ import {
   PageHeading,
   SectionHeading,
 } from "../../components/Typography";
-import { IAccountHolderDetails } from "../../entities/accountHolderDetails";
-import { IBeacon } from "../../entities/beacon";
+import { AccountHolder } from "../../entities/AccountHolder";
+import { Beacon } from "../../entities/Beacon";
 import { accountDetailsFormManager } from "../../lib/form/formManagers/accountDetailsFormManager";
 import { BeaconsGetServerSidePropsContext } from "../../lib/middleware/BeaconsGetServerSidePropsContext";
 import { withContainer } from "../../lib/middleware/withContainer";
 import { withSession } from "../../lib/middleware/withSession";
 import { redirectUserTo } from "../../lib/redirectUserTo";
 import { PageURLs } from "../../lib/urls";
-import { formatUses } from "../../utils/formatUses";
+import { formatUses } from "../../lib/writingStyle";
 
 export interface YourBeaconRegistyAccountPageProps {
   id?: string;
-  accountHolderDetails: IAccountHolderDetails;
-  beacons: IBeacon[];
+  accountHolderDetails: AccountHolder;
+  beacons: Beacon[];
 }
 
 export const YourBeaconRegistyAccount: FunctionComponent<YourBeaconRegistyAccountPageProps> =
@@ -50,7 +50,7 @@ export const YourBeaconRegistyAccount: FunctionComponent<YourBeaconRegistyAccoun
   };
 
 interface IYourDetailsProps {
-  accountHolderDetails: IAccountHolderDetails;
+  accountHolderDetails: AccountHolder;
 }
 
 const YourDetails: FunctionComponent<IYourDetailsProps> = ({
@@ -174,7 +174,7 @@ const YourDetails: FunctionComponent<IYourDetailsProps> = ({
 };
 
 interface IYourBeaconsProps {
-  beacons: IBeacon[];
+  beacons: Beacon[];
 }
 
 const YourBeacons: FunctionComponent<IYourBeaconsProps> = ({
@@ -211,7 +211,7 @@ const YourBeacons: FunctionComponent<IYourBeaconsProps> = ({
 );
 
 interface BeaconRowProps {
-  beacon: IBeacon;
+  beacon: Beacon;
 }
 
 const BeaconRow: FunctionComponent<BeaconRowProps> = ({

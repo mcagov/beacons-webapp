@@ -1,7 +1,9 @@
-import { IAppContainer } from "../lib/appContainer";
+import { DraftRegistration } from "../entities/DraftRegistration";
+import { Registration } from "../entities/Registration";
+import { IAppContainer } from "../lib/IAppContainer";
 
 export type SubmitRegistrationFn = (
-  submissionId: string,
+  draftRegistration: DraftRegistration,
   accountHolderId: string
 ) => Promise<ISubmitRegistrationResult>;
 
@@ -14,42 +16,39 @@ export interface ISubmitRegistrationResult {
 export const submitRegistration =
   ({
     sendConfirmationEmail,
-    getCachedRegistration,
-    getAccessToken,
-    beaconsApiGateway,
-    accountHolderApiGateway,
+    beaconGateway,
+    accountHolderGateway,
   }: Partial<IAppContainer>): SubmitRegistrationFn =>
-  async (submissionId: string, accountHolderId: string) => {
-    const registration = await getCachedRegistration(submissionId);
-    const accessToken = await getAccessToken();
+  async (draftRegistration: DraftRegistration, accountHolderId: string) => {
+    const draftRegistrationWithReferenceAndAccountHolderId: DraftRegistration =
+      {
+        ...draftRegistration,
+        referenceNumber: referenceNumber("A#", 7),
+        accountHolderId,
+      };
 
-    registration.setReferenceNumber(referenceNumber("A#", 7));
-    registration.setAccountHolderId(accountHolderId);
-
-    const beaconRegistered = await beaconsApiGateway.sendRegistration(
-      registration.serialiseToAPI(),
-      accessToken
+    const beaconRegistered = await beaconGateway.sendRegistration(
+      draftRegistrationWithReferenceAndAccountHolderId
     );
 
     const { email: accountHolderEmail } =
-      await accountHolderApiGateway.getAccountHolderDetails(
-        accountHolderId,
-        accessToken
-      );
+      await accountHolderGateway.getAccountHolderDetails(accountHolderId);
 
     const confirmationEmailSent = beaconRegistered
       ? await sendConfirmationEmail(
-          registration.getRegistration(),
+          draftRegistrationWithReferenceAndAccountHolderId as Registration,
           accountHolderEmail
         )
       : false;
 
-    if (!beaconRegistered) registration.setReferenceNumber("");
+    if (!beaconRegistered)
+      draftRegistrationWithReferenceAndAccountHolderId.referenceNumber = "";
 
     return {
       beaconRegistered,
       confirmationEmailSent,
-      referenceNumber: registration.getRegistration().referenceNumber || "",
+      referenceNumber:
+        draftRegistrationWithReferenceAndAccountHolderId.referenceNumber || "",
     };
   };
 

@@ -1,7 +1,8 @@
 import { render } from "@testing-library/react";
 import { createResponse } from "node-mocks-http";
 import React from "react";
-import { IAppContainer } from "../../../src/lib/appContainer";
+import { DraftRegistration } from "../../../src/entities/DraftRegistration";
+import { IAppContainer } from "../../../src/lib/IAppContainer";
 import { formSubmissionCookieId } from "../../../src/lib/types";
 import ApplicationCompletePage, {
   getServerSideProps,
@@ -16,7 +17,13 @@ describe("ApplicationCompletePage", () => {
   });
 
   describe("getServerSideProps()", () => {
+    const mockDraftRegistration: DraftRegistration = {
+      model: "ASOS",
+      uses: [],
+    };
+
     let mockContainer: Partial<IAppContainer>;
+
     const mockSubmitRegistration = jest.fn().mockResolvedValue({
       beaconRegistered: true,
       confirmationEmailSent: true,
@@ -27,6 +34,9 @@ describe("ApplicationCompletePage", () => {
       mockContainer = {
         submitRegistration: mockSubmitRegistration,
         getAccountHolderId: jest.fn().mockResolvedValue("account-holder-id"),
+        getDraftRegistration: jest
+          .fn()
+          .mockResolvedValue(mockDraftRegistration),
       };
     });
 
@@ -40,10 +50,9 @@ describe("ApplicationCompletePage", () => {
 
       const result = await getServerSideProps(context as any);
 
-      expect(result).toStrictEqual({
+      expect(result).toMatchObject({
         redirect: {
           destination: "/",
-          permanent: false,
         },
       });
     });
@@ -63,7 +72,7 @@ describe("ApplicationCompletePage", () => {
       await getServerSideProps(context as any);
 
       expect(mockSubmitRegistration).toHaveBeenCalledWith(
-        userRegistrationId,
+        expect.objectContaining(mockDraftRegistration),
         accountHolderId
       );
     });

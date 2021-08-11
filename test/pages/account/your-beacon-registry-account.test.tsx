@@ -1,6 +1,10 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { getAppContainer, IAppContainer } from "../../../src/lib/appContainer";
+import { v4 } from "uuid";
+import { BeaconsApiAccountHolderGateway } from "../../../src/gateways/BeaconsApiAccountHolderGateway";
+import { AuthGateway } from "../../../src/gateways/interfaces/AuthGateway";
+import { getAppContainer } from "../../../src/lib/appContainer";
+import { IAppContainer } from "../../../src/lib/IAppContainer";
 import { BeaconsGetServerSidePropsContext } from "../../../src/lib/middleware/BeaconsGetServerSidePropsContext";
 import { getServerSideProps } from "../../../src/pages/account/your-beacon-registry-account";
 import { accountHolderFixture } from "../../fixtures/accountHolder.fixture";
@@ -35,8 +39,14 @@ describe("YourBeaconRegistryAccount", () => {
     });
 
     it("should contain correct account details for a given user", async () => {
+      const mockAuthGateway: AuthGateway = {
+        getAccessToken: jest.fn().mockResolvedValue(v4()),
+      };
       const mocks: Partial<IAppContainer> = {
-        getAccessToken: jest.fn(),
+        accountHolderGateway: new BeaconsApiAccountHolderGateway(
+          process.env.API_URL,
+          mockAuthGateway
+        ),
       };
       const container = getAppContainer(mocks as IAppContainer);
       const context: Partial<BeaconsGetServerSidePropsContext> = {

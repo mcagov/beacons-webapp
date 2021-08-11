@@ -13,8 +13,8 @@ import { FormInputProps, Input } from "../../components/Input";
 import { Layout } from "../../components/Layout";
 import { IfYouNeedHelp } from "../../components/Mca";
 import { GovUKBody, SectionHeading } from "../../components/Typography";
-import { IAccountHolderDetails } from "../../entities/accountHolderDetails";
-import { FormJSON } from "../../lib/form/formManager";
+import { AccountHolder } from "../../entities/AccountHolder";
+import { FormJSON } from "../../lib/form/FormManager";
 import { accountDetailsFormManager } from "../../lib/form/formManagers/accountDetailsFormManager";
 import { BeaconsGetServerSidePropsContext } from "../../lib/middleware/BeaconsGetServerSidePropsContext";
 import { withContainer } from "../../lib/middleware/withContainer";
@@ -25,7 +25,7 @@ import { diffObjValues } from "../../lib/utils";
 
 export interface UpdateAccountPageProps {
   form: FormJSON;
-  accountHolderDetails: IAccountHolderDetails;
+  accountHolderDetails: AccountHolder;
 }
 
 const UpdateAccount: FunctionComponent<UpdateAccountPageProps> = ({
@@ -180,10 +180,7 @@ export const getServerSideProps: GetServerSideProps = withSession(
 
     const accountHolder = await getOrCreateAccountHolder(context.session);
     const update = diffObjValues(accountUpdateFields(accountHolder), formData);
-    await updateAccountHolder(
-      accountHolder.id,
-      update as IAccountHolderDetails
-    );
+    await updateAccountHolder(accountHolder.id, update as AccountHolder);
 
     return redirectUserTo(PageURLs.accountHome);
   })
@@ -193,11 +190,11 @@ export default UpdateAccount;
 
 /**
  * Turns an account holder in to a set of update fields
- * @param accountHolder {IAccountHolderDetails} the account holder from which to populate these fields
+ * @param accountHolder {AccountHolder} the account holder from which to populate these fields
  * @returns {AccountUpdateFields} update field values from accountHolder or properties are undefined (to allow for obj diffing)
  */
 const accountUpdateFields = (
-  accountHolder: IAccountHolderDetails
+  accountHolder: AccountHolder
 ): AccountUpdateFields => ({
   fullName: accountHolder.fullName || undefined,
   telephoneNumber: accountHolder.telephoneNumber || undefined,
