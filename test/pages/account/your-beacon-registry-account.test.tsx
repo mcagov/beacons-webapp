@@ -16,6 +16,16 @@ import { beaconFixtures } from "../../fixtures/beacons.fixture";
 import { manyBeaconsApiResponseFixture } from "../../fixtures/manyBeaconsApiResponse.fixture";
 
 describe("YourBeaconRegistryAccount", () => {
+  const mockAuthGateway: AuthGateway = {
+    getAccessToken: jest.fn().mockResolvedValue(v4()),
+  };
+  const mocks: Partial<IAppContainer> = {
+    accountHolderGateway: new BeaconsApiAccountHolderGateway(
+      process.env.API_URL,
+      mockAuthGateway
+    ),
+  };
+
   describe("GetServerSideProps for user with full account details", () => {
     const server = setupServer(
       rest.get("*/account-holder/auth-id/:authId", (req, res, ctx) => {
@@ -39,15 +49,6 @@ describe("YourBeaconRegistryAccount", () => {
     });
 
     it("should contain correct account details for a given user", async () => {
-      const mockAuthGateway: AuthGateway = {
-        getAccessToken: jest.fn().mockResolvedValue(v4()),
-      };
-      const mocks: Partial<IAppContainer> = {
-        accountHolderGateway: new BeaconsApiAccountHolderGateway(
-          process.env.API_URL,
-          mockAuthGateway
-        ),
-      };
       const container = getAppContainer(mocks as IAppContainer);
       const context: Partial<BeaconsGetServerSidePropsContext> = {
         container: container as IAppContainer,
@@ -86,12 +87,9 @@ describe("YourBeaconRegistryAccount", () => {
     });
 
     it("should redirect to account updates if account details are invalid", async () => {
-      const mocks: Partial<IAppContainer> = {
-        getAccessToken: jest.fn(),
-      };
       const container = getAppContainer(mocks as IAppContainer);
       const context: Partial<BeaconsGetServerSidePropsContext> = {
-        container: container as IAppContainer,
+        container,
         session: { user: { authId: "a-session-id" } },
       };
 
