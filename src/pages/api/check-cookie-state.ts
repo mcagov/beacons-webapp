@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { acceptRejectCookieId } from "../../lib/types";
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
-  const { cookies } = req.cookies;
+  const { cookies } = req;
   const oneYearFromNow: Date = new Date();
   oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
 
