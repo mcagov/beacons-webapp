@@ -11,7 +11,7 @@ services:
       - 5432:5432
 
   api:
-    image: 232705206979.dkr.ecr.eu-west-2.amazonaws.com/beacons-service:d374d6eaaa3824b579373629578e6c383a056001
+    image: 232705206979.dkr.ecr.eu-west-2.amazonaws.com/beacons-service:$SERVICE_COMMIT_HASH
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/beacons
     ports:
