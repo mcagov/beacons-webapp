@@ -30,8 +30,6 @@ describe("As user with an account", () => {
     cy.contains(testBeaconAndOwnerData.beaconDetails.hexId);
     cy.contains(testBeaconAndOwnerData.ownerDetails.fullName);
     cy.contains(sentenceCase(testLandUseData.type.activity));
-    const date = new Date();
-    cy.contains(date.toISOString().split("T")[0]);
   };
 
   const givenIHaveClickedToCreateANewBeacon = () =>
