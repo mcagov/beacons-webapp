@@ -44,14 +44,15 @@
     "react-dom": "17.0.2",
     "redis-json": "^6.0.1",
     "urlencoded-body-parser": "^3.0.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@jest/types": "^27.0.6",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@types/cookie": "^0.4.0",
-    "@types/node": "^14.17.0",
+    "@types/node": "^16.10.1",
     "@types/react": "^17.0.22",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
