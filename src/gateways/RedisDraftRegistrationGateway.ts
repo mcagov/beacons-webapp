@@ -7,6 +7,16 @@ export class RedisDraftRegistrationGateway implements DraftRegistrationGateway {
   private cache = new JSONCache<DraftRegistration>(
     new Redis(process.env.REDIS_URI)
   );
+  private static gatewayInstance: DraftRegistrationGateway;
+
+  static getGateway(): DraftRegistrationGateway {
+    if (!RedisDraftRegistrationGateway.gatewayInstance) {
+      RedisDraftRegistrationGateway.gatewayInstance =
+        new RedisDraftRegistrationGateway();
+    }
+
+    return RedisDraftRegistrationGateway.gatewayInstance;
+  }
 
   public async read(id: string): Promise<DraftRegistration> {
     return (await this.cache.get(id)) as DraftRegistration;
