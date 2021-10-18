@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
       - uses: actions/setup-node@v2.4.0
         with:
           node-version: "14"
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
       - name: Extract branch name
         shell: bash
         run: REF=${GITHUB_REF#refs/heads/} && arrREF=(${REF//// }) && echo "##[set-output name=branch;]$(echo ${arrREF[-1]})"
@@ -52,7 +52,7 @@ jobs:
     needs: install_dependencies
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
       - uses: actions/setup-node@v2.4.0
         with:
           node-version: "14"
@@ -78,7 +78,7 @@ jobs:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
       - name: Copy env vars
         run: cp .env.example .env.local
       - name: Run Cypress UI tests
@@ -110,14 +110,14 @@ jobs:
 
     steps:
       - name: Checkout Service repo
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
         with:
           repository: "mcagov/beacons-service"
       - id: get_service_commit_hash
         name: Get commit hash from Service repo
         run: echo "::set-output name=service_commit_hash::$(git rev-parse HEAD)"
       - name: Checkout webapp repo
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -155,7 +155,7 @@ jobs:
     needs: install_dependencies
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
       - uses: actions/setup-node@v2.4.0
         with:
           node-version: "14"
@@ -173,7 +173,7 @@ jobs:
     needs: install_dependencies
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
       - uses: actions/setup-node@v2.4.0
         with:
           node-version: "14"
@@ -190,7 +190,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
       - name: Docker lint
         uses: brpaz/hadolint-action@v1.5.0
 
@@ -200,7 +200,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
       - name: Perform CodeQL Analysis
