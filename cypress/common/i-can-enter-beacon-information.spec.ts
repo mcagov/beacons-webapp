@@ -84,7 +84,7 @@ export const iCanEditMyAdditionalBeaconInformation = (): void =>
 
 export const iCanSeeMyBeaconDetails = (): void =>
   Object.values(testBeaconAndOwnerData.beaconDetails).forEach((value) =>
-    cy.contains(value)
+    cy.contains(testBeaconAndOwnerData.beaconDetails.hexId)
   );
 
 export const iCanSeeMyAdditionalBeaconInformation = (): void =>
