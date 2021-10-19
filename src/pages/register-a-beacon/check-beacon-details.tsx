@@ -1,8 +1,8 @@
 import { GetServerSideProps } from "next";
 import React, { FunctionComponent } from "react";
 import { BeaconsForm, BeaconsFormHeading } from "../../components/BeaconsForm";
-import { BeaconManufacturerInput } from "../../components/domain/formElements/BeaconManufacturerInput";
-import { BeaconModelInput } from "../../components/domain/formElements/BeaconModelInput";
+import { BeaconManufacturerSelect } from "../../components/domain/formElements/BeaconManufacturerSelect";
+import { BeaconModelSelect } from "../../components/domain/formElements/BeaconModelSelect";
 import { HexIdHelp } from "../../components/domain/formElements/HexIdHelp";
 import { FormGroup } from "../../components/Form";
 import { FormInputProps, Input } from "../../components/Input";
@@ -53,11 +53,11 @@ const CheckBeaconDetails: FunctionComponent<DraftRegistrationPageProps> = ({
     >
       <BeaconsFormHeading pageHeading={pageHeading} />
       {pageText}
-      <BeaconManufacturerInput
+      <BeaconManufacturerSelect
         value={form.fields.manufacturer.value}
         errorMessages={form.fields.manufacturer.errorMessages}
       />
-      <BeaconModelInput
+      <BeaconModelSelect
         value={form.fields.model.value}
         errorMessages={form.fields.model.errorMessages}
       />

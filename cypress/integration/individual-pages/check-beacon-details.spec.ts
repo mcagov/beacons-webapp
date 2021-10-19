@@ -26,28 +26,6 @@ describe("As a beacon owner, I want to enter my initial beacon information", () 
     iCanSeeAPageHeadingThatContains("Check beacon details");
   });
 
-  it("errors if I submit just whitespace in the manufacturer field", () => {
-    whenIType(" ", manufacturerFieldSelector);
-
-    whenIClickContinue();
-    thenIShouldSeeAnErrorSummaryLinkThatContains("manufacturer", "required");
-    thenIShouldSeeAnErrorMessageThatContains("manufacturer", "required");
-
-    whenIClickOnTheErrorSummaryLinkContaining("manufacturer", "required");
-    thenMyFocusMovesTo(manufacturerFieldSelector);
-  });
-
-  it("errors if I submit just whitespace in the model field", () => {
-    whenIType(" ", modelFieldSelector);
-
-    whenIClickContinue();
-    thenIShouldSeeAnErrorSummaryLinkThatContains("model", "required");
-    thenIShouldSeeAnErrorMessageThatContains("model", "required");
-
-    whenIClickOnTheErrorSummaryLinkContaining("model", "required");
-    thenMyFocusMovesTo(modelFieldSelector);
-  });
-
   describe("the HEX ID field", () => {
     it("errors if I submit just whitespace string", () => {
       const expectedErrorMessage = ["HEX ID", "required"];

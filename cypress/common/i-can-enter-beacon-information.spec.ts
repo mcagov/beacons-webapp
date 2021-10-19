@@ -21,11 +21,6 @@ export const givenIHaveEnteredMyRequiredBeaconDetails = (): void => {
 
 export const givenIHaveFilledInCheckBeaconDetailsPage = (): void => {
   givenIHaveACookieSetAndIVisit(CreateRegistrationPageURLs.checkBeaconDetails);
-  givenIHaveTyped(
-    testBeaconAndOwnerData.beaconDetails.manufacturer,
-    "#manufacturer"
-  );
-  givenIHaveTyped(testBeaconAndOwnerData.beaconDetails.model, "#model");
   givenIHaveTyped(testBeaconAndOwnerData.beaconDetails.hexId, "#hexId");
   givenIHaveClickedContinue();
 };

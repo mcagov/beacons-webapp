@@ -4,8 +4,8 @@ import {
   BeaconsForm,
   BeaconsFormHeading,
 } from "../../../../components/BeaconsForm";
-import { BeaconManufacturerInput } from "../../../../components/domain/formElements/BeaconManufacturerInput";
-import { BeaconModelInput } from "../../../../components/domain/formElements/BeaconModelInput";
+import { BeaconManufacturerSelect } from "../../../../components/domain/formElements/BeaconManufacturerSelect";
+import { BeaconModelSelect } from "../../../../components/domain/formElements/BeaconModelSelect";
 import { HexIdHelp } from "../../../../components/domain/formElements/HexIdHelp";
 import { GovUKBody } from "../../../../components/Typography";
 import { FieldManager } from "../../../../lib/form/FieldManager";
@@ -60,11 +60,11 @@ const BeaconDetails: FunctionComponent<DraftRegistrationPageProps> = ({
         delete the registration then register the beacon again with the new
         UIN/HEX ID.
       </GovUKBody>
-      <BeaconManufacturerInput
+      <BeaconManufacturerSelect
         value={form.fields.manufacturer.value}
         errorMessages={form.fields.manufacturer.errorMessages}
       />
-      <BeaconModelInput
+      <BeaconModelSelect
         value={form.fields.model.value}
         errorMessages={form.fields.manufacturer.errorMessages}
       />
