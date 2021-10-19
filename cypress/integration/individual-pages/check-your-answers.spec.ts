@@ -2,10 +2,7 @@ import {
   CreateRegistrationPageURLs,
   GeneralPageURLs,
 } from "../../../src/lib/urls";
-import {
-  givenIHaveFilledInCheckBeaconDetailsPage,
-  iCanEditMyBeaconDetails,
-} from "../../common/i-can-enter-beacon-information.spec";
+import { givenIHaveFilledInCheckBeaconDetailsPage } from "../../common/i-can-enter-beacon-information.spec";
 import {
   andIHaveVisited,
   givenIHaveACookieSetAndIVisit,
@@ -32,11 +29,10 @@ describe("As a beacon owner, I want to check the details that were submitted", (
     andIHaveVisited(CreateRegistrationPageURLs.checkYourAnswers);
     givenIHaveClicked(acceptAndSendButtonSelector);
     andIHaveVisited(CreateRegistrationPageURLs.applicationComplete);
-    cy.get("div").contains("There was an error while registering your beacon");
+    cy.get("div").contains("We could not save your registration");
     givenIHaveClicked(homePageLinkSelector);
     andIHaveVisited(GeneralPageURLs.start);
     givenIHaveClicked(startButtonSelector);
     andIHaveVisited(CreateRegistrationPageURLs.checkBeaconDetails);
-    iCanEditMyBeaconDetails();
   });
 });

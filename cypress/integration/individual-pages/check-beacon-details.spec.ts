@@ -110,13 +110,8 @@ describe("As a beacon owner, I want to enter my initial beacon information", () 
 
   it("routes to the next page if there are no errors with the form submission", () => {
     const validUkEncodedHexId = "1D0EA08C52FFBFF";
-
-    whenIType("Test Manufacturer", "#manufacturer");
-    whenIType("Test Model", "#model");
     whenIType(validUkEncodedHexId, "#hexId");
-
     whenIClickContinue();
-
     thenTheUrlShouldContain("/register-a-beacon/beacon-information");
   });
 });

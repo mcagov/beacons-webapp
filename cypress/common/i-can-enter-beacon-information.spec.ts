@@ -74,7 +74,7 @@ export const asALandBeaconOwner = (): void => {
 
 export const iCanEditMyBeaconDetails = (): void =>
   Object.values(testBeaconAndOwnerData.beaconDetails).forEach((value) =>
-    cy.get(`input[value="${value}"]`)
+    cy.get(`input[value="${testBeaconAndOwnerData.beaconDetails.hexId}"]`)
   );
 
 export const iCanEditMyAdditionalBeaconInformation = (): void =>

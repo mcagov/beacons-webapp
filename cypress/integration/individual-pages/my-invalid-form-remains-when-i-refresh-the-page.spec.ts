@@ -16,8 +16,7 @@ describe("Given I have submitted invalid data to a registration form,", () => {
       givenIHaveACookieSetAndIVisit(
         CreateRegistrationPageURLs.checkBeaconDetails
       );
-      whenIType("ACME Inc.", "#manufacturer");
-      whenIType("Excelsior", "#model");
+
       whenIType("invalid hex id", "#hexId");
       andIClickContinue();
 
@@ -26,8 +25,6 @@ describe("Given I have submitted invalid data to a registration form,", () => {
 
       givenIHaveRefreshedThePage();
 
-      iCanEditAFieldContaining("ACME Inc.");
-      iCanEditAFieldContaining("Excelsior");
       iCanEditAFieldContaining("INVALID HEX ID");
     });
   });

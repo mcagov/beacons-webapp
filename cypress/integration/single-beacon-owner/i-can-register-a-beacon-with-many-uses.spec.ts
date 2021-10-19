@@ -11,7 +11,6 @@ import {
   iCanEditMyAdditionalBeaconInformation,
   iCanEditMyBeaconDetails,
   iCanSeeMyAdditionalBeaconInformation,
-  iCanSeeMyBeaconDetails,
 } from "../../common/i-can-enter-beacon-information.spec";
 import {
   givenIHaveEnteredMyAddressDetails,
@@ -106,7 +105,6 @@ describe("As a single beacon owner with many uses", () => {
     givenIHaveEnteredMyEmergencyContactDetails();
 
     thenTheUrlShouldContain(CreateRegistrationPageURLs.checkYourAnswers);
-    iCanSeeMyBeaconDetails();
     iCanSeeMyAdditionalBeaconInformation();
     iCanSeeASectionHeadingThatContains("Main use");
     iCanSeeMyLandUse();
