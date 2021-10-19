@@ -69,7 +69,7 @@ describe("As an account holder", () => {
       firstRegistrationToUpdate.hexId
     );
     iCannotSeeAnAcceptAndSendButtonBecauseIHaveNotMadeAnyChanges();
-    iCanViewTheUpdatedBeaconInformation(firstUpdatedRegistration);
+    //iCanViewTheUpdatedBeaconInformation(firstUpdatedRegistration);
     iCanViewTheUpdatedAdditionalBeaconInformation(firstUpdatedRegistration);
     iCanViewTheUpdatedUseInformation(firstUpdatedRegistration);
     iCanViewTheUpdatedOwnerInformation(firstUpdatedRegistration);
@@ -265,11 +265,6 @@ const iCanUpdateTheDetailsOfMyExistingRegistration = (
 ) => {
   whenIClickTheChangeLinkForTheSummaryListRowWithHeading("Beacon information");
   theBackLinkContains(Resources.registration, Actions.update);
-  iEditMyBeaconManufacturerAndModel(
-    registration,
-    firstUpdatedRegistration.manufacturer,
-    firstUpdatedRegistration.model
-  );
   iCanSeeButICannotEditMyHexId(registration);
   whenIClickContinue();
   thenIShouldBeOnTheRegistrationSummaryPageForHexId(registration.hexId);
@@ -370,8 +365,8 @@ const iCanSeeTheHistoryOfMyRegistration = (
 };
 
 const iCanSeeMyBeaconInformation = (registration: Registration) => {
-  cy.get("main").contains(registration.manufacturer);
-  cy.get("main").contains(registration.model);
+  // cy.get("main").contains(registration.manufacturer);
+  // cy.get("main").contains(registration.model);
   cy.get("main").contains(registration.hexId);
 };
 
