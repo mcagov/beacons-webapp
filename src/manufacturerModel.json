@@ -508,35 +508,5 @@
     "CSTA 285 SGEII, GPS EPIRB",
     "CSTA 289, Thrane & Thrane, (702) 4065 GNSS EPIRB"
   ],
-  "Ultra Electronics Ocean Systems": ["CSTA 718, T-1630/SRT Buoy EPIRB"],
-  "UNKNOWN": [
-    "EPIRB awaiting information",
-    "EPIRB Corrupted Hex Ids",
-    "SSAS Corrupted Hex Ids",
-    "SSAS awaiting information",
-    "SVDR awaiting information",
-    "MMSI coded, non-GPS, model not indicated",
-    "MMSI coded, GPS, model not indicated",
-    "SSAS, GPS, model not indicated",
-    "SVDR, GPS, MMSI, model indicated",
-    "SVDR Corrupted Hex Ids",
-    "EPIRB Test coded",
-    "SSAS Test coded",
-    "SVDR Test coded",
-    "Orbitography beacon",
-    "ELT awaiting information",
-    "ELT Corrupted Hex Ids",
-    "ELT, model unknown, non-GPS, 24-bit address",
-    "ELT, model unknown, GPS, 24-bit address",
-    "ELT, model unknown, non-GPS, Aircraft Mark",
-    "ELT, model unknown, GPS, Aircraft Mark",
-    "ELT, model unknown, non-GPS, AOD + sn",
-    "ELT, model unknown, GPS, AOD + sn",
-    "ELT Test coded",
-    "non-specific ELT, model unknown",
-    "PLB Test coded",
-    "PLB awaiting information",
-    "PLB Corrupted Hex Ids",
-    "Unkown Corrupted Hex Ids"
-  ]
+  "Ultra Electronics Ocean Systems": ["CSTA 718, T-1630/SRT Buoy EPIRB"]
 }
