@@ -3,6 +3,7 @@ import { testBeaconAndOwnerData } from "./happy-path-test-data.spec";
 import {
   andIClickContinue,
   andIHaveSelected,
+  givenIHaveACookieSetAndIVisit,
   givenIHaveClickedContinue,
   givenIHaveTyped,
   thenTheUrlShouldContain,
@@ -20,6 +21,7 @@ export const givenIHaveEnteredMyRequiredBeaconDetails = (): void => {
 };
 
 export const givenIHaveEnteredTheBeaconHexIdManufacturerAndModel = (): void => {
+  givenIHaveACookieSetAndIVisit(CreateRegistrationPageURLs.checkBeaconDetails);
   givenIHaveTyped(testBeaconAndOwnerData.beaconDetails.hexId, "#hexId");
   andIClickContinue();
 
