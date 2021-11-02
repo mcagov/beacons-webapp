@@ -3,7 +3,6 @@ import { testBeaconAndOwnerData } from "./happy-path-test-data.spec";
 import {
   andIClickContinue,
   andIHaveSelected,
-  givenIHaveACookieSetAndIVisit,
   givenIHaveClickedContinue,
   givenIHaveTyped,
   thenTheUrlShouldContain,
@@ -11,17 +10,16 @@ import {
 } from "./selectors-and-assertions.spec";
 
 export const givenIHaveEnteredMyBeaconDetails = (): void => {
-  givenIHaveFilledInCheckBeaconDetailsPage();
+  givenIHaveEnteredTheBeaconHexIdManufacturerAndModel();
   givenIHaveFilledInBeaconInformationPage();
 };
 
 export const givenIHaveEnteredMyRequiredBeaconDetails = (): void => {
-  givenIHaveFilledInCheckBeaconDetailsPage();
+  givenIHaveEnteredTheBeaconHexIdManufacturerAndModel();
   givenIHaveFilledInRequiredBeaconInformationPage();
 };
 
-export const givenIHaveFilledInCheckBeaconDetailsPage = (): void => {
-  givenIHaveACookieSetAndIVisit(CreateRegistrationPageURLs.checkBeaconDetails);
+export const givenIHaveEnteredTheBeaconHexIdManufacturerAndModel = (): void => {
   givenIHaveTyped(testBeaconAndOwnerData.beaconDetails.hexId, "#hexId");
   andIClickContinue();
 
@@ -40,7 +38,6 @@ export const givenIHaveFilledInCheckBeaconDetailsPage = (): void => {
 
 export const givenIHaveFilledInBeaconInformationPage = (): void => {
   const beaconInfo = testBeaconAndOwnerData.additionalBeaconInformation;
-  thenTheUrlShouldContain(CreateRegistrationPageURLs.beaconInformation);
   givenIHaveTyped(beaconInfo.serialNumber, "#manufacturerSerialNumber");
   givenIHaveTyped(beaconInfo.chkCode, "#chkCode");
   givenIHaveTyped(beaconInfo.csta, "#csta");

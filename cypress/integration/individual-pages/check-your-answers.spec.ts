@@ -3,7 +3,7 @@ import {
   GeneralPageURLs,
 } from "../../../src/lib/urls";
 import {
-  givenIHaveFilledInCheckBeaconDetailsPage,
+  givenIHaveEnteredTheBeaconHexIdManufacturerAndModel,
   iCanEditMyBeaconDetails,
 } from "../../common/i-can-enter-beacon-information.spec";
 import {
@@ -28,7 +28,7 @@ describe("As a beacon owner, I want to check the details that were submitted", (
   it("should not clear the form when I click Accept and Send and the registration fails", () => {
     givenIHaveSignedIn();
     givenIHaveACookieSetAndIVisit(CreateRegistrationPageURLs.beaconInformation);
-    givenIHaveFilledInCheckBeaconDetailsPage();
+    givenIHaveEnteredTheBeaconHexIdManufacturerAndModel();
     andIHaveVisited(CreateRegistrationPageURLs.checkYourAnswers);
     givenIHaveClicked(acceptAndSendButtonSelector);
     andIHaveVisited(CreateRegistrationPageURLs.applicationComplete);
