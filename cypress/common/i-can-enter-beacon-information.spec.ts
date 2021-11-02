@@ -7,6 +7,7 @@ import {
   givenIHaveClickedContinue,
   givenIHaveTyped,
   thenTheUrlShouldContain,
+  whenISelectTheOptionFromTheDropdown,
 } from "./selectors-and-assertions.spec";
 
 export const givenIHaveEnteredMyBeaconDetails = (): void => {
@@ -21,13 +22,20 @@ export const givenIHaveEnteredMyRequiredBeaconDetails = (): void => {
 
 export const givenIHaveFilledInCheckBeaconDetailsPage = (): void => {
   givenIHaveACookieSetAndIVisit(CreateRegistrationPageURLs.checkBeaconDetails);
-  givenIHaveTyped(
+  givenIHaveTyped(testBeaconAndOwnerData.beaconDetails.hexId, "#hexId");
+  andIClickContinue();
+
+  whenISelectTheOptionFromTheDropdown(
     testBeaconAndOwnerData.beaconDetails.manufacturer,
     "#manufacturer"
   );
-  givenIHaveTyped(testBeaconAndOwnerData.beaconDetails.model, "#model");
-  givenIHaveTyped(testBeaconAndOwnerData.beaconDetails.hexId, "#hexId");
-  givenIHaveClickedContinue();
+  andIClickContinue();
+
+  whenISelectTheOptionFromTheDropdown(
+    testBeaconAndOwnerData.beaconDetails.model,
+    "#model"
+  );
+  andIClickContinue();
 };
 
 export const givenIHaveFilledInBeaconInformationPage = (): void => {
