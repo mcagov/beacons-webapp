@@ -10,6 +10,9 @@ import {
   givenIHaveEnteredMyBeaconDetails,
   iCanEditMyAdditionalBeaconInformation,
   iCanEditMyBeaconDetails,
+  iCanEditMyBeaconManufacturer,
+  iCanEditMyBeaconModel,
+  iCanEditMyHexId,
   iCanSeeMyAdditionalBeaconInformation,
   iCanSeeMyBeaconDetails,
 } from "../../common/i-can-enter-beacon-information.spec";
@@ -173,7 +176,11 @@ const iCanGoBackThroughTheFormInReverse = () => {
   whenIClickBack();
   iCanEditMyAdditionalBeaconInformation();
   whenIClickBack();
-  iCanEditMyBeaconDetails();
+  iCanEditMyBeaconModel();
+  whenIClickBack();
+  iCanEditMyBeaconManufacturer();
+  whenIClickBack();
+  iCanEditMyHexId();
   whenIClickBack();
   iHaveVisited(GeneralPageURLs.start);
   iCanClickEveryChangeButtonToEditMyRegistration();

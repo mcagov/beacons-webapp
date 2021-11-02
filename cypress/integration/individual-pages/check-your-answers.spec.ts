@@ -4,7 +4,7 @@ import {
 } from "../../../src/lib/urls";
 import {
   givenIHaveEnteredTheBeaconHexIdManufacturerAndModel,
-  iCanEditMyBeaconDetails,
+  iCanEditMyHexId,
 } from "../../common/i-can-enter-beacon-information.spec";
 import {
   andIHaveVisited,
@@ -37,6 +37,6 @@ describe("As a beacon owner, I want to check the details that were submitted", (
     andIHaveVisited(GeneralPageURLs.start);
     givenIHaveClicked(startButtonSelector);
     andIHaveVisited(CreateRegistrationPageURLs.checkBeaconDetails);
-    iCanEditMyBeaconDetails();
+    iCanEditMyHexId();
   });
 });

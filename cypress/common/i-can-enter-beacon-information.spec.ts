@@ -71,23 +71,28 @@ export const asAnAviationBeaconOwner = (): void => {
   andIClickContinue();
 };
 
-export const asAMaritimePleasureBeaconOwner = (): void => {
-  asAMaritimeBeaconOwner();
-  andIHaveSelected("#pleasure");
-  andIClickContinue();
-};
-
-export const asALandBeaconOwner = (): void => {
-  givenIHaveEnteredMyBeaconDetails();
-
-  andIHaveSelected("#land");
-  andIClickContinue();
-};
-
 export const iCanEditMyBeaconDetails = (): void =>
   Object.values(testBeaconAndOwnerData.beaconDetails).forEach((value) =>
     cy.get(`input[value="${value}"]`)
   );
+
+export const iCanEditMyHexId = (
+  hexId = testBeaconAndOwnerData.beaconDetails.hexId
+): void => {
+  cy.get(`input[value="${hexId}"]`);
+};
+
+export const iCanEditMyBeaconManufacturer = (
+  manufacturer = testBeaconAndOwnerData.beaconDetails.manufacturer
+): void => {
+  cy.get("select").should("have.value", manufacturer);
+};
+
+export const iCanEditMyBeaconModel = (
+  model = testBeaconAndOwnerData.beaconDetails.model
+): void => {
+  cy.get("select").should("have.value", model);
+};
 
 export const iCanEditMyAdditionalBeaconInformation = (): void =>
   Object.values(testBeaconAndOwnerData.additionalBeaconInformation).forEach(

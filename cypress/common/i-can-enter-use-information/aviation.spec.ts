@@ -14,7 +14,9 @@ import {
 } from "../happy-path-test-data.spec";
 import {
   iCanEditMyAdditionalBeaconInformation,
-  iCanEditMyBeaconDetails,
+  iCanEditMyBeaconManufacturer,
+  iCanEditMyBeaconModel,
+  iCanEditMyHexId,
 } from "../i-can-enter-beacon-information.spec";
 import {
   iCanEditMyAddressDetails,
@@ -97,7 +99,11 @@ export const iCanGoBackAndEditMyAviationUse = (purpose: Purpose): void => {
   whenIClickBack();
   iCanEditMyAdditionalBeaconInformation();
   whenIClickBack();
-  iCanEditMyBeaconDetails();
+  iCanEditMyBeaconModel();
+  whenIClickBack();
+  iCanEditMyBeaconManufacturer();
+  whenIClickBack();
+  iCanEditMyHexId();
   whenIClickBack();
   iHaveVisited(GeneralPageURLs.start);
 };
