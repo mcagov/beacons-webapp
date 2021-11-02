@@ -227,7 +227,7 @@ export const getServerSideProps: GetServerSideProps = withContainer(
     const nextPageUrl = CreateRegistrationPageURLs.environment;
 
     const previousPageUrl =
-      context.query.previous || CreateRegistrationPageURLs.checkBeaconDetails;
+      context.query.previous || CreateRegistrationPageURLs.model;
 
     return await new BeaconsPageRouter([
       new WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError(context),
