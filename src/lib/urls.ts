@@ -43,6 +43,8 @@ export enum DeleteRegistrationPageURLs {
 
 export enum CreateRegistrationPageURLs {
   checkBeaconDetails = "/register-a-beacon/check-beacon-details",
+  manufacturer = "/register-a-beacon/manufacturer",
+  model = "/register-a-beacon/model",
   beaconInformation = "/register-a-beacon/beacon-information",
   environment = "/register-a-beacon/beacon-use",
   purpose = "/register-a-beacon/purpose",
