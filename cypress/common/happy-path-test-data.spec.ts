@@ -15,7 +15,7 @@ export const testAccountDetails = {
 export const testBeaconAndOwnerData = {
   beaconDetails: {
     manufacturer: "Ocean Signal",
-    model: "EPIRB1",
+    model: "CSTA 297, EPIRB1",
     hexId: "1D0E9B07CEFFBFF",
   },
   additionalBeaconInformation: {
@@ -55,7 +55,7 @@ export const testBeaconAndOwnerData = {
 export const testBeaconAndOwnerDataRestOfWorld = {
   beaconDetails: {
     manufacturer: "Ocean Signal",
-    model: "EPIRB1",
+    model: "CSTA 297, EPIRB1",
     hexId: "1D0E9B07CEFFBFF",
   },
   additionalBeaconInformation: {

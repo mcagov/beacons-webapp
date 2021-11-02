@@ -4,7 +4,7 @@ export const singleBeaconRegistration: Registration = {
   accountHolderId: "replace-with-account-holder-id",
   hexId: "1D0EA08C52FFBFF",
   manufacturer: "Ocean Signal",
-  model: "EPIRB1",
+  model: "CSTA 297, EPIRB1",
   manufacturerSerialNumber: "1407312904",
   batteryExpiryDateMonth: "12",
   batteryExpiryDateYear: "2022",
