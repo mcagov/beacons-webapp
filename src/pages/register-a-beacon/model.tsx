@@ -37,11 +37,10 @@ interface ModelForm {
 const Model: FunctionComponent<DraftRegistrationPageProps> = ({
   form,
   showCookieBanner,
+  draftRegistration,
 }: DraftRegistrationPageProps): JSX.Element => {
   const pageHeading = "Beacon model";
   const previousPageUrl = CreateRegistrationPageURLs.manufacturer;
-
-  const manufacturer = "Ocean Signal";
 
   return (
     <Layout
@@ -75,7 +74,7 @@ const Model: FunctionComponent<DraftRegistrationPageProps> = ({
                     id="model"
                     name="model"
                     defaultValue={form.fields.model.value}
-                    selectedManufacturer={manufacturer}
+                    selectedManufacturer={draftRegistration.manufacturer}
                   />
                   <Details
                     summaryText="What if I can't find the beacon on this list?"
