@@ -30,16 +30,18 @@ import { GivenUserIsEditingADraftRegistration_WhenUserSubmitsValidForm_ThenSaveA
 import { GivenUserIsEditingADraftRegistration_WhenUserViewsForm_ThenShowForm } from "../../router/rules/GivenUserIsEditingADraftRegistration_WhenUserViewsForm_ThenShowForm";
 import { WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError } from "../../router/rules/WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError";
 
-interface ManufacturerForm {
-  manufacturer: string;
+interface ModelForm {
+  model: string;
 }
 
-const Manufacturer: FunctionComponent<DraftRegistrationPageProps> = ({
+const Model: FunctionComponent<DraftRegistrationPageProps> = ({
   form,
   showCookieBanner,
 }: DraftRegistrationPageProps): JSX.Element => {
-  const pageHeading = "Beacon manufacturer";
-  const previousPageUrl = CreateRegistrationPageURLs.checkBeaconDetails;
+  const pageHeading = "Beacon model";
+  const previousPageUrl = CreateRegistrationPageURLs.manufacturer;
+
+  const manufacturer = "Ocean Signal";
 
   return (
     <Layout
@@ -56,7 +58,7 @@ const Manufacturer: FunctionComponent<DraftRegistrationPageProps> = ({
                 <FormErrorSummary formErrors={form.errorSummary} />
                 <FormLegendPageHeading>{pageHeading}</FormLegendPageHeading>
                 <GovUKBody>
-                  We need to know the manufacturer of the beacon so we can tell
+                  We need to know the exact model of the beacon so we can tell
                   what features it has if we need to assist the owner in an
                   emergency.
                 </GovUKBody>
@@ -65,33 +67,29 @@ const Manufacturer: FunctionComponent<DraftRegistrationPageProps> = ({
                   light which can help search and rescue teams locate the owner
                   in an emergency.
                 </GovUKBody>
-                <GovUKBody>
-                  We will ask you to select the specific model of the beacon on
-                  the next page.
-                </GovUKBody>
-                <FormGroup
-                  errorMessages={form.fields.manufacturer.errorMessages}
-                >
-                  <label className="govuk-label" htmlFor="manufacturer">
-                    Manufacturer
+                <FormGroup errorMessages={form.fields.model.errorMessages}>
+                  <label className="govuk-label" htmlFor="model">
+                    Model
                   </label>
-                  <BeaconManufacturerSelect
-                    id="manufacturer"
-                    name="manufacturer"
-                    defaultValue={form.fields.manufacturer.value}
+                  <BeaconModelSelect
+                    id="model"
+                    name="model"
+                    defaultValue={form.fields.model.value}
+                    selectedManufacturer={manufacturer}
                   />
                   <Details
-                    summaryText="What if I can't find the manufacturer of the beacon on this list?"
+                    summaryText="What if I can't find the beacon on this list?"
                     className="govuk-!-padding-top-2"
                   >
                     <p className="govuk-!-margin-top-5">
-                      Contact the UK Beacon Registry for help finding the
-                      manufacturer.
+                      Contact the UK Beacon Registry for help finding the model
+                      of the beacon you are trying to register.
                     </p>
                     <BeaconRegistryContactInfo h2 />
                   </Details>
                 </FormGroup>
               </FormFieldset>
+
               <Button buttonText="Continue" />
               <IfYouNeedHelp />
             </Form>
@@ -102,28 +100,26 @@ const Manufacturer: FunctionComponent<DraftRegistrationPageProps> = ({
   );
 };
 
-export const BeaconManufacturerSelect = ({
+export const BeaconModelSelect = ({
   id,
   name,
   defaultValue,
-  manufacturers = require("../../manufacturerModel.json"),
+  selectedManufacturer,
+  manufacturerModels = require("../../manufacturerModel.json"),
 }: {
   id: string;
   name: string;
   defaultValue: string;
-  manufacturers?: string[];
+  selectedManufacturer: string;
+  manufacturerModels?: string[];
 }): JSX.Element => (
-  <Select
-    id={id}
-    name={name}
-    defaultValue={defaultValue || "Select manufacturer"}
-  >
+  <Select id={id} name={name} defaultValue={defaultValue || "Select a model"}>
     <option disabled selected value={undefined}>
-      Select manufacturer
+      Select a model
     </option>
-    {Object.keys(manufacturers).map((manufacturer) => (
-      <SelectOption key={manufacturer} value={manufacturer}>
-        {manufacturer}
+    {manufacturerModels[selectedManufacturer].map((model) => (
+      <SelectOption key={model} value={model}>
+        {model}
       </SelectOption>
     ))}
   </Select>
@@ -131,7 +127,7 @@ export const BeaconManufacturerSelect = ({
 
 export const getServerSideProps: GetServerSideProps = withContainer(
   withSession(async (context: BeaconsGetServerSidePropsContext) => {
-    const nextPageUrl = CreateRegistrationPageURLs.model;
+    const nextPageUrl = CreateRegistrationPageURLs.beaconInformation;
 
     return await new BeaconsPageRouter([
       new WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError(context),
@@ -158,24 +154,22 @@ export const getServerSideProps: GetServerSideProps = withContainer(
   })
 );
 
-export const mapper: DraftRegistrationFormMapper<ManufacturerForm> = {
+export const mapper: DraftRegistrationFormMapper<ModelForm> = {
   formToDraftRegistration: (form) => ({
-    manufacturer: form.manufacturer,
+    model: form.model,
     uses: [],
   }),
   draftRegistrationToForm: (draftRegistration) => ({
-    manufacturer: draftRegistration?.manufacturer,
+    model: draftRegistration?.model,
   }),
 };
 
-export const validationRules = ({
-  manufacturer,
-}: ManufacturerForm): FormManager => {
+export const validationRules = ({ model }: ModelForm): FormManager => {
   return new FormManager({
-    manufacturer: new FieldManager(manufacturer, [
-      Validators.required("Select the beacon's manufacturer"),
+    model: new FieldManager(model, [
+      Validators.required("Select the beacon's model"),
     ]),
   });
 };
 
-export default Manufacturer;
+export default Model;
