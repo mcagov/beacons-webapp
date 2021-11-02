@@ -1,8 +1,6 @@
 import { GetServerSideProps } from "next";
 import React, { FunctionComponent } from "react";
 import { BeaconsForm, BeaconsFormHeading } from "../../components/BeaconsForm";
-import { BeaconManufacturerInput } from "../../components/domain/formElements/BeaconManufacturerInput";
-import { BeaconModelInput } from "../../components/domain/formElements/BeaconModelInput";
 import { HexIdHelp } from "../../components/domain/formElements/HexIdHelp";
 import { FormGroup } from "../../components/Form";
 import { FormInputProps, Input } from "../../components/Input";
@@ -25,8 +23,6 @@ import { GivenUserIsEditingADraftRegistration_WhenUserViewsForm_ThenShowForm } f
 import { WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError } from "../../router/rules/WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError";
 
 interface CheckBeaconDetailsForm {
-  manufacturer: string;
-  model: string;
   hexId: string;
 }
 
@@ -53,14 +49,6 @@ const CheckBeaconDetails: FunctionComponent<DraftRegistrationPageProps> = ({
     >
       <BeaconsFormHeading pageHeading={pageHeading} />
       {pageText}
-      <BeaconManufacturerInput
-        value={form.fields.manufacturer.value}
-        errorMessages={form.fields.manufacturer.errorMessages}
-      />
-      <BeaconModelInput
-        value={form.fields.model.value}
-        errorMessages={form.fields.model.errorMessages}
-      />
       <BeaconHexIdInput
         value={form.fields.hexId.value}
         errorMessages={form.fields.hexId.errorMessages}
@@ -117,30 +105,18 @@ export const getServerSideProps: GetServerSideProps = withContainer(
 
 export const mapper: DraftRegistrationFormMapper<CheckBeaconDetailsForm> = {
   formToDraftRegistration: (form) => ({
-    manufacturer: form.manufacturer,
-    model: form.model,
     hexId: toUpperCase(form.hexId),
     uses: [],
   }),
   draftRegistrationToForm: (draftRegistration) => ({
-    manufacturer: draftRegistration?.manufacturer,
-    model: draftRegistration?.model,
     hexId: draftRegistration?.hexId,
   }),
 };
 
 export const validationRules = ({
-  manufacturer,
-  model,
   hexId,
 }: CheckBeaconDetailsForm): FormManager => {
   return new FormManager({
-    manufacturer: new FieldManager(manufacturer, [
-      Validators.required("Beacon manufacturer is a required field"),
-    ]),
-    model: new FieldManager(model, [
-      Validators.required("Beacon model is a required field"),
-    ]),
     hexId: new FieldManager(hexId, [
       Validators.required("Beacon HEX ID is a required field"),
       Validators.isLength(
