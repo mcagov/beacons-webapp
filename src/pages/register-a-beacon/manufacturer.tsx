@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 import React, { FunctionComponent } from "react";
 import { BackButton, Button } from "../../components/Button";
-import { Details } from "../../components/Details";
 import { FormErrorSummary } from "../../components/ErrorSummary";
 import {
   Form,
@@ -11,7 +10,7 @@ import {
 } from "../../components/Form";
 import { Grid } from "../../components/Grid";
 import { Layout } from "../../components/Layout";
-import { BeaconRegistryContactInfo, IfYouNeedHelp } from "../../components/Mca";
+import { IfYouNeedHelp } from "../../components/Mca";
 import { Select, SelectOption } from "../../components/Select";
 import { GovUKBody } from "../../components/Typography";
 import { FieldManager } from "../../lib/form/FieldManager";
@@ -80,16 +79,6 @@ const Manufacturer: FunctionComponent<DraftRegistrationPageProps> = ({
                     name="manufacturer"
                     defaultValue={form.fields.manufacturer.value}
                   />
-                  <Details
-                    summaryText="What if I can't find the manufacturer of the beacon on this list?"
-                    className="govuk-!-padding-top-2"
-                  >
-                    <p className="govuk-!-margin-top-5">
-                      Contact the UK Beacon Registry for help finding the
-                      manufacturer.
-                    </p>
-                    <BeaconRegistryContactInfo h2 />
-                  </Details>
                 </FormGroup>
               </FormFieldset>
               <Button buttonText="Continue" />
@@ -121,6 +110,9 @@ export const BeaconManufacturerSelect = ({
     <option disabled selected value={undefined}>
       Select manufacturer
     </option>
+    <option disabled>--</option>
+    <option value="UNKNOWN">Other</option>
+    <option disabled>--</option>
     {Object.keys(manufacturers).map((manufacturer) => (
       <SelectOption key={manufacturer} value={manufacturer}>
         {manufacturer}

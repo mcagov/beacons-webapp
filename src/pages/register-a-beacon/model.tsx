@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import React, { FunctionComponent } from "react";
 import { BackButton, Button } from "../../components/Button";
-import { Details } from "../../components/Details";
+import { BeaconModelInput } from "../../components/domain/formElements/BeaconModelInput";
 import { FormErrorSummary } from "../../components/ErrorSummary";
 import {
   Form,
@@ -11,7 +11,7 @@ import {
 } from "../../components/Form";
 import { Grid } from "../../components/Grid";
 import { Layout } from "../../components/Layout";
-import { BeaconRegistryContactInfo, IfYouNeedHelp } from "../../components/Mca";
+import { IfYouNeedHelp } from "../../components/Mca";
 import { Select, SelectOption } from "../../components/Select";
 import { GovUKBody } from "../../components/Typography";
 import { FieldManager } from "../../lib/form/FieldManager";
@@ -67,25 +67,17 @@ const Model: FunctionComponent<DraftRegistrationPageProps> = ({
                   in an emergency.
                 </GovUKBody>
                 <FormGroup errorMessages={form.fields.model.errorMessages}>
-                  <label className="govuk-label" htmlFor="model">
-                    Model
-                  </label>
-                  <BeaconModelSelect
-                    id="model"
-                    name="model"
-                    defaultValue={form.fields.model.value}
-                    selectedManufacturer={draftRegistration.manufacturer}
-                  />
-                  <Details
-                    summaryText="What if I can't find the beacon on this list?"
-                    className="govuk-!-padding-top-2"
-                  >
-                    <p className="govuk-!-margin-top-5">
-                      Contact the UK Beacon Registry for help finding the model
-                      of the beacon you are trying to register.
-                    </p>
-                    <BeaconRegistryContactInfo h2 />
-                  </Details>
+                  {draftRegistration.manufacturer === "UNKNOWN" ||
+                  draftRegistration.model === "UNKNOWN" ? (
+                    <BeaconModelInput value={draftRegistration.model} />
+                  ) : (
+                    <BeaconModelSelect
+                      id="model"
+                      name="model"
+                      defaultValue={form.fields.model.value}
+                      selectedManufacturer={draftRegistration.manufacturer}
+                    />
+                  )}
                 </FormGroup>
               </FormFieldset>
 
@@ -112,16 +104,24 @@ export const BeaconModelSelect = ({
   selectedManufacturer: string;
   manufacturerModels?: string[];
 }): JSX.Element => (
-  <Select id={id} name={name} defaultValue={defaultValue || "Select a model"}>
-    <option disabled selected value={undefined}>
-      Select a model
-    </option>
-    {manufacturerModels[selectedManufacturer].map((model) => (
-      <SelectOption key={model} value={model}>
-        {model}
-      </SelectOption>
-    ))}
-  </Select>
+  <>
+    <label className="govuk-label" htmlFor="model">
+      Select the beacon model
+    </label>
+    <Select id={id} name={name} defaultValue={defaultValue || "Select a model"}>
+      <option disabled selected value={undefined}>
+        Select a model
+      </option>
+      <option disabled>--</option>
+      <option value="UNKNOWN">Other</option>
+      <option disabled>--</option>
+      {manufacturerModels[selectedManufacturer].map((model) => (
+        <SelectOption key={model} value={model}>
+          {model}
+        </SelectOption>
+      ))}
+    </Select>
+  </>
 );
 
 export const getServerSideProps: GetServerSideProps = withContainer(
