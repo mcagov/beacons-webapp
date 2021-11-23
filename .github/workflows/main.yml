@@ -16,7 +16,7 @@ jobs:
         env:
           CYPRESS_INSTALL_BINARY: 0
       - name: Cache dependencies
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -57,7 +57,7 @@ jobs:
         with:
           node-version: "14"
       - name: Restore cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -160,7 +160,7 @@ jobs:
         with:
           node-version: "14"
       - name: Restore cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -178,7 +178,7 @@ jobs:
         with:
           node-version: "14"
       - name: Restore cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
