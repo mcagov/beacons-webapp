@@ -6,13 +6,11 @@ import { AccountHolderGateway } from "./interfaces/AccountHolderGateway";
 import { AuthGateway } from "./interfaces/AuthGateway";
 import { BeaconsApiResponseMapper } from "./mappers/BeaconsApiResponseMapper";
 import { IAccountHolderDetailsResponse } from "./mappers/IAccountHolderDetailsResponse";
-import { IAccountHolderIdResponseBody } from "./mappers/IAccountHolderIdResponseBody";
 import { IBeaconListResponse } from "./mappers/IBeaconListResponse";
 
 export class BeaconsApiAccountHolderGateway implements AccountHolderGateway {
   private readonly apiUrl: string;
   private readonly accountHolderControllerRoute = "account-holder";
-  private readonly accountHolderIdEndpoint = "auth-id";
   private readonly accountHolderBeaconsEndpoint = "beacons";
   private readonly authGateway: AuthGateway;
 
@@ -22,16 +20,16 @@ export class BeaconsApiAccountHolderGateway implements AccountHolderGateway {
   }
 
   public async getAccountHolderId(authId: string): Promise<string> {
-    const url = `${this.apiUrl}/${this.accountHolderControllerRoute}/${this.accountHolderIdEndpoint}/${authId}`;
+    const url = `${this.apiUrl}/${this.accountHolderControllerRoute}?authId=${authId}`;
     try {
       const response = await axios.get<
         any,
-        AxiosResponse<IAccountHolderIdResponseBody>
+        AxiosResponse<IAccountHolderDetailsResponse>
       >(url, {
         headers: { Authorization: `Bearer ${await this.getAccessToken()}` },
       });
       logger.info("Account holder id retrieved");
-      return response.data.id;
+      return response.data.data.id;
     } catch (error) {
       if (error.response && error.response.status === 404) {
         return null; // 404 is a-ok
