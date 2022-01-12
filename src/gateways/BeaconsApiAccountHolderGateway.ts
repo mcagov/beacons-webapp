@@ -11,7 +11,7 @@ import { IAccountHolderDetailsResponse } from "./mappers/IAccountHolderDetailsRe
 export class BeaconsApiAccountHolderGateway implements AccountHolderGateway {
   private readonly apiUrl: string;
   private readonly accountHolderControllerRoute = "account-holder";
-  private readonly accountHolderBeaconsEndpoint = "beacons";
+  private readonly registrationControllerRoute = "registrations";
   private readonly authGateway: AuthGateway;
 
   constructor(apiUrl: string, authGateway: AuthGateway) {
@@ -117,7 +117,8 @@ export class BeaconsApiAccountHolderGateway implements AccountHolderGateway {
   }
 
   public async getAccountBeacons(accountHolderId: string): Promise<Beacon[]> {
-    const url = `${this.apiUrl}/${this.accountHolderControllerRoute}/${accountHolderId}/${this.accountHolderBeaconsEndpoint}`;
+    // This method should really be moved to a different gateway in the future.
+    const url = `${this.apiUrl}/${this.registrationControllerRoute}?accountHolderId=${accountHolderId}`;
     try {
       const response = await axios.get<
         any,
