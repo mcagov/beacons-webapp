@@ -41,7 +41,6 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
               <Panel title={pageHeading} reference={reference}>
                 {pageSubHeading}
               </Panel>
-              {/*<ApplicationCompleteWhatNext />*/}
               <GovUKBody className="govuk-body">
                 Your application to register a UK 406 MHz beacon has been
                 received by the Maritime and Coastguard Beacon Registry Team.
