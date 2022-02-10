@@ -136,7 +136,7 @@ export const getServerSideProps: GetServerSideProps = withSession(
 
       if (!result.beaconRegistered) {
         logger.error(
-          `Failed to register beacon with hexId ${draftRegistration.hexId}. Check session cache for formSubmissionCookieId ${formSubmissionCookieId}`
+          `Failed to register beacon with hexId ${draftRegistration.hexId}. Check session cache for formSubmissionCookieId ${context.req.cookies[formSubmissionCookieId]}`
         );
       }
 
@@ -149,7 +149,7 @@ export const getServerSideProps: GetServerSideProps = withSession(
       };
     } catch {
       logger.error(
-        `Failed to register beacon with hexId ${draftRegistration.hexId}. Check session cache for formSubmissionCookieId ${formSubmissionCookieId}`
+        `Failed to register beacon with hexId ${draftRegistration.hexId}. Check session cache for formSubmissionCookieId ${context.req.cookies[formSubmissionCookieId]}`
       );
       return {
         props: {
