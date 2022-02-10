@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import { ReturnToYourAccountSection } from "../../components/domain/ReturnToYourAccountSection";
 import { Grid } from "../../components/Grid";
 import { Layout } from "../../components/Layout";
+import { BeaconRegistryContactInfo } from "../../components/Mca";
 import { Panel } from "../../components/Panel";
 import { GovUKBody } from "../../components/Typography";
 import { DraftRegistration } from "../../entities/DraftRegistration";
@@ -15,18 +16,21 @@ import { redirectUserTo } from "../../lib/redirectUserTo";
 import { formSubmissionCookieId } from "../../lib/types";
 import { GeneralPageURLs } from "../../lib/urls";
 import { WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError } from "../../router/rules/WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError";
-import { ISubmitRegistrationResult } from "../../useCases/submitRegistration";
 
 interface ApplicationCompleteProps {
   reference: string;
-  pageSubHeading: string;
+  registrationSuccess: boolean;
+  confirmationEmailSuccess: boolean;
 }
 
 const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
   reference,
-  pageSubHeading,
+  registrationSuccess,
+  confirmationEmailSuccess,
 }: ApplicationCompleteProps): JSX.Element => {
-  const pageHeading = "Beacon Registration Complete";
+  const pageHeading = registrationSuccess
+    ? "Beacon registration complete"
+    : "Beacon registration failed";
 
   return (
     <>
@@ -38,14 +42,26 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
         <Grid
           mainContent={
             <>
-              <Panel title={pageHeading} reference={reference}>
-                {pageSubHeading}
-              </Panel>
-              <GovUKBody className="govuk-body">
-                Your application to register a UK 406 MHz beacon has been
-                received by the Maritime and Coastguard Beacon Registry Team.
-                You can now use your Beacon.
-              </GovUKBody>
+              {registrationSuccess ? (
+                <>
+                  <ApplicationSuccessMessage
+                    title={pageHeading}
+                    confirmationEmailSuccess={confirmationEmailSuccess}
+                    reference={reference}
+                  />
+                  <GovUKBody className="govuk-body">
+                    Your application to register a UK 406 MHz beacon has been
+                    received by the Maritime and Coastguard Beacon Registry
+                    Team. You can now use your beacon.
+                  </GovUKBody>
+                </>
+              ) : (
+                <>
+                  <ApplicationFailedMessage title={pageHeading} />
+                  <BeaconRegistryContactInfo />
+                </>
+              )}
+
               <ReturnToYourAccountSection />
             </>
           }
@@ -54,6 +70,26 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
     </>
   );
 };
+
+const ApplicationSuccessMessage = (props: {
+  title: string;
+  reference: string;
+  confirmationEmailSuccess: boolean;
+}): JSX.Element => (
+  <Panel title={props.title} reference={props.reference}>
+    {props.confirmationEmailSuccess
+      ? "We have sent you a confirmation email."
+      : "We could not send you a confirmation email. But we have registered your beacon under the following reference id."}
+  </Panel>
+);
+
+const ApplicationFailedMessage = (props: { title: string }) => (
+  <Panel title={props.title}>
+    {
+      "We could not save your registration or send you a confirmation email. Please contact the Beacons Registry team."
+    }
+  </Panel>
+);
 
 export const getServerSideProps: GetServerSideProps = withSession(
   withContainer(async (context: BeaconsGetServerSidePropsContext) => {
@@ -82,28 +118,20 @@ export const getServerSideProps: GetServerSideProps = withSession(
         await getAccountHolderId(context.session)
       );
 
-      const pageSubHeading = (result: ISubmitRegistrationResult) => {
-        if (result.beaconRegistered && result.confirmationEmailSent)
-          return "We have sent you a confirmation email.";
-        if (result.beaconRegistered && !result.confirmationEmailSent)
-          return "We could not send you a confirmation email. But we have registered your beacon under the following reference id.";
-        return "We could not save your registration or send you a confirmation email. Please contact the Beacons Registry team.";
-      };
-
       clearFormSubmissionCookie(context);
 
       return {
         props: {
           reference: result.referenceNumber,
-          pageSubHeading: pageSubHeading(result),
+          registrationSuccess: result.beaconRegistered,
+          confirmationEmailSuccess: result.confirmationEmailSent,
         },
       };
     } catch {
       return {
         props: {
-          reference: "",
-          pageSubHeading:
-            "There was an error while registering your beacon.  Please contact the Beacons Registry team.",
+          registrationSuccess: false,
+          confirmationEmailSuccess: false,
         },
       };
     }
