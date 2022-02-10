@@ -108,7 +108,7 @@ describe("ApplicationCompletePage", () => {
 
       const result = await getServerSideProps(context as any);
 
-      expect(result["props"].reference).toBe("");
+      expect(result["props"].reference).toBeUndefined();
     });
 
     it("should return a reference number if creating the registration is successful", async () => {
