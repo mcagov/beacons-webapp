@@ -1,0 +1,7 @@
+# Duplicated from https://github.com/mcagov/beacons-service/blob/main/opensearch.yml
+#
+# This duplication is entirely sub-optimal and should be removed by either refactoring to a modular monolith or
+# stubbing all services in the Webapp's test suite
+cluster.name: docker-cluster
+network.host: 0.0.0.0
+plugins.security.disabled: true

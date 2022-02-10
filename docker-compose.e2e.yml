@@ -14,6 +14,8 @@ services:
     image: 232705206979.dkr.ecr.eu-west-2.amazonaws.com/beacons-service:$SERVICE_COMMIT_HASH
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/beacons
+      # 'dev' profile is necessary to allow Spring to connect to local OpenSearch container without authenticating
+      SPRING_PROFILES_ACTIVE: "dev"
     ports:
       - 8080:8080
 
@@ -21,3 +23,14 @@ services:
     image: redis:6
     ports:
       - "6379:6379"
+
+  opensearch:
+    image: opensearchproject/opensearch:1.1.0
+    container_name: opensearch
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - ./opensearch.yml:/usr/share/opensearch/config/opensearch.yml
+    ports:
+      - "9200:9200"
+      - "9600:9600"
