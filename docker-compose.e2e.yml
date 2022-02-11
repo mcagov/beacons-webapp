@@ -20,6 +20,11 @@ services:
     ports:
       - "9200:9200"
       - "9600:9600"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200/_cluster/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
 
   api:
     image: 232705206979.dkr.ecr.eu-west-2.amazonaws.com/beacons-service:$SERVICE_COMMIT_HASH
