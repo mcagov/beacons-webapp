@@ -21,10 +21,10 @@ services:
       - "9200:9200"
       - "9600:9600"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9200/_cluster/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
       interval: 10s
       timeout: 10s
-      retries: 5
+      retries: 12
 
   api:
     image: 232705206979.dkr.ecr.eu-west-2.amazonaws.com/beacons-service:$SERVICE_COMMIT_HASH
@@ -37,6 +37,7 @@ services:
     depends_on:
       - opensearch
       - postgres
+    restart: on-failure
 
   redis:
     image: redis:6
