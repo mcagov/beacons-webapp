@@ -37,6 +37,17 @@ services:
     depends_on:
       - opensearch
       - postgres
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://localhost:8080/spring-api/actuator/health",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 12
 
   redis:
     image: redis:6
