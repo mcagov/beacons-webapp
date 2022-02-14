@@ -46,11 +46,11 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
             <>
               {registrationSuccess ? (
                 <>
-                  <PanelSucceeded
-                    title={pageHeading}
-                    confirmationEmailSuccess={confirmationEmailSuccess}
-                    reference={reference}
-                  />
+                  <PanelSucceeded title={pageHeading} reference={reference}>
+                    {confirmationEmailSuccess
+                      ? "We have sent you a confirmation email."
+                      : "We could not send you a confirmation email but we have registered your beacon under the following reference id."}
+                  </PanelSucceeded>
                   <GovUKBody className="govuk-body">
                     Your application to register a UK 406 MHz beacon has been
                     received by the Maritime and Coastguard Beacon Registry
@@ -59,7 +59,10 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
                 </>
               ) : (
                 <>
-                  <PanelFailed />
+                  <PanelFailed>
+                    We could not save your registration. Please contact the
+                    Beacon Registry team using the details below.
+                  </PanelFailed>
                   <BeaconRegistryContactInfo />
                 </>
               )}

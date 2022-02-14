@@ -1,6 +1,8 @@
-import React from "react";
+import React, { ReactChild, ReactChildren } from "react";
 
-export const PanelFailed = () => (
+export const PanelFailed = (props: {
+  children: ReactChildren | ReactChild;
+}): JSX.Element => (
   <div
     className="govuk-error-summary"
     aria-labelledby="error-summary-title"
@@ -12,11 +14,7 @@ export const PanelFailed = () => (
     </h2>
     <div className="govuk-error-summary__body">
       <ul className="govuk-list govuk-error-summary__list">
-        <li>
-          {
-            "We could not save your registration. Please contact the Beacon Registry team using the details below."
-          }
-        </li>
+        <li>{props.children}</li>
       </ul>
     </div>
   </div>
