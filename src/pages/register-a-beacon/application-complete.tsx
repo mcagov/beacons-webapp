@@ -97,7 +97,7 @@ const ApplicationFailedMessage = () => (
       <ul className="govuk-list govuk-error-summary__list">
         <li>
           {
-            "We could not save your registration. Please contact the Beacons Registry team using the details below."
+            "We could not save your registration. Please contact the Beacon Registry team using the details below."
           }
         </li>
       </ul>
