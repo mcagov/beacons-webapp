@@ -58,14 +58,12 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
                   </GovUKBody>
                 </>
               ) : (
-                <>
-                  <PanelFailed>
-                    We could not save your registration. Please contact the
-                    Beacon Registry team using the details below.
-                  </PanelFailed>
-                  <BeaconRegistryContactInfo />
-                </>
+                <PanelFailed>
+                  We could not save your registration. Please contact the Beacon
+                  Registry team using the details below.
+                </PanelFailed>
               )}
+              <BeaconRegistryContactInfo />
               <ReturnToYourAccountSection />
             </>
           }
