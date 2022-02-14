@@ -48,7 +48,6 @@ const ApplicationCompletePage = (props: {
                     Coastguard Beacon Registry team. You can now use your
                     beacon.
                   </GovUKBody>
-                  <ReturnToYourAccountSection />
                 </>
               ) : (
                 <>
