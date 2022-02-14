@@ -4,7 +4,8 @@ import { ReturnToYourAccountSection } from "../../components/domain/ReturnToYour
 import { Grid } from "../../components/Grid";
 import { Layout } from "../../components/Layout";
 import { BeaconRegistryContactInfo } from "../../components/Mca";
-import { Panel } from "../../components/Panel";
+import { PanelFailed } from "../../components/PanelFailed";
+import { PanelSucceeded } from "../../components/PanelSucceeded";
 import { GovUKBody } from "../../components/Typography";
 import { DraftRegistration } from "../../entities/DraftRegistration";
 import { verifyFormSubmissionCookieIsSet } from "../../lib/cookies";
@@ -45,7 +46,7 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
             <>
               {registrationSuccess ? (
                 <>
-                  <ApplicationSuccessMessage
+                  <PanelSucceeded
                     title={pageHeading}
                     confirmationEmailSuccess={confirmationEmailSuccess}
                     reference={reference}
@@ -58,7 +59,7 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
                 </>
               ) : (
                 <>
-                  <ApplicationFailedMessage />
+                  <PanelFailed />
                   <BeaconRegistryContactInfo />
                 </>
               )}
@@ -70,40 +71,6 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
     </>
   );
 };
-
-const ApplicationSuccessMessage = (props: {
-  title: string;
-  reference: string;
-  confirmationEmailSuccess: boolean;
-}): JSX.Element => (
-  <Panel title={props.title} reference={props.reference}>
-    {props.confirmationEmailSuccess
-      ? "We have sent you a confirmation email."
-      : "We could not send you a confirmation email but we have registered your beacon under the following reference id."}
-  </Panel>
-);
-
-const ApplicationFailedMessage = () => (
-  <div
-    className="govuk-error-summary"
-    aria-labelledby="error-summary-title"
-    role="alert"
-    data-module="govuk-error-summary"
-  >
-    <h2 className="govuk-error-summary__title" id="error-summary-title">
-      There is a problem
-    </h2>
-    <div className="govuk-error-summary__body">
-      <ul className="govuk-list govuk-error-summary__list">
-        <li>
-          {
-            "We could not save your registration. Please contact the Beacon Registry team using the details below."
-          }
-        </li>
-      </ul>
-    </div>
-  </div>
-);
 
 export const getServerSideProps: GetServerSideProps = withSession(
   withContainer(async (context: BeaconsGetServerSidePropsContext) => {
