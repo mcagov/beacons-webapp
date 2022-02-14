@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import React, { FunctionComponent } from "react";
+import React from "react";
 import { ReturnToYourAccountSection } from "../../components/domain/ReturnToYourAccountSection";
 import { Grid } from "../../components/Grid";
 import { Layout } from "../../components/Layout";
@@ -19,18 +19,12 @@ import { GeneralPageURLs } from "../../lib/urls";
 import logger from "../../logger";
 import { WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError } from "../../router/rules/WhenUserIsNotSignedIn_ThenShowAnUnauthenticatedError";
 
-interface ApplicationCompleteProps {
+const ApplicationCompletePage = (props: {
   reference: string;
   registrationSuccess: boolean;
   confirmationEmailSuccess: boolean;
-}
-
-const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
-  reference,
-  registrationSuccess,
-  confirmationEmailSuccess,
-}: ApplicationCompleteProps): JSX.Element => {
-  const pageHeading = registrationSuccess
+}): JSX.Element => {
+  const pageHeading = props.registrationSuccess
     ? "Beacon registration complete"
     : "Beacon registration failed";
 
@@ -44,10 +38,13 @@ const ApplicationCompletePage: FunctionComponent<ApplicationCompleteProps> = ({
         <Grid
           mainContent={
             <>
-              {registrationSuccess ? (
+              {props.registrationSuccess ? (
                 <>
-                  <PanelSucceeded title={pageHeading} reference={reference}>
-                    {confirmationEmailSuccess
+                  <PanelSucceeded
+                    title={pageHeading}
+                    reference={props.reference}
+                  >
+                    {props.confirmationEmailSuccess
                       ? "We have sent you a confirmation email."
                       : "We could not send you a confirmation email but we have registered your beacon under the following reference id."}
                   </PanelSucceeded>
