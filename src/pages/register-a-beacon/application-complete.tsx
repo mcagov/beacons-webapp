@@ -117,9 +117,9 @@ export const getServerSideProps: GetServerSideProps = withSession(
           confirmationEmailSuccess: result.confirmationEmailSent,
         },
       };
-    } catch {
+    } catch (e) {
       logger.error(
-        `Failed to register beacon with hexId ${draftRegistration.hexId}. Check session cache for formSubmissionCookieId ${context.req.cookies[formSubmissionCookieId]}`
+        `Threw error ${e} when registering beacon with hexId ${draftRegistration.hexId}. Check session cache for formSubmissionCookieId ${context.req.cookies[formSubmissionCookieId]}`
       );
       return {
         props: {
