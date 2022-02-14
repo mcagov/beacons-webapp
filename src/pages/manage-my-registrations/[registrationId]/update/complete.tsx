@@ -40,11 +40,9 @@ const ApplicationCompletePage = (props: {
               {props.updateSuccess ? (
                 <>
                   <PanelSucceeded
-                    title={pageHeading}
+                    title="Your beacon registration has been updated"
                     reference={props.reference}
-                  >
-                    Your beacon registration has been updated.
-                  </PanelSucceeded>
+                  />
                   <GovUKBody className="govuk-body">
                     Your updated details have been received by the Maritime and
                     Coastguard Beacon Registry team. You can now use your

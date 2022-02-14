@@ -3,7 +3,7 @@ import { Panel } from "./Panel";
 
 export const PanelSucceeded = (props: {
   title: string;
-  children: ReactChild | ReactChildren;
+  children?: ReactChild | ReactChildren;
   reference?: string;
 }): JSX.Element => (
   <Panel title={props.title} reference={props.reference}>
