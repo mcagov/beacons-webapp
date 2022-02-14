@@ -23,7 +23,9 @@ const ApplicationCompletePage = (props: {
   reference: string;
   updateSuccess: boolean;
 }): JSX.Element => {
-  const pageHeading = props.updateSuccess ? "Update complete" : "Update failed";
+  const pageHeading = props.updateSuccess
+    ? "Update succeeded"
+    : "Update failed";
 
   return (
     <>
@@ -41,7 +43,7 @@ const ApplicationCompletePage = (props: {
                     title={pageHeading}
                     reference={props.reference}
                   >
-                    Your beacon has been updated.
+                    Your beacon registration has been updated.
                   </PanelSucceeded>
                   <GovUKBody className="govuk-body">
                     Your updated details have been received by the Maritime and
