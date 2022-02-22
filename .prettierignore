@@ -1,5 +1,0 @@
-# Ignore artifacts:
-.next
-
-# Ignore jest coverage files
-coverage/
